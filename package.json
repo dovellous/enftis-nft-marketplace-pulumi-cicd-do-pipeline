@@ -4,9 +4,10 @@
     "description": "Node.js + MongoDB + ExpressJS + JWT",
     "main": "server.js",
     "scripts": {
-        "build": "npm run cleean && npm run lint && tsc",
+        "build": "npm run clean && npm run lint && tsc",
         "precommit": "npm run lint && npm run test",
         "start": "node src/server.js",
+        "start-server": "node server.ts",
         "dev": "nodemon src/server.js",
         "lint": "eslint --ext .ts --fix '**/*.ts' --ignore-pattern internals/scripts --ignore-path .gitignore",
         "lint:fix": "npm run lint --fix",
