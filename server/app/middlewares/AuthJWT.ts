@@ -94,11 +94,7 @@ const isRevoked = async (req, payload, done) => {
 const expressAuthJWT = () => {
   const secret = process.env.secret;
   const api = process.env.API_URL;
-  return expressJWT({
-    secret,
-    algorithms: ['HS256'],
-    isRevoked : isRevoked
-  }).unless({
+  return {
     path: [
       {url: /\/public\/uploads(.*)/, methods: ['GET', 'OPTIONS'] },
       {url: /\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS']},
@@ -106,14 +102,14 @@ const expressAuthJWT = () => {
       `${api}/users/login`,
       `${api}/users/register`
     ]
-  })
+  }
 }
 
 const AuthJwt = {
-  verifyToken,
-  isAdmin,
-  isModerator,
-  expressAuthJWT
+  verifyToken: verifyToken,
+  isAdmin: isAdmin,
+  isModerator: isModerator,
+  expressAuthJWT: expressAuthJWT
 };
 
 module.exports = AuthJwt;

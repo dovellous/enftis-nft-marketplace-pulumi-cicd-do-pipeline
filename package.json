@@ -63,6 +63,7 @@
         "cors": "^2.8.5",
         "dotenv": "^16.0.3",
         "email-validator": "^2.0.4",
+        "esm": "^3.2.25",
         "express": "^4.18.2",
         "express-async-handler": "^1.2.0",
         "express-jwt": "^8.4.1",
@@ -90,6 +91,9 @@
         "winston": "^3.8.2"
     },
     "devDependencies": {
+        "@babel/cli": "^7.21.0",
+        "@babel/core": "^7.21.3",
+        "@babel/preset-env": "^7.20.2",
         "@types/chai": "^4.3.4",
         "@types/mocha": "^10.0.1",
         "@types/node": "^18.15.3",

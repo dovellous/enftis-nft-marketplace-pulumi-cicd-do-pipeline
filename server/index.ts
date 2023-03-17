@@ -1,4 +1,3 @@
-import {RequestHandler} from "express";
 
 const express = require("express");
 const bodyParser = require('body-parser');
@@ -10,7 +9,6 @@ require('dotenv/config');
 
 const {expressAuthJWT} = require('./app/middlewares/AuthJWT.ts');
 const errorHandler = require('./app/helpers/error-handler');
-
 
 const DBConfig = require("./app/config/DBConfig.ts");
 
@@ -30,7 +28,6 @@ app.options('*',cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 app.use(morgan('tiny'));
-app.use(expressAuthJWT());
 app.use('/public/uploads', express.static( __dirname + '/public/uploads'));
 app.use(errorHandler);
 
@@ -53,14 +50,10 @@ const orderRoute = require('./app/routes/ecommerce/orders');
 
 // Routes
 
-class RouteParameters<T> {
-    string;
-}
-
-const apiUrlProducts: RequestHandler<RouteParameters<string>> | RouterItemUrl = `${api}/products`;
-const apiUrlCategories: RequestHandler<RouteParameters<string>> | RouterItemUrl = `${api}/products`;
-const apiUrlUsers: RequestHandler<RouteParameters<string>> | RouterItemUrl = `${api}/products`;
-const apiUrlOrders: RequestHandler<RouteParameters<string>> | RouterItemUrl = `${api}/products`;
+let apiUrlProducts = `${api}/products`;
+let apiUrlCategories = `${api}/products`;
+let apiUrlUsers = `${api}/products`;
+let apiUrlOrders = `${api}/products`;
 
 // @ts-ignore
 app.use(apiUrlProducts, productRoute);
@@ -85,7 +78,6 @@ mongoose
     .connect(`mongodb://${DBConfig.HOST}:${DBConfig.PORT}/${DBConfig.DB}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false
     })
     .then(() => {
         console.log("Successfully connect to MongoDB.");
