@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
+const expressJWT  = require('express-jwt');
 const config = require("../config/AuthConfig.ts");
 const db = require("../models/index.ts");
 const User = db.user;
 const Role = db.role;
 
-verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
 
   if (!token) {
@@ -20,7 +21,7 @@ verifyToken = (req, res, next) => {
   });
 };
 
-isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -51,7 +52,7 @@ isAdmin = (req, res, next) => {
   });
 };
 
-isModerator = (req, res, next) => {
+const isModerator = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -82,9 +83,37 @@ isModerator = (req, res, next) => {
   });
 };
 
-const authJwt = {
+const isRevoked = async (req, payload, done) => {
+  if(!payload.isAdmin){
+    done(null, true)
+  }
+
+  done();
+}
+
+const expressAuthJWT = () => {
+  const secret = process.env.secret;
+  const api = process.env.API_URL;
+  return expressJWT({
+    secret,
+    algorithms: ['HS256'],
+    isRevoked : isRevoked
+  }).unless({
+    path: [
+      {url: /\/public\/uploads(.*)/, methods: ['GET', 'OPTIONS'] },
+      {url: /\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS']},
+      {url: /\/api\/v1\/categories(.*)/, methods: ['GET', 'OPTIONS']},
+      `${api}/users/login`,
+      `${api}/users/register`
+    ]
+  })
+}
+
+const AuthJwt = {
   verifyToken,
   isAdmin,
-  isModerator
+  isModerator,
+  expressAuthJWT
 };
-module.exports = authJwt;
+
+module.exports = AuthJwt;
