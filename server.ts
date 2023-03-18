@@ -1,2 +1,2 @@
 
-const ServerApp = require("./server/index.ts");
+const ServerApp = require("./src/server/index.ts");
