@@ -1,6 +1,6 @@
 const jwt  = require('express-jwt');
 
-function authJwt() {
+authJwt : () => {
     const secret = process.env.secret;
     const api = process.env.API_URL;
     return jwt({
@@ -16,9 +16,9 @@ function authJwt() {
             `${api}/users/register`
         ]
     })
-}
+},
 
-async function isRevoked (req, payload, done){
+ isRevoked : async (req, payload, done) => {
     if(!payload.isAdmin){
         done(null, true)
     } 

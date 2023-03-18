@@ -2,7 +2,7 @@ const db = require('../models/index.ts');
 const ResourceItem = db.resourceItems;
 
 // Create and Save a new ResourceItem
-exports.create = (req: { body: { title: any; description: any; published: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: any; }): void; new(): any; }; }; send: (arg0: any) => void; }) => {
+exports.create = (req, res) => {
 	// Validate request
 	if (!req.body.title) {
 		res.status(400).send({ message: 'Content can not be empty!' });
@@ -19,10 +19,10 @@ exports.create = (req: { body: { title: any; description: any; published: any; }
 	// Save ResourceItem in the database
 	resourceItem
 		.save(resourceItem)
-		.then((data: any) => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch((err: { message: any; }) => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
           err.message || 'Some error occurred while creating the ResourceItem.'
@@ -31,15 +31,15 @@ exports.create = (req: { body: { title: any; description: any; published: any; }
 };
 
 // Retrieve all ResourceItems from the database.
-exports.findAll = (req: { query: { title: any; }; }, res: { send: (arg0: any) => void; status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: any; }): void; new(): any; }; }; }) => {
+exports.findAll = (req, res) => {
 	const title = req.query.title;
 	const condition = title ? { title: { $regex: new RegExp(title), $options: 'i' } } : {};
 
 	ResourceItem.find(condition)
-		.then((data: any) => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch((err: { message: any; }) => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
           err.message || 'Some error occurred while retrieving resourceItems.'
@@ -48,16 +48,16 @@ exports.findAll = (req: { query: { title: any; }; }, res: { send: (arg0: any) =>
 };
 
 // Find a single ResourceItem with an id
-exports.findOne = (req: { params: { id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: string; }): void; new(): any; }; }; send: (arg0: any) => void; }) => {
+exports.findOne = (req, res) => {
 	const id = req.params.id;
 
 	ResourceItem.findById(id)
-		.then((data: any) => {
+		.then((data) => {
 			if (!data)
 				res.status(404).send({ message: 'Not found ResourceItem with id ' + id });
 			else res.send(data);
 		})
-		.catch((err: any) => {
+		.catch((err) => {
 			res
 				.status(500)
 				.send({ message: 'Error retrieving ResourceItem with id=' + id });
@@ -65,7 +65,7 @@ exports.findOne = (req: { params: { id: any; }; }, res: { status: (arg0: number)
 };
 
 // Update a ResourceItem by the id in the request
-exports.update = (req: { body: any; params: { id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: string; }): void; new(): any; }; }; send: (arg0: { message: string; }) => void; }) => {
+exports.update = (req, res) => {
 	if (!req.body) {
 		return res.status(400).send({
 			message: 'Data to update can not be empty!'
@@ -75,14 +75,14 @@ exports.update = (req: { body: any; params: { id: any; }; }, res: { status: (arg
 	const id = req.params.id;
 
 	ResourceItem.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-		.then((data: any) => {
+		.then((data) => {
 			if (!data) {
 				res.status(404).send({
 					message: `Cannot update ResourceItem with id=${id}. Maybe ResourceItem was not found!`
 				});
 			} else res.send({ message: 'ResourceItem was updated successfully.' });
 		})
-		.catch((err: any) => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Error updating ResourceItem with id=' + id
 			});
@@ -90,11 +90,11 @@ exports.update = (req: { body: any; params: { id: any; }; }, res: { status: (arg
 };
 
 // Delete a ResourceItem with the specified id in the request
-exports.delete = (req: { params: { id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: string; }): void; new(): any; }; }; send: (arg0: { message: string; }) => void; }) => {
+exports.delete = (req, res) => {
 	const id = req.params.id;
 
 	ResourceItem.findByIdAndRemove(id, { useFindAndModify: false })
-		.then((data: any) => {
+		.then((data) => {
 			if (!data) {
 				res.status(404).send({
 					message: `Cannot delete ResourceItem with id=${id}. Maybe ResourceItem was not found!`
@@ -105,7 +105,7 @@ exports.delete = (req: { params: { id: any; }; }, res: { status: (arg0: number) 
 				});
 			}
 		})
-		.catch((err: any) => {
+		.catch((err) => {
 			res.status(500).send({
 				message: 'Could not delete ResourceItem with id=' + id
 			});
@@ -113,14 +113,14 @@ exports.delete = (req: { params: { id: any; }; }, res: { status: (arg0: number) 
 };
 
 // Delete all ResourceItems from the database.
-exports.deleteAll = (req: any, res: { send: (arg0: { message: string; }) => void; status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: any; }): void; new(): any; }; }; }) => {
+exports.deleteAll = (req, res) => {
 	ResourceItem.deleteMany({})
-		.then((data: { deletedCount: any; }) => {
+		.then((data) => {
 			res.send({
 				message: `${data.deletedCount} ResourceItems were deleted successfully!`
 			});
 		})
-		.catch((err: { message: any; }) => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
           err.message || 'Some error occurred while removing all resourceItems.'
@@ -129,12 +129,12 @@ exports.deleteAll = (req: any, res: { send: (arg0: { message: string; }) => void
 };
 
 // Find all published ResourceItems
-exports.findAllPublished = (req: any, res: { send: (arg0: any) => void; status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: any; }): void; new(): any; }; }; }) => {
+exports.findAllPublished = (req, res) => {
 	ResourceItem.find({ published: true })
-		.then((data: any) => {
+		.then((data) => {
 			res.send(data);
 		})
-		.catch((err: { message: any; }) => {
+		.catch((err) => {
 			res.status(500).send({
 				message:
           err.message || 'Some error occurred while retrieving resourceItems.'

@@ -28,7 +28,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 app.use(morgan('tiny'));
 app.use('/public/uploads', express.static( __dirname + '/public/uploads'));
-app.use(Snippets);
+app.use(Snippets.expressJWT.authJwt);
 
 // parse requests of content-type - application/json
 app.use(express.json());

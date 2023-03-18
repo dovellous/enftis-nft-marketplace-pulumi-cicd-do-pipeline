@@ -8,13 +8,13 @@ module.exports = {
 
 	cookies: {
 
-		getItem: (key: string): any => {
+		getItem: (key) => {
 
 			return store.get(key);
 
 		},
 
-		setItem: (key: string, value: any): void => {
+		setItem: (key, value) => {
 
 			store.set(key, value);
 

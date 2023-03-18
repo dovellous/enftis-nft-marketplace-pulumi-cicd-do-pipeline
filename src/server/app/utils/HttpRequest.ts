@@ -1,10 +1,10 @@
 const axiosClient = require('axios');
 
-const apiConfig = require('../config/APIConfig');
+const apiConfig = require('../config/APIConfig.ts');
 
 const apiBaseURL = apiConfig.API_END_POINT;
 
-const snippets = require('./Snippets');
+const snippets = require('./Snippets.ts');
 
 module.exports = {
 

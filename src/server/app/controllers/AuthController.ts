@@ -6,14 +6,14 @@ const Role = db.role;
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 
-exports.signup = (req: { body: { username: any; email: any; password: any; roles: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message: any; }): void; new(): any; }; }; send: (arg0: { message: string; }) => void; }) => {
+exports.signup = (req, res) => {
 	const user = new User({
 		username: req.body.username,
 		email: req.body.email,
 		password: bcrypt.hashSync(req.body.password, 8),
 	});
 
-	user.save((err: any, user: { roles: any[]; save: (arg0: { (err: any): void; (err: any): void; }) => void; }) => {
+	user.save((err, user) => {
 		if (err) {
 			res.status(500).send({ message: err });
 			return;
@@ -24,15 +24,15 @@ exports.signup = (req: { body: { username: any; email: any; password: any; roles
 				{
 					name: { $in: req.body.roles },
 				},
-				(err: any, roles: any[]) => {
+				(err, roles) => {
 					if (err) {
 						res.status(500).send({ message: err });
 						return;
 					}
 
-					user.roles = roles.map((role: { _id: any; }) => role._id);
+					user.roles = roles.map((role) => role._id);
 
-					user.save((err: any) => {
+					user.save((err) => {
 						if (err) {
 							res.status(500).send({ message: err });
 							return;
@@ -43,14 +43,14 @@ exports.signup = (req: { body: { username: any; email: any; password: any; roles
 				}
 			);
 		} else {
-			Role.findOne({ name: 'user' }, (err: any, role: { _id: any; }) => {
+			Role.findOne({ name: 'user' }, (err, role) => {
 				if (err) {
 					res.status(500).send({ message: err });
 					return;
 				}
 
 				user.roles = [role._id];
-				user.save((err: any) => {
+				user.save((err) => {
 					if (err) {
 						res.status(500).send({ message: err });
 						return;
@@ -63,12 +63,12 @@ exports.signup = (req: { body: { username: any; email: any; password: any; roles
 	});
 };
 
-exports.signin = (req: { body: { username: any; password: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: { message?: any; accessToken?: any; id?: any; username?: any; email?: any; roles?: string[]; }): void; new(): any; }; }; }) => {
+exports.signin = (req, res) => {
 	User.findOne({
 		username: req.body.username,
 	})
 		.populate('roles', '-__v')
-		.exec((err: any, user: { password: any; id: any; roles: string | any[]; _id: any; username: any; email: any; }) => {
+		.exec((err, user) => {
 			if (err) {
 				res.status(500).send({ message: err });
 				return;
