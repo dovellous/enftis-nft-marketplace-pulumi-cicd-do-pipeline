@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Node.js + MongoDB + ExpressJS + JWT",
     "main": "src/server/index.ts",
+    "types": "types/*/*.d.ts",
     "scripts": {
         "build": "npm run clean && npm run lint && tsc",
         "precommit": "npm run lint && npm run test",
@@ -104,6 +105,7 @@
         "qs": "^6.9.4",
         "redis": "^4.6.5",
         "short-unique-id": "^3.0.4",
+        "sitka": "^1.0.6",
         "socket.io": "^2.3.0",
         "winston": "^3.8.2"
     },
