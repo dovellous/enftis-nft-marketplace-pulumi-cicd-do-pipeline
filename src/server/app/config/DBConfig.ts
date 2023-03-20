@@ -1,9 +1,29 @@
-const DB_HOST = process.env.DB_HOST || 'localhost';
-const DB_PORT = process.env.DB_PORT || 27017;
-const DB_NAME = process.env.DB_NAME || 'db_name';
+import { MongooseDBOptions } from "../../../../types/nosqldatabase";
 
-module.exports = {
-	HOST: DB_HOST,
-	PORT: DB_PORT,
-	DB: DB_NAME
+const MYSQL_HOST = process.env.DB_HOST || '127.0.0.1';
+const MYSQL_PORT = process.env.DB_PORT || 27017;
+const MYSQL_NAME = process.env.DB_NAME || 'dovellous';
+
+const MONGOOSE_HOST = process.env.DB_HOST || '127.0.0.1';
+const MONGOOSE_PORT = process.env.DB_PORT || 27017;
+const MONGOOSE_NAME = process.env.DB_NAME || 'dovellous';
+
+const MONGOOSE_OPTIONS: MongooseDBOptions = {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+}
+
+const MySQLConfig:any = {
+	HOST: MYSQL_HOST,
+	PORT: MYSQL_PORT,
+	DB: MYSQL_NAME
 };
+
+const MongooseConfig:any = {
+	HOST: MONGOOSE_HOST,
+	PORT: MONGOOSE_PORT,
+	DB: MONGOOSE_NAME,
+	OPTIONS: MONGOOSE_OPTIONS
+};
+
+export { MySQLConfig, MongooseConfig };

@@ -7,11 +7,24 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 
 exports.signup = (req, res) => {
+	
 	const user = new User({
 		username: req.body.username,
 		email: req.body.email,
 		password: bcrypt.hashSync(req.body.password, 8),
 	});
+	
+	function saveUser(res:any, userObject:any){
+		
+		userObject.save((err:any) => {
+			if (err) {
+				res.status(500).send({ message: err });
+				return;
+			}
+			res.send({ message: 'User was registered successfully!' });
+		});
+		
+	}
 
 	user.save((err, user) => {
 		if (err) {
@@ -90,15 +103,15 @@ exports.signin = (req, res) => {
 				});
 			}
 
-			const token = jwt.sign({ id: user.id }, config.secret, {
-				expiresIn: 86400, // 24 hours
-			});
-
 			const authorities = [];
 
 			for (let i = 0; i < user.roles.length; i++) {
 				authorities.push('ROLE_' + user.roles[i].name.toUpperCase());
 			}
+			
+			const token = jwt.sign({ id: user.id, roles: authorities }, config.secret, {
+				expiresIn: 86400, // 24 hours
+			});
 
 			res.status(200).send({
 				id: user._id,

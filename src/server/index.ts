@@ -1,17 +1,12 @@
-
-const express = require('express');
+import express from 'express';
+import * as dotenv from 'dotenv';
+import cors from 'cors';
+import Snippets from './app/utils/Snippets';
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const cors = require('cors');
-const mongoose = require('mongoose');
 
-require('dotenv/config');
-
-const {Snippets} = require('./app/utils/index.ts');
-
-const DBConfig = require('./app/config/DBConfig.ts');
-
-const {RoleModel} = require('./app/models/index.ts');
+//require('dotenv/config');
+dotenv.config();
 
 const app = express();
 
@@ -28,7 +23,6 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 app.use(morgan('tiny'));
 app.use('/public/uploads', express.static( __dirname + '/public/uploads'));
-app.use(Snippets.expressJWT.authJwt);
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -37,9 +31,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-require('./app/routes/AuthRoutes.ts')(app);
-require('./app/routes/UserRoutes.ts')(app);
-require('./app/routes/ResourceItemsRoutes.ts')(app);
+require('./app/routes/SetupRoutes.ts')(app);
+
+
 
 const api = process.env.API_URL;
 const categoriesRoute = require('./app/routes/ecommerce/categories');
@@ -66,74 +60,39 @@ app.use(apiUrlOrders, orderRoute);
 
 // simple route
 app.get('/', (req, res) => {
+
 	res.json({ message: 'Welcome to Node.JS application.' });
+
 });
 
-mongoose.Promise = global.Promise;
+function init(appInstance: any){
 
-mongoose
-	.connect(`mongodb://${DBConfig.HOST}:${DBConfig.PORT}/${DBConfig.DB}`, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
-	.then(() => {
-		console.log('Successfully connected to MongoDB.');
-		initial();
-	})
-	.catch(err => {
-		console.error('Connection error', err);
-		process.exit();
-	});
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8090;
-
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}.`);
-});
-
-function initial() {
-
-	RoleModel.estimatedDocumentCount((err, count) => {
-        
-		if (!err && count === 0) {
-            
-			new RoleModel({
-				name: 'user'
-			}).save((err) => {
-
-				if (err) {
-					console.log('error', err);
-				}
-
-				console.log('added \'user\' to roles collection');
-			});
-
-			new RoleModel({
-				name: 'moderator'
-			}).save((err) => {
-
-				if (err) {
-					console.log('error', err);
-				}
-
-				console.log('added \'moderator\' to roles collection');
-			});
-
-			new RoleModel({
-				name: 'admin'
-			}).save((err) => {
-
-				if (err) {
-					console.log('error', err);
-				}
-
-				console.log('added \'admin\' to roles collection');
-
-			});
-
-		}
-
-	});
+	Snippets.databaseHelper.MongooseDBConnect(
+		() => {
+			console.log('Successfully connected to MongoDB.');
+			startServer(appInstance);
+		},
+		(err: any) => {
+			console.error('Connection error', err);
+			process.exit();
+		},
+	);
 
 }
+
+function startServer(appInstance: any){
+
+	Snippets.serverHelper.startNodeJSExpressServer(
+		appInstance,
+		(server:any, port:number) => {
+			console.log(`Server started at port ${port}`);
+		},
+		(err: any) => {
+			console.error('Server cConnection error', err);
+			process.exit();
+		}
+	);
+
+}
+
+init(app);

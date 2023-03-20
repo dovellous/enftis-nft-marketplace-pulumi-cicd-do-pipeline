@@ -1,57 +1,28 @@
-const axios = require('axios');
-const qs = require('qs');
+import { signToken, verifyToken } from './JWTHelper';
 
-module.exports = {
+import { userHasRole } from './UsersHelper';
 
-	expressJWT: {
+import { store, setItem, getItem } from './StorageHelper';
 
-		authJwt : () => {
-			const secret = process.env.secret;
-			const api = process.env.API_URL;
-			return jwt({
-				secret,
-				algorithms: ['HS256'],
-				isRevoked : isRevoked
-			}).unless({
-				path: [
-					{url: /\/public\/uploads(.*)/, methods: ['GET', 'OPTIONS'] },
-					{url: /\/api\/v1\/products(.*)/, methods: ['GET', 'OPTIONS']},
-					{url: /\/api\/v1\/categories(.*)/, methods: ['GET', 'OPTIONS']},
-					`${api}/users/login`,
-					`${api}/users/register`
-				]
-			})
-		},
-		
-		isRevoked : async (req, payload, done) => {
-			if(!payload.isAdmin){
-				done(null, true)
-			} 
-		
-			done();
-		}
+import {errors, handleError} from './ErrorHelper';
 
-	},
+import { startNodeJSExpressServer } from './ServerHelper';
 
-	getAccessToken: () => {
+import { MongooseDBConnect } from './DatabaseHelper';
 
-		return '';
-        
-	},
+export default {
 
-	errorHandler: ( err, req, res, next) => {
+	JsonWebToken: { signToken, verifyToken },
 
-		if (err.name === 'UnauthorizedError') {
-			return res.status(401).json({ message: 'The user is not authorized' })
-		}
+	userHelper: { userHasRole },
 
-		if (err.name === 'ValidationError') {
-			return res.status(401).json({ message: err })
-		}
+	serverHelper: { startNodeJSExpressServer },
 
-		return res.status(500).json(err);
+	databaseHelper: { MongooseDBConnect },
+	
+	storageHelper: { store, setItem, getItem },
 
-	},
+	errorHelper: {errors, handleError},
 
 	strings: {
 
@@ -60,10 +31,8 @@ module.exports = {
 	
 	},
 	objects: {
-		convertToArray: (obj) => {
-			//console.warn(":: OBJ ::", obj);
-			const arr = Object.keys(obj).map((key) => [key, obj[key]]);
-			//console.warn(":: ARR ::", arr);
+		convertToArray: (obj:any) => {
+			const arr = Object.keys(obj).map((key:any) => [key, obj[key]]);
 			return arr;
 		}
 	},

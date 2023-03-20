@@ -1,6 +1,6 @@
 module.exports = {
-    UserModel : require("./UserModel.ts")(require("mongoose")),
-    RoleModel : require("./RoleModel.ts")(require("mongoose")),
-    ResourceItemsModel : require("./ResourceItemsModel.ts")(require("mongoose")),
+    UserModel : require("./UserModel.ts"),
+    RoleModel : require("./RoleModel.ts"),
+    ResourceItemsModel : require("./ResourceItemsModel.ts"),
     ROLES: ["user", "admin", "moderator"],
 };

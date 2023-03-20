@@ -1,25 +1,19 @@
-const Storage = require('node-storage');
+const NodeStorage = require('node-storage');
 
 // this will synchronously create storage file and any necessary directories
 // or just load an existing file
-const store = new Storage('../storage/data.json');
+const store:any = new NodeStorage('../storage/data.json');
 
-module.exports = {
+const getItem:Function = (key: string) => {
 
-	cookies: {
-
-		getItem: (key) => {
-
-			return store.get(key);
-
-		},
-
-		setItem: (key, value) => {
-
-			store.set(key, value);
-
-		}
-
-	}
+	return store.get(key);
 
 }
+
+const setItem:Function = (key:string, value: any) => {
+
+	store.set(key, value);
+
+}
+
+export {store, setItem, getItem}
