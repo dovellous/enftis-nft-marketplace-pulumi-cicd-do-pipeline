@@ -2,7 +2,7 @@
 
 import { Logger } from 'sitka';
 
-export class LoggerHelper {
+class LoggerHelper {
     /* Private Instance Fields */
 
     private _logger: Logger;
@@ -21,3 +21,5 @@ export class LoggerHelper {
     }
 
 }
+
+module.exports = LoggerHelper;

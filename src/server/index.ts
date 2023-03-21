@@ -1,7 +1,6 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-import Snippets from './app/utils/Snippets';
 
 //require('dotenv/config');
 dotenv.config();
@@ -40,14 +39,19 @@ app.get('/', (req, res) => {
 
 });
 
-function init(appInstance: any){
+const Snippets = require('./app/utils/Snippets');
+
+const init = () => {
+	
+	Snippets.log.info('Initializing ...');
 
 	Snippets.databaseHelper.MongooseDBConnect(
 		() => {
-			console.log('Successfully connected to MongoDB.');
-			startServer(appInstance);
+			Snippets.log.info('Successfully connected to MongoDB.');
+			startServer();
 		},
 		(err: any) => {
+			Snippets.log.info('Connection error');
 			console.error('Connection error', err);
 			process.exit();
 		},
@@ -55,14 +59,15 @@ function init(appInstance: any){
 
 }
 
-function startServer(appInstance: any){
+const startServer = () => {
 
 	Snippets.serverHelper.startNodeJSExpressServer(
-		appInstance,
+		app,
 		(server:any, port:number) => {
-			console.log(`Server started at port ${port}`);
+			Snippets.log.info(`Server started at port ${port}`);
 		},
 		(err: any) => {
+			Snippets.log.info('Server Connection error');
 			console.error('Server cConnection error', err);
 			process.exit();
 		}
@@ -70,4 +75,4 @@ function startServer(appInstance: any){
 
 }
 
-init(app);
+init();

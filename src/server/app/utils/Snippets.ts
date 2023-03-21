@@ -1,16 +1,12 @@
-import { signToken, verifyToken } from './JWTHelper';
+const  { signToken, verifyToken } = require('./JWTHelper');
+const  { userHasRole } = require('./UsersHelper');
+const  { store, setItem, getItem } = require('./StorageHelper');
+const  { errors, handleError} = require('./ErrorHelper');
+const  { startNodeJSExpressServer } = require('./ServerHelper');
+const  { MongooseDBConnect } = require('./DatabaseHelper');
+const  { LoggerHelper } = require('./LoggerHelper');
 
-import { userHasRole } from './UsersHelper';
-
-import { store, setItem, getItem } from './StorageHelper';
-
-import {errors, handleError} from './ErrorHelper';
-
-import { startNodeJSExpressServer } from './ServerHelper';
-
-import { MongooseDBConnect } from './DatabaseHelper';
-
-export default {
+module.exports = {
 
 	JsonWebToken: { signToken, verifyToken },
 
@@ -23,6 +19,17 @@ export default {
 	storageHelper: { store, setItem, getItem },
 
 	errorHelper: {errors, handleError},
+	
+	log: {
+		
+		info: (param:string) => {
+			
+			const _logger:any = new LoggerHelper();
+			_logger.logOutput(param);
+			
+		}
+		
+	},
 
 	strings: {
 
