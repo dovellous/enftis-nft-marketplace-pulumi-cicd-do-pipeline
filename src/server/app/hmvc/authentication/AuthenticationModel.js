@@ -1,7 +1,6 @@
-
 const mongoose = require("mongoose");
 
-const authenticationModelSchemaStructure: any = {
+const authenticationModelSchemaStructure = {
 	firstName: String,
 	lastName: String,
 	username: String,
@@ -36,7 +35,7 @@ authenticationModelSchema.pre('find', () => {
 	queryStartedAt = Date.now();
 });
 
-authenticationModelSchema.post('find', (res:any) => {
+authenticationModelSchema.post('find', (res) => {
 	console.log(res instanceof mongoose.Query); // true
 	// prints returned documents
 	console.log('find() returned ' + JSON.stringify(res));
@@ -49,4 +48,4 @@ const AuthenticationModel = mongoose.model(
 	authenticationModelSchema
 );
 
-export default AuthenticationModel;
+module.export = AuthenticationModel;

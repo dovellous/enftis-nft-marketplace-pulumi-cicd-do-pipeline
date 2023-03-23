@@ -1,6 +1,6 @@
-import express from 'express';
-import * as dotenv from 'dotenv';
-import cors from 'cors';
+const dotenv = require('dotenv');
+const express = require('express');
+const cors =require('cors');
 
 //require('dotenv/config');
 dotenv.config();
@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(morgan('tiny'));
 
 // routes
-require('./app/routes/SetupRoutes.ts')(app);
+require('./app/routes/SetupRoutes')(app);
 
 // simple route
 app.get('/', (req, res) => {
@@ -50,7 +50,7 @@ const init = () => {
 			Snippets.log.info('Successfully connected to MongoDB.');
 			startServer();
 		},
-		(err: any) => {
+		(err) => {
 			Snippets.log.info('Connection error');
 			console.error('Connection error', err);
 			process.exit();
@@ -63,10 +63,10 @@ const startServer = () => {
 
 	Snippets.serverHelper.startNodeJSExpressServer(
 		app,
-		(server:any, port:number) => {
+		(server, port) => {
 			Snippets.log.info(`Server started at port ${port}`);
 		},
-		(err: any) => {
+		(err) => {
 			Snippets.log.info('Server Connection error');
 			console.error('Server cConnection error', err);
 			process.exit();

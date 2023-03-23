@@ -1,10 +1,10 @@
-import AuthenticationModel from './AuthenticationModel';
+const AuthenticationModel = require('./AuthenticationModel');
 
-const UserRoles = require('./UserRoles');
+const userRoles = require('./UserRoles');
 
-const checkDuplicateUsernameOrEmail = (req:any, res:any, next:any) => {
+const checkDuplicateUsernameOrEmail = (req, res, next) => {
 	
-	const userIdentifier:any = {};
+	const userIdentifier = {};
 	
 	if(req.body.hasOwnProperty('username')){
 		
@@ -21,7 +21,7 @@ const checkDuplicateUsernameOrEmail = (req:any, res:any, next:any) => {
 	}
 	
 	// Check Email / Username existence
-	AuthenticationModel.findOne(userIdentifier).exec((err:any, user:any) => {
+	AuthenticationModel.findOne(userIdentifier).exec((err, user) => {
 		
 		if (err) {
 			res.status(500).send({ message: err });
@@ -39,13 +39,13 @@ const checkDuplicateUsernameOrEmail = (req:any, res:any, next:any) => {
 	
 };
 
-const checkRolesExisted = (req:any, res:any, next:any) => {
+const checkRolesExisted = (req, res, next) => {
 	
 	if (req.body.roles) {
 		
-		for (let i:number = 0; i < req.body.roles.length; i++) {
+		for (let i = 0; i < req.body.roles.length; i++) {
 			
-			if (!Object.values(UserRoles).includes(req.body.roles[i])) {
+			if (!Object.values(userRoles).includes(req.body.roles[i])) {
 				
 				res.status(400).send({
 					message: `Failed! Role ${req.body.roles[i]} does not exist!`
@@ -63,7 +63,8 @@ const checkRolesExisted = (req:any, res:any, next:any) => {
 	
 };
 
-export {
+module.exports = {
 	checkDuplicateUsernameOrEmail,
-	checkRolesExisted
+	checkRolesExisted,
+	userRoles
 };

@@ -1,11 +1,11 @@
 'use strict';
 
-import { Logger } from 'sitka';
+const { Logger } = require('sitka');
 
-class LoggerHelper {
+const _LoggerHelper = class LoggerHelper {
     /* Private Instance Fields */
 
-    private _logger: Logger;
+    _logger;
 
     /* Constructor */
 
@@ -15,11 +15,11 @@ class LoggerHelper {
 
     /* Public Instance Methods */
 
-    public logOutput(param: string): string {
+    logOutput(param){
         this._logger.debug(param);
         return param;
     }
 
 }
 
-module.exports = LoggerHelper;
+module.exports = _LoggerHelper;

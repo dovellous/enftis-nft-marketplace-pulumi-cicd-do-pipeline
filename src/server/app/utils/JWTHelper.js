@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
+const jwt = require('jsonwebtoken');
 
-const verifyToken:Function = (req:any, res:any, next:any, secret:string) => {
+const verifyToken = (req, res, next, secret) => {
 
     let token = req.headers["x-access-token"];
 
@@ -8,7 +8,7 @@ const verifyToken:Function = (req:any, res:any, next:any, secret:string) => {
         return res.status(403).send({ message: "No token provided!" });
     }
 
-    jwt.verify(token, secret, (err:any, decoded:any) => {
+    jwt.verify(token, secret, (err, decoded) => {
 
         if (err) {
           return res.status(401).send({ message: "Unauthorized!" });
@@ -22,12 +22,12 @@ const verifyToken:Function = (req:any, res:any, next:any, secret:string) => {
 
 }
 
-const signToken:Function = (payload:any, secret:string, time:number = 86400) => {
+const signToken = (payload, secret, time) => {
     
     return jwt.sign(payload, secret, {
-        expiresIn: time
+        expiresIn: time ?? 86000
     });
 
 }
 
-export {verifyToken, signToken}
+module.exports = {verifyToken, signToken}

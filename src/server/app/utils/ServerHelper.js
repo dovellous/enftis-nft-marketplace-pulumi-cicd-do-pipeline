@@ -1,17 +1,17 @@
-const startNodeJSExpressServer:Function = (app:any, callbackSuccess:any, callbackError:any) => {
+const startNodeJSExpressServer = (app, callbackSuccess, callbackError) => {
     
     // set port, listen for requests
     const PORT = process.env.PORT || 8080;
 
     try {
             
-        app.listen(PORT, (httpServer:any) => {
+        app.listen(PORT, (httpServer) => {
 
             callbackSuccess(httpServer, PORT);
 
         });
 
-    } catch (err:any) {
+    } catch (err) {
 
         callbackError(err)
         
@@ -19,4 +19,4 @@ const startNodeJSExpressServer:Function = (app:any, callbackSuccess:any, callbac
 
 };
 
-export {startNodeJSExpressServer};
+module.exports = {startNodeJSExpressServer};

@@ -1,4 +1,4 @@
-const errors: any = {
+const errors = {
 	BAD_REQUEST: 'BadRequest',
 	VALIDATION_ERROR: 'ValidationError',
 	UNAUTHORIZED_ERROR: 'UnauthorizedError',
@@ -6,7 +6,7 @@ const errors: any = {
 	INTERNAL_SERVER_ERROR: 'InternalServerError',
 }
 
-const handleError: Function = (err: any, res: any, payload: any): any => {
+const handleError = (err, res, payload) => {
 	
 	if (err.name === errors.BAD_REQUEST) {
 		return res.status(400).json({message: err, data: payload})
@@ -32,4 +32,4 @@ const handleError: Function = (err: any, res: any, payload: any): any => {
 	
 }
 
-export {errors, handleError}
+module.exports = {errors, handleError}

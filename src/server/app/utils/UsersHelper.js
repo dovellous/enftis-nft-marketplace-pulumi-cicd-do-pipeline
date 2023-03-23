@@ -1,6 +1,6 @@
-const userHasRole = (req: any, res: any, next: any, roleName: string, User: any, Role: any) => {
+const userHasRole = (req, res, next, roleName, User, Role) => {
 
-  User.findById(req.userId).exec((err: any, user: any) => {
+  User.findById(req.userId).exec((err, user) => {
 
     if (err) {
       res.status(500).send({ message: err });
@@ -11,7 +11,7 @@ const userHasRole = (req: any, res: any, next: any, roleName: string, User: any,
       {
         _id: { $in: user.roles }
       },
-      (err: any, roles: any) => {
+      (err, roles) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
@@ -36,4 +36,4 @@ const userHasRole = (req: any, res: any, next: any, roleName: string, User: any,
 
 }
 
-export { userHasRole }
+module.exports = { userHasRole }
