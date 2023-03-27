@@ -25,12 +25,12 @@ const checkDuplicateUsernameOrEmail = async (req: Request, res:Response, next:an
 		
 	}
 	
-	next();
-	
 	// Check Email / Username existence
 	const result = await UserModel.findOne(userIdentifier).exec();
 	
 	console.log(result);
+	
+	next();
 	
 	/*
 	

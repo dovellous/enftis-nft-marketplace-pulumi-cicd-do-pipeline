@@ -1,5 +1,5 @@
 import {Schema, model, connect, createConnection} from 'mongoose';
-
+import dotenv from 'dotenv';
 // 1. Create an interface representing a document in MongoDB.
 interface IUser {
 	firstName: String;
@@ -115,22 +115,16 @@ userSchema.post('find', (res: any) => {
 	console.log('find() returned ' + JSON.stringify(res));
 });
 
-const userModelConnection = createConnection("mongodb://localhost:27017/dovellous")
+console.log('Connecting to database');
 
+const cxnString = process.env.DATABASE_URL || 'mongodb://localhost:27017/dovellous';
+	
+const cxn:any = createConnection(cxnString);
+	
+console.log('Database connected!', cxnString);
+	
 // Create a Model.
 // @ts-ignore
-const UserModel = userModelConnection.model<IUser>('UserModel', userSchema);
-
-run().catch(err => console.log(err));
-
-async function run() {
-	
-	console.log('Connecting to database');
-	
-	const cxn:any = await connect('mongodb://127.0.0.1:27017/dovellous');
-	
-	console.log('Database connected!', cxn);
-	
-}
+const UserModel =  cxn.model<IUser>('UserModel', userSchema);
 
 export {IUser, UserModel};

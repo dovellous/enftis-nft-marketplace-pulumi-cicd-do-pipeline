@@ -1,0 +1,4 @@
+config:
+  infra:branch: main
+  infra:repo: dovellous/node-server-express-mongo-jwt
+  infra:service_instance_count: "1"
