@@ -94,10 +94,10 @@
     "devDependencies": {
         "@babel/cli": "^7.21.0",
         "@babel/core": "^7.21.3",
-        "@types/express": "^4.17.17",
         "@babel/preset-env": "^7.20.2",
         "@types/chai": "^4.3.4",
         "@types/dotenv": "^8.2.0",
+        "@types/express": "^4.17.17",
         "@types/mocha": "^10.0.1",
         "@types/node": "^18.15.10",
         "@typescript-eslint/eslint-plugin": "^5.56.0",
@@ -120,17 +120,17 @@
         "typescript": "^5.0.2"
     },
     "scripts": {
-        "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
-        "dev2": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
         "build": "tsc",
-        "start": "npx ts-node src/index.ts"
+        "start": "node bin/index.js",
+        "dev": "npx ts-node src/index.ts",
+        "dev2": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
     },
-      "nodemonConfig": {
+    "nodemonConfig": {
         "ext": "js",
         "ignore": [
-          "*.test.ts",
-          "db/*"
+            "*.test.ts",
+            "db/*"
         ],
         "delay": 2
-      }
+    }
 }

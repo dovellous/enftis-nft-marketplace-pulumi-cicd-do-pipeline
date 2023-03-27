@@ -13,7 +13,7 @@ const region = digitalocean.Region.SFO3;
 // Our MongoDB cluster (currently just one node).
 const cluster = new digitalocean.DatabaseCluster("cluster", {
     engine: "mongodb",
-    version: "5",
+    version: "6",
     region,
     size: digitalocean.DatabaseSlug.DB_1VPCU1GB,
     nodeCount: 1,
@@ -21,14 +21,14 @@ const cluster = new digitalocean.DatabaseCluster("cluster", {
 
 // The database we'll use for our grocery list.
 const db = new digitalocean.DatabaseDb("db", {
-    name: "infra",
+    name: "dvs-mern-services",
     clusterId: cluster.id,
 });
 
 // The App Platform spec that defines our grocery list.
 const app = new digitalocean.App("app", {
     spec: {
-        name: "infra",
+        name: "dvs-mern-services",
         region: region,
 
         // The React front end.
@@ -42,7 +42,7 @@ const app = new digitalocean.App("app", {
                 },
                 sourceDir: "/frontend",
                 buildCommand: "npm install && npm run build",
-                outputDir: "/dist",
+                outputDir: "/build",
             }
         ],
 
@@ -57,7 +57,7 @@ const app = new digitalocean.App("app", {
                 },
                 sourceDir: "/backend",
                 buildCommand: "npm install && npm run build",
-                runCommand: "npm start",
+                runCommand: "npm run start",
                 httpPort: 8000,
                 routes: [
                     {
