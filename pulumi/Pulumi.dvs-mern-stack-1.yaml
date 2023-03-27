@@ -1,0 +1,4 @@
+config:
+  dvs-mern-services:branch: main
+  dvs-mern-services:repo: dovellous/node-server-express-mongo-jwt
+  dvs-mern-services:service_instance_count: "1"

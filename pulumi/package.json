@@ -9,9 +9,9 @@
         "@pulumi/digitalocean": "^4.19.1"
     },
     "scripts": {
-        "config-instances": "pulumi config set service_instance_count 1",
-        "config-repo": "pulumi config set repo 'dovellous/node-server-express-mongo-jwt'",
-        "config-branch": "pulumi config set branch 'main'",
+        "config-1": "pulumi config set service_instance_count 1",
+        "config-2": "pulumi config set repo 'dovellous/node-server-express-mongo-jwt'",
+        "config-3": "pulumi config set branch 'main'",
         "live": "pulumi up",
         "destroy": "pulumi destroy"
     }
