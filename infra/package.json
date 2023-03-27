@@ -1,0 +1,18 @@
+{
+    "name": "infra",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.0.0",
+        "@pulumi/digitalocean": "^4.0.0"
+    },
+    "scripts": {
+        "config-instances": "pulumi config set service_instance_count 1",
+        "config-repo": "pulumi config set repo 'dovellous/dvs-mern-services'",
+        "config-branch": "pulumi config set branch 'main'",
+        "live": "pulumi up",
+        "destroy": "pulumi destroy"
+    }
+}
