@@ -1,56 +1,46 @@
 import {Request, Response} from "express";
 
-import {IUser, UserModel} from "./AuthenticationModel";
+import {handleError, errors} from "../../../../utils/HttpHelper"
+
+import {UserModel} from "./AuthenticationModel";
 
 const userRoles = require('./UserRoles');
 
 const checkDuplicateUsernameOrEmail = async (req: Request, res:Response, next:any) => {
 	
-	const userIdentifier = {
-		username: null,
-		email: null
-	};
+	let userIdentifier:any;
 	
 	if(req.body.hasOwnProperty('username')){
 		
-		userIdentifier.username = req.body.username;
+		userIdentifier = {username: {default: req.body.username.default }};
 		
-	}else if(req.body.hasOwnProperty('email')){
+		const usernameExists = await UserModel.findOne(userIdentifier).exec();
 		
-		userIdentifier.email = req.body.username;
+		if(usernameExists != null){
+			
+			return handleError(res, errors.BAD_REQUEST, 'Username already exists', userIdentifier);
+			
+		}
+		
+	}else if(req.body.hasOwnProperty('emailAddress')){
+		
+		userIdentifier = {emailAddress: req.body.emailAddress};
+		
+		const emailExists = await UserModel.findOne(userIdentifier).exec();
+		
+		if(emailExists != null){
+			
+			return handleError(res, errors.BAD_REQUEST, 'Email address already exists', userIdentifier);
+			
+		}
 		
 	}else{
 		
-		return res.sendStatus(400).end();
+		return handleError(res, errors.BAD_REQUEST, 'Missing email/username', req.body);
 		
 	}
 	
-	// Check Email / Username existence
-	const result = await UserModel.findOne(userIdentifier).exec();
-	
-	console.log(result);
-	
 	next();
-	
-	/*
-	
-	(err:any, user: IUser | any) => {
-		
-		if (err) {
-			res.status(500).send({ message: err });
-			return;
-		}
-		
-		if (user) {
-			res.status(400).send({ message: 'Failed! Email / Username is already in use!' });
-			return;
-		}
-		
-		next();
-		
-	});
-	
-	*/
 	
 };
 

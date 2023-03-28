@@ -1,5 +1,8 @@
 {
-    "name": "infra",
+    "name": "dvs-mern-deployer",
+    "license": "MIT",
+    "version": "1.0.0",
+    "description": "MongoDB + App + Cluster on Digital Ocean",
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^18"
@@ -10,8 +13,14 @@
     },
     "scripts": {
         "config-1": "pulumi config set service_instance_count 1",
-        "config-2": "pulumi config set repo 'dovellous/node-server-express-mongo-jwt'",
-        "config-3": "pulumi config set branch 'main'",
+        "config-2": "pulumi config set service_instance_size 'basic-xxs'",
+        "config-3": "pulumi config set service_db_count 1",
+        "config-4": "pulumi config set service_db_engine 'mongodb'",
+        "config-5": "pulumi config set service_db_version '6'",
+        "config-6": "pulumi config set repo 'dovellous/node-server-express-mongo-jwt'",
+        "config-7": "pulumi config set branch 'main'",
+        "config-8": "pulumi config set services_name 'dvs-mern-stack-001'",
+        "configs" : "npm run config-1 && config-2 && config-3 && config-4 && config-5 && config-6 && config-7 && config-8",
         "live": "pulumi up",
         "destroy": "pulumi destroy"
     }

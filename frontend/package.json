@@ -1,6 +1,8 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "dvs-mern-frontend",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "ReactJS + Redux + Typescript",
   "private": true,
   "dependencies": {
     "@redux-devtools/core": "^3.13.1",

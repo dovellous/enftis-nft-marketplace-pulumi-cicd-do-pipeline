@@ -6,29 +6,34 @@ const config = new pulumi.Config();
 const repo = config.require("repo");
 const branch = config.require("branch");
 const serviceInstanceCount = config.requireNumber("service_instance_count");
+const serviceInstanceSize = config.requireNumber("service_instance_size");
+const serviceDBCount = config.requireNumber("service_db_count");
+const serviceDBEngine = config.requireNumber("service_db_engine");
+const serviceDBVersion = config.requireNumber("service_db_version");
+const servicesName = config.requireNumber("services_name");
 
 // The DigitalOcean region to deploy into.
 const region = digitalocean.Region.SFO3;
 
 // Our MongoDB cluster (currently just one node).
 const cluster = new digitalocean.DatabaseCluster("cluster", {
-    engine: "mongodb",
-    version: "6",
+    engine: serviceDBEngine,
+    version: serviceDBVersion,
     region,
     size: digitalocean.DatabaseSlug.DB_1VPCU1GB,
-    nodeCount: 1,
+    nodeCount: serviceDBCount,
 });
 
-// The database we'll use for our grocery list.
+// The database we'll use for the app.
 const db = new digitalocean.DatabaseDb("db", {
-    name: "dvs-mern-services",
+    name: servicesName,
     clusterId: cluster.id,
 });
 
 // The App Platform spec that defines our grocery list.
 const app = new digitalocean.App("app", {
     spec: {
-        name: "dvs-mern-services",
+        name: servicesName,
         region: region,
 
         // The React front end.
@@ -65,7 +70,7 @@ const app = new digitalocean.App("app", {
                         preservePathPrefix: true,
                     },
                 ],
-                instanceSizeSlug: "basic-xxs",
+                instanceSizeSlug: serviceInstanceSize,
                 instanceCount: serviceInstanceCount,
 
                 // To connect to MongoDB, the service needs a DATABASE_URL, which

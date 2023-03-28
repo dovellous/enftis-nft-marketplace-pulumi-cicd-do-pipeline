@@ -1,24 +1,23 @@
+
+import {handleResponse, errors} from "../../../../utils/HttpHelper";
+
 import {UserModel} from "./AuthenticationModel";
 
 const signIn = () => {
 
 };
 
-const signUp = async () => {
+const signUp = async (req:any, res:any, next: any) => {
 	
-	const user = new UserModel({
-		username: {
-			default: 'drmaposa'
-		},
-		emailAddress: 'bill@initech.com',
-		password: '@l3Tm3!N#2023'
-	});
+	const user = new UserModel(req.body);
 	
-	console.log('Saving user ...');
+	const userData = await user.save();
 	
-	await user.save();
+	//console.log('User saved!', userData);
 	
-	console.log('User saved!');
+	delete userData.password;
+	
+	return handleResponse(res, req, next, userData);
 	
 };
 

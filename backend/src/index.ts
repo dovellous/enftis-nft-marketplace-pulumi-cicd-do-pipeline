@@ -8,13 +8,13 @@ import AuthenticationRouter from "./apps/enftis/modules/authentication/Authentic
 
 const port = process.env.BACKEND_SERVICE_PORT || 8000;
 
-const prefix = process.env.BACKEND_ROUTE_PREFIX || "/enftis/api/v1/";
+const prefix = process.env.BACKEND_ROUTE_PREFIX || "/api";
 
 const app = express();
 
 app.use(express.json());
 
-app.use(`/auth`, AuthenticationRouter);
+app.use(prefix, AuthenticationRouter);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

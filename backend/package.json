@@ -1,5 +1,6 @@
 {
-    "name": "node-server-express-mongo-jwt",
+    "name": "dvs-mern-backend",
+    "license": "MIT",
     "version": "1.0.0",
     "description": "Node.js + MongoDB + ExpressJS + JWT",
     "main": "src/index.ts",

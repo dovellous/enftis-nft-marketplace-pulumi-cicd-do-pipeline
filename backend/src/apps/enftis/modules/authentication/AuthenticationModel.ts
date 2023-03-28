@@ -1,6 +1,7 @@
-import {Schema, model, connect, createConnection} from 'mongoose';
-import dotenv from 'dotenv';
-// 1. Create an interface representing a document in MongoDB.
+import {Schema} from 'mongoose';
+
+const mongoose = require("mongoose");
+
 interface IUser {
 	firstName: String;
 	lastName?: String;
@@ -14,8 +15,7 @@ interface IUser {
 	age?: Number;
 }
 
-// 2. Create a Schema corresponding to the document interface.
-const userSchema = new Schema<IUser>({
+const userSchema = new mongoose.Schema<IUser>({
 	firstName: {
 		type: String,
 		required: false,
@@ -92,6 +92,10 @@ const userSchema = new Schema<IUser>({
 		max: 65,
 		required: false
 	},
+}, {
+	capped: { size: 1024 },
+	bufferCommands: false,
+	autoCreate: false // disable `autoCreate` since `bufferCommands` is false
 });
 
 userSchema.pre('validate', () => {
@@ -111,20 +115,49 @@ userSchema.post('save', () => {
 });
 
 userSchema.post('find', (res: any) => {
-	// prints returned documents
 	console.log('find() returned ' + JSON.stringify(res));
 });
 
-console.log('Connecting to database');
+const cxnString = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/dovellous';
 
-const cxnString = process.env.DATABASE_URL || 'mongodb://localhost:27017/dovellous';
+function connectDatabase() {
 	
-const cxn:any = createConnection(cxnString);
+	const cxnDBInstance = mongoose.connection;
 	
-console.log('Database connected!', cxnString);
+	cxnDBInstance.on("error", (error: any)=>{
+		console.log("Connection Error!", error);
+	});
 	
-// Create a Model.
-// @ts-ignore
-const UserModel =  cxn.model<IUser>('UserModel', userSchema);
+	cxnDBInstance.once("open", () => {
+		console.log("Connected successfully!");
+	});
+	
+	const cxnOptions = {
+		autoIndex: false, // Don't build indexes
+		maxPoolSize: 10, // Maintain up to 10 socket connections
+		serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+		socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+		family: 4, // Use IPv4, skip trying IPv6,
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	};
+	
+	mongoose.connect(cxnString, cxnOptions).catch((err: any)=>{
+		
+		console.log('Connection Error: ', err);
+		
+		connectDatabase();
+		
+	});
+	
+}
+
+connectDatabase();
+
+const UserModel =  mongoose.model<IUser>('UserModel', userSchema);
+
+// Explicitly create the collection before using it
+// so the collection is capped.
+UserModel.createCollection();
 
 export {IUser, UserModel};
