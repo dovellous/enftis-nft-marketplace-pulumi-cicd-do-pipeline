@@ -90,4 +90,4 @@ const LoggerHelper = class LoggerClass {
 
 const Logger = new LoggerHelper();
 
-export {Logger, _logger, ErrorLogger};
+export {Logger, _logger};
