@@ -9,20 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const HttpHelper_1 = require("../../../../utils/HttpHelper");
 const AuthenticationModel_1 = require("./AuthenticationModel");
 const signIn = () => {
 };
-const signUp = () => __awaiter(void 0, void 0, void 0, function* () {
-    const user = new AuthenticationModel_1.UserModel({
-        username: {
-            default: 'drmaposa'
-        },
-        emailAddress: 'bill@initech.com',
-        password: '@l3Tm3!N#2023'
-    });
-    console.log('Saving user ...');
-    yield user.save();
-    console.log('User saved!');
+const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = new AuthenticationModel_1.UserModel(req.body);
+    const userData = yield user.save();
+    //console.log('User saved!', userData);
+    return (0, HttpHelper_1.handleResponse)(res, req, next, userData);
 });
 const resetPassword = () => {
 };

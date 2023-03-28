@@ -9,45 +9,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const HttpHelper_1 = require("../../../../utils/HttpHelper");
 const AuthenticationModel_1 = require("./AuthenticationModel");
 const userRoles = require('./UserRoles');
 const checkDuplicateUsernameOrEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const userIdentifier = {
-        username: null,
-        email: null
-    };
+    let userIdentifier;
     if (req.body.hasOwnProperty('username')) {
-        userIdentifier.username = req.body.username;
+        userIdentifier = { username: { default: req.body.username.default } };
+        const usernameExists = yield AuthenticationModel_1.UserModel.findOne(userIdentifier).exec();
+        if (usernameExists != null) {
+            return (0, HttpHelper_1.handleError)(res, HttpHelper_1.errors.BAD_REQUEST, 'Username already exists', userIdentifier);
+        }
     }
-    else if (req.body.hasOwnProperty('email')) {
-        userIdentifier.email = req.body.username;
+    else if (req.body.hasOwnProperty('emailAddress')) {
+        userIdentifier = { emailAddress: req.body.emailAddress };
+        const emailExists = yield AuthenticationModel_1.UserModel.findOne(userIdentifier).exec();
+        if (emailExists != null) {
+            return (0, HttpHelper_1.handleError)(res, HttpHelper_1.errors.BAD_REQUEST, 'Email address already exists', userIdentifier);
+        }
     }
     else {
-        return res.sendStatus(400).end();
+        return (0, HttpHelper_1.handleError)(res, HttpHelper_1.errors.BAD_REQUEST, 'Missing email/username', req.body);
     }
-    // Check Email / Username existence
-    const result = yield AuthenticationModel_1.UserModel.findOne(userIdentifier).exec();
-    console.log(result);
     next();
-    /*
-    
-    (err:any, user: IUser | any) => {
-        
-        if (err) {
-            res.status(500).send({ message: err });
-            return;
-        }
-        
-        if (user) {
-            res.status(400).send({ message: 'Failed! Email / Username is already in use!' });
-            return;
-        }
-        
-        next();
-        
-    });
-    
-    */
 });
 const checkRolesExisted = (req, res, next) => {
     if (req.body.roles) {

@@ -7,8 +7,6 @@ const mongoose = require("mongoose");
 const DatabaseManager = class DatabaseManagerClass {
     /* Private Instance Fields */
 
-    logger;
-
     cxnString:string;
 
     cxnOptions:any;
@@ -21,7 +19,7 @@ const DatabaseManager = class DatabaseManagerClass {
 
         this.cxnString = process.env.DATABASE_URL || "mongodb://127.0.0.1/dovellous";
 
-        Logger.log('Initialising Mongoose ...', this.cxnString);
+        Logger.log('Initialising Mongoose ...' + this.cxnString);
 
         this.cxnOptions = {
             autoIndex: false, // Don't build indexes
@@ -63,7 +61,7 @@ const DatabaseManager = class DatabaseManagerClass {
     
     onConnectionOpen(){
 
-        Logger.success('Connection opened!', this.cxnString);
+        Logger.success('Connection opened!');
         
     }
     

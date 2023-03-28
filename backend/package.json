@@ -38,6 +38,7 @@
     ],
     "author": "@dovellous",
     "dependencies": {
+        "@types/mongoose": "^5.11.97",
         "ajv": "^8.12.0",
         "axios": "^1.3.4",
         "bcryptjs": "^2.4.3",

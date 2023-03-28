@@ -6,7 +6,7 @@ const errors = {
 	INTERNAL_SERVER_ERROR: 'InternalServerError',
 }
 
-const handleError = ( res, status, message, payload ) => {
+const handleError = ( res: any, status: any, message: any, payload: any ) => {
 	
 	if (status === errors.BAD_REQUEST) {
 		return res.status(400).json({status: errors.BAD_REQUEST, message: message, data: payload})

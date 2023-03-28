@@ -16,14 +16,15 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const { resetPassword, signIn, signUp, verifyEmailAddress } = require("./AuthenticationController");
 const { checkDuplicateUsernameOrEmail, checkRolesExisted } = require("./AuthenticationMiddleware");
-router.get('/', (res) => __awaiter(void 0, void 0, void 0, function* () {
+const routerPrefix = '/auth';
+router.get(`${routerPrefix}/`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send(`Authentication API`).end();
 }));
-router.post('/sign-up', [
+router.post(`${routerPrefix}/sign-up`, [
     checkDuplicateUsernameOrEmail,
     checkRolesExisted
 ], signUp);
-router.get('*', (res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('*', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.sendStatus(404);
 }));
 exports.default = router;

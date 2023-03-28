@@ -15,8 +15,6 @@ const signUp = async (req:any, res:any, next: any) => {
 	
 	//console.log('User saved!', userData);
 	
-	delete userData.password;
-	
 	return handleResponse(res, req, next, userData);
 	
 };

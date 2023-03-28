@@ -1,21 +1,22 @@
-import {Schema} from 'mongoose';
+import {Schema, Types, model} from 'mongoose';
 
 const mongoose = require("mongoose");
 
 interface IUser {
 	firstName: String;
 	lastName?: String;
-	username: Schema.Types.Mixed;
+	username: String;
 	emailAddress: String;
 	password: String;
-	phoneNumber?: Schema.Types.Mixed;
+	phoneNumber?: String;
 	photoURL?: String;
-	roles?: Schema.Types.Mixed;
-	updated?: Schema.Types.Mixed;
+	roles?: Types.Array<any>
+	updated?: String;
 	age?: Number;
+	organization: Types.ObjectId;
 }
 
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new Schema<IUser>({
 	firstName: {
 		type: String,
 		required: false,
@@ -42,12 +43,14 @@ const userSchema = new mongoose.Schema<IUser>({
 		type: String,
 		lowercase: true,
 		trim: true,
-		required: false,
+		unique: true,
+		required: true,
 	},
 	password: {
 		type: String,
 		trim: true,
-		required: false,
+		minlength: 8,
+		required: true,
 	},
 	phoneNumber: {
 		mobile: {
@@ -75,7 +78,7 @@ const userSchema = new mongoose.Schema<IUser>({
 			required: false,
 		},
 		permissions: {
-			type: [Schema.Types.Mixed],
+			type: Array,
 			lowercase: true,
 			trim: true,
 			required: false,
@@ -93,6 +96,7 @@ const userSchema = new mongoose.Schema<IUser>({
 		required: false
 	},
 }, {
+	timestamps: true,
 	capped: { size: 1024 },
 	bufferCommands: false,
 	autoCreate: false // disable `autoCreate` since `bufferCommands` is false
@@ -118,7 +122,7 @@ userSchema.post('find', (res: any) => {
 	console.log('find() returned ' + JSON.stringify(res));
 });
 
-const UserModel =  mongoose.model<IUser>('UserModel', userSchema);
+const UserModel =  model<IUser>('UserModel', userSchema);
 
 // Explicitly create the collection before using it
 // so the collection is capped.

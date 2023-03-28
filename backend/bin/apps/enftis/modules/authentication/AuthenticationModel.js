@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModel = void 0;
 const mongoose_1 = require("mongoose");
-// 2. Create a Schema corresponding to the document interface.
+const mongoose = require("mongoose");
 const userSchema = new mongoose_1.Schema({
     firstName: {
         type: String,
@@ -30,12 +30,14 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         lowercase: true,
         trim: true,
-        required: false,
+        unique: true,
+        required: true,
     },
     password: {
         type: String,
         trim: true,
-        required: false,
+        minlength: 8,
+        required: true,
     },
     phoneNumber: {
         mobile: {
@@ -63,7 +65,7 @@ const userSchema = new mongoose_1.Schema({
             required: false,
         },
         permissions: {
-            type: [mongoose_1.Schema.Types.Mixed],
+            type: Array,
             lowercase: true,
             trim: true,
             required: false,
@@ -80,6 +82,11 @@ const userSchema = new mongoose_1.Schema({
         max: 65,
         required: false
     },
+}, {
+    timestamps: true,
+    capped: { size: 1024 },
+    bufferCommands: false,
+    autoCreate: false // disable `autoCreate` since `bufferCommands` is false
 });
 userSchema.pre('validate', () => {
     console.log('this gets printed first.');
@@ -94,14 +101,10 @@ userSchema.post('save', () => {
     console.log('this gets printed fourth.');
 });
 userSchema.post('find', (res) => {
-    // prints returned documents
     console.log('find() returned ' + JSON.stringify(res));
 });
-console.log('Connecting to database');
-const cxnString = process.env.DATABASE_URL || 'mongodb://localhost:27017/dovellous';
-const cxn = (0, mongoose_1.createConnection)(cxnString);
-console.log('Database connected!', cxnString);
-// Create a Model.
-// @ts-ignore
-const UserModel = cxn.model('UserModel', userSchema);
+const UserModel = (0, mongoose_1.model)('UserModel', userSchema);
 exports.UserModel = UserModel;
+// Explicitly create the collection before using it
+// so the collection is capped.
+UserModel.createCollection();
