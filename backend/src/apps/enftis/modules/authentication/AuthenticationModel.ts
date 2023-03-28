@@ -118,42 +118,6 @@ userSchema.post('find', (res: any) => {
 	console.log('find() returned ' + JSON.stringify(res));
 });
 
-const cxnString = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/dovellous';
-
-function connectDatabase() {
-	
-	const cxnDBInstance = mongoose.connection;
-	
-	cxnDBInstance.on("error", (error: any)=>{
-		console.log("Connection Error!", error);
-	});
-	
-	cxnDBInstance.once("open", () => {
-		console.log("Connected successfully!");
-	});
-	
-	const cxnOptions = {
-		autoIndex: false, // Don't build indexes
-		maxPoolSize: 10, // Maintain up to 10 socket connections
-		serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-		socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-		family: 4, // Use IPv4, skip trying IPv6,
-		useNewUrlParser: true,
-		useUnifiedTopology: true
-	};
-	
-	mongoose.connect(cxnString, cxnOptions).catch((err: any)=>{
-		
-		console.log('Connection Error: ', err);
-		
-		connectDatabase();
-		
-	});
-	
-}
-
-connectDatabase();
-
 const UserModel =  mongoose.model<IUser>('UserModel', userSchema);
 
 // Explicitly create the collection before using it

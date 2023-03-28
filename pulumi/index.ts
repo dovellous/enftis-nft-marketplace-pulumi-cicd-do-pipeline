@@ -6,11 +6,11 @@ const config = new pulumi.Config();
 const repo = config.require("repo");
 const branch = config.require("branch");
 const serviceInstanceCount = config.requireNumber("service_instance_count");
-const serviceInstanceSize = config.requireNumber("service_instance_size");
+const serviceInstanceSize = config.require("service_instance_size");
 const serviceDBCount = config.requireNumber("service_db_count");
-const serviceDBEngine = config.requireNumber("service_db_engine");
-const serviceDBVersion = config.requireNumber("service_db_version");
-const servicesName = config.requireNumber("services_name");
+const serviceDBEngine = config.require("service_db_engine");
+const serviceDBVersion = config.require("service_db_version");
+const servicesName = config.require("services_name");
 
 // The DigitalOcean region to deploy into.
 const region = digitalocean.Region.SFO3;

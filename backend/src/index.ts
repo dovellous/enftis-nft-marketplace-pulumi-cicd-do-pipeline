@@ -1,14 +1,21 @@
 import express from "express";
-const dotenv = require('dotenv');
+require('dotenv').config();
 const cors =require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+
 import AuthenticationRouter from "./apps/enftis/modules/authentication/AuthenticationRouter";
 
-const port = process.env.BACKEND_SERVICE_PORT || 8000;
+import DatabaseManager from "../src/utils/DatabaseManager";
 
-const prefix = process.env.BACKEND_ROUTE_PREFIX || "/api";
+const port = process.env.BACKEND_SERVICE_PORT ?? 8002;
+
+const prefix = process.env.BACKEND_ROUTE_PREFIX ?? "/api";
+
+const MongoDBConnection = new DatabaseManager();
+
+MongoDBConnection.connect();
 
 const app = express();
 

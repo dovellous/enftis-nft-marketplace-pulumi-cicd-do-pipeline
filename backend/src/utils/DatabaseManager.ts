@@ -1,8 +1,10 @@
 'use strict';
 
+import {Logger} from "./LoggerHelper";
+
 const mongoose = require("mongoose");
 
-const DatabaseManager = class LoggerHelper {
+const DatabaseManager = class DatabaseManagerClass {
     /* Private Instance Fields */
 
     logger;
@@ -16,11 +18,11 @@ const DatabaseManager = class LoggerHelper {
     /* Constructor */
 
     constructor() {
-        
-        this.logger = new LoggerHelper();
-        
-        this.cxnString = '';
-        
+
+        this.cxnString = process.env.DATABASE_URL || "mongodb://127.0.0.1/dovellous";
+
+        Logger.log('Initialising Mongoose ...', this.cxnString);
+
         this.cxnOptions = {
             autoIndex: false, // Don't build indexes
             maxPoolSize: 10, // Maintain up to 10 socket connections
@@ -36,7 +38,7 @@ const DatabaseManager = class LoggerHelper {
         this.cxnDBInstance.on("error", this.onConnectionError);
     
         this.cxnDBInstance.once("open", this.onConnectionOpen);
-        
+
         this.connect();
         
     }
@@ -47,36 +49,30 @@ const DatabaseManager = class LoggerHelper {
         
         mongoose.connect(this.cxnString, this.cxnOptions).catch((err: any)=>{
 
-            console.log('Connection Error: ', err);
-
-            this.reconnect();
+            //
 
         });
         
     }
     
     reconnect(){
-    
+
+        Logger.warn('Connection reconnect logic not implemented manually!')
+
     }
     
     onConnectionOpen(){
-    
-        this.logger.logOutput('Connection opened')
+
+        Logger.success('Connection opened!', this.cxnString);
         
     }
     
     onConnectionError(){
-    
-    }
-    
-    reconnect(){
-    
-    }
-    
-    reconnect(){
+
+        Logger.error('Connection error!')
     
     }
     
 }
 
-module.exports = DatabaseManager;
+export default DatabaseManager;

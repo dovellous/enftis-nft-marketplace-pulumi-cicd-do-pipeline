@@ -5,14 +5,16 @@ const {resetPassword, signIn, signUp, verifyEmailAddress} = require("./Authentic
 
 const {checkDuplicateUsernameOrEmail, checkRolesExisted}  = require("./AuthenticationMiddleware");
 
-router.get('/', async (req:Request, res:Response) => {
+const routerPrefix = '/auth'
+
+router.get(`${routerPrefix}/`, async (req:Request, res:Response) => {
     
     res.send(`Authentication API`).end();
 
 });
 
 router.post(
-    '/sign-up',
+    `${routerPrefix}/sign-up`,
     [
         checkDuplicateUsernameOrEmail,
         checkRolesExisted
