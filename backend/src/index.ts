@@ -10,6 +10,7 @@ global['country'] = 'This is a global variable';
 import AuthenticationRouter from "./apps/enftis/modules/authentication/AuthenticationRouter";
 
 import DatabaseManager from "../src/utils/DatabaseManager";
+import Cryptography from "../src/utils/Cryptography";
 
 const port = process.env.BACKEND_SERVICE_PORT ?? 8000;
 
@@ -18,6 +19,8 @@ const prefix = process.env.BACKEND_ROUTE_PREFIX ?? "/api";
 const MongoDBConnection = new DatabaseManager();
 
 MongoDBConnection.connect();
+
+Cryptography;
 
 const app = express();
 
