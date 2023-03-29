@@ -42,7 +42,7 @@ const signUp = async (req:any, res:any, next: any) => {
 			
 		} else {
 			
-			handleError(res, errors.BAD_REQUEST, "Missing or invalid registration parameters", {});
+			handleError(res, errors.BAD_REQUEST, "Missing . or invalid registration parameters", {});
 			
 		}
 		
