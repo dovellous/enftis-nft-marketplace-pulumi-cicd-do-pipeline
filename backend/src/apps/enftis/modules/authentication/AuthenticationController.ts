@@ -1,4 +1,4 @@
-import {handleResponse, handleError, errors, handleError} from "../../../../utils/HttpHelper";
+import {handleResponse, handleError, errors} from "../../../../utils/HttpHelper";
 import {verifyBearerToken, signBearerToken, parseBearerToken} from "../../../../utils/JWTHelper";
 
 import {UserModel} from "./AuthenticationModel";
@@ -30,15 +30,10 @@ const signUp = async (req:any, res:any, next: any) => {
 			const user = await UserModel.create(userData);
 			
 			// Create token
-			const token = signBearerToken(user, '4hr');
-			
-			// save user token
-			user.token = token;
-			
-			console.log(user);
-			
+			const accessToken:string = signBearerToken(user, 4 * 60 * 60);
+
 			// user
-			handleResponse(req, res, next, user);
+			handleResponse(req, res, next, {user, accessToken});
 			
 		} else {
 			
@@ -66,15 +61,12 @@ const signIn = async(req:any, res:any, next: any) => {
 		// Validate if user exist in our database
 		const user = await UserModel.findOne(userLogin);
 		
-		if (user && (await UserModel.compare(password, user.password))) {
+		if (user && (await bcrypt.compare(password, user.password))) {
 			// Create token
-			const token = signBearerToken(user, '4h');
-			
-			// save user token
-			user.token = token;
-			
+			const accessToken = signBearerToken(user, 4 * 60 * 60);
+
 			// user
-			handleResponse(req, res, next, user);
+			handleResponse(req, res, next, {user, accessToken});
 			
 		} else {
 			

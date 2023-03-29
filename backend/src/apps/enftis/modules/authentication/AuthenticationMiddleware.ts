@@ -1,12 +1,9 @@
 import {Request, Response} from "express";
 import jwt from "jsonwebtoken";
-
 import {handleError, errors} from "../../../../utils/HttpHelper"
-
-import {parseBearerToken, signToken, verifyToken} from "../../../../utils/JWTHelper"
-
+import {verifyBearerToken, signBearerToken, parseBearerToken} from "../../../../utils/JWTHelper";
 import {UserModel} from "./AuthenticationModel";
-
+require('dotenv').config();
 const userRoles = require('./UserRoles');
 
 const checkDuplicateEmailAddress = async (req: Request, res:Response, next:any) => {
@@ -61,31 +58,6 @@ const checkDuplicateUsername = async (req: Request, res:Response, next:any) => {
 	
 };
 
-const checkRolesExisted = (req: Request, res:Response, next:any) => {
-	
-	if (req.body.roles) {
-		
-		for (let i = 0; i < req.body.roles.length; i++) {
-			
-			if (!Object.values(userRoles).includes(req.body.roles[i])) {
-				
-				res.status(400).send({
-					message: `Failed!  Role ${req.body.roles[i]} does not exist!`
-				});
-				
-				return;
-				
-			}
-			
-		}
-		
-	}
-	
-	next();
-	
-};
-
-
 const checkToken = (req:any, res:any, next: any) => {
 	
 	const authorizationHeader = req.headers["authorization"];
@@ -98,7 +70,7 @@ const checkToken = (req:any, res:any, next: any) => {
 	
 	const token = parseBearerToken(authorizationHeader);
 	
-	const { JWT_SECRET } = process.env;
+	const JWT_SECRET:string = process.env.JWT_SECRET || 'secret123';
 	
 	try {
 		
@@ -149,7 +121,6 @@ const checkParameters = (req:any, res:any, next: any) => {
 module.exports = {
 	checkDuplicateUsername,
 	checkDuplicateEmailAddress,
-	checkRolesExisted,
 	checkToken,
 	checkParameters,
 	userRoles

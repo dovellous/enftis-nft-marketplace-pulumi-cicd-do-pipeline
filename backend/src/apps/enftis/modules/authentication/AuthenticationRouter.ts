@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {resetPassword, signIn, signUp, profileMe, verifyEmailAddress} = require("./AuthenticationController");
 
-const {checkDuplicateUsername, checkDuplicateEmailAddress, checkParameters, checkRolesExisted, checkToken}  = require("./AuthenticationMiddleware");
+const {checkDuplicateUsername, checkDuplicateEmailAddress, checkParameters, checkToken}  = require("./AuthenticationMiddleware");
 
 const routerPrefix = '/auth'
 
@@ -17,8 +17,7 @@ router.post(
     `${routerPrefix}/sign-up`,
     [
         checkDuplicateUsername,
-        checkDuplicateEmailAddress,
-        checkRolesExisted
+        checkDuplicateEmailAddress
     ],
     signUp
 );
