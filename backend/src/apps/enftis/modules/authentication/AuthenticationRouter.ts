@@ -1,9 +1,9 @@
 import express, {  Request, Response } from "express";
 const router = express.Router();
 
-const {resetPassword, signIn, signUp, verifyEmailAddress} = require("./AuthenticationController");
+const {resetPassword, signIn, signUp, profileMe, verifyEmailAddress} = require("./AuthenticationController");
 
-const {checkDuplicateUsernameOrEmail, checkRolesExisted}  = require("./AuthenticationMiddleware");
+const {checkDuplicateUsername, checkDuplicateEmailAddress, checkParameters, checkRolesExisted, checkToken}  = require("./AuthenticationMiddleware");
 
 const routerPrefix = '/auth'
 
@@ -16,10 +16,27 @@ router.get(`${routerPrefix}/`, async (req:Request, res:Response) => {
 router.post(
     `${routerPrefix}/sign-up`,
     [
-        checkDuplicateUsernameOrEmail,
+        checkDuplicateUsername,
+        checkDuplicateEmailAddress,
         checkRolesExisted
     ],
     signUp
+);
+
+router.post(
+    `${routerPrefix}/sign-in`,
+    [
+        checkParameters
+    ],
+    signIn
+);
+
+router.get(
+    `${routerPrefix}/profile/me`,
+    [
+        checkToken
+    ],
+    profileMe
 );
 
 router.get('*', async (req:Request, res:Response)=>{

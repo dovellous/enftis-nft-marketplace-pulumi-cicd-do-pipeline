@@ -95,6 +95,10 @@ const userSchema = new Schema<IUser>({
 		max: 65,
 		required: false
 	},
+	organization: {
+		type: Schema.Types.ObjectId,
+		ref: 'Organization'
+	}
 }, {
 	timestamps: true,
 	capped: { size: 1024 },
