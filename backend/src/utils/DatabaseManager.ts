@@ -1,9 +1,6 @@
 'use strict';
-
 import {Logger} from "./LoggerHelper";
-
 const mongoose = require("mongoose");
-
 const DatabaseManager = class DatabaseManagerClass {
     /* Private Instance Fields */
 
@@ -44,13 +41,9 @@ const DatabaseManager = class DatabaseManagerClass {
     /* Public Instance Methods */
 
     connect(){
-        
-        mongoose.connect(this.cxnString, this.cxnOptions).catch((err: any)=>{
 
-            //
+        mongoose.connect(this.cxnString, this.cxnOptions).catch((err: any)=>{});
 
-        });
-        
     }
     
     reconnect(){

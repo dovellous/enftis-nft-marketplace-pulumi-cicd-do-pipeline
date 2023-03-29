@@ -1,37 +1,10 @@
-import {Schema, Types, model} from 'mongoose';
-import {autoIncrement} from 'mongoose-plugin-autoinc';
-
-const modelName: string = 'User';
-
-interface IUser {
-    firstName: String;
-    lastName: String;
-    username: String;
-    emailAddress: String;
-    password?: String;
-    phoneNumber?: String;
-    photoURL?: String;
-    age?: Number;
-    accessLevels?: Schema.Types.Mixed;
-    organization?: Types.ObjectId;
-    firebaseUserData?: Schema.Types.Mixed;
-}
-
-interface IFirebaseUser {
-    uid: String;
-    email: String;
-    displayName: String;
-    photoURL?: String;
-    phoneNumber?: String;
-}
-
-interface IAccessLevels {
-    defaultRole: String;
-    roles: Types.Array<any>;
-    permissions: Types.Array<any>;
-}
-
-const userSchema = new Schema<IUser>({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserModel = void 0;
+const mongoose_1 = require("mongoose");
+const mongoose_plugin_autoinc_1 = require("mongoose-plugin-autoinc");
+const modelName = 'User';
+const userSchema = new mongoose_1.Schema({
     firstName: {
         type: String,
         required: false,
@@ -81,7 +54,7 @@ const userSchema = new Schema<IUser>({
         trim: true,
         required: false,
     },
-    accessLevels: new Schema<IAccessLevels>({
+    accessLevels: new mongoose_1.Schema({
         defaultRole: {
             type: String,
             enum: ['root', 'super-admin', 'tenant-admin', 'editor', 'moderator', 'observer', 'subscriber', 'guest'],
@@ -91,25 +64,24 @@ const userSchema = new Schema<IUser>({
             required: true,
         },
         roles: {
-            type: Schema.Types.Mixed,
+            type: mongoose_1.Schema.Types.Mixed,
             default: 'subscriber',
             lowercase: true,
             trim: true,
             required: false,
         },
         permissions: {
-            type: Schema.Types.Mixed,
+            type: mongoose_1.Schema.Types.Mixed,
             lowercase: true,
             trim: true,
             required: false,
         }
     }),
     organization: {
-        type: Schema.Types.ObjectId,
+        type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Organization'
     },
-    firebaseUserData: new Schema<IFirebaseUser>({
-
+    firebaseUserData: new mongoose_1.Schema({
         uid: {
             type: String,
             required: true,
@@ -139,33 +111,20 @@ const userSchema = new Schema<IUser>({
 }, {
     timestamps: true
 });
-
-userSchema.plugin(autoIncrement, {model: modelName, field: 'userId'});
-
+userSchema.plugin(mongoose_plugin_autoinc_1.autoIncrement, { model: modelName, field: 'userId' });
 userSchema.pre('validate', () => {
-
 });
-
 userSchema.post('validate', () => {
-
 });
-
 userSchema.pre('save', () => {
-
 });
-
 userSchema.post('save', () => {
-
 });
-
-userSchema.post('find', (res: any) => {
+userSchema.post('find', (res) => {
     console.log('find() returned ' + JSON.stringify(res));
 });
-
-const UserModel = model<IUser>(modelName, userSchema);
-
+const UserModel = (0, mongoose_1.model)(modelName, userSchema);
+exports.UserModel = UserModel;
 // Explicitly create the collection before using it
 // so the collection is capped.
 UserModel.createCollection();
-
-export {IUser, IFirebaseUser, IAccessLevels, UserModel};

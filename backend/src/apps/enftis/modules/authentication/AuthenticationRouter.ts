@@ -1,14 +1,20 @@
-import express, {  Request, Response } from "express";
+import express, {Request, Response} from "express";
+
 const router = express.Router();
 
-const {resetPassword, signIn, signUp, profileMe, verifyEmailAddress} = require("./AuthenticationController");
+const {resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress} = require("./AuthenticationController");
 
-const {checkDuplicateUsername, checkDuplicateEmailAddress, checkParameters, checkToken}  = require("./AuthenticationMiddleware");
+const {
+    checkDuplicateUsername,
+    checkDuplicateEmailAddress,
+    checkParameters,
+    checkToken
+} = require("./AuthenticationMiddleware");
 
 const routerPrefix = '/auth'
 
-router.get(`${routerPrefix}/`, async (req:Request, res:Response) => {
-    
+router.get(`${routerPrefix}/`, async (req: Request, res: Response) => {
+
     res.send(`Authentication API`).end();
 
 });
@@ -38,10 +44,18 @@ router.get(
     profileMe
 );
 
-router.get('*', async (req:Request, res:Response)=>{
-    
+router.post(
+    `${routerPrefix}/profile/me`,
+    [
+        checkToken
+    ],
+    profileSave
+);
+
+router.get('*', async (req: Request, res: Response) => {
+
     res.sendStatus(404);
-    
+
 })
 
 export default router;

@@ -32,9 +32,9 @@ const handleError = ( res: any, status: any, message: any, payload: any ) => {
 	
 }
 
-const handleResponse = (res: any, req: any, next: any, payload: any) => {
-	
-	return res.send(payload);
+const handleResponse = (req: any, res: any, next: any, payload: any, code: number = 200) => {
+
+	return res.status(code).json(payload).end();
 	
 }
 

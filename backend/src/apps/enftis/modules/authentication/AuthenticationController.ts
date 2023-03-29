@@ -19,7 +19,7 @@ const signUp = async (req:any, res:any, next: any) => {
 			const encryptedPassword = await bcrypt.hash(password, 10);
 			
 			const userData = {
-				username: {default: username},
+				username: username,
 				firstName: first_name,
 				lastName: last_name,
 				emailAddress: email.toLowerCase(), // sanitize: convert email to lowercase
@@ -28,12 +28,12 @@ const signUp = async (req:any, res:any, next: any) => {
 			
 			// Create user in our database
 			const user = await UserModel.create(userData);
-			
+
 			// Create token
 			const accessToken:string = signBearerToken(user, 4 * 60 * 60);
 
 			// user
-			handleResponse(req, res, next, {user, accessToken});
+			handleResponse(req, res, next, {user, accessToken}, 201);
 			
 		} else {
 			
@@ -41,10 +41,10 @@ const signUp = async (req:any, res:any, next: any) => {
 			
 		}
 		
-	} catch (err) {
-		
-		handleError(res, errors.INTERNAL_SERVER_ERROR, "Unknown registration error", err);
-		
+	} catch (error:any) {
+
+		handleError(res, errors.INTERNAL_SERVER_ERROR, "Unknown registration error", error);
+
 	}
 	
 };
@@ -59,18 +59,20 @@ const signIn = async(req:any, res:any, next: any) => {
 		const userLogin = username ? {username} : {emailAddress};
 		
 		// Validate if user exist in our database
-		const user = await UserModel.findOne(userLogin);
-		
+		const user = await UserModel.findOne(userLogin).select('+password');
+
 		if (user && (await bcrypt.compare(password, user.password))) {
 			// Create token
 			const accessToken = signBearerToken(user, 4 * 60 * 60);
 
+			delete user.password;
+
 			// user
-			handleResponse(req, res, next, {user, accessToken});
+			handleResponse(req, res, next, {user, accessToken}, 200);
 			
 		} else {
 			
-			handleError(res, errors.UNAUTHORIZED_ERROR, "Invalid username/password combinarion", {});
+			handleError(res, errors.UNAUTHORIZED_ERROR, "Invalid username/password combination", {});
 			
 		}
 		
@@ -83,23 +85,85 @@ const signIn = async(req:any, res:any, next: any) => {
 };
 
 const profileMe = async(req:any, res:any, next: any) => {
-	
+
 	try {
-		
-		const { bearerToken, bearerTokenDecoded } = req;
-		
-		//const user = await UserModel.findOne({ emailAddress });
-		
-		console.log(bearerToken, bearerTokenDecoded)
-		
-	} catch (err) {
-		
-		handleError(res, errors.INTERNAL_SERVER_ERROR, "Failed to retrieve profile data", {});
-		
-		console.log(err);
-		
+
+		const { decodedAccessToken } = req;
+
+		const user = await UserModel.findOne({userId: decodedAccessToken.userId}).select('+password');
+
+		if (user) {
+
+			delete user.password;
+
+			// user
+			handleResponse(req, res, next, user, 200);
+
+		}
+
+	} catch (error: any) {
+
+		handleError(res, errors.INTERNAL_SERVER_ERROR, "Failed to retrieve profile data", error);
+
 	}
-	
+
+};
+
+const profileSave = async(req:any, res:any, next: any) => {
+
+	try {
+
+		const { decodedAccessToken } = req;
+
+		const requestBody:any = req.body;
+
+		const user = await UserModel.findOne({userId: decodedAccessToken.userId}).select('+password');
+
+		if (user) {
+
+			if(requestBody.hasOwnProperty('password')){
+
+				requestBody.password = await bcrypt.hash(requestBody.password, 10);
+
+			}
+
+			if(requestBody.hasOwnProperty('userId')){
+
+				delete requestBody.userId;
+
+			}
+
+			if(requestBody.hasOwnProperty('id')){
+
+				delete requestBody.id;
+
+			}
+
+			if(requestBody.hasOwnProperty('_id')){
+
+				delete requestBody._id;
+
+			}
+
+			console.log('userUpdated', requestBody);
+
+			const userUpdated = await UserModel.findOneAndUpdate({userId: decodedAccessToken.userId}, requestBody);
+
+			console.log('userUpdated', userUpdated);
+
+			const user = await UserModel.findOne({userId: decodedAccessToken.userId});
+
+			// user
+			handleResponse(req, res, next, user, 200);
+
+		}
+
+	} catch (error: any) {
+
+		handleError(res, errors.INTERNAL_SERVER_ERROR, "Failed to retrieve profile data", error);
+
+	}
+
 };
 
 const resetPassword = () => {
@@ -110,4 +174,4 @@ const verifyEmailAddress = () => {
 
 };
 
-module.exports = {signIn, signUp, profileMe, resetPassword, verifyEmailAddress}
+module.exports = {signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress}
