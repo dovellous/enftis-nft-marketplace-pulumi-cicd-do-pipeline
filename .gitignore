@@ -5,7 +5,8 @@ node_modules
 
 # IDE
 /.idea
-.idea
+.idea/
+**/.idea
 
 # backend dev folders
 backend/node_modules
