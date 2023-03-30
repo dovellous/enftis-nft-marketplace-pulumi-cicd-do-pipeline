@@ -10,15 +10,20 @@ node_modules
 
 # backend dev folders
 backend/node_modules
+backend/.idea
 backend/logs
 backend/build
 backend/cert
 
 # frontend dev folders
 frontend/node_modules
+frontend/.idea
+frontend/logs
+frontend/build
+frontend/cert
 
 # infra dev folders
-infra/node_modules
+pulumi/node_modules
 
 #pnp
 /.pnp
