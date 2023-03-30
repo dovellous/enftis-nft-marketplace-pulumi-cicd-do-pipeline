@@ -4,7 +4,7 @@
 /node_modules
 
 # IDE
-.idea
+/.idea
 
 # dev folders
 backend/node_modules
