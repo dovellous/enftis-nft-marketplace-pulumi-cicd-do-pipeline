@@ -1,18 +1,25 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 
 # IDE
 /.idea
+.idea
 
-# dev folders
+# backend dev folders
 backend/node_modules
 backend/logs
 backend/build
 backend/cert
+
+# frontend dev folders
 frontend/node_modules
+
+# infra dev folders
 infra/node_modules
+
+#pnp
 /.pnp
 .pnp.js
 
@@ -20,7 +27,7 @@ infra/node_modules
 /coverage
 
 # production
-# /build
+/build
 
 # misc
 .netlify
@@ -34,3 +41,4 @@ infra/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.idea
