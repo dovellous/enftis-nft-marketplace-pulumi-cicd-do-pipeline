@@ -1,64 +1,116 @@
-const crypto = require("crypto");
+import { Base64 } from 'js-base64';
+import {HmacMD5, HmacSHA1, HmacSHA256, HmacSHA512, MD5, AES, DES} from 'crypto-js';
+import ErrnoException = NodeJS.ErrnoException;
 
-const fs = require('fs');
+const Crypto = require("crypto");
+const FileSystem = require('fs');
 
-const algorithm = 'aes-256-cbc';
+const certificatesPath:string = process.env.BACKEND_CERTIFICATE_PATH ?? "./cert";
 
-const key = crypto.randomBytes(32);
+const certificateName:string = process.env.BACKEND_CERTIFICATE_NAME ?? "dvs.mern.services.certificate";
 
-const iv = crypto.randomBytes(16);
+const certificateHash:string = process.env.BACKEND_CERTIFICATE_OAEP ?? "sha256";
 
-const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
-    modulusLength: 2048,
-    publicKeyEncoding: {
-        type: "pkcs1",
-        format: "pem",
-    },
-    privateKeyEncoding: {
-        type: "pkcs1",
-        format: "pem",
-    },
-});
+const certificateType:any = process.env.BACKEND_CERTIFICATE_TYPE ?? "rsa";
 
-const saveCertificates = () => {
-    fs.writeFileSync("./cert/dvs.mern.services.public.pem", publicKey);
-    fs.writeFileSync("./cert/dvs.mern.services.private.pem", privateKey);
+const base64Encode:any = (text: string) : string => {
+
+    return Base64.encode(text);
+
 }
 
-fs.exists("./cert", (exists:boolean)=>{
-    if(!exists){
-        fs.mkdir("./cert", ()=>{
-            saveCertificates();
+const base64Decode:any = (text: string) : string => {
+
+    return Base64.decode(text);
+
+}
+
+const generateCertificates: any = (save: boolean = true) : Array<string> => {
+
+    const { publicKey, privateKey }:any = Crypto.generateKeyPairSync(certificateType, {
+        modulusLength: 2048,
+        publicKeyEncoding: {
+            type: "pkcs1",
+            format: "pem",
+        },
+        privateKeyEncoding: {
+            type: "pkcs1",
+            format: "pem",
+        },
+    });
+
+    if(save){
+
+        saveCertificates(publicKey, privateKey);
+
+    }
+
+    return [publicKey, privateKey];
+
+}
+
+const saveCertificates = (publicKey: string, privateKey: string) => {
+    if(!FileSystem.existsSync(certificatesPath)){
+        FileSystem.mkdir(certificatesPath, function (error: ErrnoException) {
+            if (!error) {
+                writeCertificateToFile(publicKey, privateKey);
+            }
         });
     }else{
-        saveCertificates();
+        writeCertificateToFile(publicKey, privateKey);
     }
-    
-});
-
-const encryptData = (text: string) => {
-    
-    let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
-    let encrypted = cipher.update(text);
-    encrypted = Buffer.concat([encrypted, cipher.final()]);
-    return { iv: iv.toString('hex'), encryptedData: encrypted.toString('hex') };
-    
 }
 
-const decryptData = ( text: any) => {
-    
-    let iv = Buffer.from(text.iv, 'hex');
-    let encryptedText = Buffer.from(text.encryptedData, 'hex');
-    let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
+const writeCertificateToFile = (publicKey: string, privateKey: string) => {
+    if(!FileSystem.existsSync(certificatesPath + "/" + certificateName + ".private.pem")){
+        FileSystem.writeFileSync(certificatesPath + "/" + certificateName +".private.pem", privateKey);
+        FileSystem.writeFileSync(certificatesPath + "/" + certificateName +".public.pem", publicKey);
+    }
+}
+
+const encryptText = (plainText: string, encryptionKey: string) => {
+    if(!encryptionKey){
+        encryptionKey = getServerPublicKey();
+    }
+    return Crypto.publicEncrypt({
+            key: encryptionKey,
+            padding: Crypto.constants.RSA_PKCS1_OAEP_PADDING,
+            oaepHash: certificateHash
+        },
+        // We convert the data string to a buffer
+        Buffer.from(plainText)
+    )
+}
+
+const decryptText = (encryptedText: NodeJS.ArrayBufferView) => {
+    return Crypto.privateDecrypt(
+        {
+            key: getServerPrivateKey(),
+            // In order to decrypt the data, we need to specify the
+            // same hashing function and padding scheme that we used to
+            // encrypt the data in the previous step
+            padding: Crypto.constants.RSA_PKCS1_OAEP_PADDING,
+            oaepHash: certificateHash
+        },
+        encryptedText
+    )
+}
+
+const getServerPublicKey = () => {
+
+    return FileSystem.readFileSync(certificatesPath + "/" + certificateName +".public.pem", 'utf8');
 
 }
 
-const md5 = ( data: any ) => {
+const getServerPrivateKey = () => {
+
+    return FileSystem.readFileSync(certificatesPath + "/" + certificateName +".private.pem", 'utf8');
+
+}
+
+const hash = (data: any, algorithm:string=certificateHash) => {
     
-    const hash = crypto.createHash('md5');
+    const hash = Crypto.createHash(algorithm);
     
     hash.update(data);
     
@@ -66,14 +118,4 @@ const md5 = ( data: any ) => {
     
 }
 
-const sha256 = ( data: any ) => {
-    
-    const hash = crypto.createHash('sha256');
-    
-    hash.update(data);
-    
-    return hash.digest('hex');
-    
-}
-
-export {md5, sha256, encryptData, decryptData, publicKey, privateKey}
+export {hash, HmacMD5, HmacSHA1, HmacSHA256, HmacSHA512, MD5, AES, DES, base64Encode, base64Decode, generateCertificates, encryptText, decryptText, getServerPublicKey}

@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import {handleResponse, handleError, errors} from "../../../../utils/HttpHelper";
-import {md5, sha256} from "../../../../utils/Cryptography";
+import {hash, base64Encode, getServerPublicKey} from "../../../../utils/Cryptography";
 import {signBearerToken} from "../../../../utils/JWTHelper";
 
 import {UserModel, IClient, ClientModel} from "./AuthenticationModel";
@@ -17,14 +17,14 @@ const clientRegister = async (req:any, res:any, next: any) => {
 		
 		if (device_name && device_uid && device_agent) {
 			
-			const clientId:string = md5(`${device_uid}:${device_name}:${device_agent}:${device_pub_key}`);
+			const clientId:string = hash(`${device_uid}:${device_name}:${device_agent}:${device_pub_key}`, 'md5');
 			
-			const clientSecret:string = sha256(`${clientId}:${device_pub_key}`);
+			const clientSecret:string = hash(`${clientId}:${device_pub_key}`, 'sha256');
 			
 			//Encrypt client password
 			const encryptedClientSecret = await bcrypt.hash(clientSecret, 10);
 			
-			const clientDevicePubKey:string = atob(device_pub_key);
+			const clientDevicePubKey:string = base64Encode(device_pub_key);
 			
 			const clientData:IClient = {
 				clientDeviceId: device_uid,
@@ -41,31 +41,20 @@ const clientRegister = async (req:any, res:any, next: any) => {
 			
 			client.clientSecret = clientSecret;
 			
-			client.clientDevicePubKey = null;
+			client.clientDevicePubKey = '';
 			
 			delete client.clientDevicePubKey;
 			
-			fs.readFile('./cert/dvs.mern.services.public.pem', 'utf8', (error, serverPubKey) => {
-				
-				if (error){
-					
-					console.log("SERVER PUB KEY ERROR", error);
-					
-				} else {
-					
-					client.serverDevicePubKey = btoa(serverPubKey);
-					
-				}
-				
-				// client
-				handleResponse(req, res, next, client, 201);
-				
-			});
-			
+			const serverPubKey = getServerPublicKey();
+
+			client.serverDevicePubKey = base64Encode(serverPubKey);
+
+			// client
+			handleResponse(req, res, next, client, 201);
 			
 		} else {
 			
-			handleError(res, errors.BAD_REQUEST, "Missing . or invalid registration parameters", {});
+			handleError(res, errors.BAD_REQUEST, "Missing or invalid registration parameters", {});
 			
 		}
 		

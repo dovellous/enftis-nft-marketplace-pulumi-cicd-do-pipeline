@@ -11,11 +11,13 @@ import AuthenticationRouter from "./apps/enftis/modules/authentication/Authentic
 
 import DatabaseManager from "../src/utils/DatabaseManager";
 
-import {encryptData, decryptData} from "../src/utils/Cryptography";
+import {generateCertificates} from "../src/utils/Cryptography";
 
 const port = process.env.BACKEND_SERVICE_PORT ?? 8000;
 
 const prefix = process.env.BACKEND_ROUTE_PREFIX ?? "/api";
+
+generateCertificates();
 
 const MongoDBConnection = new DatabaseManager();
 
