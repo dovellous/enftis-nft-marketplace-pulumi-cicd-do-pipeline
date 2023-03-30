@@ -14,17 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-const { resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress } = require("./AuthenticationController");
-const { checkDuplicateUsername, checkDuplicateEmailAddress, checkParameters, checkToken } = require("./AuthenticationMiddleware");
+const { clientRegister, resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress } = require("./AuthenticationController");
+const { checkDuplicateUsername, checkDuplicateEmailAddress, checkParameters, checkClient, checkToken } = require("./AuthenticationMiddleware");
 const routerPrefix = '/auth';
 router.get(`${routerPrefix}/`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send(`Authentication API`).end();
 }));
+router.post(`${routerPrefix}/client/register`, [], clientRegister);
 router.post(`${routerPrefix}/sign-up`, [
+    checkClient,
     checkDuplicateUsername,
     checkDuplicateEmailAddress
 ], signUp);
 router.post(`${routerPrefix}/sign-in`, [
+    checkClient,
     checkParameters
 ], signIn);
 router.get(`${routerPrefix}/profile/me`, [

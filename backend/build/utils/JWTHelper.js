@@ -1,24 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseBearerToken = exports.signBearerToken = exports.verifyBearerToken = void 0;
+exports.parseAuthorizationToken = exports.signBearerToken = exports.verifyBearerToken = void 0;
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET, JWT_TOKEN_EXPIRATION } = process.env;
-const parseBearerToken = (bearer) => {
+const parseAuthorizationToken = (bearer) => {
     const [_, token] = bearer.trim().split(" ");
     return token;
 };
-exports.parseBearerToken = parseBearerToken;
-const verifyBearerToken = (accessToken, callBackFunction) => {
+exports.parseAuthorizationToken = parseAuthorizationToken;
+const verifyBearerToken = (authorizationHeader, callBackFunction) => {
+    const accessToken = parseAuthorizationToken(authorizationHeader);
     if (!accessToken) {
-        return { status: 400, message: "No token provided!" };
+        callBackFunction(false);
     }
-    jwt.verify(accessToken, JWT_SECRET, (error, decoded) => {
-        if (error) {
-            return { status: 400, message: "User is unauthorized to perform the function." };
-        }
-        callBackFunction(decoded);
-    });
+    try {
+        jwt.verify(accessToken, JWT_SECRET, (error, decoded) => {
+            if (error || decoded === null) {
+                callBackFunction(false);
+            }
+            else {
+                callBackFunction(decoded);
+            }
+        });
+    }
+    catch (error) {
+        callBackFunction(false);
+    }
 };
 exports.verifyBearerToken = verifyBearerToken;
 const signBearerToken = (payload, time) => {

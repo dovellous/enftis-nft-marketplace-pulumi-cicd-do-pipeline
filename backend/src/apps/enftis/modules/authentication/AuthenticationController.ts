@@ -1,14 +1,88 @@
+import * as fs from "fs";
 import {handleResponse, handleError, errors} from "../../../../utils/HttpHelper";
-import {verifyBearerToken, signBearerToken, parseBearerToken} from "../../../../utils/JWTHelper";
+import {md5, sha256} from "../../../../utils/Cryptography";
+import {signBearerToken} from "../../../../utils/JWTHelper";
 
-import {UserModel} from "./AuthenticationModel";
+import {UserModel, IClient, ClientModel} from "./AuthenticationModel";
 
 const bcrypt = require("bcryptjs");
+
+const clientRegister = async (req:any, res:any, next: any) => {
+	
+	// Our device registration logic starts here
+	try {
+		
+		// Get device input
+		const { device_name, device_uid, device_pub_key, device_agent } = req.body;
+		
+		if (device_name && device_uid && device_agent) {
+			
+			const clientId:string = md5(`${device_uid}:${device_name}:${device_agent}:${device_pub_key}`);
+			
+			const clientSecret:string = sha256(`${clientId}:${device_pub_key}`);
+			
+			//Encrypt client password
+			const encryptedClientSecret = await bcrypt.hash(clientSecret, 10);
+			
+			const clientDevicePubKey:string = atob(device_pub_key);
+			
+			const clientData:IClient = {
+				clientDeviceId: device_uid,
+				clientDeviceName: device_name,
+				clientDevicePubKey: clientDevicePubKey,
+				clientDeviceUserAgent: device_agent,
+				clientId: clientId,
+				clientSecret: encryptedClientSecret,
+			};
+			
+			// Create client in our database
+			// @ts-ignore
+			const client:IClient = await ClientModel.create(clientData);
+			
+			client.clientSecret = clientSecret;
+			
+			client.clientDevicePubKey = null;
+			
+			delete client.clientDevicePubKey;
+			
+			fs.readFile('./cert/dvs.mern.services.public.pem', 'utf8', (error, serverPubKey) => {
+				
+				if (error){
+					
+					console.log("SERVER PUB KEY ERROR", error);
+					
+				} else {
+					
+					client.serverDevicePubKey = btoa(serverPubKey);
+					
+				}
+				
+				// client
+				handleResponse(req, res, next, client, 201);
+				
+			});
+			
+			
+		} else {
+			
+			handleError(res, errors.BAD_REQUEST, "Missing . or invalid registration parameters", {});
+			
+		}
+		
+	} catch (error:any) {
+		
+		handleError(res, errors.INTERNAL_SERVER_ERROR, "Unknown registration error", error);
+		
+	}
+	
+};
 
 const signUp = async (req:any, res:any, next: any) => {
 	
 	// Our login logic starts here
 	try {
+		
+		console.log(req.headers)
 		
 		// Get user input
 		const { username, email, password, first_name, last_name } = req.body;
@@ -28,10 +102,10 @@ const signUp = async (req:any, res:any, next: any) => {
 			
 			// Create user in our database
 			const user = await UserModel.create(userData);
-
+			
 			// Create token
 			const accessToken:string = signBearerToken(user, 4 * 60 * 60);
-
+			
 			// user
 			handleResponse(req, res, next, {user, accessToken}, 201);
 			
@@ -42,9 +116,9 @@ const signUp = async (req:any, res:any, next: any) => {
 		}
 		
 	} catch (error:any) {
-
+		
 		handleError(res, errors.INTERNAL_SERVER_ERROR, "Unknown registration error", error);
-
+		
 	}
 	
 };
@@ -174,4 +248,4 @@ const verifyEmailAddress = () => {
 
 };
 
-module.exports = {signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress}
+module.exports = {clientRegister, signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress}

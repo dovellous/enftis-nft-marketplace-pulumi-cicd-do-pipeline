@@ -2,12 +2,13 @@ import express, {Request, Response} from "express";
 
 const router = express.Router();
 
-const {resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress} = require("./AuthenticationController");
+const {clientRegister, resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress} = require("./AuthenticationController");
 
 const {
     checkDuplicateUsername,
     checkDuplicateEmailAddress,
     checkParameters,
+    checkClient,
     checkToken
 } = require("./AuthenticationMiddleware");
 
@@ -20,8 +21,15 @@ router.get(`${routerPrefix}/`, async (req: Request, res: Response) => {
 });
 
 router.post(
+    `${routerPrefix}/client/register`,
+    [],
+    clientRegister
+);
+
+router.post(
     `${routerPrefix}/sign-up`,
     [
+        checkClient,
         checkDuplicateUsername,
         checkDuplicateEmailAddress
     ],
@@ -31,6 +39,7 @@ router.post(
 router.post(
     `${routerPrefix}/sign-in`,
     [
+        checkClient,
         checkParameters
     ],
     signIn

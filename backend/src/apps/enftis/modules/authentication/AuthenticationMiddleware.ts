@@ -1,11 +1,12 @@
 import {Request, Response} from "express";
 import jwt from "jsonwebtoken";
 import {handleError, errors} from "../../../../utils/HttpHelper"
-import {verifyBearerToken, signBearerToken, parseBearerToken} from "../../../../utils/JWTHelper";
-import {UserModel} from "./AuthenticationModel";
+import {verifyBearerToken, parseAuthorizationToken} from "../../../../utils/JWTHelper";
+import {ClientModel, UserModel} from "./AuthenticationModel";
 
 require('dotenv').config();
-const userRoles = require('./UserRoles');
+
+const bcrypt = require("bcryptjs");
 
 const checkDuplicateEmailAddress = async (req: Request, res: Response, next: any) => {
 
@@ -60,65 +61,145 @@ const checkDuplicateUsername = async (req: Request, res: Response, next: any) =>
 };
 
 const checkToken = (req: any, res: any, next: any) => {
-
+    
     const authorizationHeader = req.headers["authorization"];
-
+    
     if (!authorizationHeader) {
-
+        
         return handleError(res, errors.BAD_REQUEST, 'Missing authorization header', req.headers);
-
+        
     }
-
-    const token = parseBearerToken(authorizationHeader);
-
+    
     try {
-
-        verifyBearerToken(token, (decoded:any) => {
-
+        
+        verifyBearerToken(authorizationHeader, (decoded:any) => {
+            
             if (decoded) {
-
+                
                 req.decodedAccessToken = decoded;
-
+                
                 if( decoded.iat*1000 > new Date().getTime() ){
-
+                    
                     return handleError(res, errors.FORBIDDEN_ERROR, 'This should never happen, the token want us to assume it\'s yet to be created, huh?', {created: new Date(decoded.iat*1000)});
-
+                    
                 }
-
+                
                 if( decoded.exp*1000 < new Date().getTime() ){
-
+                    
                     return handleError(res, errors.FORBIDDEN_ERROR, 'Token has expired', {created: new Date(decoded.iat*1000)});
-
+                    
                 }
-
+                
                 if( !decoded.hasOwnProperty('userId') ){
-
+                    
                     return handleError(res, errors.FORBIDDEN_ERROR, 'The token is missing the user identity', decoded);
-
+                    
                 }
-
+                
                 if( !decoded.hasOwnProperty('username') ){
-
+                    
                     return handleError(res, errors.FORBIDDEN_ERROR, 'The token is missing the username', decoded);
-
+                    
                 }
-
+                
                 next();
-
+                
             } else {
-
-                return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid token', {token});
-
+                
+                return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid token', {authorizationHeader});
+                
             }
-
+            
         });
-
+        
     } catch (error: any) {
-
+        
         return handleError(res, errors.FORBIDDEN_ERROR, 'Could not parse token', error);
-
+        
     }
+    
+};
 
+const checkClient = async (req: any, res: any, next: any) => {
+    
+    const authorizationHeader: string = req.headers["authorization"];
+    
+    if (!authorizationHeader) {
+        
+        return handleError(res, errors.BAD_REQUEST, 'Invalid client. Missing authorization header', req.headers);
+        
+    }
+    
+    const usernamePassword: string = parseAuthorizationToken(authorizationHeader);
+    
+    if(usernamePassword){
+        
+        let [clientId, clientSecret]:Array<string> = atob(usernamePassword).split(":");
+        
+        console.log(clientId, clientSecret);
+    
+        const client = await ClientModel.findOne({clientId: clientId}).select('+clientSecret');
+    
+        if (client && (await bcrypt.compare(clientSecret, client.clientSecret))) {
+            
+            next();
+            
+        }else{
+    
+            return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid client', {clientId});
+    
+        }
+        
+    }
+    
+    try {
+        
+        verifyBearerToken(authorizationHeader, (decoded:any) => {
+            
+            if (decoded) {
+                
+                req.decodedAccessToken = decoded;
+                
+                if( decoded.iat*1000 > new Date().getTime() ){
+                    
+                    return handleError(res, errors.FORBIDDEN_ERROR, 'This should never happen, the token want us to assume it\'s yet to be created, huh?', {created: new Date(decoded.iat*1000)});
+                    
+                }
+                
+                if( decoded.exp*1000 < new Date().getTime() ){
+                    
+                    return handleError(res, errors.FORBIDDEN_ERROR, 'Token has expired', {created: new Date(decoded.iat*1000)});
+                    
+                }
+                
+                if( !decoded.hasOwnProperty('userId') ){
+                    
+                    return handleError(res, errors.FORBIDDEN_ERROR, 'The token is missing the user identity', decoded);
+                    
+                }
+                
+                if( !decoded.hasOwnProperty('username') ){
+                    
+                    return handleError(res, errors.FORBIDDEN_ERROR, 'The token is missing the username', decoded);
+                    
+                }
+                
+                next();
+                
+            } else {
+                
+                return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid token', {authorizationHeader});
+                
+            }
+            
+        });
+        
+    } catch (error: any) {
+        
+        return handleError(res, errors.FORBIDDEN_ERROR, 'Could not parse token', error);
+        
+    }
+    
 };
 
 const checkParameters = (req: any, res: any, next: any) => {
@@ -145,9 +226,9 @@ const checkParameters = (req: any, res: any, next: any) => {
 };
 
 module.exports = {
-    checkDuplicateUsername,
     checkDuplicateEmailAddress,
-    checkToken,
+    checkDuplicateUsername,
     checkParameters,
-    userRoles
+    checkClient,
+    checkToken
 };

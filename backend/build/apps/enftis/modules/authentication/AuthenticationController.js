@@ -10,12 +10,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpHelper_1 = require("../../../../utils/HttpHelper");
+const Cryptography_1 = require("../../../../utils/Cryptography");
 const JWTHelper_1 = require("../../../../utils/JWTHelper");
 const AuthenticationModel_1 = require("./AuthenticationModel");
 const bcrypt = require("bcryptjs");
+const clientRegister = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    // Our device registration logic starts here
+    try {
+        // Get device input
+        const { device_name, device_uid, device_pub_key, device_agent } = req.body;
+        if (device_name && device_uid && device_agent) {
+            const clientId = (0, Cryptography_1.md5)(`${device_uid}:${device_name}:${device_agent}:${device_pub_key}`);
+            const clientSecret = (0, Cryptography_1.sha256)(`${clientId}:${device_pub_key}`);
+            //Encrypt client password
+            const encryptedClientSecret = yield bcrypt.hash(clientSecret, 10);
+            const clientData = {
+                clientDeviceId: device_uid,
+                clientDeviceName: device_name,
+                clientDevicePubKey: device_pub_key,
+                clientDeviceUserAgent: device_agent,
+                clientId: clientId,
+                clientSecret: encryptedClientSecret,
+            };
+            console.log(clientData, clientSecret);
+            // Create client in our database
+            const client = yield AuthenticationModel_1.ClientModel.create(clientData);
+            client.clientSecret = clientSecret;
+            // client
+            (0, HttpHelper_1.handleResponse)(req, res, next, client, 201);
+        }
+        else {
+            (0, HttpHelper_1.handleError)(res, HttpHelper_1.errors.BAD_REQUEST, "Missing . or invalid registration parameters", {});
+        }
+    }
+    catch (error) {
+        (0, HttpHelper_1.handleError)(res, HttpHelper_1.errors.INTERNAL_SERVER_ERROR, "Unknown registration error", error);
+    }
+});
 const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // Our login logic starts here
     try {
+        console.log(req.headers);
         // Get user input
         const { username, email, password, first_name, last_name } = req.body;
         if (username && email && password) {
@@ -114,4 +149,4 @@ const resetPassword = () => {
 };
 const verifyEmailAddress = () => {
 };
-module.exports = { signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress };
+module.exports = { clientRegister, signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress };

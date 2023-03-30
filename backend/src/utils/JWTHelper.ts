@@ -6,26 +6,42 @@ const jwt = require('jsonwebtoken');
 
 const { JWT_SECRET, JWT_TOKEN_EXPIRATION } = process.env;
 
-const parseBearerToken = (bearer: string) => {
+const parseAuthorizationToken = (bearer: string) => {
     const [_, token] = bearer.trim().split(" ");
     return token;
 };
 
-const verifyBearerToken = (accessToken:string, callBackFunction:any) => {
+const verifyBearerToken = (authorizationHeader:string, callBackFunction:any) => {
+    
+    const accessToken = parseAuthorizationToken(authorizationHeader);
     
     if (!accessToken) {
-        return { status: 400, message: "No token provided!" };
+        
+        callBackFunction(false);
+        
     }
     
-    jwt.verify(accessToken, JWT_SECRET, (error:VerifyErrors, decoded:JwtPayload) => {
-
-        if (error) {
-            return { status: 400, message: "User is unauthorized to perform the function." };
-        }
-
-        callBackFunction( decoded );
-
-    });
+    try {
+    
+        jwt.verify(accessToken, JWT_SECRET, (error: VerifyErrors, decoded: any) => {
+    
+            if (error || decoded === null) {
+    
+                callBackFunction(false);
+                
+            }else{
+    
+                callBackFunction(decoded);
+    
+            }
+        
+        });
+    
+    } catch (error: any) {
+    
+        callBackFunction(false);
+    
+    }
 
 }
 
@@ -43,4 +59,4 @@ const signBearerToken = (payload:any, time:number) => {
 
 }
 
-export {verifyBearerToken, signBearerToken, parseBearerToken}
+export {verifyBearerToken, signBearerToken, parseAuthorizationToken}
