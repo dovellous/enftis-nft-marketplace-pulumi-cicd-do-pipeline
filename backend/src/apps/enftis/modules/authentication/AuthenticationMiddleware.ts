@@ -106,7 +106,7 @@ const checkToken = (req: any, res: any, next: any) => {
                 
             } else {
                 
-                return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid token', {authorizationHeader});
+                return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid token, failed to decode', {authorizationHeader});
                 
             }
             
@@ -141,6 +141,8 @@ const checkClient = async (req: any, res: any, next: any) => {
         const client = await ClientModel.findOne({clientId: clientId}).select('+clientSecret');
     
         if (client && (await bcrypt.compare(clientSecret, client.clientSecret))) {
+
+            req.clientId = clientId;
             
             next();
             
@@ -149,54 +151,6 @@ const checkClient = async (req: any, res: any, next: any) => {
             return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid client', {clientId});
     
         }
-        
-    }
-    
-    try {
-        
-        verifyBearerToken(authorizationHeader, (decoded:any) => {
-            
-            if (decoded) {
-                
-                req.decodedAccessToken = decoded;
-                
-                if( decoded.iat*1000 > new Date().getTime() ){
-                    
-                    return handleError(res, errors.FORBIDDEN_ERROR, 'This should never happen, the token want us to assume it\'s yet to be created, huh?', {created: new Date(decoded.iat*1000)});
-                    
-                }
-                
-                if( decoded.exp*1000 < new Date().getTime() ){
-                    
-                    return handleError(res, errors.FORBIDDEN_ERROR, 'Token has expired', {created: new Date(decoded.iat*1000)});
-                    
-                }
-                
-                if( !decoded.hasOwnProperty('userId') ){
-                    
-                    return handleError(res, errors.FORBIDDEN_ERROR, 'The token is missing the user identity', decoded);
-                    
-                }
-                
-                if( !decoded.hasOwnProperty('username') ){
-                    
-                    return handleError(res, errors.FORBIDDEN_ERROR, 'The token is missing the username', decoded);
-                    
-                }
-                
-                next();
-                
-            } else {
-                
-                return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid token', {authorizationHeader});
-                
-            }
-            
-        });
-        
-    } catch (error: any) {
-        
-        return handleError(res, errors.FORBIDDEN_ERROR, 'Could not parse token', error);
         
     }
     

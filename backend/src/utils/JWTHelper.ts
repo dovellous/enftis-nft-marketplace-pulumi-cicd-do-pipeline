@@ -30,6 +30,8 @@ const verifyBearerToken = (authorizationHeader:string, callBackFunction:any) => 
                 callBackFunction(false);
                 
             }else{
+
+                console.log(decoded);
     
                 callBackFunction(decoded);
     
@@ -45,13 +47,30 @@ const verifyBearerToken = (authorizationHeader:string, callBackFunction:any) => 
 
 }
 
-const signBearerToken = (payload:any, time:number) => {
+interface IJsonWebAccessToken {
+    id: String;
+    username: String;
+    email: String;
+    userId: String;
+    userStatus: String;
+    clientId: String;
+    roles: String | Array<String> | undefined;
+}
 
-    return jwt.sign({
-            username: payload.username,
-            userId: payload.userId,
-            roles: payload.roles,
-        },
+const signBearerToken = (req: any, payload:any, time:number) => {
+
+    const accessTokenPayload:IJsonWebAccessToken = {
+        id: payload._id,
+        username: payload.username,
+        email: payload.email,
+        userId: payload.userId,
+        userStatus: payload.userStatus,
+        clientId: req.clientId,
+        roles: payload.roles,
+    };
+
+    return jwt.sign(
+        accessTokenPayload,
         JWT_SECRET,
         {
             expiresIn: time || JWT_TOKEN_EXPIRATION

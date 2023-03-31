@@ -12,6 +12,6 @@
     },
     "scripts": {
         "install": "npm -C frontend install && npm -C backend install",
-        "start": "concurrently 'npm -C backend run dev' 'npm -C frontend run dev'"
+        "start": "concurrently 'npm -C backend run dev2' 'npm -C frontend run start'"
     }
 }

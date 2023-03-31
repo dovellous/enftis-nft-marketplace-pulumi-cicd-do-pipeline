@@ -3,7 +3,7 @@ import {handleResponse, handleError, errors} from "../../../../utils/HttpHelper"
 import {hash, base64Encode, getServerPublicKey} from "../../../../utils/Cryptography";
 import {signBearerToken} from "../../../../utils/JWTHelper";
 
-import {UserModel, IClient, ClientModel} from "./AuthenticationModel";
+import {UserModel, IClient, ClientModel, IUser} from "./AuthenticationModel";
 
 const bcrypt = require("bcryptjs");
 
@@ -90,13 +90,12 @@ const signUp = async (req:any, res:any, next: any) => {
 			};
 			
 			// Create user in our database
-			const user = await UserModel.create(userData);
-			
-			// Create token
-			const accessToken:string = signBearerToken(user, 4 * 60 * 60);
-			
+			const user:IUser = await UserModel.create(userData);
+
+			user.password = '';
+
 			// user
-			handleResponse(req, res, next, {user, accessToken}, 201);
+			handleResponse(req, res, next, user, 201);
 			
 		} else {
 			
@@ -126,12 +125,10 @@ const signIn = async(req:any, res:any, next: any) => {
 
 		if (user && (await bcrypt.compare(password, user.password))) {
 			// Create token
-			const accessToken = signBearerToken(user, 4 * 60 * 60);
-
-			delete user.password;
+			const accessToken = signBearerToken(req, user, 4 * 60 * 60);
 
 			// user
-			handleResponse(req, res, next, {user, accessToken}, 200);
+			handleResponse(req, res, next, {accessToken}, 200);
 			
 		} else {
 			
@@ -153,11 +150,11 @@ const profileMe = async(req:any, res:any, next: any) => {
 
 		const { decodedAccessToken } = req;
 
-		const user = await UserModel.findOne({userId: decodedAccessToken.userId}).select('+password');
+		const user:IUser = await UserModel.findOne({userId: decodedAccessToken.userId}).select('+password');
 
 		if (user) {
 
-			delete user.password;
+			user.password = '';
 
 			// user
 			handleResponse(req, res, next, user, 200);

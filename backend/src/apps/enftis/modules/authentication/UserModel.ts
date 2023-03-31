@@ -4,6 +4,7 @@ import {autoIncrement} from 'mongoose-plugin-autoinc';
 const modelName: string = 'User';
 
 interface IUser {
+    _id?: Schema.Types.ObjectId,
     firstName: String;
     lastName: String;
     username: String;
