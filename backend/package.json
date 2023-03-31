@@ -133,7 +133,8 @@
         "build": "tsc",
         "start": "node build/index.js",
         "dev": "npx ts-node src/index.ts",
-        "dev2": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
+        "dev2": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
+        "swaggerizer": "node src/swagger-index.js"
     },
     "nodemonConfig": {
         "ext": "js",

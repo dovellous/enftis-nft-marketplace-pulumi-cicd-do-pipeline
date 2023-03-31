@@ -8,7 +8,7 @@ import {UserModel, IClient, ClientModel, IUser} from "./AuthenticationModel";
 const bcrypt = require("bcryptjs");
 
 const clientRegister = async (req:any, res:any, next: any) => {
-	
+
 	// Our device registration logic starts here
 	try {
 		
@@ -67,7 +67,7 @@ const clientRegister = async (req:any, res:any, next: any) => {
 };
 
 const signUp = async (req:any, res:any, next: any) => {
-	
+
 	// Our login logic starts here
 	try {
 		
@@ -112,7 +112,21 @@ const signUp = async (req:any, res:any, next: any) => {
 };
 
 const signIn = async(req:any, res:any, next: any) => {
-	
+
+	/* 	#swagger.tags = ['User']
+        #swagger.description = 'Endpoint to sign in / login a specific user' */
+
+	/*	#swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'User information.',
+            required: true,
+            schema: { $ref: "#/definitions/AddUser" }
+    } */
+
+	/* #swagger.security = [{
+            "apiKeyAuth": []
+    }] */
+
 	// Our login logic starts here
 	try {
 		// Get user input
@@ -146,15 +160,22 @@ const signIn = async(req:any, res:any, next: any) => {
 
 const profileMe = async(req:any, res:any, next: any) => {
 
+	// #swagger.tags = ['User']
+	// #swagger.description = 'Endpoint to get a specific user.'
+
 	try {
 
 		const { decodedAccessToken } = req;
 
-		const user:IUser = await UserModel.findOne({userId: decodedAccessToken.userId}).select('+password');
+		const user:any = await UserModel.findOne({userId: decodedAccessToken.userId}).select('+password');
 
 		if (user) {
 
 			user.password = '';
+
+			/* #swagger.responses[200] = {
+			  schema: { "$ref": "#/definitions/User" },
+			  description: "User registered successfully." } */
 
 			// user
 			handleResponse(req, res, next, user, 200);

@@ -1,11 +1,6 @@
 import express, {Request, Response} from "express";
 const router = require('express').Router();
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../../docs/swagger.json');
-
 const routerPrefix = '/auth'
-router.use(`${routerPrefix}/api-docs`, swaggerUi.serve);
-router.get(`${routerPrefix}/api-docs`, swaggerUi.setup(swaggerDocument));
 
 const {clientRegister, resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress} = require("./AuthenticationController");
 

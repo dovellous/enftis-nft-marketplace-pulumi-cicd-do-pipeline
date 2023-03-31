@@ -22,9 +22,21 @@ const app = express();
 
 //app.use(MongoDBConnection);
 
+
 app.use(express.json());
 
 app.use(prefix, AuthenticationRouter);
+
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('../src/app/docs/swagger.json')
+/* Routes */
+
+/* Middlewares */
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
+
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
