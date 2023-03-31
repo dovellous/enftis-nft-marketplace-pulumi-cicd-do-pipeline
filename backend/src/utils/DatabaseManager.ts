@@ -42,16 +42,10 @@ const DatabaseManager = class DatabaseManagerClass {
 
     connect(){
 
-        mongoose.connect(this.cxnString, this.cxnOptions).catch((err: any)=>{});
+        return mongoose.connect(this.cxnString, this.cxnOptions);
 
     }
-    
-    reconnect(){
 
-        Logger.warn('Connection reconnect logic not implemented manually!')
-
-    }
-    
     onConnectionOpen(){
 
         Logger.success('Connection opened!');

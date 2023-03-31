@@ -4,14 +4,11 @@ import "../src/utils/AppConfig";
 const cors =require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-
-import AuthenticationRouter from "./apps/enftis/modules/authentication/AuthenticationRouter";
+import AuthenticationRouter from "./app/modules/authentication/AuthenticationRouter";
 
 import DatabaseManager from "../src/utils/DatabaseManager";
 
-import {generateCertificates} from "../src/utils/Cryptography";
-
-generateCertificates();
+import {generateCertificates} from "./utils/Cryptography";
 
 const port = process.env.BACKEND_SERVICE_PORT ?? 8000;
 
@@ -23,6 +20,8 @@ MongoDBConnection.connect();
 
 const app = express();
 
+//app.use(MongoDBConnection);
+
 app.use(express.json());
 
 app.use(prefix, AuthenticationRouter);
@@ -30,3 +29,5 @@ app.use(prefix, AuthenticationRouter);
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
+
+generateCertificates();

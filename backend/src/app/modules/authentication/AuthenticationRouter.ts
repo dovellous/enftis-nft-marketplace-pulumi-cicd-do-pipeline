@@ -1,6 +1,11 @@
 import express, {Request, Response} from "express";
+const router = require('express').Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../../docs/swagger.json');
 
-const router = express.Router();
+const routerPrefix = '/auth'
+router.use(`${routerPrefix}/api-docs`, swaggerUi.serve);
+router.get(`${routerPrefix}/api-docs`, swaggerUi.setup(swaggerDocument));
 
 const {clientRegister, resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress} = require("./AuthenticationController");
 
@@ -11,8 +16,6 @@ const {
     checkClient,
     checkToken
 } = require("./AuthenticationMiddleware");
-
-const routerPrefix = '/auth'
 
 router.get(`${routerPrefix}/`, async (req: Request, res: Response) => {
 

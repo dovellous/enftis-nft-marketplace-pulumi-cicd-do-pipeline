@@ -1,7 +1,7 @@
 import * as fs from "fs";
-import {handleResponse, handleError, errors} from "../../../../utils/HttpHelper";
-import {hash, base64Encode, getServerPublicKey} from "../../../../utils/Cryptography";
-import {signBearerToken} from "../../../../utils/JWTHelper";
+import {handleResponse, handleError, errors} from "../../../utils/HttpHelper";
+import {hash, base64Encode, getServerPublicKey} from "../../../utils/Cryptography";
+import {signBearerToken} from "../../../utils/JWTHelper";
 
 import {UserModel, IClient, ClientModel, IUser} from "./AuthenticationModel";
 
