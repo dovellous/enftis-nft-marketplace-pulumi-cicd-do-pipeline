@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 const router = require('express').Router();
-const routerPrefix = '/auth'
+const routerPrefix = ''
 
 const {clientRegister, resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress} = require("./AuthenticationController");
 
@@ -14,7 +14,7 @@ const {
 
 router.get(`${routerPrefix}/`, async (req: Request, res: Response) => {
 
-    res.send(`Authentication API`).end();
+    res.send(`Authentication APIs`).end();
 
 });
 

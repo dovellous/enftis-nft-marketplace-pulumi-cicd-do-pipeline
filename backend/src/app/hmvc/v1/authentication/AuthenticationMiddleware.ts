@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import jwt from "jsonwebtoken";
-import {handleError, errors} from "../../../utils/HttpHelper"
-import {verifyBearerToken, parseAuthorizationToken} from "../../../utils/JWTHelper";
+import {handleError, errors} from "../../../../utils/HttpHelper"
+import {verifyBearerToken, parseAuthorizationToken} from "../../../../utils/JWTHelper";
 import {ClientModel, UserModel} from "./AuthenticationModel";
 
 require('dotenv').config();

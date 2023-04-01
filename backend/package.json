@@ -26,6 +26,10 @@
         "mocha",
         "jest",
         "istanbul",
+        "swagger",
+        "server",
+        "socket.io",
+        "socket-io",
         "nyc",
         "eslint",
         "Travis CI",
@@ -133,15 +137,13 @@
     "scripts": {
         "build": "tsc",
         "start": "node build/index.js",
-        "dev": "npx ts-node src/index.ts",
-        "dev2": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
-        "swaggerizer": "node src/swagger-index.js"
+        "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
+        "swg": "node src/app/docs/output/swagger.json"
     },
     "nodemonConfig": {
         "ext": "js",
         "ignore": [
-            "*.test.ts",
-            "db/*"
+            "*.test.ts"
         ],
         "delay": 2
     }

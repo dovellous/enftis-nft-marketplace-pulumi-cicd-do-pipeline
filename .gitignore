@@ -22,6 +22,10 @@ frontend/logs
 frontend/build
 frontend/cert
 
+# hardhat dev folders
+hardhat/node_modules
+hardhat/.idea
+
 # infra dev folders
 pulumi/node_modules
 
