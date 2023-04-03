@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 const router = express.Router();
 
-import {clientGet, clientPost, clientPut, clientPatch, clientDelete, clientMiddleware, IClient, ClientModel} from "./client/ClientController";
+import {clientGet, clientGetAll, clientPost, clientPut, clientPatch, clientDelete, clientMiddleware, IClient, ClientModel} from "./client/ClientController";
 import {signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress} from "./user/UserController";
 
 const {
@@ -26,11 +26,18 @@ router.post(
     clientPost
 );
 
-// Read Client Model
+// Retrieve a single Client Model
 router.get(
     '/client/:device_id',
     [],
     clientGet
+);
+
+// Retrieve all Client Models
+router.get(
+    '/client',
+    [],
+    clientGetAll
 );
 
 // Update Client Model

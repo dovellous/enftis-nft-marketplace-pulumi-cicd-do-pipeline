@@ -20,6 +20,15 @@ const modelGetClientByDeviceId = async  (deviceId: string) : Promise<  IClient|a
 	
 }
 
+// Get the client model by its deviceId
+const modelGetAllClients = async  () : Promise<  Array<IClient|any|null> > => {
+	
+	const clients:  Array<IClient|any|null> = await ClientModel.find({});
+	
+	return clients;
+	
+}
+
 // Get the client model by its Id
 const modelGetClientById = async  (id: string) : Promise<  IClient|any|null >  => {
 	
@@ -289,6 +298,107 @@ const clientGet = async (req: any, res: any, next: any) => {
 			
 			// Dump the HTTP 400 response
 			handleError(res, errors.BAD_REQUEST, 'Missing or invalid client parameters', {});
+			
+		}
+		
+	} catch (error: any) {
+		
+		/* #swagger.responses[500] = {
+			description: "Server error while retrieving client.",
+			schema: {
+				status: 'error',
+				error: 'SERVER_ERROR',
+				message: 'INTERNAL_SERVER_ERROR_CLIENT_MODEL_GET',
+			}
+		} */
+		
+		// Dump the HTTP 500 response
+		handleError(res, errors.INTERNAL_SERVER_ERROR, 'Internal Server error during client registration', error);
+		
+	}
+	
+	// #swagger.end
+	
+};
+
+/*
+ * Gets an existing Client
+ *
+ * @param req : Request - Client request object
+ * @param res : Response - Server response object
+ * @params next : - Middleware
+ * @returns void
+ *
+ */
+const clientGetAll = async (req: any, res: any, next: any) => {
+	
+	// #swagger.start
+	
+	/* 	#swagger.tags = ['Client']
+        #swagger.description = 'Endpoint to get an already existing client model'
+        #swagger.summary = 'Gets an existing Client'
+        
+        #swagger.path = '/auth/client'
+		#swagger.method = 'get'
+		#swagger.produces = ['application/json']
+		#swagger.consumes = ['application/json']
+
+	*/
+	
+	/* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+	
+	// Try to update a model
+	try {
+		
+		// Get the client from the database
+		const clients:  IClient|any|null = await modelGetAllClients();
+		
+		const clientsArray: Array<IClient|any|null> = [];
+		
+		// If all the parameters are available, its a go
+		if (clients.length > 0) {
+			
+			clients.map((client:IClient|any|null)=> {
+				
+				// Return the clientSecret as unencrypted
+				client.clientSecret = '';
+				
+				// No need to return back the device public key
+				client.clientDevicePubKey = '';
+				
+				// Instead return the server public key so that data to the server is always encrypted
+				client.serverDevicePubKey = base64Encode(getServerPublicKey());
+				
+				// Push the client to the array
+				clientsArray.push(client);
+				
+			});
+			
+			/* #swagger.responses[201] = {
+				description: 'Client updated successfully.',
+				schema: {
+					$ref: '#/definitions/Client'
+				}
+			} */
+			
+			// Dump the HTTP 201 response
+			handleResponse(req, res, next, clientsArray, 201);
+			
+		} else {
+			
+			/* #swagger.responses[404] = {
+						description: 'Client device not found.',
+						schema: {
+							status: 'error',
+							error: 'NOT_FOUND',
+							message: 'CLIENT_MODEL_NOT_FOUND_GET',
+						}
+					} */
+			
+			// Dump the HTTP 404 response
+			handleResponse(req, res, next, {}, 404);
 			
 		}
 		
@@ -617,4 +727,4 @@ const checkClient: RequestHandler = async (req: any, res: any, next: any) => {
 
 const clientMiddleware:any = { checkClient }
 
-export {clientGet, clientPost, clientPut, clientPatch, clientDelete, clientMiddleware, IClient, ClientModel}
+export {clientGet, clientGetAll, clientPost, clientPut, clientPatch, clientDelete, clientMiddleware, IClient, ClientModel}

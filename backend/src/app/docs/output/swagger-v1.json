@@ -181,6 +181,79 @@
             "bearerAuth": []
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "Client"
+        ],
+        "summary": "Gets an existing Client",
+        "description": "Endpoint to get an already existing client model",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Client updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "404": {
+            "description": "Client device not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "error"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "NOT_FOUND"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "CLIENT_MODEL_NOT_FOUND_GET"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Server error while retrieving client.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "error"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "SERVER_ERROR"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "INTERNAL_SERVER_ERROR_CLIENT_MODEL_GET"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/v1/auth/client/{device_id}": {
