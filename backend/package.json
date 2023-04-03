@@ -1,11 +1,19 @@
 {
-    "name": "dvs-mern-backend",
-    "license": "MIT",
+    "name": "node-react-hardhat-pulumi-do-backend",
     "version": "1.0.0",
-    "description": "Node.js + MongoDB + ExpressJS + JWT",
+    "private": true,
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dovellous/node-react-hardhat-pulumi-do.git"
+    },
+    "author": {
+        "name": "Dovellous/@Code_Writer",
+        "email": "dovelous@gmail.com",
+        "url": "https://dovellous.com"
+    },
     "main": "src/index.ts",
     "types": "types/*/*.d.ts",
-    "private": true,
     "keywords": [
         "node.js",
         "express",
@@ -40,7 +48,6 @@
         "generator",
         "starter project"
     ],
-    "author": "@dovellous",
     "dependencies": {
         "@types/crypto-js": "^4.1.1",
         "ajv": "^8.12.0",

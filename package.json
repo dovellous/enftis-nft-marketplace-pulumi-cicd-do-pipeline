@@ -1,17 +1,40 @@
 {
-    "name": "fullstack-pulumi-mern-digitalocean",
-    "version": "0.0.1",
+    "name": "node-react-hardhat-pulumi-do",
+    "version": "1.0.0",
     "private": true,
+    "keywords": [
+        "smart contracts",
+        "bep20",
+        "erc20",
+        "erc721",
+        "erc1155",
+        "etherium",
+        "binance",
+        "solana",
+        "bitcoin",
+        "polygon",
+        "solidity",
+        "truffle",
+        "hardhat"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dovellous/node-react-hardhat-pulumi-do.git"
+    },
+    "author": {
+        "name": "Dovellous/@Code_Writer",
+        "email": "dovelous@gmail.com",
+        "url": "https://dovellous.com"
+    },
     "dependencies": {
         "@types/jest": "^29.5.0",
-        "@types/node": "^18.15.10",
-        "@types/react": "^18.0.29",
-        "@types/react-dom": "^18.0.11",
-        "concurrently": "^7.6.0",
-        "typescript": "^5.0.2"
+        "@types/node": "^18.15.11",
+        "concurrently": "^8.0.1",
+        "typescript": "^5.0.3"
     },
     "scripts": {
-        "install": "npm -C frontend install && npm -C backend install",
+        "install-all": "npm -C frontend install && npm -C backend install && npm -C hardhat install && npm -C pulumi install",
         "start": "concurrently 'npm -C backend run dev2' 'npm -C frontend run start'"
     }
 }

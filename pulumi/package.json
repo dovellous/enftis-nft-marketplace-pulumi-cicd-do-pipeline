@@ -1,15 +1,39 @@
 {
-    "name": "dvs-mern-deployer",
-    "description": "MongoDB + App + Cluster on Digital Ocean",
-    "license": "MIT",
+    "name": "node-react-hardhat-pulumi-do-pulumi",
     "version": "1.0.0",
+    "private": true,
+    "keywords": [
+        "smart contracts",
+        "bep20",
+        "erc20",
+        "erc721",
+        "erc1155",
+        "etherium",
+        "binance",
+        "solana",
+        "bitcoin",
+        "polygon",
+        "solidity",
+        "truffle",
+        "hardhat"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dovellous/node-react-hardhat-pulumi-do.git"
+    },
+    "author": {
+        "name": "Dovellous/@Code_Writer",
+        "email": "dovelous@gmail.com",
+        "url": "https://dovellous.com"
+    },
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^18"
     },
     "dependencies": {
         "@pulumi/digitalocean": "^4.19.1",
-        "@pulumi/pulumi": "^3.60.0",
+        "@pulumi/pulumi": "^3.60.1",
         "cross-var": "^1.1.0",
         "dotenv-cli": "^7.1.0"
     },
