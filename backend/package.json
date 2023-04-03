@@ -138,7 +138,8 @@
         "build": "tsc",
         "start": "node build/index.js",
         "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
-        "swg": "node src/app/docs/output/swagger.json"
+        "swg": "node src/app/docs/generator/swagger.js",
+        "ini": "yarn swg && yarn dev"
     },
     "nodemonConfig": {
         "ext": "js",

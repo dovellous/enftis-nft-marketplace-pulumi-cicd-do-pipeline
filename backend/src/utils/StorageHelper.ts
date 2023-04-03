@@ -4,16 +4,22 @@ const NodeStorage = require('node-storage');
 // or just load an existing file
 const store = new NodeStorage('../storage/data.json');
 
-const getItem = (key) => {
+const getItem = (key:string) => {
 
 	return store.get(key);
 
 }
 
-const setItem = (key, value) => {
-
-	store.set(key, value);
-
+const setItem = (key:string, value:any) => {
+	
+	store.put(key, value);
+	
 }
 
-module.exports = {store, setItem, getItem}
+const delItem = (key:string, value:any) => {
+	
+	store.remove(key, value);
+	
+}
+
+export {store, setItem, getItem, delItem}

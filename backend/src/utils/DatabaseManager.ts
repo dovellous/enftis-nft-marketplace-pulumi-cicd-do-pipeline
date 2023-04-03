@@ -9,6 +9,8 @@ const DatabaseManager = class DatabaseManagerClass {
     cxnOptions:any;
     
     cxnDBInstance:any;
+    
+    _callbackOnFailure:any;
 
     /* Constructor */
 
@@ -33,14 +35,14 @@ const DatabaseManager = class DatabaseManagerClass {
         this.cxnDBInstance.on("error", this.onConnectionError);
     
         this.cxnDBInstance.once("open", this.onConnectionOpen);
-
-        this.connect();
         
     }
 
     /* Public Instance Methods */
 
-    connect(){
+    connect(callbackOnFailure: Function){
+        
+        this._callbackOnFailure = callbackOnFailure;
 
         return mongoose.connect(this.cxnString, this.cxnOptions);
 
@@ -54,7 +56,9 @@ const DatabaseManager = class DatabaseManagerClass {
     
     onConnectionError(){
 
-        Logger.error('Connection error!')
+        Logger.error('Connection error!');
+    
+        this._callbackOnFailure();
     
     }
     

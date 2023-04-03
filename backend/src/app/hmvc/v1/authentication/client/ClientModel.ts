@@ -39,7 +39,6 @@ const clientSchema = new Schema<IClient>({
     },
     clientDeviceUserAgent: {
         type: String,
-        lowercase: true,
         trim: true,
         required: true,
         min: 6,
@@ -91,4 +90,4 @@ const ClientModel = model<IClient>(modelName, clientSchema);
 // so the collection is capped.
 ClientModel.createCollection();
 
-export {IClient, ClientModel};
+export {ClientModel, IClient};

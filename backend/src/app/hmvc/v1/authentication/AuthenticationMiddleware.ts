@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import jwt from "jsonwebtoken";
 import {handleError, errors} from "../../../../utils/HttpHelper"
 import {verifyBearerToken, parseAuthorizationToken} from "../../../../utils/JWTHelper";
-import {ClientModel, UserModel} from "./AuthenticationModel";
+import {UserModel} from "./user/UserController";
 
 require('dotenv').config();
 
@@ -120,42 +120,6 @@ const checkToken = (req: any, res: any, next: any) => {
     
 };
 
-const checkClient = async (req: any, res: any, next: any) => {
-    
-    const authorizationHeader: string = req.headers["authorization"];
-    
-    if (!authorizationHeader) {
-        
-        return handleError(res, errors.BAD_REQUEST, 'Invalid client. Missing authorization header', req.headers);
-        
-    }
-    
-    const usernamePassword: string = parseAuthorizationToken(authorizationHeader);
-    
-    if(usernamePassword){
-        
-        let [clientId, clientSecret]:Array<string> = atob(usernamePassword).split(":");
-        
-        console.log(clientId, clientSecret);
-    
-        const client = await ClientModel.findOne({clientId: clientId}).select('+clientSecret');
-    
-        if (client && (await bcrypt.compare(clientSecret, client.clientSecret))) {
-
-            req.clientId = clientId;
-            
-            next();
-            
-        }else{
-    
-            return handleError(res, errors.FORBIDDEN_ERROR, 'Invalid client', {clientId});
-    
-        }
-        
-    }
-    
-};
-
 const checkParameters = (req: any, res: any, next: any) => {
 
     const {emailAddress, username, password} = req.body;
@@ -183,6 +147,5 @@ module.exports = {
     checkDuplicateEmailAddress,
     checkDuplicateUsername,
     checkParameters,
-    checkClient,
     checkToken
 };

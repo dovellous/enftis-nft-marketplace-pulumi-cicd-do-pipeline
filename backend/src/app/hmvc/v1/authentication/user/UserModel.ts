@@ -1,6 +1,5 @@
 import {Schema, Types, model} from 'mongoose';
 import {autoIncrement} from 'mongoose-plugin-autoinc';
-
 const modelName: string = 'User';
 
 interface IUser {
@@ -9,8 +8,10 @@ interface IUser {
     lastName: String;
     username: String;
     emailAddress: String;
+    emailAddressVerified: Boolean;
     password?: String;
     phoneNumber?: String;
+    phoneNumberVerified?: Boolean;
     photoURL?: String;
     age?: Number;
     accessLevels?: Schema.Types.Mixed;
@@ -32,6 +33,7 @@ interface IAccessLevels {
     permissions: Types.Array<any>;
 }
 
+
 const userSchema = new Schema<IUser>({
     firstName: {
         type: String,
@@ -48,8 +50,8 @@ const userSchema = new Schema<IUser>({
         lowercase: true,
         trim: true,
         required: true,
-        min: 6,
-        max: 16
+        minlength: 8,
+        maxlength: 16,
     },
     emailAddress: {
         type: String,
@@ -57,6 +59,11 @@ const userSchema = new Schema<IUser>({
         trim: true,
         unique: true,
         required: true,
+    },
+    emailAddressVerified: {
+        type: Boolean,
+        required: false,
+        default: false,
     },
     password: {
         type: String,
@@ -76,6 +83,11 @@ const userSchema = new Schema<IUser>({
             trim: true,
             required: false,
         },
+    },
+    phoneNumberVerified: {
+        type: Boolean,
+        required: false,
+        default: false,
     },
     photoURL: {
         type: String,
@@ -169,4 +181,4 @@ const UserModel = model<IUser>(modelName, userSchema);
 // so the collection is capped.
 UserModel.createCollection();
 
-export {IUser, IFirebaseUser, IAccessLevels, UserModel};
+export {IFirebaseUser, IAccessLevels, UserModel, IUser};

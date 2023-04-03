@@ -1,70 +1,8 @@
-import * as fs from "fs";
-import {handleResponse, handleError, errors} from "../../../../utils/HttpHelper";
-import {hash, base64Encode, getServerPublicKey} from "../../../../utils/Cryptography";
-import {signBearerToken} from "../../../../utils/JWTHelper";
-
-import {UserModel, IClient, ClientModel, IUser} from "./AuthenticationModel";
+import {handleResponse, handleError, errors} from "../../../../../utils/HttpHelper";
+import {signBearerToken} from "../../../../../utils/JWTHelper";
+import {UserModel, IUser} from "./UserModel";
 
 const bcrypt = require("bcryptjs");
-
-const clientRegister = async (req:any, res:any, next: any) => {
-
-	// Our device registration logic starts here
-	try {
-		
-		// Get device input
-		const { device_name, device_uid, device_pub_key, device_agent } = req.body;
-		
-		if (device_name && device_uid && device_agent) {
-			
-			const clientId:string = hash(`${device_uid}:${device_name}:${device_agent}:${device_pub_key}`, 'md5');
-			
-			const clientSecret:string = hash(`${clientId}:${device_pub_key}`, 'sha256');
-			
-			//Encrypt client password
-			const encryptedClientSecret = await bcrypt.hash(clientSecret, 10);
-			
-			const clientDevicePubKey:string = base64Encode(device_pub_key);
-			
-			const clientData:IClient = {
-				clientDeviceId: device_uid,
-				clientDeviceName: device_name,
-				clientDevicePubKey: clientDevicePubKey,
-				clientDeviceUserAgent: device_agent,
-				clientId: clientId,
-				clientSecret: encryptedClientSecret,
-			};
-			
-			// Create client in our database
-			// @ts-ignore
-			const client:IClient = await ClientModel.create(clientData);
-			
-			client.clientSecret = clientSecret;
-			
-			client.clientDevicePubKey = '';
-			
-			delete client.clientDevicePubKey;
-			
-			const serverPubKey = getServerPublicKey();
-
-			client.serverDevicePubKey = base64Encode(serverPubKey);
-
-			// client
-			handleResponse(req, res, next, client, 201);
-			
-		} else {
-			
-			handleError(res, errors.BAD_REQUEST, "Missing or invalid registration parameters", {});
-			
-		}
-		
-	} catch (error:any) {
-		
-		handleError(res, errors.INTERNAL_SERVER_ERROR, "Unknown registration error", error);
-		
-	}
-	
-};
 
 const signUp = async (req:any, res:any, next: any) => {
 
@@ -112,21 +50,31 @@ const signUp = async (req:any, res:any, next: any) => {
 };
 
 const signIn = async(req:any, res:any, next: any) => {
-
+	
+	// #swagger.auto = false
+	
 	/* 	#swagger.tags = ['User']
         #swagger.description = 'Endpoint to sign in / login a specific user' */
 
 	/*	#swagger.parameters['obj'] = {
             in: 'body',
-            description: 'User information.',
+            description: 'User informationx.',
             required: true,
-            schema: { $ref: "#/definitions/AddUser" }
+            schema: { $ref: "#/definitions/User" }
     } */
 
 	/* #swagger.security = [{
             "apiKeyAuth": []
     }] */
-
+	
+	/* #swagger.responses[200] = {
+				  schema: { "$ref": "#/definitions/User" },
+				  description: "User registered successfully." } */
+	
+	/* #swagger.responses[400] = {
+				  schema: { "$ref": "#/definitions/User" },
+				  description: "Plz use correct params." } */
+	
 	// Our login logic starts here
 	try {
 		// Get user input
@@ -255,4 +203,4 @@ const verifyEmailAddress = () => {
 
 };
 
-module.exports = {clientRegister, signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress}
+export {signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress, IUser, UserModel}

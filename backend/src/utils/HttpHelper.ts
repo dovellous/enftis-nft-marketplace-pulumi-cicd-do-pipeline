@@ -1,3 +1,5 @@
+import {Logger} from "./LoggerHelper";
+
 const errors = {
 	OK: 'OK',
 	CREATED: 'CREATED',
@@ -11,6 +13,10 @@ const errors = {
 }
 
 const handleError = ( res: any, status: any, message: any, payload: any ) => {
+	
+	Logger.error(['HTTP Error', status, message]);
+	
+	res.setHeader('Content-Type', 'application/json');
 	
 	switch( status ) {
 
@@ -105,6 +111,10 @@ const handleError = ( res: any, status: any, message: any, payload: any ) => {
 }
 
 const handleResponse = (req: any, res: any, next: any, payload: any, code: number = 200) => {
+	
+	Logger.log(['HTTP Response', code]);
+	
+	res.setHeader('Content-Type', 'application/json');
 
 	res.status(code).json(payload).end();
 	

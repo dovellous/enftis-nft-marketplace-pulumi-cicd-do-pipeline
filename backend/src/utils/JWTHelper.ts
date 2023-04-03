@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken');
 
 const { JWT_SECRET, JWT_TOKEN_EXPIRATION } = process.env;
 
-const parseAuthorizationToken = (bearer: string) => {
-    const [_, token] = bearer.trim().split(" ");
+const parseAuthorizationToken = (authorizationHeader: string) => {
+    const [_, token] = authorizationHeader.trim().split(" ");
     return token;
 };
 
@@ -30,8 +30,6 @@ const verifyBearerToken = (authorizationHeader:string, callBackFunction:any) => 
                 callBackFunction(false);
                 
             }else{
-
-                console.log(decoded);
     
                 callBackFunction(decoded);
     

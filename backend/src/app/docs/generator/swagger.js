@@ -12,7 +12,7 @@ const doc = {
     },
     host: "127.0.0.1:"+port,
     basePath: "/",
-    schemes: ['http', 'https'],
+    schemes:  ['http', 'https'],
     consumes: ['application/json'],
     produces: ['application/json'],
     tags: [
@@ -24,48 +24,24 @@ const doc = {
             "name": "User",
             "description": "User Endpoints: The User Model"
         },
-        {
-            "name": "NFTs",
-            "description": "User Endpoints: The User Model"
-        },
-        {
-            "name": "Collections",
-            "description": "User Endpoints: The User Model"
-        },
-        {
-            "name": "Charts",
-            "description": "User Endpoints: The User Model"
-        },
-        {
-            "name": "Domains",
-            "description": "User Endpoints: The User Model"
-        },
-        {
-            "name": "Land",
-            "description": "User Endpoints: The User Model"
-        },
-        {
-            "name": "Art",
-            "description": "User Endpoints: The User Model"
-        },
-        {
-            "name": "Music",
-            "description": "User Endpoints: The User Model"
-        },
-        {
-            "name": "Gaming",
-            "description": "User Endpoints: The User Model"
-        },
     ],
     securityDefinitions: {
-        apiKeyAuth:{
-            type: "apiKey",
-            in: "header",    // can be "header", "query" or "cookie"
-            name: "Bearer",  // name of the header, query parameter or cookie
-            description: "The bearer to authenticate the request."
+        apiKeyAuth: {
+            type: 'apiKey',
+            in: 'header', // can be 'header', 'query' or 'cookie'
+            name: 'X-API-KEY', // name of the header, query parameter or cookie
+            description: 'Some description...'
+        },
+        bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
         }
     },
     definitions: {
+        Roles: {
+            enum: ['root', 'super-admin', 'tenant-admin', 'editor', 'moderator', 'observer', 'subscriber', 'guest']
+        },
         Client: {
             clientDeviceId: 'SERIAL1234567890',
             clientDeviceName: 'My Device #001',
@@ -83,7 +59,10 @@ const doc = {
             password: 'pass123',
             phoneNumber: '+1 (234) 567 8901',
             photoURL: 'https://img.com',
-            age: '24',
+            age: 24,
+            isActive: true,
+            emailAddressVerified: false,
+            phoneNumberVerified: false,
             accessLevels: {
                 defaultRole: 'admin',
                 roles: ['admin', 'observer'],
@@ -101,12 +80,35 @@ const doc = {
                 $ref: '#/definitions/Client'
             },
         },
+    },
+    components: {
+        examples : {
+            ClientResponse201: {
+                clientDeviceId: 'SERIAL1234567890',
+                clientDeviceName: 'My Device #001',
+                clientDevicePubKey: 'client.public.pem',
+                serverDevicePubKey: 'server.public.pem',
+                clientDeviceUserAgent: 'Device Browser v 5.0.0',
+                $clientId: 'a187ao9a3afe36a3984ca7',
+                $clientSecret: 'cco9a3afe36a187ao9a3afe36a3984ca7a3984ca7a187ao9a3afe36a3984ca7',
+            },
+            ClientResponse400: {
+                status: 'error',
+                error: 'BAD_REQUEST',
+                message: 'INVALID_PARAMETERS_CLIENT_MODEL',
+            },
+            ClientResponse500: {
+                status: 'error',
+                error: 'SERVER_ERROR',
+                message: 'INTERNAL_SERVER_ERROR_CLIENT_MODEL',
+            }
+        }
     }
 }
 
 const outputFile = './src/app/docs/output/swagger-'+version+'.json'
-const endpointsFiles = ['./src/index.ts']
+const endpointsFiles = ['./src/index']
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-    require('./src/index.ts') // Your project's root file
+    console.log('Docs updated!');
 })

@@ -1,7 +1,5 @@
 /* Import Modules */
 import express from "express";
-import DatabaseManager from "../src/utils/DatabaseManager";
-import {generateCertificates as InitializeServerCertificates} from "./utils/Cryptography";
 
 /* Environment Variables */
 require('dotenv').config();
@@ -22,13 +20,9 @@ const morgan = require('morgan');
 const app = express();
 app.use(express.json());
 
-/* MongoDB Database Connector */
-const MongoDBConnection = new DatabaseManager();
-
 /* Routes */
 const Router = require("./app/router/app-router");
-
-app.use(prefix,Router);
+app.use(Router);
 
 /* Initialize Swagger UI */
 const swaggerUi = require('swagger-ui-express');
@@ -37,14 +31,5 @@ const swaggerUi = require('swagger-ui-express');
 app.use(apiDocs, swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 /* Start the Server */
-app.listen(port, () => {
-    
-    // Connect DB
-    MongoDBConnection.connect();
-    
-    // Generate server certificate if they don't exists
-    InitializeServerCertificates();
-
-    console.log(`Listening on port ${port}`);
-
-});
+const {startServer} = require("./app/services/Server");
+startServer(app, port);

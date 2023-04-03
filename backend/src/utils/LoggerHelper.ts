@@ -1,16 +1,12 @@
 'use strict';
 
-const logger = require('node-color-log');
-
-const winston = require('winston');
-
 const { createLogger, format, transports } = require('winston');
 
 const { combine, timestamp, label, printf } = format;
 
 const myFormat = printf((params:any) => {
     const { level, message, label, timestamp }:any = params;
-    return `${timestamp} [${label}] [${level}]: ${message}`;
+    return `${timestamp} [${label.toString().toUpperCase()}] [${level.toString().toUpperCase()}]: ${message}`;
 });
 
 const _logger = createLogger({
@@ -28,19 +24,9 @@ const _logger = createLogger({
         //
         new transports.File({ filename: 'logs/error.log', level: 'error' }),
         new transports.File({ filename: 'logs/combined.log' }),
-        new transports.Console({ level: 'error' }),
+        new transports.Console(),
     ],
 });
-
-//
-// If we're not in production then log to the `console` with the format:
-// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
-//
-if (process.env.NODE_ENV !== 'production') {
-    _logger.add(new transports.Console({
-        format: winston.format.simple(),
-    }));
-}
 
 const LoggerHelper = class LoggerClass {
     /* Private Instance Fields */
@@ -58,32 +44,26 @@ const LoggerHelper = class LoggerClass {
     /* Public Instance Methods */
 
     log(payload: any){
-        if(!this.isProduction) logger.dim().debug(payload);
         _logger.info(payload)
     }
 
     debug(payload: any){
-        if(!this.isProduction) logger.debug(payload);
-        _logger.info(payload)
+        _logger.debug(payload)
     }
 
     info(payload: any){
-        if(!this.isProduction) logger.info(payload);
         _logger.info(payload)
     }
 
     success(payload: any){
-        if(!this.isProduction) logger.success(payload);
         _logger.info(payload)
     }
 
     warn(payload: any){
-        if(!this.isProduction) logger.warn(payload);
-        _logger.info(payload)
+        _logger.warn(payload)
     }
 
     error(payload: any){
-        if(!this.isProduction) logger.error(payload);
         _logger.error(payload)
     }
 

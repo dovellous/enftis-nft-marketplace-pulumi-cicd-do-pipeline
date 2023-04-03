@@ -1,31 +1,89 @@
 import express, {Request, Response} from "express";
-const router = require('express').Router();
-const routerPrefix = ''
+const router = express.Router();
 
-const {clientRegister, resetPassword, signIn, signUp, profileMe, profileSave, verifyEmailAddress} = require("./AuthenticationController");
+import {clientGet, clientPost, clientPut, clientPatch, clientDelete, clientMiddleware, IClient, ClientModel} from "./client/ClientController";
+import {signIn, signUp, profileMe, profileSave, resetPassword, verifyEmailAddress} from "./user/UserController";
 
 const {
     checkDuplicateUsername,
     checkDuplicateEmailAddress,
     checkParameters,
-    checkClient,
     checkToken
 } = require("./AuthenticationMiddleware");
 
-router.get(`${routerPrefix}/`, async (req: Request, res: Response) => {
-
-    res.send(`Authentication APIs`).end();
+router.get('/', async (req: Request, res: Response) => {
+    
+    res.send('Authentication APIs').end();
 
 });
 
+// - Begin Client CRUD Router
+
+// Create Client Model
 router.post(
-    `${routerPrefix}/client/register`,
+    '/client',
     [],
-    clientRegister
+    clientPost
+);
+
+// Read Client Model
+router.get(
+    '/client/:device_id',
+    [],
+    clientGet
+);
+
+// Update Client Model
+router.put(
+    '/client/:device_id',
+    [],
+    clientPut
+);
+
+// Patch Client Model
+router.patch(
+    '/client/:device_id',
+    [],
+    clientPatch
+);
+
+// Delete Client Model
+router.delete(
+    '/client/:device_id',
+    [],
+    clientDelete
+);
+
+// - End Client CRUD Router
+
+/*
+
+router.get(
+    '/client/:id',
+    [
+        checkClient
+    ],
+    clientDetails
+);
+
+router.put(
+    '/client',
+    [
+        checkClient
+    ],
+    clientUpdate
+);
+
+router.delete(
+    '/client/:id',
+    [
+        checkClient
+    ],
+    clientDelete
 );
 
 router.post(
-    `${routerPrefix}/sign-up`,
+    '/sign-up',
     [
         checkClient,
         checkDuplicateUsername,
@@ -35,7 +93,7 @@ router.post(
 );
 
 router.post(
-    `${routerPrefix}/sign-in`,
+    '/sign-in',
     [
         checkClient,
         checkParameters
@@ -44,7 +102,7 @@ router.post(
 );
 
 router.get(
-    `${routerPrefix}/profile/me`,
+    '/profile/me',
     [
         checkToken
     ],
@@ -52,12 +110,14 @@ router.get(
 );
 
 router.post(
-    `${routerPrefix}/profile/me`,
+    '/profile/me',
     [
         checkToken
     ],
     profileSave
 );
+
+*/
 
 router.get('*', async (req: Request, res: Response) => {
 
