@@ -46,7 +46,7 @@ const app = new digitalocean.App("app", {
                     deployOnPush: true,
                 },
                 sourceDir: "/frontend",
-                buildCommand: "yarn install --force && yarn build",
+                buildCommand: "npm install --force --legacy-peer-deps && yarn build",
                 outputDir: "/build",
             }
         ],
