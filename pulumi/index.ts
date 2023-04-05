@@ -46,7 +46,7 @@ const app = new digitalocean.App("app", {
                     deployOnPush: true,
                 },
                 sourceDir: "/frontend",
-                buildCommand: "npm install && npm run build",
+                buildCommand: "yarn install --force && yarn build",
                 outputDir: "/build",
             }
         ],
@@ -61,7 +61,7 @@ const app = new digitalocean.App("app", {
                     deployOnPush: true,
                 },
                 sourceDir: "/backend",
-                buildCommand: "npm install && npm run build",
+                buildCommand: "yarn install --force && yarn run build",
                 runCommand: "npm run start",
                 httpPort: 8000,
                 routes: [

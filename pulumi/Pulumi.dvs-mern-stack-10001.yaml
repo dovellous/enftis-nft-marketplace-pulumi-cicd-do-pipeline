@@ -1,9 +1,0 @@
-config:
-  dvs-mern-services:branch: '''main'''
-  dvs-mern-services:repo: '''dovellous/node-server-express-mongo-jwt'''
-  dvs-mern-services:service_db_count: "1"
-  dvs-mern-services:service_db_engine: '''mongodb'''
-  dvs-mern-services:service_db_version: "'6'"
-  dvs-mern-services:service_instance_count: "1"
-  dvs-mern-services:service_instance_size: '''basic-xxs'''
-  dvs-mern-services:services_name: '''dvs-mern-stack-001'''
