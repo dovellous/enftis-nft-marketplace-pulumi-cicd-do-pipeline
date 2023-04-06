@@ -147,7 +147,7 @@
         "build2": "yarn clean2 && tsc && yarn copy-files",
         "clean": "rm -rf ./build",
         "clean2": "rmdir /s /q .\\build",
-        "copy-files": "cp ./src/app/docs ./build/app/docs -r",
+        "copy-files": "cp -R ./src/app/docs ./build/app/docs && cp -R ./src/app/router ./build/app/router ",
         "copy-files2": "xcopy Z:\\git\\apps\\dvs-mern-services\\src\\app\\docs Z:\\git\\apps\\dvs-mern-services\\build\\app\\docs /e /c /h /k /o /y",
         "start": "node build/index.js",
         "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
