@@ -48,9 +48,11 @@
         "config-8": "dotenv cross-var pulumi config set services_name '%PULUMI_SERVICES_NAME%'",
         "config-9": "dotenv cross-var echo export DIGITALOCEAN_TOKEN=%DIGITALOCEAN_TOKEN% && echo $DIGITALOCEAN_TOKEN",
         "configs" : "npm run config-1 && npm run config-2 && npm run config-3 && npm run config-4 && npm run config-5 && npm run config-6 && npm run config-7 && npm run config-8 && npm run config-9",
-        "live": "npm run configs && pulumi up",
+        "live": "npm run configs && pulumi refresh && pulumi up",
+        "refresh": "pulumi refresh",
         "destroy": "pulumi destroy",
         "start": "npm run live",
-        "kill": "npm run destroy"
+        "kill": "npm run destroy",
+        "org": "pulumi org set-default dovellous-nodes"
     }
 }
