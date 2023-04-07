@@ -22,7 +22,7 @@ app.use(express.json());
 
 /* Routes */
 const Router = require("./app/router/app-router");
-app.use(Router);
+app.use('/api', Router);
 
 /* Initialize Swagger UI */
 const swaggerUi = require('swagger-ui-express');

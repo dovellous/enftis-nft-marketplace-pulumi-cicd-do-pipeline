@@ -144,15 +144,20 @@
     },
     "scripts": {
         "build": "yarn clean && tsc && yarn copy-files",
-        "build2": "yarn clean2 && tsc && yarn copy-files",
+        "build-win": "yarn clean-win && tsc && yarn copy-files-win",
         "clean": "rm -rf ./build",
-        "clean2": "rmdir /s /q .\\build",
+        "clean-win": "rmdir /s /q .\\build",
         "copy-files": "cp -R ./src/app/docs ./build/app/docs && cp -R ./src/app/router ./build/app/router ",
-        "copy-files2": "xcopy Z:\\git\\apps\\dvs-mern-services\\src\\app\\docs Z:\\git\\apps\\dvs-mern-services\\build\\app\\docs /e /c /h /k /o /y",
-        "start": "node build/index.js",
-        "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
+        "copy-files-win": "yarn copy-files1 && yarn copy-files2",
+        "copy-files1": "xcopy 'Z:\\git\\apps\\dvs-mern-services\\src\\app\\docs' 'Z:\\git\\apps\\dvs-mern-services\\build\\app\\docs' /e /c /h /k /o /y",
+        "copy-files2": "xcopy 'Z:\\git\\apps\\dvs-mern-services\\src\\app\\docs' 'Z:\\git\\apps\\dvs-mern-services\\build\\app\\docs' /e /c /h /k /o /y",
+        "start": "NODE_ENV=production node build/index.js",
+        "dev": "NODE_ENV=dev ts-node-dev --respawn --pretty --transpile-only src/index.ts",
         "swg": "node src/app/docs/generator/swagger.js",
-        "ini": "yarn swg && yarn dev"
+        "ini": "yarn swg && yarn dev",
+        "ini-win": "set NODE_ENV=production && yarn swg && yarn dev-win",
+        "start-win": "set NODE_ENV=production && node build/index.js",
+        "dev-win": "set NODE_ENV=dev && ts-node-dev --respawn --pretty --transpile-only src/index.ts"
     },
     "nodemonConfig": {
         "ext": "js",
