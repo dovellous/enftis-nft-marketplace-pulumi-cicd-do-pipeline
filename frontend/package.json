@@ -235,7 +235,6 @@
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "rimraf": "^5.0.0",
-    "semantic-release": "^21.0.1",
     "start-server-and-test": "^2.0.0",
     "storybook": "^7.0.2",
     "tailwindcss": "^3.3.1",
@@ -250,19 +249,6 @@
     "branches": [
       "main"
     ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      "@semantic-release/git",
-      "@semantic-release/github"
-    ]
   },
   "eslintConfig": {
     "extends": [
