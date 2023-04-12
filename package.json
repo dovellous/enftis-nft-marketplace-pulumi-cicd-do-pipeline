@@ -35,6 +35,8 @@
     },
     "scripts": {
         "install-all": "npm -C frontend install && npm -C backend install && npm -C hardhat install && npm -C pulumi install",
-        "start": "concurrently 'npm -C backend run dev2' 'npm -C frontend run start'"
+        "start": "concurrently 'npm -C backend run dev2' 'npm -C frontend run start'",
+        "undo-commit": "git push -f origin HEAD^:main",
+        "commit": "git add . && git commit -m 'Keep Calm And Commit' && git push --force"
     }
 }
