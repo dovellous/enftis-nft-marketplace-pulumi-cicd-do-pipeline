@@ -57,9 +57,6 @@
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject"ß
   },
-  "engines" : { 
-    "node" : "16.16.0" 
-  },
   "dependencies": {
     "0xsequence": "^0.43.26",
     "@babel/core": "^7.21.4",
