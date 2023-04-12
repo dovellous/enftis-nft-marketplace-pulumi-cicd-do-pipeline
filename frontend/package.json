@@ -58,7 +58,7 @@
     "react-eject": "react-scripts eject"ß
   },
   "engines" : { 
-    "node" : "17.1.0" 
+    "node" : "16.16.0" 
   },
   "dependencies": {
     "0xsequence": "^0.43.26",
