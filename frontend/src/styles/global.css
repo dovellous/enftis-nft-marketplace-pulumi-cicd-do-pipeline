@@ -1,5 +1,9 @@
 @tailwind base;
 
+@tailwind components;
+
+@tailwind utilities;
+
 a {
   @apply text-blue-700;
 }
@@ -8,12 +12,8 @@ a:hover {
   @apply border-b-2 border-blue-700;
 }
 
-@tailwind components;
-
-@tailwind utilities;
-
 .content{
-    
+
 }
 
 .content p {
@@ -22,4 +22,43 @@ a:hover {
 
 .content ul {
   @apply my-6;
+}
+
+/* assign the Cal Sans font-family */
+html,
+body {
+  font-family: "Cal Sans";
+}
+
+/* usage samples with adjusted letter spacings */
+h1 {
+  font-size: 56px;
+}
+h2 {
+  font-size: 40px;
+  letter-spacing: 0.01em;
+}
+h3 {
+  font-size: 36px;
+  letter-spacing: 0.015em;
+}
+h4 {
+  font-size: 28px;
+  letter-spacing: 0.02em;
+}
+h5 {
+  font-size: 20px;
+  letter-spacing: 0.03em;
+}
+h6 {
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+.quote {
+  font-size: 24px;
+  letter-spacing: 0.02em;
+}
+.smaller_cal_sans {
+  font-size: 18px;
+  letter-spacing: 0.045em;
 }

@@ -55,7 +55,7 @@
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",
-    "react-eject": "react-scripts eject"ß
+    "react-eject": "react-scripts eject"
   },
   "dependencies": {
     "0xsequence": "^0.43.26",
@@ -95,6 +95,7 @@
     "babel-loader": "^9.1.2",
     "bootstrap": "^5.2.3",
     "buffer": "^6.0.3",
+    "cal-sans": "^1.0.1",
     "chart.js": "^4.2.1",
     "console-table-printer": "^2.11.1",
     "countdown-updated": "^2.7.0",
