@@ -248,7 +248,7 @@
   "release": {
     "branches": [
       "main"
-    ],
+    ]
   },
   "eslintConfig": {
     "extends": [

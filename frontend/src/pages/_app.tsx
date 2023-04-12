@@ -1,5 +1,3 @@
-import "cal-sans";
-
 import '../styles/dist.css';
 
 import type { AppProps } from 'next/app';
