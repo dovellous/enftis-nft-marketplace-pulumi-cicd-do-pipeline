@@ -55,10 +55,10 @@
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",
-    "react-eject": "react-scripts eject"
+    "react-eject": "react-scripts eject"ß
   },
   "engines" : { 
-    "node" : "18.15.0" 
+    "node" : "17.1.0" 
   },
   "dependencies": {
     "0xsequence": "^0.43.26",
