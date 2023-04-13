@@ -121,6 +121,7 @@
     "next-iron-session": "^4.2.0",
     "next-seo": "^6.0.0",
     "next-sitemap": "^4.0.7",
+    "nextra": "^2.3.0",
     "nft.storage": "^7.0.3",
     "node-sass": "^8.0.0",
     "nodemon": "^2.0.22",

@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "target": "es5",
-    "outDir": "build",
+    //"outDir": "build",
     "declaration": true,
     "sourceMap": true,
 
