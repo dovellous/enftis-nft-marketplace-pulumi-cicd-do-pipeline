@@ -1,9 +1,9 @@
-import '../styles/dist.css';
-
 import type { AppProps } from 'next/app';
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
+import '../styles/app.css';
+
+const App = ({ Component, pageProps }: AppProps) => (
   <Component {...pageProps} />
 );
 
-export default MyApp;
+export default App;
