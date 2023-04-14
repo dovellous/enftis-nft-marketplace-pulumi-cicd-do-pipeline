@@ -3,7 +3,7 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { AppConfig } from '@/utils/AppConfig';
 
 // Need to create a custom _document because i18n support is not compatible with `next export`.
-class HTMLDocument extends Document {
+class MyDocument extends Document {
   // eslint-disable-next-line class-methods-use-this
   render() {
     return (
@@ -18,4 +18,4 @@ class HTMLDocument extends Document {
   }
 }
 
-export default HTMLDocument;
+export default MyDocument;

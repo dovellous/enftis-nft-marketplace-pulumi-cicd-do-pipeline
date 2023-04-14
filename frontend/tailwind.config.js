@@ -1,33 +1,13 @@
+/* eslint-enable global-require */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  important: true,
-  // Active dark mode on class basis
-  darkMode: "class",
-  i18n: {
-    locales: ["en-US"],
-    defaultLocale: "en-US",
-  },
-  purge: {
-    content: ["./pages/**/*.tsx", "./components/**/*.tsx"],
-    // These options are passed through directly to PurgeCSS
-  },
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './src/app/**/*.{js,ts,jsx,tsx}',
-    './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/styles/**/*.{js,ts,jsx,tsx}',
-    './src/layouts/**/*.{js,ts,jsx,tsx}',
-    './src/templates/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
-    './**/*.{js,ts,jsx,tsx}',
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './styles/**/*.{js,ts,jsx,tsx}',
-    './layouts/**/*.{js,ts,jsx,tsx}',
-    './templates/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
     'node_modules/preline/dist/*.js',
   ],
+  // enable dark mode via class strategy
+  darkMode: 'media',
   theme: {
     fontSize: {
       xs: '0.75rem',
@@ -42,21 +22,18 @@ module.exports = {
       '6xl': '4rem',
     },
     extend: {
-      fontFamily: {
-        sans: ['Montserrat'],
-      },
       colors: {
         red: {
-          '50': '#ffebee',
-          '100': '#ffcdd2',
-          '200': '#ef9a9a',
-          '300': '#e57373',
-          '400': '#ef5350',
-          '500': '#f44336',
-          '600': '#e53935',
-          '700': '#d32f2f',
-          '800': '#c62828',
-          '900': '#b71c1c',
+          50: '#ffebee',
+          100: '#ffcdd2',
+          200: '#ef9a9a',
+          300: '#e57373',
+          400: '#ef5350',
+          500: '#f44336',
+          600: '#e53935',
+          700: '#d32f2f',
+          800: '#c62828',
+          900: '#b71c1c',
           'accent-100': '#ff8a80',
           'accent-200': '#ff5252',
           'accent-400': '#ff1744',
@@ -339,42 +316,13 @@ module.exports = {
           900: '#3e2723',
         },
       },
-      spacing: {
-        '7': '1.75rem',
-        '9': '2.25rem',
-        '28': '7rem',
-        '80': '20rem',
-        '96': '24rem',
-      },
-      height: {
-        '1/2': '50%',
-      },
-      scale: {
-        '30': '.3',
-      },
-      boxShadow: {
-        outline: '0 0 0 3px rgba(101, 31, 255, 0.4)',
-      },
-    },
-  },
-  variants: {
-    scale: ['responsive', 'hover', 'focus', 'group-hover'],
-    textColor: ['responsive', 'hover', 'focus', 'group-hover'],
-    opacity: ['responsive', 'hover', 'focus', 'group-hover'],
-    backgroundColor: ['responsive', 'hover', 'focus', 'group-hover'],
-    extend: {
-      backgroundColor: ["checked"],
-      borderColor: ["checked"],
-      inset: ["checked"],
-      zIndex: ["hover", "active"],
     },
   },
   plugins: [
+    require('@tailwindcss/forms'),
     require('preline/plugin'),
-    require("daisyui"),
-    require('flowbite/plugin')
+    require('daisyui'),
+    require('flowbite/plugin'),
   ],
-  future: {
-    purgeLayersByDefault: true,
-  },
 };
+/* eslint-enable global-require */
