@@ -5,8 +5,6 @@ import { AppConfig } from '@/utils/AppConfig';
 
 import 'cal-sans';
 
-import 'preline';
-
 import { Footer4 } from '@/ui/themes/windkit/layout/footers';
 import { NavBar2 } from '@/ui/themes/windkit/layout/navbars';
 
