@@ -1028,19 +1028,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "getTokenCurrentId",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "bytes32",
@@ -1514,12 +1501,17 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "ownerAddress",
+        name: "minterAddress",
         type: "address",
       },
       {
         internalType: "address",
         name: "creatorAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "ownerAddress",
         type: "address",
       },
       {

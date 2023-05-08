@@ -1,10 +1,30 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
-import "./ERCStructs.sol";
+/*
 
-contract ERCEvents is ERCStructs {
+============
+Events.sol
+============
+
+name        :   Enftis NFT Factory Token
+symbol      :   ENFTIS
+tokenTypes  :   ERC721, ERC165, ERC2968
+maxSupply   :   uint256.max()
+solhcVersion:   0.8.20
+version     :   1.0.0
+released    :   25 March 2023
+developers  :   @enftix
+license     :   MIT License
+networks    :   ethereum, polygon, binance
+
+*/
+
+import "./Enums.sol";
+
+library Events {
+    
     /*********************************** Events ***********************************/
 
     /// Event fired when owner address is modified.
@@ -43,7 +63,7 @@ contract ERCEvents is ERCStructs {
     );
 
     /// Event fired when owner address is modified.
-    event TokenCategoryChanged(TokenCategory newTokenCategotyIndex);
+    event TokenCategoryChanged(Enums.TokenCategory newTokenCategotyIndex);
 
     /// Event fired when a token has been minted.
     event TokenBurned(
@@ -64,4 +84,5 @@ contract ERCEvents is ERCStructs {
     event Received(address, uint);
 
     event Log(string func, uint gas);
+
 }

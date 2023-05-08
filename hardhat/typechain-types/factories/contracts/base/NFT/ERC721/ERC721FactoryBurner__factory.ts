@@ -922,6 +922,19 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "burnToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address payable",
         name: "_to",
         type: "address",
@@ -1022,19 +1035,6 @@ const _abi = [
         internalType: "bytes32",
         name: "",
         type: "bytes32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getTokenCurrentId",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -1433,12 +1433,17 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "ownerAddress",
+        name: "minterAddress",
         type: "address",
       },
       {
         internalType: "address",
         name: "creatorAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "ownerAddress",
         type: "address",
       },
       {

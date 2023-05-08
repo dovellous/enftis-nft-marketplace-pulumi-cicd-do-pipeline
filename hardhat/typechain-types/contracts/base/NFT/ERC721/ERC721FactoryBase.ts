@@ -46,6 +46,7 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
     "TOKEN_URI_EXISTS()": FunctionFragment;
     "ZERO_ADDRESS()": FunctionFragment;
     "_tokenCurrentSupply()": FunctionFragment;
+    "_tokenIdCounter()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
@@ -107,6 +108,7 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
       | "TOKEN_URI_EXISTS"
       | "ZERO_ADDRESS"
       | "_tokenCurrentSupply"
+      | "_tokenIdCounter"
       | "approve"
       | "balanceOf"
       | "baseTokenURI"
@@ -212,6 +214,10 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "_tokenCurrentSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_tokenIdCounter",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -442,6 +448,10 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "_tokenCurrentSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_tokenIdCounter",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
@@ -923,6 +933,10 @@ export interface ERC721FactoryBase extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { _value: BigNumber }>;
 
+    _tokenIdCounter(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { _value: BigNumber }>;
+
     approve(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
@@ -1065,9 +1079,10 @@ export interface ERC721FactoryBase extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -1158,6 +1173,8 @@ export interface ERC721FactoryBase extends BaseContract {
   ZERO_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
   _tokenCurrentSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  _tokenIdCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
     to: PromiseOrValue<string>,
@@ -1301,9 +1318,10 @@ export interface ERC721FactoryBase extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, BigNumber, BigNumber, BigNumber, string] & {
-      ownerAddress: string;
+    [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+      minterAddress: string;
       creatorAddress: string;
+      ownerAddress: string;
       tokenId: BigNumber;
       createdAt: BigNumber;
       updatedAt: BigNumber;
@@ -1394,6 +1412,8 @@ export interface ERC721FactoryBase extends BaseContract {
     ZERO_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
     _tokenCurrentSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _tokenIdCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
       to: PromiseOrValue<string>,
@@ -1537,9 +1557,10 @@ export interface ERC721FactoryBase extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -1800,6 +1821,8 @@ export interface ERC721FactoryBase extends BaseContract {
 
     _tokenCurrentSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    _tokenIdCounter(overrides?: CallOverrides): Promise<BigNumber>;
+
     approve(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
@@ -2039,6 +2062,8 @@ export interface ERC721FactoryBase extends BaseContract {
     _tokenCurrentSupply(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    _tokenIdCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
       to: PromiseOrValue<string>,

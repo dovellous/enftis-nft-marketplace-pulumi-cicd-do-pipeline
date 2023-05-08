@@ -51,6 +51,7 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "burnToken(uint256)": FunctionFragment;
     "callFallback(address)": FunctionFragment;
     "contractOptionsStruct()": FunctionFragment;
     "contractTreasury()": FunctionFragment;
@@ -58,7 +59,6 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
     "description()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
-    "getTokenCurrentId()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
@@ -114,6 +114,7 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
       | "balanceOf"
       | "baseTokenURI"
       | "burn"
+      | "burnToken"
       | "callFallback"
       | "contractOptionsStruct"
       | "contractTreasury"
@@ -121,7 +122,6 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
       | "description"
       | "getApproved"
       | "getRoleAdmin"
-      | "getTokenCurrentId"
       | "grantRole"
       | "hasRole"
       | "isApprovedForAll"
@@ -239,6 +239,10 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "burnToken",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "callFallback",
     values: [PromiseOrValue<string>]
   ): string;
@@ -265,10 +269,6 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
     values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTokenCurrentId",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "grantRole",
@@ -467,6 +467,7 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burnToken", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "callFallback",
     data: BytesLike
@@ -493,10 +494,6 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getRoleAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTokenCurrentId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
@@ -965,6 +962,11 @@ export interface ERC721FactoryBurner extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     callFallback(
       _to: PromiseOrValue<string>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -989,8 +991,6 @@ export interface ERC721FactoryBurner extends BaseContract {
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[string]>;
-
-    getTokenCurrentId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
@@ -1091,9 +1091,10 @@ export interface ERC721FactoryBurner extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -1205,6 +1206,11 @@ export interface ERC721FactoryBurner extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  burnToken(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   callFallback(
     _to: PromiseOrValue<string>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -1229,8 +1235,6 @@ export interface ERC721FactoryBurner extends BaseContract {
     role: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  getTokenCurrentId(overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
     role: PromiseOrValue<BytesLike>,
@@ -1331,9 +1335,10 @@ export interface ERC721FactoryBurner extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, BigNumber, BigNumber, BigNumber, string] & {
-      ownerAddress: string;
+    [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+      minterAddress: string;
       creatorAddress: string;
+      ownerAddress: string;
       tokenId: BigNumber;
       createdAt: BigNumber;
       updatedAt: BigNumber;
@@ -1445,6 +1450,11 @@ export interface ERC721FactoryBurner extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     callFallback(
       _to: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1469,8 +1479,6 @@ export interface ERC721FactoryBurner extends BaseContract {
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    getTokenCurrentId(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
@@ -1571,9 +1579,10 @@ export interface ERC721FactoryBurner extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -1854,6 +1863,11 @@ export interface ERC721FactoryBurner extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     callFallback(
       _to: PromiseOrValue<string>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -1876,8 +1890,6 @@ export interface ERC721FactoryBurner extends BaseContract {
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    getTokenCurrentId(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
@@ -2098,6 +2110,11 @@ export interface ERC721FactoryBurner extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     callFallback(
       _to: PromiseOrValue<string>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -2122,8 +2139,6 @@ export interface ERC721FactoryBurner extends BaseContract {
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    getTokenCurrentId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,

@@ -2,14 +2,12 @@
 /**
  * Created on 2023-05-05 14:36
  * @summary:
- * @author: inboxdev
+ * @author: dovellous
  */
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 /*********************************** Imports **********************************/
-import "hardhat/console.sol";
-import "../../../libs/Snippets.sol";
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -33,10 +31,6 @@ contract ERC721FactoryBase is
     ERCModifiers
 {
 
-    using Snippets for *;
-
-    using StringsLib for *;
-
     using Counters for Counters.Counter;
 
     /// Counters
@@ -45,20 +39,20 @@ contract ERC721FactoryBase is
     /// Counters
     Counters.Counter public _tokenCurrentSupply;
 
-    ///
-    TokenCategory public tokenCategory;
-
     /// Owner of the contract. This is only for compatibility for opensea and other protocols.
     address payable public owner;
 
     /// Marketplace address
     address payable public marketplaceAddress;
 
+    ///
+    Enums.TokenCategory public tokenCategory;
+
     mapping(uint256 => string) internal tokenURIs;
 
-    mapping(uint256 => TokenActivityItem[]) public tokenIdToTokenActivityItem;
+    mapping(uint256 => Structs.TokenActivityItem[]) public tokenIdToTokenActivityItem;
 
-    mapping(uint256 => NFTItem) public tokenIdToNFTItem;
+    mapping(uint256 => Structs.NFTItem) public tokenIdToNFTItem;
 
     /// tokenMaximumSupply to be minted
     uint256 public tokenMaximumSupply;
@@ -125,18 +119,6 @@ contract ERC721FactoryBase is
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        return _tokenURIString(_tokenId);
-    }
-
-    /**
-     * @dev See {IERC721Metadata-tokenURI}.
-     * @param _tokenId tokenId.
-     * @return string uri of the tokenId.
-     *
-     */
-    function _tokenURIString(
-        uint256 _tokenId
-    ) internal view returns (string memory) {
         if (!_exists(_tokenId)) {
             return "";
         }
@@ -198,47 +180,46 @@ contract ERC721FactoryBase is
     ) internal virtual override {
         //Minted
         if (from == address(0)) {
-            // Log Event in after
+            // Log Event in after mint
 
             tokenLogActivity(
                 from,
                 to,
                 firstTokenId,
-                TokenActivityType.Mint,
-                block.timestamp,
-                string("Token mint")
+                Enums.TokenActivityType.Mint,
+                block.timestamp
             );
 
-            emit TokenMinted(from, to, firstTokenId, batchSize);
+            emit Events.TokenMinted(from, to, firstTokenId, batchSize);
         }
 
         //Burned
         if (to == address(0)) {
-            // Log Event in after
+            // Log Event in after burn
 
             tokenLogActivity(
                 from,
                 to,
                 firstTokenId,
-                TokenActivityType.Burn,
-                block.timestamp,
-                string("Token burn")
+                Enums.TokenActivityType.Burn,
+                block.timestamp
             );
 
-            emit TokenBurned(from, to, firstTokenId, batchSize);
+            emit Events.TokenBurned(from, to, firstTokenId, batchSize);
 
             if (bytes(tokenURIs[firstTokenId]).length != 0) {
                 delete tokenURIs[firstTokenId];
             }
 
             delete tokenIdToNFTItem[firstTokenId];
+
         }
 
         //Transfered
         if (to != address(0) && from != address(0)) {
-            //Log Eventnin after
+            //Log Eventnin after transfer
 
-            NFTItem memory _NFT = tokenIdToNFTItem[firstTokenId];
+            Structs.NFTItem memory _NFT = tokenIdToNFTItem[firstTokenId];
 
             _NFT.ownerAddress = to;
             _NFT.updatedAt = block.timestamp;
@@ -249,17 +230,17 @@ contract ERC721FactoryBase is
                 from,
                 to,
                 firstTokenId,
-                TokenActivityType.TransferSingle,
-                block.timestamp,
-                string("Token transfer")
+                Enums.TokenActivityType.TransferSingle,
+                block.timestamp
             );
 
-            emit TokenTransfered(from, to, firstTokenId, batchSize);
+            emit Events.TokenTransfered(from, to, firstTokenId, batchSize);
 
             delete _NFT;
         }
 
         super._afterTokenTransfer(from, to, firstTokenId, batchSize);
+
     }
 
     /**
@@ -269,16 +250,14 @@ contract ERC721FactoryBase is
         address _from,
         address _to,
         uint256 _tokenId,
-        TokenActivityType _type,
-        uint256 _timestamp,
-        string memory _data
+        Enums.TokenActivityType _type,
+        uint256 _timestamp
     ) internal {
-        TokenActivityItem memory _activity = TokenActivityItem(
+        Structs.TokenActivityItem memory _activity = Structs.TokenActivityItem(
             _type,
             _from,
             _to,
-            _timestamp,
-            _data
+            _timestamp
         );
 
         tokenIdToTokenActivityItem[_tokenId].push(_activity);

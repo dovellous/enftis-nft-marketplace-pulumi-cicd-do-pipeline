@@ -1,13 +1,30 @@
 // SPDX-License-Identifier: MIT
-/**
- * Created on 2023-05-05 14:36
- * @summary:
- * @author: dovellous
- */
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
-contract ERCErrors {
+/*
+
+============
+Errors.sol
+============
+
+name        :   Enftis NFT Factory Token
+symbol      :   ENFTIS
+tokenTypes  :   ERC721, ERC165, ERC2968
+maxSupply   :   uint256.max()
+solhcVersion:   0.8.20
+version     :   1.0.0
+released    :   25 March 2023
+developers  :   @enftix
+license     :   MIT License
+networks    :   ethereum, polygon, binance
+
+*/
+
+import "./Enums.sol";
+
+library Errors {
+
     /*********************************** Errors ***********************************/
 
     /**
@@ -148,4 +165,5 @@ contract ERCErrors {
      */
 
     error ZeroAddress(address account, bytes32 message);
+
 }

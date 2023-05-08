@@ -4,7 +4,7 @@
  * @summary:
  * @author: dovellous
  */
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 import "./ERC721FactoryWorker.sol";
@@ -21,8 +21,9 @@ abstract contract ERC721FactoryBurner is ERC721FactoryWorker {
      * - The caller must own `tokenId` or be an approved operator.
      */
     function burnToken(uint256 _tokenId) public {
+        
         if (!_isApprovedOrOwner(_msgSender(), _tokenId)) {
-            revert NotApprovedOrOwner({
+            revert Errors.NotApprovedOrOwner({
                 caller: _msgSender(),
                 tokenId: _tokenId,
                 message: NOT_APPROVED_OWNER
@@ -34,5 +35,6 @@ abstract contract ERC721FactoryBurner is ERC721FactoryWorker {
         _tokenCurrentSupply.decrement();
 
         super._burn(_tokenId);
+        
     }
 }

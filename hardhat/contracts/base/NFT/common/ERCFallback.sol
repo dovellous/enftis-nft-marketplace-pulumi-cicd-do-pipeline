@@ -4,7 +4,7 @@
  * @summary:
  * @author: dovellous
  */
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -12,9 +12,12 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "./ERCEvents.sol";
+import "../../../libs/Snippets.sol";
 
-abstract contract ERCFallback is ERCEvents, AccessControl, ReentrancyGuard {
+abstract contract ERCFallback is AccessControl, ReentrancyGuard {
+
+    using Snippets for *;
+
     address payable public contractTreasury =
         payable(0x0A098Eda01Ce92ff4A4CCb7A4fFFb5A43EBC70DC);
 
@@ -29,7 +32,7 @@ abstract contract ERCFallback is ERCEvents, AccessControl, ReentrancyGuard {
     function recoverTokens(
         address _token,
         address _account,
-        TokenStandards _standard,
+        Enums.TokenStandards _standard,
         uint256 _amount,
         uint256 _tokenId
     ) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -41,11 +44,11 @@ abstract contract ERCFallback is ERCEvents, AccessControl, ReentrancyGuard {
             _receiver = payable(_msgSender());
         }
 
-        if (_standard == TokenStandards.ERC20) {
+        if (_standard == Enums.TokenStandards.ERC20) {
             IERC20(_token).transfer(_receiver, _amount);
         }
 
-        if (_standard == TokenStandards.ERC721) {
+        if (_standard == Enums.TokenStandards.ERC721) {
             IERC721(_token).safeTransferFrom(
                 address(this),
                 _receiver,
@@ -53,7 +56,7 @@ abstract contract ERCFallback is ERCEvents, AccessControl, ReentrancyGuard {
             );
         }
 
-        if (_standard == TokenStandards.ERC1155) {
+        if (_standard == Enums.TokenStandards.ERC1155) {
             IERC1155(_token).safeTransferFrom(
                 address(this),
                 _receiver,

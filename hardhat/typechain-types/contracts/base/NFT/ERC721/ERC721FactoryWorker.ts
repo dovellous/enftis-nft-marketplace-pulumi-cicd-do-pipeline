@@ -58,7 +58,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
     "description()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
-    "getTokenCurrentId()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
@@ -121,7 +120,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
       | "description"
       | "getApproved"
       | "getRoleAdmin"
-      | "getTokenCurrentId"
       | "grantRole"
       | "hasRole"
       | "isApprovedForAll"
@@ -265,10 +263,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
     values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTokenCurrentId",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "grantRole",
@@ -493,10 +487,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getRoleAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTokenCurrentId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
@@ -990,8 +980,6 @@ export interface ERC721FactoryWorker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getTokenCurrentId(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
@@ -1091,9 +1079,10 @@ export interface ERC721FactoryWorker extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -1230,8 +1219,6 @@ export interface ERC721FactoryWorker extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getTokenCurrentId(overrides?: CallOverrides): Promise<BigNumber>;
-
   grantRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
@@ -1331,9 +1318,10 @@ export interface ERC721FactoryWorker extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, BigNumber, BigNumber, BigNumber, string] & {
-      ownerAddress: string;
+    [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+      minterAddress: string;
       creatorAddress: string;
+      ownerAddress: string;
       tokenId: BigNumber;
       createdAt: BigNumber;
       updatedAt: BigNumber;
@@ -1470,8 +1458,6 @@ export interface ERC721FactoryWorker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getTokenCurrentId(overrides?: CallOverrides): Promise<BigNumber>;
-
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
@@ -1571,9 +1557,10 @@ export interface ERC721FactoryWorker extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -1877,8 +1864,6 @@ export interface ERC721FactoryWorker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getTokenCurrentId(overrides?: CallOverrides): Promise<BigNumber>;
-
     grantRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
@@ -2122,8 +2107,6 @@ export interface ERC721FactoryWorker extends BaseContract {
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    getTokenCurrentId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,

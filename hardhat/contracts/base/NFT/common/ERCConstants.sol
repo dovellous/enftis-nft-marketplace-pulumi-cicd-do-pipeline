@@ -4,10 +4,15 @@
  * @summary: Contains byte32 constants for error handling messages.
  * @author: dovellous
  */
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
+import "../../../libs/Snippets.sol";
+
 contract ERCConstants {
+
+    using Snippets for *;
+
     /********************************** Constants *********************************/
 
     /// Implementation type for this contract

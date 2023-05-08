@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   PopulatedTransaction,
@@ -23,11 +24,21 @@ import type {
 export interface SnippetsInterface extends utils.Interface {
   functions: {
     "bytes32String(bytes32)": FunctionFragment;
+    "compareStrings(string,string)": FunctionFragment;
     "getIPFSPrefix()": FunctionFragment;
+    "stringContains(string,string)": FunctionFragment;
+    "subString(string,uint256,uint256)": FunctionFragment;
+    "trim(string,uint256,uint256)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "bytes32String" | "getIPFSPrefix"
+    nameOrSignatureOrTopic:
+      | "bytes32String"
+      | "compareStrings"
+      | "getIPFSPrefix"
+      | "stringContains"
+      | "subString"
+      | "trim"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -35,8 +46,32 @@ export interface SnippetsInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
+    functionFragment: "compareStrings",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getIPFSPrefix",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stringContains",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "subString",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "trim",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
 
   decodeFunctionResult(
@@ -44,9 +79,19 @@ export interface SnippetsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "compareStrings",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getIPFSPrefix",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "stringContains",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "subString", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "trim", data: BytesLike): Result;
 
   events: {};
 }
@@ -83,7 +128,33 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    compareStrings(
+      a: PromiseOrValue<string>,
+      b: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     getIPFSPrefix(overrides?: CallOverrides): Promise<[string]>;
+
+    stringContains(
+      what: PromiseOrValue<string>,
+      where: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    subString(
+      str: PromiseOrValue<string>,
+      startIndex: PromiseOrValue<BigNumberish>,
+      endIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    trim(
+      str: PromiseOrValue<string>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
   };
 
   bytes32String(
@@ -91,7 +162,33 @@ export interface Snippets extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  compareStrings(
+    a: PromiseOrValue<string>,
+    b: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   getIPFSPrefix(overrides?: CallOverrides): Promise<string>;
+
+  stringContains(
+    what: PromiseOrValue<string>,
+    where: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  subString(
+    str: PromiseOrValue<string>,
+    startIndex: PromiseOrValue<BigNumberish>,
+    endIndex: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  trim(
+    str: PromiseOrValue<string>,
+    start: PromiseOrValue<BigNumberish>,
+    end: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   callStatic: {
     bytes32String(
@@ -99,7 +196,33 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    compareStrings(
+      a: PromiseOrValue<string>,
+      b: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     getIPFSPrefix(overrides?: CallOverrides): Promise<string>;
+
+    stringContains(
+      what: PromiseOrValue<string>,
+      where: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    subString(
+      str: PromiseOrValue<string>,
+      startIndex: PromiseOrValue<BigNumberish>,
+      endIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    trim(
+      str: PromiseOrValue<string>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
   };
 
   filters: {};
@@ -110,7 +233,33 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    compareStrings(
+      a: PromiseOrValue<string>,
+      b: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getIPFSPrefix(overrides?: CallOverrides): Promise<BigNumber>;
+
+    stringContains(
+      what: PromiseOrValue<string>,
+      where: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    subString(
+      str: PromiseOrValue<string>,
+      startIndex: PromiseOrValue<BigNumberish>,
+      endIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    trim(
+      str: PromiseOrValue<string>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -119,6 +268,32 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    compareStrings(
+      a: PromiseOrValue<string>,
+      b: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getIPFSPrefix(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    stringContains(
+      what: PromiseOrValue<string>,
+      where: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    subString(
+      str: PromiseOrValue<string>,
+      startIndex: PromiseOrValue<BigNumberish>,
+      endIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    trim(
+      str: PromiseOrValue<string>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

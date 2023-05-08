@@ -30,8 +30,9 @@ import type {
 
 export declare namespace ERCStructs {
   export type NFTItemStruct = {
-    ownerAddress: PromiseOrValue<string>;
+    minterAddress: PromiseOrValue<string>;
     creatorAddress: PromiseOrValue<string>;
+    ownerAddress: PromiseOrValue<string>;
     tokenId: PromiseOrValue<BigNumberish>;
     createdAt: PromiseOrValue<BigNumberish>;
     updatedAt: PromiseOrValue<BigNumberish>;
@@ -41,13 +42,15 @@ export declare namespace ERCStructs {
   export type NFTItemStructOutput = [
     string,
     string,
+    string,
     BigNumber,
     BigNumber,
     BigNumber,
     string
   ] & {
-    ownerAddress: string;
+    minterAddress: string;
     creatorAddress: string;
+    ownerAddress: string;
     tokenId: BigNumber;
     createdAt: BigNumber;
     updatedAt: BigNumber;
@@ -123,6 +126,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "burnToken(uint256)": FunctionFragment;
     "callFallback(address)": FunctionFragment;
     "collectionDescription()": FunctionFragment;
     "collectionDisplayPicture()": FunctionFragment;
@@ -185,6 +189,12 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "royaltyReceiver()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
+    "search(string,uint256)": FunctionFragment;
+    "search(string,string)": FunctionFragment;
+    "search(string,bool)": FunctionFragment;
+    "search(string,bytes)": FunctionFragment;
+    "search(string,address)": FunctionFragment;
+    "searchNFT(string,string)": FunctionFragment;
     "setAdminRole(address)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseURI(string)": FunctionFragment;
@@ -238,6 +248,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "balanceOf"
       | "baseTokenURI"
       | "burn"
+      | "burnToken"
       | "callFallback"
       | "collectionDescription"
       | "collectionDisplayPicture"
@@ -300,6 +311,12 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "royaltyReceiver"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
+      | "search(string,uint256)"
+      | "search(string,string)"
+      | "search(string,bool)"
+      | "search(string,bytes)"
+      | "search(string,address)"
+      | "searchNFT"
       | "setAdminRole"
       | "setApprovalForAll"
       | "setBaseURI"
@@ -415,6 +432,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "burn",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "burnToken",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -667,6 +688,30 @@ export interface ERC721FactoryInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "search(string,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "search(string,string)",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "search(string,bool)",
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "search(string,bytes)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "search(string,address)",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "searchNFT",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setAdminRole",
     values: [PromiseOrValue<string>]
   ): string;
@@ -849,6 +894,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burnToken", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "callFallback",
     data: BytesLike
@@ -1058,6 +1104,27 @@ export interface ERC721FactoryInterface extends utils.Interface {
     functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "search(string,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "search(string,string)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "search(string,bool)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "search(string,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "search(string,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "searchNFT", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setAdminRole",
     data: BytesLike
@@ -1533,6 +1600,11 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     callFallback(
       _to: PromiseOrValue<string>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -1774,6 +1846,42 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    "search(string,uint256)"(
+      _itemKey: PromiseOrValue<string>,
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+
+    "search(string,string)"(
+      _itemKey: PromiseOrValue<string>,
+      _query: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+
+    "search(string,bool)"(
+      _itemKey: PromiseOrValue<string>,
+      _bool: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+
+    "search(string,bytes)"(
+      _itemKey: PromiseOrValue<string>,
+      _bytes: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+
+    "search(string,address)"(
+      _itemKey: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+
+    searchNFT(
+      _query: PromiseOrValue<string>,
+      _key: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+
     setAdminRole(
       _account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1848,9 +1956,10 @@ export interface ERC721Factory extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -1974,6 +2083,11 @@ export interface ERC721Factory extends BaseContract {
 
   burn(
     tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  burnToken(
+    _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2215,6 +2329,42 @@ export interface ERC721Factory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  "search(string,uint256)"(
+    _itemKey: PromiseOrValue<string>,
+    _uint256: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+  "search(string,string)"(
+    _itemKey: PromiseOrValue<string>,
+    _query: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+  "search(string,bool)"(
+    _itemKey: PromiseOrValue<string>,
+    _bool: PromiseOrValue<boolean>,
+    overrides?: CallOverrides
+  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+  "search(string,bytes)"(
+    _itemKey: PromiseOrValue<string>,
+    _bytes: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+  "search(string,address)"(
+    _itemKey: PromiseOrValue<string>,
+    _address: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+  searchNFT(
+    _query: PromiseOrValue<string>,
+    _key: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
   setAdminRole(
     _account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2289,9 +2439,10 @@ export interface ERC721Factory extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, BigNumber, BigNumber, BigNumber, string] & {
-      ownerAddress: string;
+    [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+      minterAddress: string;
       creatorAddress: string;
+      ownerAddress: string;
       tokenId: BigNumber;
       createdAt: BigNumber;
       updatedAt: BigNumber;
@@ -2415,6 +2566,11 @@ export interface ERC721Factory extends BaseContract {
 
     burn(
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2657,6 +2813,42 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "search(string,uint256)"(
+      _itemKey: PromiseOrValue<string>,
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+    "search(string,string)"(
+      _itemKey: PromiseOrValue<string>,
+      _query: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+    "search(string,bool)"(
+      _itemKey: PromiseOrValue<string>,
+      _bool: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+    "search(string,bytes)"(
+      _itemKey: PromiseOrValue<string>,
+      _bytes: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+    "search(string,address)"(
+      _itemKey: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
+    searchNFT(
+      _query: PromiseOrValue<string>,
+      _key: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+
     setAdminRole(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -2731,9 +2923,10 @@ export interface ERC721Factory extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber, BigNumber, BigNumber, string] & {
-        ownerAddress: string;
+      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+        minterAddress: string;
         creatorAddress: string;
+        ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
@@ -3027,6 +3220,11 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     callFallback(
       _to: PromiseOrValue<string>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -3255,6 +3453,42 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    "search(string,uint256)"(
+      _itemKey: PromiseOrValue<string>,
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "search(string,string)"(
+      _itemKey: PromiseOrValue<string>,
+      _query: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "search(string,bool)"(
+      _itemKey: PromiseOrValue<string>,
+      _bool: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "search(string,bytes)"(
+      _itemKey: PromiseOrValue<string>,
+      _bytes: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "search(string,address)"(
+      _itemKey: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    searchNFT(
+      _query: PromiseOrValue<string>,
+      _key: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     setAdminRole(
       _account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -3461,6 +3695,11 @@ export interface ERC721Factory extends BaseContract {
 
     burn(
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    burnToken(
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -3718,6 +3957,42 @@ export interface ERC721Factory extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "search(string,uint256)"(
+      _itemKey: PromiseOrValue<string>,
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "search(string,string)"(
+      _itemKey: PromiseOrValue<string>,
+      _query: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "search(string,bool)"(
+      _itemKey: PromiseOrValue<string>,
+      _bool: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "search(string,bytes)"(
+      _itemKey: PromiseOrValue<string>,
+      _bytes: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "search(string,address)"(
+      _itemKey: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    searchNFT(
+      _query: PromiseOrValue<string>,
+      _key: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     setAdminRole(

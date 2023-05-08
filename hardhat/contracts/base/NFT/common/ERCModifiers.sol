@@ -4,14 +4,13 @@
  * @summary:
  * @author: dovellous
  */
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./ERCConstants.sol";
-import "./ERCErrors.sol";
 
-abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
+abstract contract ERCModifiers is AccessControl, ERCConstants {
     
     ContractOptions public contractOptionsStruct;
 
@@ -30,7 +29,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
             !hasRole(ADMIN_ROLE, _msgSender()) &&
             !hasRole(DEFAULT_ADMIN_ROLE, _msgSender())
         ) {
-            revert InsufficientPermissions({
+            revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
                 requiredRole: ADMIN_ROLE,
                 message: INSUFFICIENT_PERMISSIONS
@@ -48,7 +47,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
      */
     function _onlyOwner() private view {
         if (!hasRole(DEFAULT_ADMIN_ROLE, _msgSender())) {
-            revert InsufficientPermissions({
+            revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
                 requiredRole: DEFAULT_ADMIN_ROLE,
                 message: INSUFFICIENT_PERMISSIONS
@@ -66,7 +65,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
      */
     function _onlyMinter() private view {
         if (!hasRole(MINTER_ROLE, _msgSender())) {
-            revert InsufficientPermissions({
+            revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
                 requiredRole: MINTER_ROLE,
                 message: INSUFFICIENT_PERMISSIONS
@@ -84,7 +83,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
      */
     function _burnable() private view {
         if (!contractOptionsStruct.burnable) {
-            revert DisabledOption({active: contractOptionsStruct.burnable});
+            revert Errors.DisabledOption({active: contractOptionsStruct.burnable});
         }
     }
 
@@ -98,7 +97,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
      */
     function _pausable() private view {
         if (!contractOptionsStruct.pausable) {
-            revert DisabledOption({active: contractOptionsStruct.pausable});
+            revert Errors.DisabledOption({active: contractOptionsStruct.pausable});
         }
     }
 
@@ -113,7 +112,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
      */
     function _nonZeroAmount(uint256 _amount) private pure {
         if (_amount == 0) {
-            revert InvalidAmount();
+            revert Errors.InvalidAmount();
         }
     }
 
@@ -128,7 +127,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
      */
     function _validAccount(address _account) private pure {
         if (address(0) == _account) {
-            revert ZeroAddress({account: _account, message: ZERO_ADDRESS});
+            revert Errors.ZeroAddress({account: _account, message: ZERO_ADDRESS});
         }
     }
 
@@ -147,13 +146,13 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
             size := extcodesize(_account)
         }
         if (size > 0) {
-            revert UnAuthorizedCaller({
+            revert Errors.UnAuthorizedCaller({
                 account: _account,
                 message: INVALID_CALLER
             });
         }
         if (_account.code.length > 0) {
-            revert UnAuthorizedCaller({
+            revert Errors.UnAuthorizedCaller({
                 account: _account,
                 message: INVALID_CALLER
             });
@@ -174,7 +173,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
         uint256 _tokenMaximumSupply
     ) private pure {
         if (_tokenId == 0) {
-            revert ExceededMaxValue({
+            revert Errors.ExceededMaxValue({
                 maxValue: _tokenMaximumSupply,
                 value: _tokenId,
                 message: INDEX_OUT_OF_BOUNDS
@@ -182,7 +181,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
         }
 
         if (_tokenId > _tokenMaximumSupply) {
-            revert ExceededMaxValue({
+            revert Errors.ExceededMaxValue({
                 maxValue: _tokenMaximumSupply,
                 value: _tokenId,
                 message: INDEX_OUT_OF_BOUNDS
@@ -190,7 +189,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants, ERCErrors {
         }
 
         if (!_tokenExists) {
-            revert TokenDoesNotExists({
+            revert Errors.TokenDoesNotExists({
                 tokenId: _tokenId,
                 message: TOKEN_DOES_NOT_EXISTS
             });

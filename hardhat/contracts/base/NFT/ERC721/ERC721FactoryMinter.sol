@@ -4,12 +4,13 @@
  * @summary:
  * @author: dovellous
  */
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 import "./ERC721FactoryWorker.sol";
 
 abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
+    
     using Counters for Counters.Counter;
 
     /// royalty states
@@ -25,7 +26,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
     /*********************************** Mappings ***********************************/
 
-    mapping(uint256 => RoyaltyItem) internal tokenIdToRoyaltyItem;
+    mapping(uint256 => Structs.RoyaltyItem) internal tokenIdToRoyaltyItem;
 
     mapping(string => bool) internal usedTokenURIs;
 
@@ -61,7 +62,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
         uint256 newTokenId = _tokenIdCounter.current();
 
         if (newTokenId > tokenMaximumSupply) {
-            revert ExceededMaxValue({
+            revert Errors.ExceededMaxValue({
                 maxValue: tokenMaximumSupply,
                 value: newTokenId,
                 message: MAX_SUPPLY_REACHED
@@ -70,7 +71,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
         // Ensure that the amount supplied is equal to the minting fee specified.
         if (msg.value < mintingFee) {
-            revert PriceBelowMintingFee({
+            revert Errors.PriceBelowMintingFee({
                 mintingFee: mintingFee,
                 value: msg.value,
                 message: AMOUNT_BELOW_MINTING_FEE
@@ -79,7 +80,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
         // Ensure that the token URI provided already exists. NFTs are non-fungible.
         if (tokenURIExists(_tokenURI)) {
-            revert TokenURIAlreadyExists({
+            revert Errors.TokenURIAlreadyExists({
                 tokenURI: _tokenURI,
                 tokenURIExists: usedTokenURIs[_tokenURI],
                 message: TOKEN_URI_EXISTS
@@ -88,7 +89,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
         unchecked {
 
-            tokenIdToNFTItem[newTokenId] = NFTItem(
+            tokenIdToNFTItem[newTokenId] = Structs.NFTItem(
                 _msgSender(),
                 _to,
                 _to,
@@ -113,7 +114,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
             if (royaltiesEnabled) {
                 if (_royaltyFraction > 0) {
-                    tokenIdToRoyaltyItem[newTokenId] = RoyaltyItem(
+                    tokenIdToRoyaltyItem[newTokenId] = Structs.RoyaltyItem(
                         true,
                         _msgSender(),
                         royaltyFraction,
@@ -127,7 +128,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
                         _royaltyFraction
                     );
                 } else {
-                    tokenIdToRoyaltyItem[newTokenId] = RoyaltyItem(
+                    tokenIdToRoyaltyItem[newTokenId] = Structs.RoyaltyItem(
                         true,
                         _msgSender(),
                         royaltyFraction,
