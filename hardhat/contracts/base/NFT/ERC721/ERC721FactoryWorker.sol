@@ -133,7 +133,8 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                 bool _match = Snippets.searchHasMatch(
                     _itemKey,
                     _data,
-                    _nftItem
+                    _nftItem,
+                    tokenURIs[(i + 1)]
                 );
 
                 // If token id is zero, then it's a invalid token
@@ -168,7 +169,8 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                     bool _match = Snippets.searchHasMatch(
                         _itemKey,
                         _data,
-                        _nftItem
+                        _nftItem,
+                        tokenURIs[(i + 1)]
                     );
                     
                     // If token id is zero, then it's a invalid token

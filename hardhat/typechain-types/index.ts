@@ -64,5 +64,9 @@ export type { ERC721FactoryWorker } from "./contracts/base/NFT/ERC721/ERC721Fact
 export { ERC721FactoryWorker__factory } from "./factories/contracts/base/NFT/ERC721/ERC721FactoryWorker__factory";
 export type { ERC721Factory } from "./contracts/ERC721Factory";
 export { ERC721Factory__factory } from "./factories/contracts/ERC721Factory__factory";
+export type { Errors } from "./contracts/libs/Errors";
+export { Errors__factory } from "./factories/contracts/libs/Errors__factory";
+export type { Events } from "./contracts/libs/Events";
+export { Events__factory } from "./factories/contracts/libs/Events__factory";
 export type { Snippets } from "./contracts/libs/Snippets";
 export { Snippets__factory } from "./factories/contracts/libs/Snippets__factory";

@@ -159,7 +159,8 @@ library Snippets {
     function searchHasMatch(
         string memory _itemKey,
         bytes memory _data,
-        Structs.NFTItem memory _nftItem
+        Structs.NFTItem memory _nftItem,
+        string memory _tokenURIString
     ) public pure returns (bool) {
         
         bool _match;
@@ -172,7 +173,7 @@ library Snippets {
             }
 
             // If the creator address is a zero address, thats an invalid token, continue ...
-            if (_nftItem.creatorAddress == address(0)) {
+            if (_nftItem.creatorAddress[1] == address(0)) {
                 return _match;
             }
 
@@ -193,7 +194,7 @@ library Snippets {
             else if (compareStrings(_itemKey, "creator")) {
                 address _account = abi.decode(_data, (address));
 
-                if (_nftItem.creatorAddress == _account) {
+                if (_nftItem.creatorAddress[1] == _account) {
                     _match = true;
                 }
             }
@@ -216,7 +217,7 @@ library Snippets {
                 }
 
                 // Check if the address is the same as the creator
-                if (_nftItem.creatorAddress == _account) {
+                if (_nftItem.creatorAddress[1] == _account) {
                     _match = true;
                 }
 
@@ -245,7 +246,7 @@ library Snippets {
             else if (compareStrings(_itemKey, "token_uri")) {
                 string memory _tokenURIStr = abi.decode(_data, (string));
 
-                if (compareStrings(_nftItem.tokenURI, _tokenURIStr)) {
+                if (compareStrings(_tokenURIString, _tokenURIStr)) {
                     _match = true;
                 }
             }
@@ -253,7 +254,7 @@ library Snippets {
             else if (compareStrings(_itemKey, "bytes")) {
                 string memory _bytes = abi.decode(_data, (string));
 
-                if (compareStrings(_nftItem.tokenURI, _bytes)) {
+                if (compareStrings(_tokenURIString, _bytes)) {
                     _match = true;
                 }
             }
@@ -261,7 +262,7 @@ library Snippets {
             else if (compareStrings(_itemKey, "string")) {
                 string memory _string = abi.decode(_data, (string));
 
-                if (compareStrings(_nftItem.tokenURI, _string)) {
+                if (compareStrings(_tokenURIString, _string)) {
                     _match = true;
                 }
             }
@@ -337,7 +338,7 @@ library Snippets {
                 if (stringLength(_key) == 0) { 
                     
                     if (
-                        stringContains(_query, _nftItem.tokenURI)
+                        stringContains(_query, _tokenURIString)
                     ) {
                         _match = true;
                     }

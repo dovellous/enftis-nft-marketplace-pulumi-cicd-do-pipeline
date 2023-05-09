@@ -13,17 +13,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bool",
-        name: "active",
-        type: "bool",
-      },
-    ],
-    name: "DisabledOption",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint256",
         name: "maxValue",
         type: "uint256",
@@ -64,54 +53,6 @@ const _abi = [
     type: "error",
   },
   {
-    inputs: [],
-    name: "InvalidAmount",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "NoAdmins",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "NoMinters",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "caller",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "NotApprovedOrOwner",
-    type: "error",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -135,22 +76,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "TokenDoesNotExists",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
         internalType: "string",
         name: "tokenURI",
         type: "string",
@@ -167,38 +92,6 @@ const _abi = [
       },
     ],
     name: "TokenURIAlreadyExists",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "UnAuthorizedCaller",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "ZeroAddress",
     type: "error",
   },
   {
@@ -256,160 +149,12 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "string",
-        name: "newURI",
-        type: "string",
-      },
-    ],
-    name: "BaseURIChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "description",
-        type: "string",
-      },
-    ],
-    name: "CollectionDescriptionChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "photoURL",
-        type: "string",
-      },
-    ],
-    name: "CollectionDisplayPictureChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "newURI",
-        type: "string",
-      },
-    ],
-    name: "ContractURIChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "func",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "gas",
-        type: "uint256",
-      },
-    ],
-    name: "Log",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "newMarketplaceAddress",
-        type: "address",
-      },
-    ],
-    name: "MarketplaceAddressChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "newMarketplaceAddress",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "MarketplaceAddressForTokenChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "newMintingFee",
-        type: "uint256",
-      },
-    ],
-    name: "MintingFeeChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "OwnerChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
         internalType: "address",
         name: "account",
         type: "address",
       },
     ],
     name: "Paused",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "Received",
     type: "event",
   },
   {
@@ -485,112 +230,6 @@ const _abi = [
       },
     ],
     name: "RoleRevoked",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "creator",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "burner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "burnedTokenId",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "batchSize",
-        type: "uint256",
-      },
-    ],
-    name: "TokenBurned",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "enum ERCEnums.TokenCategory",
-        name: "newTokenCategotyIndex",
-        type: "uint8",
-      },
-    ],
-    name: "TokenCategoryChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "creator",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "minter",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "newTokenId",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "batchSize",
-        type: "uint256",
-      },
-    ],
-    name: "TokenMinted",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "creator",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "burner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "transferedTokenId",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "batchSize",
-        type: "uint256",
-      },
-    ],
-    name: "TokenTransfered",
     type: "event",
   },
   {
@@ -1232,7 +871,7 @@ const _abi = [
         type: "address",
       },
       {
-        internalType: "enum ERCEnums.TokenStandards",
+        internalType: "enum Enums.TokenStandards",
         name: "_standard",
         type: "uint8",
       },
@@ -1481,7 +1120,7 @@ const _abi = [
     name: "tokenCategory",
     outputs: [
       {
-        internalType: "enum ERCEnums.TokenCategory",
+        internalType: "enum Enums.TokenCategory",
         name: "",
         type: "uint8",
       },
@@ -1554,7 +1193,7 @@ const _abi = [
     name: "tokenIdToTokenActivityItem",
     outputs: [
       {
-        internalType: "enum ERCEnums.TokenActivityType",
+        internalType: "enum Enums.TokenActivityType",
         name: "activityType",
         type: "uint8",
       },
@@ -1572,11 +1211,6 @@ const _abi = [
         internalType: "uint256",
         name: "timestamp",
         type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "data",
-        type: "string",
       },
     ],
     stateMutability: "view",

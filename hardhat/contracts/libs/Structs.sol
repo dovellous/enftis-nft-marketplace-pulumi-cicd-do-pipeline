@@ -47,12 +47,11 @@ library Structs {
     // NFT Object
     struct NFTItem {
         address minterAddress;
-        address creatorAddress;
+        address[2] creatorAddress;
         address ownerAddress;
         uint256 tokenId;
         uint createdAt;
         uint updatedAt;
-        string tokenURI;
     }
 
 }

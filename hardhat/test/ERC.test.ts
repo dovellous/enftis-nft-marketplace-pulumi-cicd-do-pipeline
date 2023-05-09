@@ -194,7 +194,7 @@ describe("ERC721Factory", function () {
 
         it("Should deploy the contract successfully!", async function () {
 
-            expect(await ERC721FactorySmartContract.address).to.be.greaterThan(0);
+            expect(await ERC721FactorySmartContract.address).not.to.equal(null);
 
         });
 
@@ -466,9 +466,32 @@ describe("ERC721Factory", function () {
             
         })
 
+        it("Get tokens minted by address : getTokensMintedByAddress", async () => {
+
+            console.warn("      ✔ Get tokens minted");
+        
+            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensMintedByAddress(account1.address);
+
+            expect(nftItems.length).to.equal(5);
+            expect(nftItems[0].ownerAddress).to.equal(account1.address);
+            
+        })
+
+        it("Get tokens minted by me : getTokensMintedByMe", async () => {
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+            
+            const deployerTokens: Array<any> = await deployerWallet.getTokensMintedByMe();
+
+            console.log(deployerTokens);
+
+            expect(deployerTokens.length).to.equal(1);
+
+        })
+
         it("Get tokens created by address : getTokensCreatedByAddress", async () => {
 
-            console.warn("      ✔ Get token creators");
+            console.warn("      ✔ Get tokens created");
         
             const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensCreatedByAddress(account1.address);
 
@@ -495,7 +518,7 @@ describe("ERC721Factory", function () {
 
         it("Get tokens owned by address : getTokensOwnedByAddress", async () => {
 
-            console.warn("      ✔ Get token owners");
+            console.warn("      ✔ Get tokens owned");
         
             const deployerTokens: Array<any> = await ERC721FactorySmartContract.getTokensOwnedByAddress(deployer.address);
 

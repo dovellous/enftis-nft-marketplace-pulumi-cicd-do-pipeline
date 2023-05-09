@@ -28,7 +28,7 @@ import type {
   PromiseOrValue,
 } from "../common";
 
-export declare namespace ERCStructs {
+export declare namespace Structs {
   export type NFTItemStruct = {
     minterAddress: PromiseOrValue<string>;
     creatorAddress: PromiseOrValue<string>;
@@ -62,21 +62,18 @@ export declare namespace ERCStructs {
     fromAddress: PromiseOrValue<string>;
     toAddress: PromiseOrValue<string>;
     timestamp: PromiseOrValue<BigNumberish>;
-    data: PromiseOrValue<string>;
   };
 
   export type TokenActivityItemStructOutput = [
     number,
     string,
     string,
-    BigNumber,
-    string
+    BigNumber
   ] & {
     activityType: number;
     fromAddress: string;
     toAddress: string;
     timestamp: BigNumber;
-    data: string;
   };
 
   export type RoyaltyItemStruct = {
@@ -122,7 +119,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "_tokenCurrentSupply()": FunctionFragment;
     "_tokenIdCounter()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
-    "approveAddressForTokenId(address,uint256)": FunctionFragment;
+    "approveAccountForTokenId(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
@@ -141,27 +138,28 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "getApproved(uint256)": FunctionFragment;
     "getBaseURI()": FunctionFragment;
     "getContractURI()": FunctionFragment;
-    "getCreatorTokenCount(address)": FunctionFragment;
+    "getCountTokensOwned(address)": FunctionFragment;
     "getMarketplaceAddress()": FunctionFragment;
     "getNFTItem(uint256)": FunctionFragment;
     "getNFTItemFull(uint256)": FunctionFragment;
     "getNFTItems()": FunctionFragment;
     "getOwner()": FunctionFragment;
-    "getOwnerTokenCount(address)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getRoyaltyFraction()": FunctionFragment;
     "getRoyaltyReceiver()": FunctionFragment;
+    "getTokenAuditTrail(uint256)": FunctionFragment;
     "getTokenCategory()": FunctionFragment;
     "getTokenCreator(uint256)": FunctionFragment;
     "getTokenCurrentId()": FunctionFragment;
     "getTokenCurrentSupply()": FunctionFragment;
     "getTokenMaximumSupply()": FunctionFragment;
     "getTokenMintingFee()": FunctionFragment;
-    "getTokenOwner(uint256)": FunctionFragment;
     "getTokenRoyaltyInfo(uint256,uint256)": FunctionFragment;
     "getTokenURI(uint256)": FunctionFragment;
     "getTokensCreatedByAddress(address)": FunctionFragment;
     "getTokensCreatedByMe()": FunctionFragment;
+    "getTokensMintedByAddress(address)": FunctionFragment;
+    "getTokensMintedByMe()": FunctionFragment;
     "getTokensOwnedByAddress(address)": FunctionFragment;
     "getTokensOwnedByMe()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
@@ -191,10 +189,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
     "search(string,uint256)": FunctionFragment;
     "search(string,string)": FunctionFragment;
-    "search(string,bool)": FunctionFragment;
-    "search(string,bytes)": FunctionFragment;
     "search(string,address)": FunctionFragment;
-    "searchNFT(string,string)": FunctionFragment;
     "setAdminRole(address)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseURI(string)": FunctionFragment;
@@ -244,7 +239,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "_tokenCurrentSupply"
       | "_tokenIdCounter"
       | "approve"
-      | "approveAddressForTokenId"
+      | "approveAccountForTokenId"
       | "balanceOf"
       | "baseTokenURI"
       | "burn"
@@ -263,27 +258,28 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "getApproved"
       | "getBaseURI"
       | "getContractURI"
-      | "getCreatorTokenCount"
+      | "getCountTokensOwned"
       | "getMarketplaceAddress"
       | "getNFTItem"
       | "getNFTItemFull"
       | "getNFTItems"
       | "getOwner"
-      | "getOwnerTokenCount"
       | "getRoleAdmin"
       | "getRoyaltyFraction"
       | "getRoyaltyReceiver"
+      | "getTokenAuditTrail"
       | "getTokenCategory"
       | "getTokenCreator"
       | "getTokenCurrentId"
       | "getTokenCurrentSupply"
       | "getTokenMaximumSupply"
       | "getTokenMintingFee"
-      | "getTokenOwner"
       | "getTokenRoyaltyInfo"
       | "getTokenURI"
       | "getTokensCreatedByAddress"
       | "getTokensCreatedByMe"
+      | "getTokensMintedByAddress"
+      | "getTokensMintedByMe"
       | "getTokensOwnedByAddress"
       | "getTokensOwnedByMe"
       | "grantRole"
@@ -313,10 +309,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "safeTransferFrom(address,address,uint256,bytes)"
       | "search(string,uint256)"
       | "search(string,string)"
-      | "search(string,bool)"
-      | "search(string,bytes)"
       | "search(string,address)"
-      | "searchNFT"
       | "setAdminRole"
       | "setApprovalForAll"
       | "setBaseURI"
@@ -419,7 +412,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "approveAddressForTokenId",
+    functionFragment: "approveAccountForTokenId",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -495,7 +488,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getCreatorTokenCount",
+    functionFragment: "getCountTokensOwned",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -516,10 +509,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "getOwner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getOwnerTokenCount",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "getRoleAdmin",
     values: [PromiseOrValue<BytesLike>]
   ): string;
@@ -530,6 +519,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getRoyaltyReceiver",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTokenAuditTrail",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getTokenCategory",
@@ -556,10 +549,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getTokenOwner",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "getTokenRoyaltyInfo",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -573,6 +562,14 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getTokensCreatedByMe",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTokensMintedByAddress",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTokensMintedByMe",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -696,19 +693,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "search(string,bool)",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "search(string,bytes)",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "search(string,address)",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "searchNFT",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -885,7 +870,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "approveAddressForTokenId",
+    functionFragment: "approveAccountForTokenId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -949,7 +934,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getCreatorTokenCount",
+    functionFragment: "getCountTokensOwned",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -967,10 +952,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getOwnerTokenCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getRoleAdmin",
     data: BytesLike
   ): Result;
@@ -980,6 +961,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getRoyaltyReceiver",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokenAuditTrail",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1007,10 +992,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getTokenOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getTokenRoyaltyInfo",
     data: BytesLike
   ): Result;
@@ -1024,6 +1005,14 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getTokensCreatedByMe",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokensMintedByAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokensMintedByMe",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1113,18 +1102,9 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "search(string,bool)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "search(string,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "search(string,address)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "searchNFT", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setAdminRole",
     data: BytesLike
@@ -1219,54 +1199,20 @@ export interface ERC721FactoryInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "BaseURIChanged(string)": EventFragment;
-    "CollectionDescriptionChanged(string)": EventFragment;
-    "CollectionDisplayPictureChanged(string)": EventFragment;
-    "ContractURIChanged(string)": EventFragment;
-    "Log(string,uint256)": EventFragment;
-    "MarketplaceAddressChanged(address)": EventFragment;
-    "MarketplaceAddressForTokenChanged(address,uint256)": EventFragment;
-    "MintingFeeChanged(uint256)": EventFragment;
-    "OwnerChanged(address)": EventFragment;
     "Paused(address)": EventFragment;
-    "Received(address,uint256)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
     "RoleRevoked(bytes32,address,address)": EventFragment;
-    "TokenBurned(address,address,uint256,uint256)": EventFragment;
-    "TokenCategoryChanged(uint8)": EventFragment;
-    "TokenMinted(address,address,uint256,uint256)": EventFragment;
-    "TokenTransfered(address,address,uint256,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "BaseURIChanged"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "CollectionDescriptionChanged"
-  ): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "CollectionDisplayPictureChanged"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ContractURIChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Log"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MarketplaceAddressChanged"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "MarketplaceAddressForTokenChanged"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MintingFeeChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenBurned"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenCategoryChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenMinted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenTransfered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
 }
@@ -1295,115 +1241,12 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
-export interface BaseURIChangedEventObject {
-  newURI: string;
-}
-export type BaseURIChangedEvent = TypedEvent<
-  [string],
-  BaseURIChangedEventObject
->;
-
-export type BaseURIChangedEventFilter = TypedEventFilter<BaseURIChangedEvent>;
-
-export interface CollectionDescriptionChangedEventObject {
-  description: string;
-}
-export type CollectionDescriptionChangedEvent = TypedEvent<
-  [string],
-  CollectionDescriptionChangedEventObject
->;
-
-export type CollectionDescriptionChangedEventFilter =
-  TypedEventFilter<CollectionDescriptionChangedEvent>;
-
-export interface CollectionDisplayPictureChangedEventObject {
-  photoURL: string;
-}
-export type CollectionDisplayPictureChangedEvent = TypedEvent<
-  [string],
-  CollectionDisplayPictureChangedEventObject
->;
-
-export type CollectionDisplayPictureChangedEventFilter =
-  TypedEventFilter<CollectionDisplayPictureChangedEvent>;
-
-export interface ContractURIChangedEventObject {
-  newURI: string;
-}
-export type ContractURIChangedEvent = TypedEvent<
-  [string],
-  ContractURIChangedEventObject
->;
-
-export type ContractURIChangedEventFilter =
-  TypedEventFilter<ContractURIChangedEvent>;
-
-export interface LogEventObject {
-  func: string;
-  gas: BigNumber;
-}
-export type LogEvent = TypedEvent<[string, BigNumber], LogEventObject>;
-
-export type LogEventFilter = TypedEventFilter<LogEvent>;
-
-export interface MarketplaceAddressChangedEventObject {
-  newMarketplaceAddress: string;
-}
-export type MarketplaceAddressChangedEvent = TypedEvent<
-  [string],
-  MarketplaceAddressChangedEventObject
->;
-
-export type MarketplaceAddressChangedEventFilter =
-  TypedEventFilter<MarketplaceAddressChangedEvent>;
-
-export interface MarketplaceAddressForTokenChangedEventObject {
-  newMarketplaceAddress: string;
-  tokenId: BigNumber;
-}
-export type MarketplaceAddressForTokenChangedEvent = TypedEvent<
-  [string, BigNumber],
-  MarketplaceAddressForTokenChangedEventObject
->;
-
-export type MarketplaceAddressForTokenChangedEventFilter =
-  TypedEventFilter<MarketplaceAddressForTokenChangedEvent>;
-
-export interface MintingFeeChangedEventObject {
-  newMintingFee: BigNumber;
-}
-export type MintingFeeChangedEvent = TypedEvent<
-  [BigNumber],
-  MintingFeeChangedEventObject
->;
-
-export type MintingFeeChangedEventFilter =
-  TypedEventFilter<MintingFeeChangedEvent>;
-
-export interface OwnerChangedEventObject {
-  newOwner: string;
-}
-export type OwnerChangedEvent = TypedEvent<[string], OwnerChangedEventObject>;
-
-export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
-
 export interface PausedEventObject {
   account: string;
 }
 export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
-
-export interface ReceivedEventObject {
-  arg0: string;
-  arg1: BigNumber;
-}
-export type ReceivedEvent = TypedEvent<
-  [string, BigNumber],
-  ReceivedEventObject
->;
-
-export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
 
 export interface RoleAdminChangedEventObject {
   role: string;
@@ -1441,56 +1284,6 @@ export type RoleRevokedEvent = TypedEvent<
 >;
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
-
-export interface TokenBurnedEventObject {
-  creator: string;
-  burner: string;
-  burnedTokenId: BigNumber;
-  batchSize: BigNumber;
-}
-export type TokenBurnedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  TokenBurnedEventObject
->;
-
-export type TokenBurnedEventFilter = TypedEventFilter<TokenBurnedEvent>;
-
-export interface TokenCategoryChangedEventObject {
-  newTokenCategotyIndex: number;
-}
-export type TokenCategoryChangedEvent = TypedEvent<
-  [number],
-  TokenCategoryChangedEventObject
->;
-
-export type TokenCategoryChangedEventFilter =
-  TypedEventFilter<TokenCategoryChangedEvent>;
-
-export interface TokenMintedEventObject {
-  creator: string;
-  minter: string;
-  newTokenId: BigNumber;
-  batchSize: BigNumber;
-}
-export type TokenMintedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  TokenMintedEventObject
->;
-
-export type TokenMintedEventFilter = TypedEventFilter<TokenMintedEvent>;
-
-export interface TokenTransferedEventObject {
-  creator: string;
-  burner: string;
-  transferedTokenId: BigNumber;
-  batchSize: BigNumber;
-}
-export type TokenTransferedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  TokenTransferedEventObject
->;
-
-export type TokenTransferedEventFilter = TypedEventFilter<TokenTransferedEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -1582,7 +1375,7 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    approveAddressForTokenId(
+    approveAccountForTokenId(
       _account: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1610,15 +1403,23 @@ export interface ERC721Factory extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    collectionDescription(overrides?: CallOverrides): Promise<[string]>;
+    collectionDescription(
+      overrides?: CallOverrides
+    ): Promise<[string] & { description: string }>;
 
-    collectionDisplayPicture(overrides?: CallOverrides): Promise<[string]>;
+    collectionDisplayPicture(
+      overrides?: CallOverrides
+    ): Promise<[string] & { photoURL: string }>;
 
-    collectionMaxSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+    collectionMaxSupply(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { tokenMaximumSupply: BigNumber }>;
 
     collectionName(overrides?: CallOverrides): Promise<[string]>;
 
-    collectionRoyaltiesEnabled(overrides?: CallOverrides): Promise<[boolean]>;
+    collectionRoyaltiesEnabled(
+      overrides?: CallOverrides
+    ): Promise<[boolean] & { royaltiesEnabled: boolean }>;
 
     collectionSymbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1641,49 +1442,54 @@ export interface ERC721Factory extends BaseContract {
 
     getContractURI(overrides?: CallOverrides): Promise<[string]>;
 
-    getCreatorTokenCount(
+    getCountTokensOwned(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    getMarketplaceAddress(overrides?: CallOverrides): Promise<[string]>;
+    getMarketplaceAddress(
+      overrides?: CallOverrides
+    ): Promise<[string] & { marketplaceAddress: string }>;
 
     getNFTItem(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput]>;
+    ): Promise<[Structs.NFTItemStructOutput]>;
 
     getNFTItemFull(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        ERCStructs.NFTItemStructOutput,
-        ERCStructs.TokenActivityItemStructOutput[]
-      ]
+      [Structs.NFTItemStructOutput, Structs.TokenActivityItemStructOutput[]]
     >;
 
     getNFTItems(
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
-    getOwner(overrides?: CallOverrides): Promise<[string]>;
-
-    getOwnerTokenCount(
-      _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getOwner(overrides?: CallOverrides): Promise<[string] & { owner: string }>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getRoyaltyFraction(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRoyaltyFraction(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { royaltyFraction: BigNumber }>;
 
-    getRoyaltyReceiver(overrides?: CallOverrides): Promise<[string]>;
+    getRoyaltyReceiver(
+      overrides?: CallOverrides
+    ): Promise<[string] & { royaltyReceiver: string }>;
 
-    getTokenCategory(overrides?: CallOverrides): Promise<[number]>;
+    getTokenAuditTrail(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[Structs.TokenActivityItemStructOutput[]]>;
+
+    getTokenCategory(
+      overrides?: CallOverrides
+    ): Promise<[number] & { tokenCategory: number }>;
 
     getTokenCreator(
       _tokenId: PromiseOrValue<BigNumberish>,
@@ -1694,20 +1500,17 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenCurrentSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTokenMaximumSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTokenMaximumSupply(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { tokenMaximumSupply: BigNumber }>;
 
     getTokenMintingFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    getTokenOwner(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
 
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
       price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.RoyaltyItemStructOutput]>;
+    ): Promise<[Structs.RoyaltyItemStructOutput]>;
 
     getTokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
@@ -1717,20 +1520,29 @@ export interface ERC721Factory extends BaseContract {
     getTokensCreatedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
     getTokensCreatedByMe(
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
+
+    getTokensMintedByAddress(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
+
+    getTokensMintedByMe(
+      overrides?: CallOverrides
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
     getTokensOwnedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
     getTokensOwnedByMe(
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
@@ -1850,37 +1662,19 @@ export interface ERC721Factory extends BaseContract {
       _itemKey: PromiseOrValue<string>,
       _uint256: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
     "search(string,string)"(
       _itemKey: PromiseOrValue<string>,
       _query: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
-
-    "search(string,bool)"(
-      _itemKey: PromiseOrValue<string>,
-      _bool: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
-
-    "search(string,bytes)"(
-      _itemKey: PromiseOrValue<string>,
-      _bytes: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
     "search(string,address)"(
       _itemKey: PromiseOrValue<string>,
       _address: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
-
-    searchNFT(
-      _query: PromiseOrValue<string>,
-      _key: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[ERCStructs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTItemStructOutput[]]>;
 
     setAdminRole(
       _account: PromiseOrValue<string>,
@@ -1972,12 +1766,11 @@ export interface ERC721Factory extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [number, string, string, BigNumber, string] & {
+      [number, string, string, BigNumber] & {
         activityType: number;
         fromAddress: string;
         toAddress: string;
         timestamp: BigNumber;
-        data: string;
       }
     >;
 
@@ -2068,7 +1861,7 @@ export interface ERC721Factory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  approveAddressForTokenId(
+  approveAccountForTokenId(
     _account: PromiseOrValue<string>,
     _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2127,7 +1920,7 @@ export interface ERC721Factory extends BaseContract {
 
   getContractURI(overrides?: CallOverrides): Promise<string>;
 
-  getCreatorTokenCount(
+  getCountTokensOwned(
     _account: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
@@ -2137,25 +1930,20 @@ export interface ERC721Factory extends BaseContract {
   getNFTItem(
     _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput>;
+  ): Promise<Structs.NFTItemStructOutput>;
 
   getNFTItemFull(
     _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [ERCStructs.NFTItemStructOutput, ERCStructs.TokenActivityItemStructOutput[]]
+    [Structs.NFTItemStructOutput, Structs.TokenActivityItemStructOutput[]]
   >;
 
   getNFTItems(
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   getOwner(overrides?: CallOverrides): Promise<string>;
-
-  getOwnerTokenCount(
-    _account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
 
   getRoleAdmin(
     role: PromiseOrValue<BytesLike>,
@@ -2165,6 +1953,11 @@ export interface ERC721Factory extends BaseContract {
   getRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
   getRoyaltyReceiver(overrides?: CallOverrides): Promise<string>;
+
+  getTokenAuditTrail(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<Structs.TokenActivityItemStructOutput[]>;
 
   getTokenCategory(overrides?: CallOverrides): Promise<number>;
 
@@ -2181,16 +1974,11 @@ export interface ERC721Factory extends BaseContract {
 
   getTokenMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTokenOwner(
-    _tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   getTokenRoyaltyInfo(
     _tokenId: PromiseOrValue<BigNumberish>,
     price: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<ERCStructs.RoyaltyItemStructOutput>;
+  ): Promise<Structs.RoyaltyItemStructOutput>;
 
   getTokenURI(
     _tokenId: PromiseOrValue<BigNumberish>,
@@ -2200,20 +1988,29 @@ export interface ERC721Factory extends BaseContract {
   getTokensCreatedByAddress(
     _account: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   getTokensCreatedByMe(
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
+
+  getTokensMintedByAddress(
+    _account: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<Structs.NFTItemStructOutput[]>;
+
+  getTokensMintedByMe(
+    overrides?: CallOverrides
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   getTokensOwnedByAddress(
     _account: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   getTokensOwnedByMe(
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   grantRole(
     role: PromiseOrValue<BytesLike>,
@@ -2333,37 +2130,19 @@ export interface ERC721Factory extends BaseContract {
     _itemKey: PromiseOrValue<string>,
     _uint256: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   "search(string,string)"(
     _itemKey: PromiseOrValue<string>,
     _query: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
-
-  "search(string,bool)"(
-    _itemKey: PromiseOrValue<string>,
-    _bool: PromiseOrValue<boolean>,
-    overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
-
-  "search(string,bytes)"(
-    _itemKey: PromiseOrValue<string>,
-    _bytes: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   "search(string,address)"(
     _itemKey: PromiseOrValue<string>,
     _address: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
-
-  searchNFT(
-    _query: PromiseOrValue<string>,
-    _key: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<ERCStructs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTItemStructOutput[]>;
 
   setAdminRole(
     _account: PromiseOrValue<string>,
@@ -2455,12 +2234,11 @@ export interface ERC721Factory extends BaseContract {
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [number, string, string, BigNumber, string] & {
+    [number, string, string, BigNumber] & {
       activityType: number;
       fromAddress: string;
       toAddress: string;
       timestamp: BigNumber;
-      data: string;
     }
   >;
 
@@ -2551,7 +2329,7 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    approveAddressForTokenId(
+    approveAccountForTokenId(
       _account: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -2610,7 +2388,7 @@ export interface ERC721Factory extends BaseContract {
 
     getContractURI(overrides?: CallOverrides): Promise<string>;
 
-    getCreatorTokenCount(
+    getCountTokensOwned(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -2620,28 +2398,20 @@ export interface ERC721Factory extends BaseContract {
     getNFTItem(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput>;
+    ): Promise<Structs.NFTItemStructOutput>;
 
     getNFTItemFull(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [
-        ERCStructs.NFTItemStructOutput,
-        ERCStructs.TokenActivityItemStructOutput[]
-      ]
+      [Structs.NFTItemStructOutput, Structs.TokenActivityItemStructOutput[]]
     >;
 
     getNFTItems(
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     getOwner(overrides?: CallOverrides): Promise<string>;
-
-    getOwnerTokenCount(
-      _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
@@ -2651,6 +2421,11 @@ export interface ERC721Factory extends BaseContract {
     getRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoyaltyReceiver(overrides?: CallOverrides): Promise<string>;
+
+    getTokenAuditTrail(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<Structs.TokenActivityItemStructOutput[]>;
 
     getTokenCategory(overrides?: CallOverrides): Promise<number>;
 
@@ -2667,16 +2442,11 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTokenOwner(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
       price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<ERCStructs.RoyaltyItemStructOutput>;
+    ): Promise<Structs.RoyaltyItemStructOutput>;
 
     getTokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
@@ -2686,20 +2456,29 @@ export interface ERC721Factory extends BaseContract {
     getTokensCreatedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     getTokensCreatedByMe(
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
+
+    getTokensMintedByAddress(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<Structs.NFTItemStructOutput[]>;
+
+    getTokensMintedByMe(
+      overrides?: CallOverrides
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     getTokensOwnedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     getTokensOwnedByMe(
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     grantRole(
       role: PromiseOrValue<BytesLike>,
@@ -2817,37 +2596,19 @@ export interface ERC721Factory extends BaseContract {
       _itemKey: PromiseOrValue<string>,
       _uint256: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     "search(string,string)"(
       _itemKey: PromiseOrValue<string>,
       _query: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
-
-    "search(string,bool)"(
-      _itemKey: PromiseOrValue<string>,
-      _bool: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
-
-    "search(string,bytes)"(
-      _itemKey: PromiseOrValue<string>,
-      _bytes: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     "search(string,address)"(
       _itemKey: PromiseOrValue<string>,
       _address: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
-
-    searchNFT(
-      _query: PromiseOrValue<string>,
-      _key: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<ERCStructs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTItemStructOutput[]>;
 
     setAdminRole(
       _account: PromiseOrValue<string>,
@@ -2939,12 +2700,11 @@ export interface ERC721Factory extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [number, string, string, BigNumber, string] & {
+      [number, string, string, BigNumber] & {
         activityType: number;
         fromAddress: string;
         toAddress: string;
         timestamp: BigNumber;
-        data: string;
       }
     >;
 
@@ -3014,58 +2774,8 @@ export interface ERC721Factory extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
-    "BaseURIChanged(string)"(newURI?: null): BaseURIChangedEventFilter;
-    BaseURIChanged(newURI?: null): BaseURIChangedEventFilter;
-
-    "CollectionDescriptionChanged(string)"(
-      description?: null
-    ): CollectionDescriptionChangedEventFilter;
-    CollectionDescriptionChanged(
-      description?: null
-    ): CollectionDescriptionChangedEventFilter;
-
-    "CollectionDisplayPictureChanged(string)"(
-      photoURL?: null
-    ): CollectionDisplayPictureChangedEventFilter;
-    CollectionDisplayPictureChanged(
-      photoURL?: null
-    ): CollectionDisplayPictureChangedEventFilter;
-
-    "ContractURIChanged(string)"(newURI?: null): ContractURIChangedEventFilter;
-    ContractURIChanged(newURI?: null): ContractURIChangedEventFilter;
-
-    "Log(string,uint256)"(func?: null, gas?: null): LogEventFilter;
-    Log(func?: null, gas?: null): LogEventFilter;
-
-    "MarketplaceAddressChanged(address)"(
-      newMarketplaceAddress?: null
-    ): MarketplaceAddressChangedEventFilter;
-    MarketplaceAddressChanged(
-      newMarketplaceAddress?: null
-    ): MarketplaceAddressChangedEventFilter;
-
-    "MarketplaceAddressForTokenChanged(address,uint256)"(
-      newMarketplaceAddress?: null,
-      tokenId?: null
-    ): MarketplaceAddressForTokenChangedEventFilter;
-    MarketplaceAddressForTokenChanged(
-      newMarketplaceAddress?: null,
-      tokenId?: null
-    ): MarketplaceAddressForTokenChangedEventFilter;
-
-    "MintingFeeChanged(uint256)"(
-      newMintingFee?: null
-    ): MintingFeeChangedEventFilter;
-    MintingFeeChanged(newMintingFee?: null): MintingFeeChangedEventFilter;
-
-    "OwnerChanged(address)"(newOwner?: null): OwnerChangedEventFilter;
-    OwnerChanged(newOwner?: null): OwnerChangedEventFilter;
-
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
-
-    "Received(address,uint256)"(arg0?: null, arg1?: null): ReceivedEventFilter;
-    Received(arg0?: null, arg1?: null): ReceivedEventFilter;
 
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
       role?: PromiseOrValue<BytesLike> | null,
@@ -3099,52 +2809,6 @@ export interface ERC721Factory extends BaseContract {
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null
     ): RoleRevokedEventFilter;
-
-    "TokenBurned(address,address,uint256,uint256)"(
-      creator?: null,
-      burner?: null,
-      burnedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenBurnedEventFilter;
-    TokenBurned(
-      creator?: null,
-      burner?: null,
-      burnedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenBurnedEventFilter;
-
-    "TokenCategoryChanged(uint8)"(
-      newTokenCategotyIndex?: null
-    ): TokenCategoryChangedEventFilter;
-    TokenCategoryChanged(
-      newTokenCategotyIndex?: null
-    ): TokenCategoryChangedEventFilter;
-
-    "TokenMinted(address,address,uint256,uint256)"(
-      creator?: null,
-      minter?: null,
-      newTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenMintedEventFilter;
-    TokenMinted(
-      creator?: null,
-      minter?: null,
-      newTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenMintedEventFilter;
-
-    "TokenTransfered(address,address,uint256,uint256)"(
-      creator?: null,
-      burner?: null,
-      transferedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenTransferedEventFilter;
-    TokenTransfered(
-      creator?: null,
-      burner?: null,
-      transferedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenTransferedEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
@@ -3202,7 +2866,7 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    approveAddressForTokenId(
+    approveAccountForTokenId(
       _account: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -3259,7 +2923,7 @@ export interface ERC721Factory extends BaseContract {
 
     getContractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCreatorTokenCount(
+    getCountTokensOwned(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -3280,11 +2944,6 @@ export interface ERC721Factory extends BaseContract {
 
     getOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getOwnerTokenCount(
-      _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -3293,6 +2952,11 @@ export interface ERC721Factory extends BaseContract {
     getRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoyaltyReceiver(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTokenAuditTrail(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getTokenCategory(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -3308,11 +2972,6 @@ export interface ERC721Factory extends BaseContract {
     getTokenMaximumSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     getTokenMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getTokenOwner(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
@@ -3331,6 +2990,13 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<BigNumber>;
 
     getTokensCreatedByMe(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTokensMintedByAddress(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getTokensMintedByMe(overrides?: CallOverrides): Promise<BigNumber>;
 
     getTokensOwnedByAddress(
       _account: PromiseOrValue<string>,
@@ -3465,27 +3131,9 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "search(string,bool)"(
-      _itemKey: PromiseOrValue<string>,
-      _bool: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "search(string,bytes)"(
-      _itemKey: PromiseOrValue<string>,
-      _bytes: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     "search(string,address)"(
       _itemKey: PromiseOrValue<string>,
       _address: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    searchNFT(
-      _query: PromiseOrValue<string>,
-      _key: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -3680,7 +3328,7 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    approveAddressForTokenId(
+    approveAccountForTokenId(
       _account: PromiseOrValue<string>,
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -3747,7 +3395,7 @@ export interface ERC721Factory extends BaseContract {
 
     getContractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCreatorTokenCount(
+    getCountTokensOwned(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -3770,11 +3418,6 @@ export interface ERC721Factory extends BaseContract {
 
     getOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getOwnerTokenCount(
-      _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getRoleAdmin(
       role: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -3785,6 +3428,11 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getRoyaltyReceiver(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTokenAuditTrail(
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3809,11 +3457,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getTokenOwner(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
       price: PromiseOrValue<BigNumberish>,
@@ -3831,6 +3474,15 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getTokensCreatedByMe(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTokensMintedByAddress(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTokensMintedByMe(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3971,27 +3623,9 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "search(string,bool)"(
-      _itemKey: PromiseOrValue<string>,
-      _bool: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "search(string,bytes)"(
-      _itemKey: PromiseOrValue<string>,
-      _bytes: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     "search(string,address)"(
       _itemKey: PromiseOrValue<string>,
       _address: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    searchNFT(
-      _query: PromiseOrValue<string>,
-      _key: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

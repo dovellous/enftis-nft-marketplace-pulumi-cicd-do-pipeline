@@ -153,6 +153,11 @@ const _abi = [
         type: "string",
       },
       {
+        internalType: "bool",
+        name: "tokenURIExists",
+        type: "bool",
+      },
+      {
         internalType: "bytes32",
         name: "message",
         type: "bytes32",
@@ -174,13 +179,29 @@ const _abi = [
         type: "bytes32",
       },
     ],
+    name: "UnAuthorizedCaller",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "bytes32",
+        name: "message",
+        type: "bytes32",
+      },
+    ],
     name: "ZeroAddress",
     type: "error",
   },
 ] as const;
 
 const _bytecode =
-  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220a7f2391d3fe09623cc9f2e19b4cc9368416e1376df0714fcc946b6dae5d662e364736f6c63430008120033";
+  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209aa68137b0293a56fac96c4969476341316335644c1b7bfe43de59ce92943d8264736f6c63430008130033";
 
 type ErrorsConstructorParams =
   | [signer?: Signer]

@@ -21,11 +21,42 @@ import type {
   PromiseOrValue,
 } from "../../common";
 
+export declare namespace Structs {
+  export type NFTItemStruct = {
+    minterAddress: PromiseOrValue<string>;
+    creatorAddress: PromiseOrValue<string>;
+    ownerAddress: PromiseOrValue<string>;
+    tokenId: PromiseOrValue<BigNumberish>;
+    createdAt: PromiseOrValue<BigNumberish>;
+    updatedAt: PromiseOrValue<BigNumberish>;
+    tokenURI: PromiseOrValue<string>;
+  };
+
+  export type NFTItemStructOutput = [
+    string,
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string
+  ] & {
+    minterAddress: string;
+    creatorAddress: string;
+    ownerAddress: string;
+    tokenId: BigNumber;
+    createdAt: BigNumber;
+    updatedAt: BigNumber;
+    tokenURI: string;
+  };
+}
+
 export interface SnippetsInterface extends utils.Interface {
   functions: {
     "bytes32String(bytes32)": FunctionFragment;
     "compareStrings(string,string)": FunctionFragment;
     "getIPFSPrefix()": FunctionFragment;
+    "searchHasMatch(string,bytes,(address,address,address,uint256,uint256,uint256,string))": FunctionFragment;
     "stringContains(string,string)": FunctionFragment;
     "subString(string,uint256,uint256)": FunctionFragment;
     "trim(string,uint256,uint256)": FunctionFragment;
@@ -36,6 +67,7 @@ export interface SnippetsInterface extends utils.Interface {
       | "bytes32String"
       | "compareStrings"
       | "getIPFSPrefix"
+      | "searchHasMatch"
       | "stringContains"
       | "subString"
       | "trim"
@@ -52,6 +84,14 @@ export interface SnippetsInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getIPFSPrefix",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "searchHasMatch",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      Structs.NFTItemStruct
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "stringContains",
@@ -84,6 +124,10 @@ export interface SnippetsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getIPFSPrefix",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "searchHasMatch",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -136,6 +180,13 @@ export interface Snippets extends BaseContract {
 
     getIPFSPrefix(overrides?: CallOverrides): Promise<[string]>;
 
+    searchHasMatch(
+      _itemKey: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      _nftItem: Structs.NFTItemStruct,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     stringContains(
       what: PromiseOrValue<string>,
       where: PromiseOrValue<string>,
@@ -170,6 +221,13 @@ export interface Snippets extends BaseContract {
 
   getIPFSPrefix(overrides?: CallOverrides): Promise<string>;
 
+  searchHasMatch(
+    _itemKey: PromiseOrValue<string>,
+    _data: PromiseOrValue<BytesLike>,
+    _nftItem: Structs.NFTItemStruct,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   stringContains(
     what: PromiseOrValue<string>,
     where: PromiseOrValue<string>,
@@ -203,6 +261,13 @@ export interface Snippets extends BaseContract {
     ): Promise<boolean>;
 
     getIPFSPrefix(overrides?: CallOverrides): Promise<string>;
+
+    searchHasMatch(
+      _itemKey: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      _nftItem: Structs.NFTItemStruct,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     stringContains(
       what: PromiseOrValue<string>,
@@ -241,6 +306,13 @@ export interface Snippets extends BaseContract {
 
     getIPFSPrefix(overrides?: CallOverrides): Promise<BigNumber>;
 
+    searchHasMatch(
+      _itemKey: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      _nftItem: Structs.NFTItemStruct,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     stringContains(
       what: PromiseOrValue<string>,
       where: PromiseOrValue<string>,
@@ -275,6 +347,13 @@ export interface Snippets extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getIPFSPrefix(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    searchHasMatch(
+      _itemKey: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      _nftItem: Structs.NFTItemStruct,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     stringContains(
       what: PromiseOrValue<string>,

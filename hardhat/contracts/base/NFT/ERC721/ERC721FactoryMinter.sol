@@ -89,14 +89,26 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
         unchecked {
 
+            /*
+
+            struct NFTItem {
+                address minterAddress;
+                address creatorAddress;
+                address ownerAddress;
+                uint256 tokenId;
+                uint createdAt;
+                uint updatedAt;
+            }
+
+            */
+
             tokenIdToNFTItem[newTokenId] = Structs.NFTItem(
                 _msgSender(),
-                _to,
+                [_msgSender(), _to],
                 _to,
                 newTokenId,
                 block.timestamp,
-                block.timestamp,
-                _tokenURI
+                block.timestamp
             );
 
             tokenURIs[newTokenId] = _tokenURI;

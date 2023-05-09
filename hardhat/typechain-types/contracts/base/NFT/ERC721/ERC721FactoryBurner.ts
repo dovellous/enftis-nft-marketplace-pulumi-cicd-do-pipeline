@@ -587,54 +587,20 @@ export interface ERC721FactoryBurnerInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "BaseURIChanged(string)": EventFragment;
-    "CollectionDescriptionChanged(string)": EventFragment;
-    "CollectionDisplayPictureChanged(string)": EventFragment;
-    "ContractURIChanged(string)": EventFragment;
-    "Log(string,uint256)": EventFragment;
-    "MarketplaceAddressChanged(address)": EventFragment;
-    "MarketplaceAddressForTokenChanged(address,uint256)": EventFragment;
-    "MintingFeeChanged(uint256)": EventFragment;
-    "OwnerChanged(address)": EventFragment;
     "Paused(address)": EventFragment;
-    "Received(address,uint256)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
     "RoleRevoked(bytes32,address,address)": EventFragment;
-    "TokenBurned(address,address,uint256,uint256)": EventFragment;
-    "TokenCategoryChanged(uint8)": EventFragment;
-    "TokenMinted(address,address,uint256,uint256)": EventFragment;
-    "TokenTransfered(address,address,uint256,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "BaseURIChanged"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "CollectionDescriptionChanged"
-  ): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "CollectionDisplayPictureChanged"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ContractURIChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Log"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MarketplaceAddressChanged"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "MarketplaceAddressForTokenChanged"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MintingFeeChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenBurned"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenCategoryChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenMinted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenTransfered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
 }
@@ -663,115 +629,12 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
-export interface BaseURIChangedEventObject {
-  newURI: string;
-}
-export type BaseURIChangedEvent = TypedEvent<
-  [string],
-  BaseURIChangedEventObject
->;
-
-export type BaseURIChangedEventFilter = TypedEventFilter<BaseURIChangedEvent>;
-
-export interface CollectionDescriptionChangedEventObject {
-  description: string;
-}
-export type CollectionDescriptionChangedEvent = TypedEvent<
-  [string],
-  CollectionDescriptionChangedEventObject
->;
-
-export type CollectionDescriptionChangedEventFilter =
-  TypedEventFilter<CollectionDescriptionChangedEvent>;
-
-export interface CollectionDisplayPictureChangedEventObject {
-  photoURL: string;
-}
-export type CollectionDisplayPictureChangedEvent = TypedEvent<
-  [string],
-  CollectionDisplayPictureChangedEventObject
->;
-
-export type CollectionDisplayPictureChangedEventFilter =
-  TypedEventFilter<CollectionDisplayPictureChangedEvent>;
-
-export interface ContractURIChangedEventObject {
-  newURI: string;
-}
-export type ContractURIChangedEvent = TypedEvent<
-  [string],
-  ContractURIChangedEventObject
->;
-
-export type ContractURIChangedEventFilter =
-  TypedEventFilter<ContractURIChangedEvent>;
-
-export interface LogEventObject {
-  func: string;
-  gas: BigNumber;
-}
-export type LogEvent = TypedEvent<[string, BigNumber], LogEventObject>;
-
-export type LogEventFilter = TypedEventFilter<LogEvent>;
-
-export interface MarketplaceAddressChangedEventObject {
-  newMarketplaceAddress: string;
-}
-export type MarketplaceAddressChangedEvent = TypedEvent<
-  [string],
-  MarketplaceAddressChangedEventObject
->;
-
-export type MarketplaceAddressChangedEventFilter =
-  TypedEventFilter<MarketplaceAddressChangedEvent>;
-
-export interface MarketplaceAddressForTokenChangedEventObject {
-  newMarketplaceAddress: string;
-  tokenId: BigNumber;
-}
-export type MarketplaceAddressForTokenChangedEvent = TypedEvent<
-  [string, BigNumber],
-  MarketplaceAddressForTokenChangedEventObject
->;
-
-export type MarketplaceAddressForTokenChangedEventFilter =
-  TypedEventFilter<MarketplaceAddressForTokenChangedEvent>;
-
-export interface MintingFeeChangedEventObject {
-  newMintingFee: BigNumber;
-}
-export type MintingFeeChangedEvent = TypedEvent<
-  [BigNumber],
-  MintingFeeChangedEventObject
->;
-
-export type MintingFeeChangedEventFilter =
-  TypedEventFilter<MintingFeeChangedEvent>;
-
-export interface OwnerChangedEventObject {
-  newOwner: string;
-}
-export type OwnerChangedEvent = TypedEvent<[string], OwnerChangedEventObject>;
-
-export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
-
 export interface PausedEventObject {
   account: string;
 }
 export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
-
-export interface ReceivedEventObject {
-  arg0: string;
-  arg1: BigNumber;
-}
-export type ReceivedEvent = TypedEvent<
-  [string, BigNumber],
-  ReceivedEventObject
->;
-
-export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
 
 export interface RoleAdminChangedEventObject {
   role: string;
@@ -809,56 +672,6 @@ export type RoleRevokedEvent = TypedEvent<
 >;
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
-
-export interface TokenBurnedEventObject {
-  creator: string;
-  burner: string;
-  burnedTokenId: BigNumber;
-  batchSize: BigNumber;
-}
-export type TokenBurnedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  TokenBurnedEventObject
->;
-
-export type TokenBurnedEventFilter = TypedEventFilter<TokenBurnedEvent>;
-
-export interface TokenCategoryChangedEventObject {
-  newTokenCategotyIndex: number;
-}
-export type TokenCategoryChangedEvent = TypedEvent<
-  [number],
-  TokenCategoryChangedEventObject
->;
-
-export type TokenCategoryChangedEventFilter =
-  TypedEventFilter<TokenCategoryChangedEvent>;
-
-export interface TokenMintedEventObject {
-  creator: string;
-  minter: string;
-  newTokenId: BigNumber;
-  batchSize: BigNumber;
-}
-export type TokenMintedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  TokenMintedEventObject
->;
-
-export type TokenMintedEventFilter = TypedEventFilter<TokenMintedEvent>;
-
-export interface TokenTransferedEventObject {
-  creator: string;
-  burner: string;
-  transferedTokenId: BigNumber;
-  batchSize: BigNumber;
-}
-export type TokenTransferedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  TokenTransferedEventObject
->;
-
-export type TokenTransferedEventFilter = TypedEventFilter<TokenTransferedEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -1107,12 +920,11 @@ export interface ERC721FactoryBurner extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [number, string, string, BigNumber, string] & {
+      [number, string, string, BigNumber] & {
         activityType: number;
         fromAddress: string;
         toAddress: string;
         timestamp: BigNumber;
-        data: string;
       }
     >;
 
@@ -1351,12 +1163,11 @@ export interface ERC721FactoryBurner extends BaseContract {
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [number, string, string, BigNumber, string] & {
+    [number, string, string, BigNumber] & {
       activityType: number;
       fromAddress: string;
       toAddress: string;
       timestamp: BigNumber;
-      data: string;
     }
   >;
 
@@ -1595,12 +1406,11 @@ export interface ERC721FactoryBurner extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [number, string, string, BigNumber, string] & {
+      [number, string, string, BigNumber] & {
         activityType: number;
         fromAddress: string;
         toAddress: string;
         timestamp: BigNumber;
-        data: string;
       }
     >;
 
@@ -1663,58 +1473,8 @@ export interface ERC721FactoryBurner extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
-    "BaseURIChanged(string)"(newURI?: null): BaseURIChangedEventFilter;
-    BaseURIChanged(newURI?: null): BaseURIChangedEventFilter;
-
-    "CollectionDescriptionChanged(string)"(
-      description?: null
-    ): CollectionDescriptionChangedEventFilter;
-    CollectionDescriptionChanged(
-      description?: null
-    ): CollectionDescriptionChangedEventFilter;
-
-    "CollectionDisplayPictureChanged(string)"(
-      photoURL?: null
-    ): CollectionDisplayPictureChangedEventFilter;
-    CollectionDisplayPictureChanged(
-      photoURL?: null
-    ): CollectionDisplayPictureChangedEventFilter;
-
-    "ContractURIChanged(string)"(newURI?: null): ContractURIChangedEventFilter;
-    ContractURIChanged(newURI?: null): ContractURIChangedEventFilter;
-
-    "Log(string,uint256)"(func?: null, gas?: null): LogEventFilter;
-    Log(func?: null, gas?: null): LogEventFilter;
-
-    "MarketplaceAddressChanged(address)"(
-      newMarketplaceAddress?: null
-    ): MarketplaceAddressChangedEventFilter;
-    MarketplaceAddressChanged(
-      newMarketplaceAddress?: null
-    ): MarketplaceAddressChangedEventFilter;
-
-    "MarketplaceAddressForTokenChanged(address,uint256)"(
-      newMarketplaceAddress?: null,
-      tokenId?: null
-    ): MarketplaceAddressForTokenChangedEventFilter;
-    MarketplaceAddressForTokenChanged(
-      newMarketplaceAddress?: null,
-      tokenId?: null
-    ): MarketplaceAddressForTokenChangedEventFilter;
-
-    "MintingFeeChanged(uint256)"(
-      newMintingFee?: null
-    ): MintingFeeChangedEventFilter;
-    MintingFeeChanged(newMintingFee?: null): MintingFeeChangedEventFilter;
-
-    "OwnerChanged(address)"(newOwner?: null): OwnerChangedEventFilter;
-    OwnerChanged(newOwner?: null): OwnerChangedEventFilter;
-
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
-
-    "Received(address,uint256)"(arg0?: null, arg1?: null): ReceivedEventFilter;
-    Received(arg0?: null, arg1?: null): ReceivedEventFilter;
 
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
       role?: PromiseOrValue<BytesLike> | null,
@@ -1748,52 +1508,6 @@ export interface ERC721FactoryBurner extends BaseContract {
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null
     ): RoleRevokedEventFilter;
-
-    "TokenBurned(address,address,uint256,uint256)"(
-      creator?: null,
-      burner?: null,
-      burnedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenBurnedEventFilter;
-    TokenBurned(
-      creator?: null,
-      burner?: null,
-      burnedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenBurnedEventFilter;
-
-    "TokenCategoryChanged(uint8)"(
-      newTokenCategotyIndex?: null
-    ): TokenCategoryChangedEventFilter;
-    TokenCategoryChanged(
-      newTokenCategotyIndex?: null
-    ): TokenCategoryChangedEventFilter;
-
-    "TokenMinted(address,address,uint256,uint256)"(
-      creator?: null,
-      minter?: null,
-      newTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenMintedEventFilter;
-    TokenMinted(
-      creator?: null,
-      minter?: null,
-      newTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenMintedEventFilter;
-
-    "TokenTransfered(address,address,uint256,uint256)"(
-      creator?: null,
-      burner?: null,
-      transferedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenTransferedEventFilter;
-    TokenTransfered(
-      creator?: null,
-      burner?: null,
-      transferedTokenId?: PromiseOrValue<BigNumberish> | null,
-      batchSize?: null
-    ): TokenTransferedEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
