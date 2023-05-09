@@ -44,10 +44,6 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { ERCConstants } from "./contracts/base/NFT/common/ERCConstants";
 export { ERCConstants__factory } from "./factories/contracts/base/NFT/common/ERCConstants__factory";
-export type { ERCErrors } from "./contracts/base/NFT/common/ERCErrors";
-export { ERCErrors__factory } from "./factories/contracts/base/NFT/common/ERCErrors__factory";
-export type { ERCEvents } from "./contracts/base/NFT/common/ERCEvents";
-export { ERCEvents__factory } from "./factories/contracts/base/NFT/common/ERCEvents__factory";
 export type { ERCFallback } from "./contracts/base/NFT/common/ERCFallback";
 export { ERCFallback__factory } from "./factories/contracts/base/NFT/common/ERCFallback__factory";
 export type { ERCModifiers } from "./contracts/base/NFT/common/ERCModifiers";

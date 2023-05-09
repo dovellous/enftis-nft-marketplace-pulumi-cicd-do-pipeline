@@ -2,7 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ERCConstants } from "./ERCConstants";
-export type { ERCErrors } from "./ERCErrors";
-export type { ERCEvents } from "./ERCEvents";
 export type { ERCFallback } from "./ERCFallback";
 export type { ERCModifiers } from "./ERCModifiers";

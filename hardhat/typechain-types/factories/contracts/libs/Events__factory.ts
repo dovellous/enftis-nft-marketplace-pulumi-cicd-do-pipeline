@@ -12,12 +12,44 @@ const _abi = [
     inputs: [
       {
         indexed: false,
+        internalType: "address",
+        name: "approvedAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "ApprovedAddressForTokenChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
         internalType: "string",
         name: "newURI",
         type: "string",
       },
     ],
     name: "BaseURIChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "bannerURL",
+        type: "string",
+      },
+    ],
+    name: "CollectionBannerMediaChanged",
     type: "event",
   },
   {
@@ -89,25 +121,6 @@ const _abi = [
       },
     ],
     name: "MarketplaceAddressChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "newMarketplaceAddress",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "MarketplaceAddressForTokenChanged",
     type: "event",
   },
   {
@@ -264,7 +277,7 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea264697066735822122090cee7c8f25791b7881bda09e1ef633f8f605c220cb22c1029c5a3d6a2f132da64736f6c63430008130033";
+  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220e766ff72ee3c6cddede188aabb8fe5bf22f166045db3e2148ce1a50cb245639d64736f6c63430008130033";
 
 type EventsConstructorParams =
   | [signer?: Signer]

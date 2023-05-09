@@ -89,14 +89,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERCConstants__factory>;
     getContractFactory(
-      name: "ERCErrors",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERCErrors__factory>;
-    getContractFactory(
-      name: "ERCEvents",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERCEvents__factory>;
-    getContractFactory(
       name: "ERCFallback",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERCFallback__factory>;
@@ -236,16 +228,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERCConstants>;
-    getContractAt(
-      name: "ERCErrors",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERCErrors>;
-    getContractAt(
-      name: "ERCEvents",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERCEvents>;
     getContractAt(
       name: "ERCFallback",
       address: string,

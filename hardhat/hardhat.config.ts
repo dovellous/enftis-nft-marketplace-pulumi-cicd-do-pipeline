@@ -10,9 +10,16 @@ module.exports = {
       sepolia: `${process.env.ETHERSCAN_API_KEY}`,
     }
   },
+
   networks: {
+    localhost: {
+      url: "http://127.0.0.1:8545"
+    },
     hardhat: {
-      
+      forking: {
+        url: `${process.env.ALCHEMY_URL_SEPOLIA}/${process.env.ALCHEMY_KEY}`,
+        blockNumber: 14390000
+      }
     },
     sepolia: {
       url: `${process.env.ALCHEMY_URL_SEPOLIA}/${process.env.ALCHEMY_KEY}`,
@@ -26,7 +33,7 @@ module.exports = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 1,
+            runs: 50,
             details: {
               yul: true
             }

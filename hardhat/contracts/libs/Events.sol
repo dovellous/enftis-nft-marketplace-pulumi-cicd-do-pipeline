@@ -36,18 +36,21 @@ library Events {
     ///
     event CollectionDescriptionChanged(string description);
 
-    ///
+    /// Dispatched when the banner media url has been updated.
+    event CollectionBannerMediaChanged(string bannerURL);
+
+    /// Dispatched when the diplay picture url has been updated.
     event CollectionDisplayPictureChanged(string photoURL);
 
-    /// Event fired when owner address is modified.
+    /// Dispatched when the base uri has been updated.
     event BaseURIChanged(string newURI);
 
-    /// Event fired when owner address is modified.
+    /// Dispatched when the marketplace address has been updated.
     event MarketplaceAddressChanged(address newMarketplaceAddress);
 
-    /// Event fired when owner address is modified.
-    event MarketplaceAddressForTokenChanged(
-        address newMarketplaceAddress,
+    /// Dispatched when the token approved address has been updated.
+    event ApprovedAddressForTokenChanged(
+        address approvedAddress,
         uint256 tokenId
     );
 

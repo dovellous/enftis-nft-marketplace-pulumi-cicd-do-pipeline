@@ -7,7 +7,6 @@
 pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
-import "../../../libs/Snippets.sol";
 import "./ERC721FactoryBase.sol";
 
 abstract contract ERC721FactoryWorker is ERC721FactoryBase {
@@ -54,7 +53,7 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
             // Create a fixed array set with the actual number of tokens computed above
             nftItems = new Structs.NFTItem[](numberOfAvailableTokens);
 
-            //Cleanup : @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/cleanup-variables.md
+            // Save gas, free up memory; @see below
             delete numberOfAvailableTokens;
 
             // Set the current index to zero, increament only if the token is valid
@@ -73,26 +72,13 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                 }
             }
 
-            //Cleanup : @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/cleanup-variables.md
-            delete currentIndex;
+            // Save gas, free up memory; @see below
+            // @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/reset-variables.mddelete currentIndex;
             delete numberOfMintedTokens;
         }
 
         // Return tokens array
         return nftItems;
-    }
-
-    /**
-     * @dev Retrieves and array of tokens minted by an address.
-     * @param _account account address that minted the token.
-     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
-     *
-     */
-    function _tokensMintedBy(
-        address _account
-    ) internal view returns (Structs.NFTItem[] memory) {
-        // Encode the _account parameter and pass it to the search function
-        return _search("minter", abi.encode(_account));
     }
 
     /**
@@ -129,6 +115,11 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                 //Get the current token from the index+1
                 Structs.NFTItem memory _nftItem = tokenIdToNFTItem[(i + 1)];
 
+                // If token id is zero, then it's a invalid token
+                if(_nftItem.tokenId == 0){
+                    continue;
+                }
+
                 // Get the nft token item and the check if there is a match
                 bool _match = Snippets.searchHasMatch(
                     _itemKey,
@@ -136,11 +127,6 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                     _nftItem,
                     tokenURIs[(i + 1)]
                 );
-
-                // If token id is zero, then it's a invalid token
-                if(_nftItem.tokenId == 0){
-                    continue;
-                }
 
                 // If there is a match increment the 
                 // number of result tokens - numberOfResultsTokens.
@@ -165,6 +151,11 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                     //Get the current token from the index+1
                     Structs.NFTItem memory _nftItem = tokenIdToNFTItem[(i + 1)];
 
+                    // If token id is zero, then it's a invalid token
+                    if(_nftItem.tokenId == 0){
+                        continue;
+                    }
+
                     // Get the nft token item and the check if there is a match
                     bool _match = Snippets.searchHasMatch(
                         _itemKey,
@@ -173,11 +164,6 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                         tokenURIs[(i + 1)]
                     );
                     
-                    // If token id is zero, then it's a invalid token
-                    if(_nftItem.tokenId == 0){
-                        continue;
-                    }
-
                     // If we found a match, then add the item to the array,
                     // Only increment the currentIndex when there is a match.
                     if (_match) {
@@ -186,22 +172,23 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                         ++currentIndex;
                     }
 
-                    // Save gas, delete an redundant variables
+                    // Save gas, free up memory; @see below
                     delete _nftItem;
                     delete _match;
                 }
 
-                // Free up some memory
+                // Save gas, free up memory; @see below
                 delete currentIndex;
             }
         }
-
-        // Free up some memory
+        // Save gas, free up memory; @see below
+        // @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/reset-variables.md
         delete numberOfMintedTokens;
         delete numberOfResultsTokens;
 
         // Return an array of NFT items.
         return nftItems;
+        
     }
 
 }

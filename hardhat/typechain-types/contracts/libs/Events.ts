@@ -22,13 +22,14 @@ export interface EventsInterface extends utils.Interface {
   functions: {};
 
   events: {
+    "ApprovedAddressForTokenChanged(address,uint256)": EventFragment;
     "BaseURIChanged(string)": EventFragment;
+    "CollectionBannerMediaChanged(string)": EventFragment;
     "CollectionDescriptionChanged(string)": EventFragment;
     "CollectionDisplayPictureChanged(string)": EventFragment;
     "ContractURIChanged(string)": EventFragment;
     "Log(string,uint256)": EventFragment;
     "MarketplaceAddressChanged(address)": EventFragment;
-    "MarketplaceAddressForTokenChanged(address,uint256)": EventFragment;
     "MintingFeeChanged(uint256)": EventFragment;
     "OwnerChanged(address)": EventFragment;
     "Received(address,uint256)": EventFragment;
@@ -38,7 +39,13 @@ export interface EventsInterface extends utils.Interface {
     "TokenTransfered(address,address,uint256,uint256)": EventFragment;
   };
 
+  getEvent(
+    nameOrSignatureOrTopic: "ApprovedAddressForTokenChanged"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "BaseURIChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "CollectionBannerMediaChanged"
+  ): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "CollectionDescriptionChanged"
   ): EventFragment;
@@ -48,9 +55,6 @@ export interface EventsInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "ContractURIChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Log"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MarketplaceAddressChanged"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "MarketplaceAddressForTokenChanged"
-  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MintingFeeChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
@@ -59,6 +63,18 @@ export interface EventsInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "TokenMinted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenTransfered"): EventFragment;
 }
+
+export interface ApprovedAddressForTokenChangedEventObject {
+  approvedAddress: string;
+  tokenId: BigNumber;
+}
+export type ApprovedAddressForTokenChangedEvent = TypedEvent<
+  [string, BigNumber],
+  ApprovedAddressForTokenChangedEventObject
+>;
+
+export type ApprovedAddressForTokenChangedEventFilter =
+  TypedEventFilter<ApprovedAddressForTokenChangedEvent>;
 
 export interface BaseURIChangedEventObject {
   newURI: string;
@@ -69,6 +85,17 @@ export type BaseURIChangedEvent = TypedEvent<
 >;
 
 export type BaseURIChangedEventFilter = TypedEventFilter<BaseURIChangedEvent>;
+
+export interface CollectionBannerMediaChangedEventObject {
+  bannerURL: string;
+}
+export type CollectionBannerMediaChangedEvent = TypedEvent<
+  [string],
+  CollectionBannerMediaChangedEventObject
+>;
+
+export type CollectionBannerMediaChangedEventFilter =
+  TypedEventFilter<CollectionBannerMediaChangedEvent>;
 
 export interface CollectionDescriptionChangedEventObject {
   description: string;
@@ -121,18 +148,6 @@ export type MarketplaceAddressChangedEvent = TypedEvent<
 
 export type MarketplaceAddressChangedEventFilter =
   TypedEventFilter<MarketplaceAddressChangedEvent>;
-
-export interface MarketplaceAddressForTokenChangedEventObject {
-  newMarketplaceAddress: string;
-  tokenId: BigNumber;
-}
-export type MarketplaceAddressForTokenChangedEvent = TypedEvent<
-  [string, BigNumber],
-  MarketplaceAddressForTokenChangedEventObject
->;
-
-export type MarketplaceAddressForTokenChangedEventFilter =
-  TypedEventFilter<MarketplaceAddressForTokenChangedEvent>;
 
 export interface MintingFeeChangedEventObject {
   newMintingFee: BigNumber;
@@ -244,8 +259,24 @@ export interface Events extends BaseContract {
   callStatic: {};
 
   filters: {
+    "ApprovedAddressForTokenChanged(address,uint256)"(
+      approvedAddress?: null,
+      tokenId?: null
+    ): ApprovedAddressForTokenChangedEventFilter;
+    ApprovedAddressForTokenChanged(
+      approvedAddress?: null,
+      tokenId?: null
+    ): ApprovedAddressForTokenChangedEventFilter;
+
     "BaseURIChanged(string)"(newURI?: null): BaseURIChangedEventFilter;
     BaseURIChanged(newURI?: null): BaseURIChangedEventFilter;
+
+    "CollectionBannerMediaChanged(string)"(
+      bannerURL?: null
+    ): CollectionBannerMediaChangedEventFilter;
+    CollectionBannerMediaChanged(
+      bannerURL?: null
+    ): CollectionBannerMediaChangedEventFilter;
 
     "CollectionDescriptionChanged(string)"(
       description?: null
@@ -273,15 +304,6 @@ export interface Events extends BaseContract {
     MarketplaceAddressChanged(
       newMarketplaceAddress?: null
     ): MarketplaceAddressChangedEventFilter;
-
-    "MarketplaceAddressForTokenChanged(address,uint256)"(
-      newMarketplaceAddress?: null,
-      tokenId?: null
-    ): MarketplaceAddressForTokenChangedEventFilter;
-    MarketplaceAddressForTokenChanged(
-      newMarketplaceAddress?: null,
-      tokenId?: null
-    ): MarketplaceAddressForTokenChangedEventFilter;
 
     "MintingFeeChanged(uint256)"(
       newMintingFee?: null

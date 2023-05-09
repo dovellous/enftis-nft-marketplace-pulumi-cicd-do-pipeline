@@ -24,30 +24,27 @@ import type {
 export declare namespace Structs {
   export type NFTItemStruct = {
     minterAddress: PromiseOrValue<string>;
-    creatorAddress: PromiseOrValue<string>;
+    creatorAddress: [PromiseOrValue<string>, PromiseOrValue<string>];
     ownerAddress: PromiseOrValue<string>;
     tokenId: PromiseOrValue<BigNumberish>;
     createdAt: PromiseOrValue<BigNumberish>;
     updatedAt: PromiseOrValue<BigNumberish>;
-    tokenURI: PromiseOrValue<string>;
   };
 
   export type NFTItemStructOutput = [
     string,
+    [string, string],
     string,
-    string,
     BigNumber,
     BigNumber,
-    BigNumber,
-    string
+    BigNumber
   ] & {
     minterAddress: string;
-    creatorAddress: string;
+    creatorAddress: [string, string];
     ownerAddress: string;
     tokenId: BigNumber;
     createdAt: BigNumber;
     updatedAt: BigNumber;
-    tokenURI: string;
   };
 }
 
@@ -56,7 +53,7 @@ export interface SnippetsInterface extends utils.Interface {
     "bytes32String(bytes32)": FunctionFragment;
     "compareStrings(string,string)": FunctionFragment;
     "getIPFSPrefix()": FunctionFragment;
-    "searchHasMatch(string,bytes,(address,address,address,uint256,uint256,uint256,string))": FunctionFragment;
+    "searchHasMatch(string,bytes,(address,address[2],address,uint256,uint256,uint256),string)": FunctionFragment;
     "stringContains(string,string)": FunctionFragment;
     "subString(string,uint256,uint256)": FunctionFragment;
     "trim(string,uint256,uint256)": FunctionFragment;
@@ -90,7 +87,8 @@ export interface SnippetsInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BytesLike>,
-      Structs.NFTItemStruct
+      Structs.NFTItemStruct,
+      PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
@@ -184,6 +182,7 @@ export interface Snippets extends BaseContract {
       _itemKey: PromiseOrValue<string>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
+      _tokenURIString: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -225,6 +224,7 @@ export interface Snippets extends BaseContract {
     _itemKey: PromiseOrValue<string>,
     _data: PromiseOrValue<BytesLike>,
     _nftItem: Structs.NFTItemStruct,
+    _tokenURIString: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -266,6 +266,7 @@ export interface Snippets extends BaseContract {
       _itemKey: PromiseOrValue<string>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
+      _tokenURIString: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -310,6 +311,7 @@ export interface Snippets extends BaseContract {
       _itemKey: PromiseOrValue<string>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
+      _tokenURIString: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -352,6 +354,7 @@ export interface Snippets extends BaseContract {
       _itemKey: PromiseOrValue<string>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
+      _tokenURIString: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

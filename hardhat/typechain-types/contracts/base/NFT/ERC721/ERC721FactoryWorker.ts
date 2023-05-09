@@ -49,6 +49,7 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
     "_tokenIdCounter()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "bannerURL()": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
     "burn(uint256)": FunctionFragment;
     "callFallback(address)": FunctionFragment;
@@ -111,6 +112,7 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
       | "_tokenIdCounter"
       | "approve"
       | "balanceOf"
+      | "bannerURL"
       | "baseTokenURI"
       | "burn"
       | "callFallback"
@@ -228,6 +230,7 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
     functionFragment: "balanceOf",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: "bannerURL", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "baseTokenURI",
     values?: undefined
@@ -456,6 +459,7 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "bannerURL", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "baseTokenURI",
     data: BytesLike
@@ -761,6 +765,8 @@ export interface ERC721FactoryWorker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    bannerURL(overrides?: CallOverrides): Promise<[string]>;
+
     baseTokenURI(overrides?: CallOverrides): Promise<[string]>;
 
     burn(
@@ -892,14 +898,12 @@ export interface ERC721FactoryWorker extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+      [string, string, BigNumber, BigNumber, BigNumber] & {
         minterAddress: string;
-        creatorAddress: string;
         ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
-        tokenURI: string;
       }
     >;
 
@@ -998,6 +1002,8 @@ export interface ERC721FactoryWorker extends BaseContract {
     owner: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
+
+  bannerURL(overrides?: CallOverrides): Promise<string>;
 
   baseTokenURI(overrides?: CallOverrides): Promise<string>;
 
@@ -1130,14 +1136,12 @@ export interface ERC721FactoryWorker extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+    [string, string, BigNumber, BigNumber, BigNumber] & {
       minterAddress: string;
-      creatorAddress: string;
       ownerAddress: string;
       tokenId: BigNumber;
       createdAt: BigNumber;
       updatedAt: BigNumber;
-      tokenURI: string;
     }
   >;
 
@@ -1236,6 +1240,8 @@ export interface ERC721FactoryWorker extends BaseContract {
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    bannerURL(overrides?: CallOverrides): Promise<string>;
 
     baseTokenURI(overrides?: CallOverrides): Promise<string>;
 
@@ -1368,14 +1374,12 @@ export interface ERC721FactoryWorker extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, BigNumber, BigNumber, BigNumber, string] & {
+      [string, string, BigNumber, BigNumber, BigNumber] & {
         minterAddress: string;
-        creatorAddress: string;
         ownerAddress: string;
         tokenId: BigNumber;
         createdAt: BigNumber;
         updatedAt: BigNumber;
-        tokenURI: string;
       }
     >;
 
@@ -1547,6 +1551,8 @@ export interface ERC721FactoryWorker extends BaseContract {
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    bannerURL(overrides?: CallOverrides): Promise<BigNumber>;
 
     baseTokenURI(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1789,6 +1795,8 @@ export interface ERC721FactoryWorker extends BaseContract {
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    bannerURL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     baseTokenURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

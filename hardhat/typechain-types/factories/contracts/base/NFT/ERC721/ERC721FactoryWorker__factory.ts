@@ -450,6 +450,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "bannerURL",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "baseTokenURI",
     outputs: [
       {
@@ -980,11 +993,6 @@ const _abi = [
       },
       {
         internalType: "address",
-        name: "creatorAddress",
-        type: "address",
-      },
-      {
-        internalType: "address",
         name: "ownerAddress",
         type: "address",
       },
@@ -1002,11 +1010,6 @@ const _abi = [
         internalType: "uint256",
         name: "updatedAt",
         type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "tokenURI",
-        type: "string",
       },
     ],
     stateMutability: "view",

@@ -33,39 +33,54 @@ contract ERC721FactoryBase is
 
     using Counters for Counters.Counter;
 
-    /// Counters
+    /// @dev Counters
     Counters.Counter public _tokenIdCounter;
 
-    /// Counters
+    /// @dev Counters
     Counters.Counter public _tokenCurrentSupply;
+
+    /// @dev Collection category
+    Enums.TokenCategory public tokenCategory;
 
     /// Owner of the contract. This is only for compatibility for opensea and other protocols.
     address payable public owner;
 
-    /// Marketplace address
+    /// @dev Marketplace address
     address payable public marketplaceAddress;
 
-    ///
-    Enums.TokenCategory public tokenCategory;
-
+    /// @dev Token Id to Token URI mapping
     mapping(uint256 => string) internal tokenURIs;
 
+    /// @dev Token Id to Token Activity mapping
     mapping(uint256 => Structs.TokenActivityItem[]) public tokenIdToTokenActivityItem;
 
+    /// @dev Token Id to NFTItem mapping
     mapping(uint256 => Structs.NFTItem) public tokenIdToNFTItem;
 
-    /// tokenMaximumSupply to be minted
+    /// @dev Token Maximum Supply
     uint256 public tokenMaximumSupply;
 
-    /// @dev if baseTokenURI = "", default to "ipfs://"
+    /// @dev Base Token URI, if = "", default to "ipfs://"
     string public baseTokenURI;
 
+    /// @dev Contract URI where this code resides
     string public contractURI;
 
+    /// @dev Description of this token collection
     string public description;
 
+    /// @dev URL path to the banner url of this collection
+    string public bannerURL;
+
+    /// @dev URL path to the photo url of this collection
     string public photoURL;
 
+    /**
+     * @dev Initialize the  base contract
+     * @param _name NFT Name
+     * @param _symbol NFT Symbol
+     *
+     */
     constructor(
         string memory _name,
         string memory _symbol
@@ -150,21 +165,9 @@ contract ERC721FactoryBase is
         uint256 firstTokenId,
         uint256 batchSize
     ) internal virtual override(ERC721, ERC721Enumerable) {
-        //Mint
-        if (from == address(0)) {
-            // Mint amount must not overflow total supply
-        }
 
-        //Burn
-        if (to == address(0)) {
-            // to must be the owner
-            // Must not below owned amounts
-        }
-
-        //Transfer
-        if (to == address(0) && from == address(0)) {
-            //Collect fees
-        }
+        require(ownerOf(firstTokenId) == _msgSender(), "UNAUTHORIZED");
+        require(_exists(firstTokenId), "TOKEN_NOT_FOUND");
 
         super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
     }

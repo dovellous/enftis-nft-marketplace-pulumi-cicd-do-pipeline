@@ -61,6 +61,7 @@ contract ERC721FactoryGetSet is
          * @param _admins encoded parameters
          * @param _minters encoded parameters
          * @param _mintingFee encoded parameters
+         * @param _tokenCategoryEnumIndex encoded parameters
          * @param _isPausable encoded parameters
          * @param _isBurnable encoded parameters
          */
@@ -73,6 +74,7 @@ contract ERC721FactoryGetSet is
             address[] memory _admins,
             address[] memory _minters,
             uint256 _mintingFee,
+            Enums.TokenCategory _tokenCategoryEnumIndex,
             bool _isPausable,
             bool _isBurnable
         ) = abi.decode(
@@ -86,6 +88,7 @@ contract ERC721FactoryGetSet is
                     address[],
                     address[],
                     uint256,
+                    Enums.TokenCategory,
                     bool,
                     bool
                 )
@@ -138,19 +141,24 @@ contract ERC721FactoryGetSet is
         baseTokenURI = _baseUri;
         
         contractURI = _contractURI;
+
         mintingFee = _mintingFee;
         
         contractOptionsStruct = ContractOptions(_isPausable, _isBurnable);
 
-        owner = payable(_msgSender());
+        tokenCategory = _tokenCategoryEnumIndex; 
         
+        owner = payable(_msgSender());
+
     }
 
-    /******************************* Read Functions *******************************/
+    // ==================== Begin Reading State Variables ==================== //
+
+    // URIs
 
     /**
      * @dev Returns the base uri of the contract.
-     * @return string base uri of the contract.
+     * @return url string.
      *
      */
     function getBaseURI() external view returns (string memory) {
@@ -158,8 +166,8 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev Returns current _owner address. This is only for compatibility for opensea and other protocols.
-     * @return address address of the _owner address. Used just for compatibility with other protocols.
+     * @dev Retreives the contract url where the source code resides.
+     * @return url string.
      *
      */
     function getContractURI() external view returns (string memory) {
@@ -178,35 +186,46 @@ contract ERC721FactoryGetSet is
         return tokenURI(_tokenId);
     }
 
+    // TokenIds
+
     /**
-     * @dev Retrieves the royalty info of a token including the fee base on price supplied.
-     *
+     * @dev Retrieves the current token id. This represents
+     * the current token supply.
+     * @return _tokenIdCounter.
      */
     function getTokenCurrentId() external view returns (uint256) {
         return _tokenIdCounter.current();
     }
 
+    // Admin
+
     /**
-     * @dev Returns current _owner address. This is only for compatibility for opensea and other protocols.
-     * @return owner of the _owner address. Used just for compatibility with other protocols.
+     * @dev Returns current _owner address. This is only for compatibility 
+     * for other protocols.
+     * @return _owner address.
      *
      */
     function getOwner() external view returns (address ) {
         return owner;
     }
 
-    /**
-     * @dev Returns current _owner address. This is only for compatibility for opensea and other protocols.
-     * @return royaltiesEnabled of the _owner address. Used just for compatibility with other protocols.
-     *
-     */
-    function collectionRoyaltiesEnabled() external view returns (bool ) {
-        return royaltiesEnabled;
-    }
+    // Marketplace
 
     /**
-     * @dev Returns current _owner address. This is only for compatibility for opensea and other protocols.
-     * @return royaltyFraction of the _owner address. Used just for compatibility with other protocols.
+     * @dev Retrieves the marketplace address approved for toke transfers.
+     * @return marketplaceAddress.
+     *
+     */
+    function getMarketplaceAddress() external view returns (address ) {
+        return marketplaceAddress;
+    }
+
+    // Royalties
+
+    /**
+     * @dev Returns current _owner address. This is only for compatibility 
+     * for opensea and other protocols.
+     * @return royaltyFraction.
      *
      */
     function getRoyaltyFraction() external view returns (uint96 ) {
@@ -214,8 +233,8 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev Returns current _owner address. This is only for compatibility for opensea and other protocols.
-     * @return royaltyReceiver of the _owner address. Used just for compatibility with other protocols.
+     * @dev The default receiver of the token royalties.
+     * @return address.
      *
      */
     function getRoyaltyReceiver() external view returns (address ) {
@@ -223,19 +242,15 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev Returns current _owner address. This is only for compatibility for opensea and other protocols.
-     * @return marketplaceAddress of the _owner address. Used just for compatibility with other protocols.
-     *
-     */
-    function getMarketplaceAddress() external view returns (address ) {
-        return marketplaceAddress;
-    }
-
-    /**
      * @dev Retrieves the royalty info of a token.
      * @param _tokenId the id of the token.
      * @param price the price of the token.
      * @return royaltyItemStruct the royalty info of the token.
+     * 
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     * 
      */
     function getTokenRoyaltyInfo(
         uint256 _tokenId,
@@ -265,7 +280,8 @@ contract ERC721FactoryGetSet is
             _royaltyItemStruct = Structs.RoyaltyItem(false, address(0), 0, 0, 0);
         }
 
-        //Cleanup : @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/cleanup-variables.md
+        //Cleanup : @see 
+        // https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/cleanup-variables.md
 
         delete _royaltyReceiver;
         delete _royaltyAmount;
@@ -273,9 +289,11 @@ contract ERC721FactoryGetSet is
         return _royaltyItemStruct;
     }
 
+    // Supply
+
     /**
      * @dev Retrieves the royalty info of a token including the fee base on price supplied.
-     * @return tokenMaximumSupply - efkj
+     * @return `tokenMaximumSupply`
      *
      */
     function getTokenMaximumSupply() external view returns (uint256 ) {
@@ -284,17 +302,14 @@ contract ERC721FactoryGetSet is
 
     /**
      * @dev Retrieves the royalty info of a token including the fee base on price supplied.
+     * @return `_tokenCurrentSupply`
      *
      */
     function getTokenCurrentSupply() external view returns (uint256) {
         return _tokenCurrentSupply.current();
     }
 
-    /**
-     * @dev Retrieves the royalty info of a token including the fee base on price supplied.
-     * @param tokenCategory : jf
-     */
-    function getTokenCategory() external view returns (Enums.TokenCategory tokenCategory) {}
+    // Minting
 
     /**
      * @dev Retrieves the royalty info of a token including the fee base on price supplied.
@@ -304,47 +319,9 @@ contract ERC721FactoryGetSet is
         return mintingFee;
     }
 
-    /**
-     * @dev Retrieves and array of tokens owned by caller.
-     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
-     *
-     */
-    function getTokensOwnedByMe() external view returns (Structs.NFTItem[] memory) {
-        return _search("owner", abi.encode(_msgSender()));
-    }
+    // ==================== End Reading State Variables ==================== //
 
-    /**
-     * @dev Retrieves and array of tokens owned by an address.
-     * @param _account account address that owns the token.
-     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
-     *
-     */
-    function getTokensOwnedByAddress(
-        address _account
-    ) external view returns (Structs.NFTItem[] memory) {
-        return _search("owner", abi.encode(_account));
-    }
-
-    /**
-     * @dev Retrieves and array of tokens created by caller
-     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
-     *
-     */
-    function getTokensCreatedByMe() external view returns (Structs.NFTItem[] memory) {
-        return _search("creator", abi.encode(_msgSender()));
-    }
-
-    /**
-     * @dev Retrieves and array of tokens created by an address.
-     * @param _account account address that created the token.
-     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
-     *
-     */
-    function getTokensCreatedByAddress(
-        address _account
-    ) external view returns (Structs.NFTItem[] memory) {
-        return _search("creator", abi.encode(_account));
-    }
+    // ==================== Begin Read Mint Data ==================== //
 
     /**
      * @dev Retrieves and array of tokens minted by caller.
@@ -368,9 +345,60 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev : Get the creator of the token
-     * @param _tokenId : The token id to look for
+     * @dev Get the minter of the token id
+     * @param _tokenId The id of the token to get the minter from.
      * @return address
+     * 
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     * 
+     */
+    function getTokenMinter(
+        uint256 _tokenId
+    )
+        external
+        view
+        validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
+        returns (address)
+    {
+        return _getNFTItem(_tokenId).minterAddress;
+    }
+
+    // ==================== End Read Mint Data ==================== //
+
+    // ==================== Begin Read Creator Data ==================== //
+
+    /**
+     * @dev Retrieves and array of tokens created by caller
+     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
+     *
+     */
+    function getTokensCreatedByMe() external view returns (Structs.NFTItem[] memory) {
+        return _search("creator", abi.encode(_msgSender()));
+    }
+
+    /**
+     * @dev Retrieves and array of tokens created by an address.
+     * @param _account account address that created the token.
+     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
+     *
+     */
+    function getTokensCreatedByAddress(
+        address _account
+    ) external view returns (Structs.NFTItem[] memory) {
+        return _search("creator", abi.encode(_account));
+    }
+
+    /**
+     * @dev Get the creator of the token id
+     * @param _tokenId The id of the token to get the creator from.
+     * @return address
+     * 
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     * 
      */
     function getTokenCreator(
         uint256 _tokenId
@@ -383,10 +411,40 @@ contract ERC721FactoryGetSet is
         return _getNFTItem(_tokenId).creatorAddress[1];
     }
 
+    // ==================== End Read Creator Data ==================== //
+
+    // ==================== Begin Read Owner Data ==================== //
+
     /**
-     * @dev Get the number of tokens owned by an address
-     * @param _tokenId :
+     * @dev Retrieves and array of tokens owned by caller.
+     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
+     *
+     */
+    function getTokensOwnedByMe() external view returns (Structs.NFTItem[] memory) {
+        return _search("owner", abi.encode(_msgSender()));
+    }
+
+    /**
+     * @dev Retrieves and array of tokens owned by an address.
+     * @param _account account address that owns the token.
+     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
+     *
+     */
+    function getTokensOwnedByAddress(
+        address _account
+    ) external view returns (Structs.NFTItem[] memory) {
+        return _search("owner", abi.encode(_account));
+    }
+
+    /**
+     * @dev Get the owner of the token id
+     * @param _tokenId The id of the token to get the owner from.
      * @return address
+     * 
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     * 
      */
     function getTokenOwner(
         uint256 _tokenId
@@ -402,7 +460,7 @@ contract ERC721FactoryGetSet is
     /**
      * @dev Retrieves the number of tokens owned  by an account address.
      * @param _account The account address to get the balance from.
-     * @return uint256 The balance of the account.
+     * @return The balance of the account.
      */
     function getAccountTokenBalance(
         address _account
@@ -410,11 +468,20 @@ contract ERC721FactoryGetSet is
         return balanceOf(_account);
     }
 
+    // ==================== End Read Owner Data ==================== //
+
+    // Tokens
+
     /**
      * @dev Retrieves full details on an NFT.
      * @param _tokenId The id of the token to get the details from.
      * @return Structs.NFTItem 
-     * @return string The token uri string that contains the metdata { see: tokenURIs }
+     * @return string The token uri string that contains the metdata { see: tokenURIs }.
+     * 
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     * 
      */
     function getNFTItem(
         uint256 _tokenId
@@ -430,6 +497,11 @@ contract ERC721FactoryGetSet is
      * @dev Retrieves full details on an NFT.
      * @param _tokenId The id of the token to get the details from.
      * @return Structs.NFTItem 
+     * 
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     * 
      */
     function _getNFTItem(
         uint256 _tokenId
@@ -443,26 +515,14 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev Get the number of tokens owned by an address
-     * @param _tokenId The id of the token to get the activity history and audit trail.
-     * @return Structs.NFTItem
-     * @return TokenActivityItem[] 
-     */
-    function getNFTItemFull(
-        uint256 _tokenId
-    )
-        external
-        view
-        validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-        returns (Structs.NFTItem memory, Structs.TokenActivityItem[] memory)
-    {
-        return (_getNFTItem(_tokenId), getTokenAuditTrail(_tokenId));
-    }
-
-    /**
      * @dev Retrieves the activity history of a token.
      * @param _tokenId The id of the token to get the activity history.
-     * @return TokenActivityItem[] memory
+     * @return TokenActivityItem[] 
+     * 
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     * 
      */
     function getTokenAuditTrail(
         uint256 _tokenId
@@ -482,6 +542,8 @@ contract ERC721FactoryGetSet is
         return _tokens();
     }
 
+    // Collections
+
     /**
      * @dev Retrieves the collection name.
      * @return The token name.
@@ -498,22 +560,14 @@ contract ERC721FactoryGetSet is
         return symbol();
     }
 
-    /**
-     * @dev Retrieves the total number of available tokens 
-     * that have been minted so far, less burned.
-     * @return _tokenCurrentSupply the supply maximum cap.
-     */
-    function collectionCurrentSupply() external view returns (uint256) {
-        return _tokenCurrentSupply.current();
-    }
-
+    // Category
 
     /**
-     * @dev Retrieves the maximum number of tokens that can be minted.
-     * @return tokenMaximumSupply the supply maximum cap.
+     * @dev Retrieves the category of the collection.
+     * @return Enums.TokenCategory tokenCategory
      */
-    function collectionMaxSupply() external view returns (uint256) {
-        return tokenMaximumSupply;
+    function collectionCategory() external view returns (Enums.TokenCategory) {
+        return tokenCategory;
     }
 
     /**
@@ -525,11 +579,64 @@ contract ERC721FactoryGetSet is
     }
 
     /**
+     * @dev Retrieves a path to a banner media of this collection
+     * @return bannerURL The uri to an image resource
+     */
+    function collectionBannerMedia() external view returns (string memory) {
+        return bannerURL;
+    }
+
+    /**
      * @dev Retrieves a path to a display picture of this collection
      * @return photoURL The uri to an image resource
      */
     function collectionDisplayPicture() external view returns (string memory) {
         return photoURL;
+    }
+
+    /**
+     * @dev Check whether royalties are enabled for this collection or not.
+     * Remember that this option is set in the constructor on contract creation
+     * Hence the `royaltiesEnabled` is immutable, once set, cannot be changed.
+     * @return royaltiesEnabled.
+     *
+     */
+    function collectionRoyaltiesEnabled() external view returns (bool ) {
+        return royaltiesEnabled;
+    }
+
+    // Search
+
+    /**
+     * @dev Search and NFT, caller might have entered a tokenId
+     * @param _uint256 The id of the token to look for
+     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
+     *
+     */
+    function search(
+        uint256 _uint256
+    ) public view returns (
+        Structs.NFTItem[] memory
+    ) {
+        // Encode the _account parameter and pass it to the search function
+        return _search("token_id", abi.encode(_uint256));
+
+    }
+
+    /**
+     * @dev Search and NFT, caller might have entered part or full token uri
+     * @param _query Part or full token uri
+     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
+     *
+     */
+    function search(
+        string memory _query
+    ) public view returns (
+        Structs.NFTItem[] memory
+    ) {
+        // Encode the _account parameter and pass it to the search function
+        return _search("token_uri", abi.encode(_query));
+
     }
 
     /**
@@ -688,6 +795,8 @@ contract ERC721FactoryGetSet is
      * @dev Sets the new base uri for this contract.
      * @param _newBaseURI Base uri of the contract to change to.
      *
+     * Emits an {BaseURIChanged} event.
+     * 
      * Requirements:
      *
      * - Only Admin can call this method
@@ -701,6 +810,8 @@ contract ERC721FactoryGetSet is
      * @dev Sets the new contract uri for this contract.
      * @param _newContractURI Contract uri of the contract to 
      * change to (for contract level metadata).
+     *
+     * Emits an {ContractURIChanged} event.
      *
      * Requirements:
      *
@@ -720,6 +831,8 @@ contract ERC721FactoryGetSet is
      * @dev Sets the collection description.
      * @param _description The lengthy description  of the collection.
      *
+     * Emits an {CollectionDescriptionChanged} event.
+     *
      * Requirements:
      *
      * - Only Admin can call this method
@@ -732,8 +845,27 @@ contract ERC721FactoryGetSet is
     }
 
     /**
+     * @dev Sets collection banner media.
+     * @param _bannerURL The uri of the collection dp.
+     *
+     * Emits an {CollectionBannerMediaChanged} event.
+     *
+     * Requirements:
+     *
+     * - Only Admin can call this method
+     */
+    function setCollectionBannerMedia(
+        string calldata _bannerURL
+    ) external onlyAdmin {
+        _bannerURL = _bannerURL;
+        emit Events.CollectionBannerMediaChanged(_bannerURL);
+    }
+
+    /**
      * @dev Sets collection display picture.
      * @param _photoURL The uri of the collection dp.
+     *
+     * Emits an {CollectionDisplayPictureChanged} event.
      *
      * Requirements:
      *
@@ -750,9 +882,13 @@ contract ERC721FactoryGetSet is
      * @dev Sets the new marketplace address.
      * @param _newMarketplaceAddress marketplace address that will list the collection.
      *
+     * Emits an {MarketplaceAddressChanged} event.
+     *
      * Requirements:
      *
      * - Only Admin can call this method
+     * - _newMarketplaceAddress must not be a zero address
+     * 
      */
     function setMarketplaceAddress(
         address _newMarketplaceAddress
@@ -764,39 +900,13 @@ contract ERC721FactoryGetSet is
         setApprovalForAll(_newMarketplaceAddress, true);
         emit Events.MarketplaceAddressChanged(_newMarketplaceAddress);
     }
-
-    /**
-     * @dev Gives permission to `to` to transfer `tokenId` token to another account.
-     * The approval is cleared when the token is transferred.
-     * @param _account The address that must be approved.
-     * @param _tokenId The id of the token to approve.
-     * 
-     * Only a single account can be approved at a time, so approving the zero address clears 
-     * previous approvals.
-     *
-     * Requirements:
-     *
-     * - The caller must own the token or be an approved operator.
-     * - `tokenId` must exist.
-     *
-     * Emits an {Approval} event.
-     */
-    function approveAccountForTokenId(
-        address _account,
-        uint256 _tokenId
-    )
-        external
-        onlyAdmin
-        validAccount(_account)
-        validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-    {
-        approve(_account, _tokenId);
-    }
-
+ 
     /**
      * @dev Sets the new minting fee.
      * @param _newMintingFee New minting fee.
      *
+     * Emits an {MintingFeeChanged} event.
+     * 
      * Requirements:
      *
      * - Only Admin can call this method
@@ -809,30 +919,18 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev Sets the token category. 
-     * @param _tokenCategoryEnumIndex New category indexx.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     */
-    function setTokenCategory(
-        Enums.TokenCategory _tokenCategoryEnumIndex
-    ) external onlyAdmin {
-        tokenCategory = _tokenCategoryEnumIndex;
-        emit Events.TokenCategoryChanged(_tokenCategoryEnumIndex);
-    }
-
-    /**
      * @dev Sets the new _owner for this contract. 
      * This is only for compatibility for opensea and other protocols.
      * @param _newOwner New Owner address to set _owner to.
      *
+     * Emits an {OwnerChanged} event.
+     * 
      * Requirements:
      *
      * - Only Owner can call this method
+     * - `_newOwner` must not be a zero address.
      */
-    function setOwner(
+    function setNewOwner(
         address _newOwner
     ) external onlyOwner validAccount(_newOwner) {
         owner = payable(_newOwner);

@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+/**
+ * Created on 2023-05-05 14:36
+ * @summary:
+ * @author: dovellous
+ */
+pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 import "./base/NFT/ERC721/ERC721FactoryGetSet.sol";
