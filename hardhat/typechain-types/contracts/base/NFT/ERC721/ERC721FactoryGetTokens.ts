@@ -58,12 +58,8 @@ export interface ERC721FactoryGetTokensInterface extends utils.Interface {
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "name()": FunctionFragment;
-    "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "paused()": FunctionFragment;
-    "recoverERC1155(address,uint256)": FunctionFragment;
-    "recoverERC20(address,uint256)": FunctionFragment;
-    "recoverERC721(address,uint256)": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
     "royaltyInfo(uint256,uint256)": FunctionFragment;
@@ -111,12 +107,8 @@ export interface ERC721FactoryGetTokensInterface extends utils.Interface {
       | "hasRole"
       | "isApprovedForAll"
       | "name"
-      | "owner"
       | "ownerOf"
       | "paused"
-      | "recoverERC1155"
-      | "recoverERC20"
-      | "recoverERC721"
       | "renounceRole"
       | "revokeRole"
       | "royaltyInfo"
@@ -243,24 +235,11 @@ export interface ERC721FactoryGetTokensInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "recoverERC1155",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "recoverERC20",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "recoverERC721",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
@@ -423,21 +402,8 @@ export interface ERC721FactoryGetTokensInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "recoverERC1155",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recoverERC20",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "recoverERC721",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "renounceRole",
     data: BytesLike
@@ -832,32 +798,12 @@ export interface ERC721FactoryGetTokens extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
-
-    recoverERC1155(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    recoverERC721(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
@@ -1027,32 +973,12 @@ export interface ERC721FactoryGetTokens extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
-
   ownerOf(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
-
-  recoverERC1155(
-    tokenAddress: PromiseOrValue<string>,
-    tokenAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  recoverERC20(
-    tokenAddress: PromiseOrValue<string>,
-    tokenAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  recoverERC721(
-    tokenAddress: PromiseOrValue<string>,
-    tokenAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   renounceRole(
     role: PromiseOrValue<BytesLike>,
@@ -1222,32 +1148,12 @@ export interface ERC721FactoryGetTokens extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
-
-    recoverERC1155(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    recoverERC721(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
@@ -1543,32 +1449,12 @@ export interface ERC721FactoryGetTokens extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
-
-    recoverERC1155(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    recoverERC721(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,
@@ -1761,32 +1647,12 @@ export interface ERC721FactoryGetTokens extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    recoverERC1155(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    recoverERC721(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
 
     renounceRole(
       role: PromiseOrValue<BytesLike>,

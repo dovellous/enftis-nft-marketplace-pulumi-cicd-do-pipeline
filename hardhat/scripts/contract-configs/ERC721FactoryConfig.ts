@@ -19,6 +19,7 @@ const ROYALTY_RECEIVER: string | undefined = process.env.ROYALTY_RECEIVER;
 const ADMIN_ACCOUNTS: Array<string> | any = process.env.ADMIN_ACCOUNTS?.toString().split(",");
 const MINTER_ACCOUNTS: Array<string> | any = process.env.MINTER_ACCOUNTS?.toString().split(",");
 const MINTING_FEE_ETH: number | any = Snippets.ethersToWei(process.env.MINTING_FEE_ETH);
+const COLLECTION_CATEGORY: number | any = process.env.COLLECTION_CATEGORY;
 const IS_PAUSABLE: boolean | any = process.env.IS_PAUSABLE;
 const IS_BURNABLE: boolean | any = process.env.IS_BURNABLE;
 
@@ -30,6 +31,7 @@ const abiKeys = [
     "address",
     "address[]",
     "address[]",
+    "uint256",
     "uint256",
     "bool",
     "bool",
@@ -44,6 +46,7 @@ const abiKeys = [
     ADMIN_ACCOUNTS,
     MINTER_ACCOUNTS,
     MINTING_FEE_ETH,
+    COLLECTION_CATEGORY,
     IS_PAUSABLE,
     IS_BURNABLE,
   ]

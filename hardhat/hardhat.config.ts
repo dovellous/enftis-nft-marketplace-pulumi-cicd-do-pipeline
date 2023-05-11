@@ -18,7 +18,7 @@ module.exports = {
     hardhat: {
       forking: {
         url: `${process.env.ALCHEMY_URL_SEPOLIA}/${process.env.ALCHEMY_KEY}`,
-        blockNumber: 14390000
+        blockNumber: 3455485
       }
     },
     sepolia: {
@@ -33,7 +33,7 @@ module.exports = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 50,
+            runs: 1,
             details: {
               yul: true
             }

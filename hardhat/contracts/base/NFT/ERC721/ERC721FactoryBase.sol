@@ -166,10 +166,33 @@ contract ERC721FactoryBase is
         uint256 batchSize
     ) internal virtual override(ERC721, ERC721Enumerable) {
 
-        require(ownerOf(firstTokenId) == _msgSender(), "UNAUTHORIZED");
-        require(_exists(firstTokenId), "TOKEN_NOT_FOUND");
+        
+        /*
+
+        //Mint
+        if (from == address(0)) {
+            // Mint amount must not overflow total supply
+            require(!_exists(firstTokenId), "TOKEN_AREADY_EXISTS");
+            require(_tokenCurrentSupply.current() <= tokenMaximumSupply, "OVERFLOW");
+        }
+
+        //Burn
+        if (to == address(0)) {
+            // to must be the owner
+            require(ownerOf(firstTokenId) == _msgSender(), "UNAUTHORIZED");
+            // Must not below owned amounts
+            require(tokenMaximumSupply != 0, "UNDERFLOW");
+        }
+
+        //Transfer
+        if (to == address(0) && from == address(0)) {
+            //Collect fees
+        }
+
+        */
 
         super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+
     }
 
     /**

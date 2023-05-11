@@ -911,19 +911,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address payable",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -953,60 +940,6 @@ const _abi = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenAmount",
-        type: "uint256",
-      },
-    ],
-    name: "recoverERC1155",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenAmount",
-        type: "uint256",
-      },
-    ],
-    name: "recoverERC20",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenAmount",
-        type: "uint256",
-      },
-    ],
-    name: "recoverERC721",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {

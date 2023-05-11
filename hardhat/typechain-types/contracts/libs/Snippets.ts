@@ -166,7 +166,7 @@ export interface Snippets extends BaseContract {
 
   functions: {
     bytes32String(
-      _data: PromiseOrValue<BytesLike>,
+      _bytes32: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -208,7 +208,7 @@ export interface Snippets extends BaseContract {
   };
 
   bytes32String(
-    _data: PromiseOrValue<BytesLike>,
+    _bytes32: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -250,7 +250,7 @@ export interface Snippets extends BaseContract {
 
   callStatic: {
     bytes32String(
-      _data: PromiseOrValue<BytesLike>,
+      _bytes32: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -295,7 +295,7 @@ export interface Snippets extends BaseContract {
 
   estimateGas: {
     bytes32String(
-      _data: PromiseOrValue<BytesLike>,
+      _bytes32: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -338,7 +338,7 @@ export interface Snippets extends BaseContract {
 
   populateTransaction: {
     bytes32String(
-      _data: PromiseOrValue<BytesLike>,
+      _bytes32: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

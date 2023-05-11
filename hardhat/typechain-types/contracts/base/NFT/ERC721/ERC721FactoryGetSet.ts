@@ -124,10 +124,8 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
     "callFallback(address)": FunctionFragment;
     "collectionBannerMedia()": FunctionFragment;
     "collectionCategory()": FunctionFragment;
-    "collectionCurrentSupply()": FunctionFragment;
     "collectionDescription()": FunctionFragment;
     "collectionDisplayPicture()": FunctionFragment;
-    "collectionMaxSupply()": FunctionFragment;
     "collectionName()": FunctionFragment;
     "collectionRoyaltiesEnabled()": FunctionFragment;
     "collectionSymbol()": FunctionFragment;
@@ -210,6 +208,7 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
     "tokenIdToTokenActivityItem(uint256,uint256)": FunctionFragment;
     "tokenMaximumSupply()": FunctionFragment;
     "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
+    "tokenTransfer(address,uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "tokenURIExists(string)": FunctionFragment;
     "totalSupply()": FunctionFragment;
@@ -248,10 +247,8 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
       | "callFallback"
       | "collectionBannerMedia"
       | "collectionCategory"
-      | "collectionCurrentSupply"
       | "collectionDescription"
       | "collectionDisplayPicture"
-      | "collectionMaxSupply"
       | "collectionName"
       | "collectionRoyaltiesEnabled"
       | "collectionSymbol"
@@ -334,6 +331,7 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
       | "tokenIdToTokenActivityItem"
       | "tokenMaximumSupply"
       | "tokenOfOwnerByIndex"
+      | "tokenTransfer"
       | "tokenURI"
       | "tokenURIExists"
       | "totalSupply"
@@ -446,19 +444,11 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "collectionCurrentSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "collectionDescription",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "collectionDisplayPicture",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "collectionMaxSupply",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -788,6 +778,10 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "tokenTransfer",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "tokenURI",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -908,19 +902,11 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "collectionCurrentSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "collectionDescription",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "collectionDisplayPicture",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "collectionMaxSupply",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1206,6 +1192,10 @@ export interface ERC721FactoryGetSetInterface extends utils.Interface {
     functionFragment: "tokenOfOwnerByIndex",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenTransfer",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "tokenURIExists",
@@ -1437,13 +1427,9 @@ export interface ERC721FactoryGetSet extends BaseContract {
 
     collectionCategory(overrides?: CallOverrides): Promise<[number]>;
 
-    collectionCurrentSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     collectionDescription(overrides?: CallOverrides): Promise<[string]>;
 
     collectionDisplayPicture(overrides?: CallOverrides): Promise<[string]>;
-
-    collectionMaxSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     collectionName(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1804,6 +1790,12 @@ export interface ERC721FactoryGetSet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    tokenTransfer(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     tokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1911,13 +1903,9 @@ export interface ERC721FactoryGetSet extends BaseContract {
 
   collectionCategory(overrides?: CallOverrides): Promise<number>;
 
-  collectionCurrentSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
   collectionDescription(overrides?: CallOverrides): Promise<string>;
 
   collectionDisplayPicture(overrides?: CallOverrides): Promise<string>;
-
-  collectionMaxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   collectionName(overrides?: CallOverrides): Promise<string>;
 
@@ -2278,6 +2266,12 @@ export interface ERC721FactoryGetSet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  tokenTransfer(
+    _to: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   tokenURI(
     _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -2385,13 +2379,9 @@ export interface ERC721FactoryGetSet extends BaseContract {
 
     collectionCategory(overrides?: CallOverrides): Promise<number>;
 
-    collectionCurrentSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
     collectionDescription(overrides?: CallOverrides): Promise<string>;
 
     collectionDisplayPicture(overrides?: CallOverrides): Promise<string>;
-
-    collectionMaxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     collectionName(overrides?: CallOverrides): Promise<string>;
 
@@ -2750,6 +2740,12 @@ export interface ERC721FactoryGetSet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    tokenTransfer(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     tokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -2928,13 +2924,9 @@ export interface ERC721FactoryGetSet extends BaseContract {
 
     collectionCategory(overrides?: CallOverrides): Promise<BigNumber>;
 
-    collectionCurrentSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
     collectionDescription(overrides?: CallOverrides): Promise<BigNumber>;
 
     collectionDisplayPicture(overrides?: CallOverrides): Promise<BigNumber>;
-
-    collectionMaxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     collectionName(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -3270,6 +3262,12 @@ export interface ERC721FactoryGetSet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    tokenTransfer(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     tokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -3404,19 +3402,11 @@ export interface ERC721FactoryGetSet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    collectionCurrentSupply(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     collectionDescription(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     collectionDisplayPicture(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    collectionMaxSupply(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3778,6 +3768,12 @@ export interface ERC721FactoryGetSet extends BaseContract {
       owner: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tokenTransfer(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     tokenURI(

@@ -720,6 +720,30 @@ contract ERC721FactoryGetSet is
     }
 
     /**
+     * @dev Transfers a token to an account address `_to`.
+     * @param _to Account to receive the token.
+     * @param _tokenId The id of the token to transfer
+     *
+     * Requirements:
+     *
+     * - Only Admin can call this method
+     */
+    function tokenTransfer(
+        address _to, 
+        uint256 _tokenId
+    ) 
+        external 
+        validToken(
+            _exists(_tokenId), 
+            _tokenId, 
+            tokenMaximumSupply
+        ) 
+        onlyAdmin 
+    {
+        transferFrom(_msgSender(), _to, _tokenId);
+    }
+
+    /**
      * @dev Grants an admin role to an account.
      * @param _account Account to grant the admin role.
      *

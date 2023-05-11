@@ -9,7 +9,7 @@ const DEFAULT_ROLE: string = "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4c
 
 const MAXIMUM_SUPPLY: number | any = parseInt(`${process.env.MAXIMUM_SUPPLY}`);
 
-describe("ERC721Factory", function () {
+describe("ERC721Factory", async function () {
 
     let ERC721FactorySmartContract:any;
 
@@ -77,7 +77,7 @@ describe("ERC721Factory", function () {
             contractABI: CONTRACT_PARAMS.ABI_VALUES
         }
 
-        //console.log("  Arguments ...", _args);
+        console.log("  Arguments ...", _args, CONTRACT_PARAMS.ABI_ENCODED);
 
         return { smartContract, _deployer, _account1, _account2, _args };
 
@@ -135,7 +135,7 @@ describe("ERC721Factory", function () {
         transaction = await deployerAccount.mintNewToken(
             deployer.address,
             `test-nft-metadata-6.json`,
-            50, 
+            60, 
             {value: args.contractABI[7]}
         );
 
@@ -270,6 +270,18 @@ describe("ERC721Factory", function () {
 
         });
 
+        it("It has a admin role", async function () {
+
+            expect(await ERC721FactorySmartContract.hasRole(ADMIN_ROLE, deployer.address)).to.equal(true);
+
+        });
+
+        it("It sets the collection category", async function () {
+
+            expect(await ERC721FactorySmartContract.collectionCategory()).to.equal(parseInt(args.contractABI[8]));
+
+        });
+
         it("It is pausable", async function () {
 
             const {pausable} = await ERC721FactorySmartContract.contractOptionsStruct()
@@ -321,11 +333,34 @@ describe("ERC721Factory", function () {
             const currentTotalSupply:number = await ERC721FactorySmartContract.getTokenCurrentSupply();
 
             expect(nftItems.length).to.equal(currentTotalSupply);
-            
+
+            const mintedTokensCount = 6;
+
+            expect(await ERC721FactorySmartContract.totalSupply()).to.equal(mintedTokensCount);
+
         })
 
-        it("Emits TokenMinted event", () => {
+        it("Emits TokenMinted event", async () => {
+            
             expect(transaction).to.emit(ERC721FactorySmartContract, "TokenMinted")
+
+        });
+
+        it("Throws an PriceBelowMintingFee error", async () => {
+
+            const mintingFeeExpected:number = args.contractABI[7];
+            
+            const mintingFeeTest:number = 6;
+
+            await expect(ERC721FactorySmartContract.mintNewToken(
+                account1.address,
+                `test-nft-metadata-1.json`,
+                10, 
+                {value: mintingFeeTest}
+            ))
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "PriceBelowMintingFee")
+            .withArgs(mintingFeeExpected, mintingFeeTest, ERC721FactorySmartContract.AMOUNT_BELOW_MINTING_FEE);
+            
         });
 
         it(`Must be able to transfer tokens between accounts`, async function () {
@@ -353,6 +388,33 @@ describe("ERC721Factory", function () {
         it("Emits TokenTransfered event", () => {
             expect(transaction).to.emit(ERC721FactorySmartContract, "TokenTransfered")
         })
+
+        it("Throws an ExceededMaxValue error", async () => {
+
+            const tokenId:number = 11;
+
+            await expect(ERC721FactorySmartContract.tokenTransfer(
+                account2.address,
+                tokenId
+            ))
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "ExceededMaxValue")
+            .withArgs(ERC721FactorySmartContract.getTokenMaximumSupply(), tokenId, ERC721FactorySmartContract.MAX_SUPPLY_REACHED);
+            
+        });
+
+
+        it("Throws an TokenDoesNotExists error", async () => {
+
+            const tokenId:number = 7;
+
+            await expect(ERC721FactorySmartContract.tokenTransfer(
+                account2.address,
+                tokenId
+            ))
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "TokenDoesNotExists")
+            .withArgs(tokenId, ERC721FactorySmartContract.TOKEN_DOES_NOT_EXISTS);
+            
+        });
 
         it(`Must be able to burn tokens`, async function () {
         
@@ -446,7 +508,7 @@ describe("ERC721Factory", function () {
 
     });
 
-    describe("Contract Getters", () => {
+    describe("Token Minter, Creator & Owner", () => {
         
         console.warn("      ✔ Mint Tokens");
 
@@ -470,10 +532,16 @@ describe("ERC721Factory", function () {
 
             console.warn("      ✔ Get tokens minted");
         
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensMintedByAddress(account1.address);
+            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensMintedByAddress(deployer.address);
 
-            expect(nftItems.length).to.equal(5);
-            expect(nftItems[0].ownerAddress).to.equal(account1.address);
+            expect(nftItems.length).to.equal(6);
+
+            expect(nftItems[0].minterAddress).to.equal(deployer.address);
+            expect(nftItems[1].minterAddress).to.equal(deployer.address);
+            expect(nftItems[2].minterAddress).to.equal(deployer.address);
+            expect(nftItems[3].minterAddress).to.equal(deployer.address);
+            expect(nftItems[4].minterAddress).to.equal(deployer.address);
+            expect(nftItems[5].minterAddress).to.equal(deployer.address);
             
         })
 
@@ -483,9 +551,14 @@ describe("ERC721Factory", function () {
             
             const deployerTokens: Array<any> = await deployerWallet.getTokensMintedByMe();
 
-            console.log(deployerTokens);
+            expect(deployerTokens.length).to.equal(6);
 
-            expect(deployerTokens.length).to.equal(1);
+            expect(deployerTokens[0].minterAddress).to.equal(deployer.address);
+            expect(deployerTokens[1].minterAddress).to.equal(deployer.address);
+            expect(deployerTokens[2].minterAddress).to.equal(deployer.address);
+            expect(deployerTokens[3].minterAddress).to.equal(deployer.address);
+            expect(deployerTokens[4].minterAddress).to.equal(deployer.address);
+            expect(deployerTokens[5].minterAddress).to.equal(deployer.address);
 
         })
 
@@ -493,26 +566,27 @@ describe("ERC721Factory", function () {
 
             console.warn("      ✔ Get tokens created");
         
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensCreatedByAddress(account1.address);
+            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensCreatedByAddress(deployer.address);
 
-            expect(nftItems.length).to.equal(5);
-            expect(nftItems[0].ownerAddress).to.equal(account1.address);
+            //console.log(nftItems[0]);
+            
+            expect(nftItems.length).to.equal(1);
+
+            expect(nftItems[0].creatorAddress[0]).to.equal(deployer.address);
+            expect(nftItems[0].creatorAddress[1]).to.equal(deployer.address);
             
         })
 
         it("Get tokens created by me : getTokensCreatedByMe", async () => {
 
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensCreatedByMe();
 
-            //console.log(nftItems);
-
-            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+            //console.log(nftItems[0]);
             
-            const deployerTokens: Array<any> = await deployerWallet.getTokensCreatedByMe();
+            expect(nftItems.length).to.equal(1);
 
-            console.log(deployerTokens);
-
-            expect(deployerTokens.length).to.equal(1);
+            expect(nftItems[0].creatorAddress[0]).to.equal(deployer.address);
+            expect(nftItems[0].creatorAddress[1]).to.equal(deployer.address);
 
         })
 
@@ -545,5 +619,130 @@ describe("ERC721Factory", function () {
         })
 
     });
+
+    describe("Read State Variables", () => {
+        
+        it("Get the base uri : getBaseURI", async () => {
+
+            console.warn("      ✔ URIs");
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _baseURI: string = "https://domain.tld/base/url";
+            
+            await deployerWallet.setBaseURI(_baseURI);
+
+            const baseURI: string = await deployerWallet.getBaseURI();
+
+            expect(baseURI).to.equal(_baseURI);
+
+        })
+
+        it("Get the contract uri : getContractURI", async () => {
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _contractURI: string = "ipfs://uriKey";
+            
+            await deployerWallet.setContractURI(_contractURI);
+
+            const contractURI: string = await deployerWallet.getContractURI();
+
+            expect(contractURI).to.equal(_contractURI);
+
+        })
+
+        it("Get the token uri : getTokenURI", async () => {
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _tokenURI: string = "test-nft-metadata-1.json";
+            
+            let transaction:any;
+                
+            transaction = await deployerAccount.mintNewToken(
+                account1.address,
+                _tokenURI,
+                10, 
+                {value: args.contractABI[7]}
+            );
+
+            const txReceipt:any = await transaction.wait();
+            const txEvents:any = await txReceipt.events;
+            console.log(txEvents);
+            expect(transaction).to.emit(ERC721FactorySmartContract, "TokenMinted").withArgs(1,2,3,4);
+            const [transferEvent]:any = await txReceipt.events;
+            //console.log(transferEvent);
+            //const {tokenId}:any = transferEvent.args;
+            //console.log(tokenId);
+            /*
+            const baseURI: string = await deployerWallet.getBaseURI();
+
+            const tokenURI: string = await deployerWallet.getTokenURI(tokenId);
+
+            expect(tokenURI).to.equal(`${baseURI}${_tokenURI}`);
+            */
+            
+
+        })
+
+        
+        it("Get the token current counter : getTokenCurrentId", async () => {
+
+            console.warn("      ✔ Token Counter");
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _tokenIdCounter: string = "1";
+            
+            let _tokenURI: string = "myUrl";
+            
+            let transaction:any;
+                
+            transaction = await deployerAccount.mintNewToken(
+                account1.address,
+                _tokenURI,
+                10, 
+                {value: args.contractABI[7]}
+            );
+
+            await transaction.wait();
+
+            const tokenIdCounter: string = await deployerWallet.getTokenCurrentId();
+
+            expect(tokenIdCounter).to.equal(_tokenIdCounter);
+
+        })
+
+
+        it("Get the token uri : getTokenURI", async () => {
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _tokenURI: string = "test-nft-metadata-1.json";
+            
+            let transaction:any;
+                
+            transaction = await deployerAccount.mintNewToken(
+                account1.address,
+                _tokenURI,
+                10, 
+                {value: args.contractABI[7]}
+            );
+
+            await transaction.wait();
+
+            const baseURI: string = await deployerWallet.getBaseURI();
+
+            const tokenURI: string = await deployerWallet.getTokenURI(1);
+
+            expect(tokenURI).to.equal(`${baseURI}${_tokenURI}`);
+
+        })
+
+
+    });
+
+    await new Promise(res =>  setTimeout(() => res(null), 5000));
 
 });

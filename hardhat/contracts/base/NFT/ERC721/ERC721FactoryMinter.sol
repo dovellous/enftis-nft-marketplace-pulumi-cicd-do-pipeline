@@ -13,6 +13,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
     
     using Counters for Counters.Counter;
 
+    using Snippets for *;
     /// royalty states
 
     bool public royaltiesEnabled;
@@ -120,7 +121,9 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
             _setTokenURI(newTokenId, _tokenURI);
 
             // Give the marketplace approval to transact NFTs between users
-            // setApprovalForAll(marketplaceAddress, true);
+            if(marketplaceAddress != address(0)){
+                setApprovalForAll(marketplaceAddress, true);
+            } 
 
             _tokenCurrentSupply.increment();
 
@@ -158,5 +161,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
         }
 
         return newTokenId;
+
     }
+
 }
