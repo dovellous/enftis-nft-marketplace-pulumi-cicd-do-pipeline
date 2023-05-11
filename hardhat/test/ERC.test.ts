@@ -668,34 +668,17 @@ describe("ERC721Factory", async function () {
 
         it("Get the token uri : getTokenURI", async () => {
 
-            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+            const deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
 
-            let _tokenURI: string = "test-nft-metadata-1.json";
+            const tokenId:number = 1;
+
+            const _tokenURI: string = `test-nft-metadata-${tokenId}.json`;
             
-            let transaction:any;
-                
-            transaction = await deployerAccount.mintNewToken(
-                account1.address,
-                _tokenURI,
-                10, 
-                {value: args.contractABI[7]}
-            );
-
-            const txReceipt:any = await transaction.wait();
-            const txEvents:any = await txReceipt.events;
-            console.log(txEvents);
-            expect(transaction).to.emit(ERC721FactorySmartContract, "TokenMinted").withArgs(1,2,3,4);
-            const [transferEvent]:any = await txReceipt.events;
-            //console.log(transferEvent);
-            //const {tokenId}:any = transferEvent.args;
-            //console.log(tokenId);
-            /*
             const baseURI: string = await deployerWallet.getBaseURI();
 
             const tokenURI: string = await deployerWallet.getTokenURI(tokenId);
 
             expect(tokenURI).to.equal(`${baseURI}${_tokenURI}`);
-            */
             
 
         })
