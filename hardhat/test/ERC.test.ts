@@ -85,58 +85,26 @@ describe("ERC721Factory", async function () {
 
     const mintTokens = async () => {
 
-        let transaction:any;
-            
-        transaction = await deployerAccount.mintNewToken(
-            account1.address,
-            `test-nft-metadata-1.json`,
-            10, 
-            {value: args.contractABI[7]}
-        );
+        let mintingFee:number = args.contractABI[7];
 
-        await transaction.wait();
+        for(let i=1; i<6; i++){
+                
+            let txn:any = await ERC721FactorySmartContract.mintNewToken(
+                account1.address,
+                `test-nft-metadata-${i}.json`,
+                i*10, 
+                {value: mintingFee}
+            );
 
-        transaction = await deployerAccount.mintNewToken(
-            account1.address,
-            `test-nft-metadata-2.json`,
-            20, 
-            {value: args.contractABI[7]}
-        );
+            await txn.wait();
+        
+        }
 
-        await transaction.wait();
-
-        transaction = await deployerAccount.mintNewToken(
-            account1.address,
-            `test-nft-metadata-3.json`,
-            30, 
-            {value: args.contractABI[7]}
-        );
-
-        await transaction.wait();
-
-        transaction = await deployerAccount.mintNewToken(
-            account1.address,
-            `test-nft-metadata-4.json`,
-            40, 
-            {value: args.contractABI[7]}
-        );
-
-        await transaction.wait();
-
-        transaction = await deployerAccount.mintNewToken(
-            account1.address,
-            `test-nft-metadata-5.json`,
-            50, 
-            {value: args.contractABI[7]}
-        );
-
-        await transaction.wait();
-
-        transaction = await deployerAccount.mintNewToken(
+        const transaction:any = await deployerAccount.mintNewToken(
             deployer.address,
             `test-nft-metadata-6.json`,
             60, 
-            {value: args.contractABI[7]}
+            {value: mintingFee}
         );
 
         await transaction.wait();
@@ -363,6 +331,40 @@ describe("ERC721Factory", async function () {
             
         });
 
+        it("Throws an MaximumTokenSupplyReached error", async () => {
+
+            const mintingFee:number = args.contractABI[7];
+
+            const tokenMaximumSupply:number = args.contractABI[2];
+
+            let txn:any;
+
+            for(let i=7; i<11; i++){
+                
+                txn = await ERC721FactorySmartContract.mintNewToken(
+                    account1.address,
+                    `test-nft-metadata-${i}.json`,
+                    i, 
+                    {value: mintingFee}
+                );
+
+                await txn.wait();
+            
+            }
+
+            const outOfBoundsTokenId:number = parseInt(await ERC721FactorySmartContract.getTokenCurrentId())+1;
+
+            await expect(ERC721FactorySmartContract.mintNewToken(
+                account1.address,
+                `test-nft-metadata-11.json`,
+                11, 
+                {value: mintingFee}
+            ))
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "MaximumTokenSupplyReached")
+            .withArgs(tokenMaximumSupply, outOfBoundsTokenId, ERC721FactorySmartContract.MAX_SUPPLY_REACHED);
+            
+        });
+
         it(`Must be able to transfer tokens between accounts`, async function () {
         
             console.warn("      ✔ Transfer Tokens");
@@ -398,10 +400,22 @@ describe("ERC721Factory", async function () {
                 tokenId
             ))
             .to.be.revertedWithCustomError(ERC721FactorySmartContract, "ExceededMaxValue")
-            .withArgs(ERC721FactorySmartContract.getTokenMaximumSupply(), tokenId, ERC721FactorySmartContract.MAX_SUPPLY_REACHED);
+            .withArgs(await ERC721FactorySmartContract.getTokenMaximumSupply(), tokenId, ERC721FactorySmartContract.INDEX_OUT_OF_BOUNDS);
             
         });
 
+        it("Throws an BelowMinValue error", async () => {
+
+            const tokenId:number = 0;
+
+            await expect(ERC721FactorySmartContract.tokenTransfer(
+                account2.address,
+                tokenId
+            ))
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "BelowMinValue")
+            .withArgs(1, tokenId, ERC721FactorySmartContract.INDEX_OUT_OF_BOUNDS);
+            
+        });
 
         it("Throws an TokenDoesNotExists error", async () => {
 

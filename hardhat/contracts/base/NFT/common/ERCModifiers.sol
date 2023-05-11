@@ -172,9 +172,10 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
         uint256 _tokenId,
         uint256 _tokenMaximumSupply
     ) private pure {
+
         if (_tokenId == 0) {
-            revert Errors.ExceededMaxValue({
-                maxValue: _tokenMaximumSupply,
+            revert Errors.BelowMinValue({
+                minValue: 1,
                 value: _tokenId,
                 message: INDEX_OUT_OF_BOUNDS
             });
@@ -194,6 +195,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
                 message: TOKEN_DOES_NOT_EXISTS
             });
         }
+
     }
 
     modifier validToken(

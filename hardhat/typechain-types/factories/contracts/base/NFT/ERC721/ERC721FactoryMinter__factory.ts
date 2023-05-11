@@ -13,27 +13,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "maxValue",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "ExceededMaxValue",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
         name: "caller",
         type: "address",
@@ -50,6 +29,27 @@ const _abi = [
       },
     ],
     name: "InsufficientPermissions",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "maxValue",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes32",
+        name: "message",
+        type: "bytes32",
+      },
+    ],
+    name: "MaximumTokenSupplyReached",
     type: "error",
   },
   {

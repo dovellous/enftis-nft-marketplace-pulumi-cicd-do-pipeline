@@ -10,6 +10,27 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "minValue",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes32",
+        name: "message",
+        type: "bytes32",
+      },
+    ],
+    name: "BelowMinValue",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
         internalType: "bool",
         name: "active",
         type: "bool",
@@ -63,6 +84,27 @@ const _abi = [
   {
     inputs: [],
     name: "InvalidAmount",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "maxValue",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes32",
+        name: "message",
+        type: "bytes32",
+      },
+    ],
+    name: "MaximumTokenSupplyReached",
     type: "error",
   },
   {
@@ -201,7 +243,7 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209aa68137b0293a56fac96c4969476341316335644c1b7bfe43de59ce92943d8264736f6c63430008130033";
+  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212204a3c60b020370c71a9a971b8b12882e9a2a9f00904811e5a8fcc08350b230ade64736f6c63430008130033";
 
 type ErrorsConstructorParams =
   | [signer?: Signer]

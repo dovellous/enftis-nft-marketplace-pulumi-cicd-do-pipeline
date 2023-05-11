@@ -63,7 +63,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
         uint256 newTokenId = _tokenIdCounter.current();
 
         if (newTokenId > tokenMaximumSupply) {
-            revert Errors.ExceededMaxValue({
+            revert Errors.MaximumTokenSupplyReached({
                 maxValue: tokenMaximumSupply,
                 value: newTokenId,
                 message: MAX_SUPPLY_REACHED
