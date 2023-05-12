@@ -33,7 +33,7 @@ const Snippets = {
     ADDRESS : "0x44b6a97d834a9bfb7662b75c503f57331f40641fb9ee522bec507f7ba6a4655c",
     TOKEN_URI : "0xbc9ecbac2549f1ca8c3c6bab68fc976b8b7a87f2885e7d9b9841d24b9eb7e047",
     TOKEN_ID : "0x29a7b54c9b9e97f4b05fe2a20397ff46497367dee25875b7a64afd9a6d3f073b",
-
+    ADDRESS_ZERO : "0x0000000000000000000000000000000000000000",
     ethersToWei: (value: any) => {
       return ethers.utils.parseUnits(value.toString(), "ether");
     },

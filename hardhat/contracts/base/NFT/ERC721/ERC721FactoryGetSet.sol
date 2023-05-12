@@ -897,14 +897,14 @@ contract ERC721FactoryGetSet is
         address _royaltyReceiver,
         uint96 _royaltyFraction
     ) public onlyAdmin {
-        if(_royaltyReceiver != address(0)){
-            royaltyReceiver = payable(_royaltyReceiver);
-        }
         if(_royaltyFraction == 0){
             royaltiesEnabled = false;
         }
+        if(_royaltyReceiver != address(0)){
+            royaltyReceiver = payable(_royaltyReceiver);
+            _setDefaultRoyalty(_royaltyReceiver, _royaltyFraction);
+        }
         royaltyFraction = _royaltyFraction;
-        _setDefaultRoyalty(_royaltyReceiver, _royaltyFraction);
         emit Events.RoyaltiesChanged(_royaltyReceiver, _royaltyFraction);
     }
  

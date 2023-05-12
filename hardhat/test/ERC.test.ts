@@ -765,12 +765,14 @@ describe("ERC721Factory", async function () {
 
             let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
 
+            let _royaltyReceiver:string = Snippets.ADDRESS_ZERO;
+            
             let _royaltyFraction:number = 200;
             
             let transaction:any;
                 
             transaction = await deployerAccount.setRoyalties(
-                ethers.constants.AddressZero,
+                _royaltyReceiver,
                 _royaltyFraction
             );
 
@@ -788,11 +790,13 @@ describe("ERC721Factory", async function () {
 
             let _royaltyReceiver:string = account2.address;
             
+            let _royaltyFraction:number = 200;
+            
             let transaction:any;
                 
             transaction = await deployerAccount.setRoyalties(
                 _royaltyReceiver,
-                0
+                _royaltyFraction
             );
 
             await transaction.wait();
@@ -809,10 +813,10 @@ describe("ERC721Factory", async function () {
 
             let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
 
-            let _royaltyFraction:number = 25;
-            
             let _royaltyReceiver:string = account2.address;
-
+            
+            let _royaltyFraction:number = 200;
+            
             let _tokenId:number = 1;
 
             let _amount:number = 15_000_000;
@@ -820,8 +824,8 @@ describe("ERC721Factory", async function () {
             let transaction:any;
                 
             transaction = await deployerAccount.setRoyalties(
-                _royaltyFraction,
                 _royaltyReceiver,
+                _royaltyFraction
             );
 
             await transaction.wait();
