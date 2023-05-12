@@ -223,6 +223,10 @@ contract ERC721FactoryBase is
         if (to == address(0)) {
             // Log Event in after burn
 
+            delete tokenURIs[firstTokenId];
+
+            delete tokenIdToNFTItem[firstTokenId];
+
             tokenLogActivity(
                 from,
                 to,
@@ -232,12 +236,6 @@ contract ERC721FactoryBase is
             );
 
             emit Events.TokenBurned(from, to, firstTokenId, batchSize);
-
-            if (bytes(tokenURIs[firstTokenId]).length != 0) {
-                delete tokenURIs[firstTokenId];
-            }
-
-            delete tokenIdToNFTItem[firstTokenId];
 
         }
 
@@ -252,6 +250,8 @@ contract ERC721FactoryBase is
 
             tokenIdToNFTItem[firstTokenId] = _NFT;
 
+            delete _NFT;
+            
             tokenLogActivity(
                 from,
                 to,
@@ -262,7 +262,6 @@ contract ERC721FactoryBase is
 
             emit Events.TokenTransfered(from, to, firstTokenId, batchSize);
 
-            delete _NFT;
         }
 
         super._afterTokenTransfer(from, to, firstTokenId, batchSize);

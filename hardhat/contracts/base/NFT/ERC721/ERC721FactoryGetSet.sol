@@ -362,7 +362,8 @@ contract ERC721FactoryGetSet is
         validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
         returns (address)
     {
-        return _getNFTItem(_tokenId).minterAddress;
+        (Structs.NFTItem memory nftItem,) = getNFTItem(_tokenId);
+        return nftItem.minterAddress;
     }
 
     // ==================== End Read Mint Data ==================== //
@@ -408,7 +409,8 @@ contract ERC721FactoryGetSet is
         validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
         returns (address)
     {
-        return _getNFTItem(_tokenId).creatorAddress[1];
+        (Structs.NFTItem memory nftItem,) = getNFTItem(_tokenId);
+        return nftItem.creatorAddress[1];
     }
 
     // ==================== End Read Creator Data ==================== //
@@ -485,33 +487,13 @@ contract ERC721FactoryGetSet is
      */
     function getNFTItem(
         uint256 _tokenId
-    ) 
-    external 
-    view 
-    validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-    returns (Structs.NFTItem memory, string memory) {
-        return (_getNFTItem(_tokenId), tokenURIs[_tokenId]);
-    }
-
-    /**
-     * @dev Retrieves full details on an NFT.
-     * @param _tokenId The id of the token to get the details from.
-     * @return Structs.NFTItem 
-     * 
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     * 
-     */
-    function _getNFTItem(
-        uint256 _tokenId
     )
-        internal
+        public
         view
         validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-        returns (Structs.NFTItem memory)
+        returns (Structs.NFTItem memory, string memory)
     {
-        return tokenIdToNFTItem[_tokenId];
+        return (tokenIdToNFTItem[_tokenId], tokenURIs[_tokenId]);
     }
 
     /**
@@ -592,17 +574,6 @@ contract ERC721FactoryGetSet is
      */
     function collectionDisplayPicture() external view returns (string memory) {
         return photoURL;
-    }
-
-    /**
-     * @dev Check whether royalties are enabled for this collection or not.
-     * Remember that this option is set in the constructor on contract creation
-     * Hence the `royaltiesEnabled` is immutable, once set, cannot be changed.
-     * @return royaltiesEnabled.
-     *
-     */
-    function collectionRoyaltiesEnabled() external view returns (bool ) {
-        return royaltiesEnabled;
     }
 
     // Search
@@ -696,27 +667,15 @@ contract ERC721FactoryGetSet is
     /******************************* Write Functions ******************************/
 
     /**
-     * @dev Pauses token transfers. See {Pausable}.
+     * @dev Toggle pauses. See {Pausable}.
      *
      * Requirements:
      *
      * - Only Admin can call this method
      * - Only contracts with pausable active can call this method
      */
-    function pause() public onlyAdmin pausable {
-        _pause();
-    }
-
-    /**
-     * @dev Unpauses token transfers. See {Pausable}.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     * - Only contracts with pausable active can call this method
-     */
-    function unpause() public onlyAdmin pausable {
-        _unpause();
+    function togglePause() public onlyAdmin pausable {
+        paused() ? _unpause() : _pause();
     }
 
     /**
@@ -737,7 +696,7 @@ contract ERC721FactoryGetSet is
             _exists(_tokenId), 
             _tokenId, 
             tokenMaximumSupply
-        ) 
+        )
         onlyAdmin 
     {
         transferFrom(_msgSender(), _to, _tokenId);
@@ -923,6 +882,40 @@ contract ERC721FactoryGetSet is
         marketplaceAddress = payable(_newMarketplaceAddress);
         setApprovalForAll(_newMarketplaceAddress, true);
         emit Events.MarketplaceAddressChanged(_newMarketplaceAddress);
+    }
+ 
+    /**
+     * @dev Sets the new royalty percentage.
+     * @param _royaltyFraction The percentage to pay the royalties.
+     * @param _royaltyReceiver The receiver of the royalties
+     * 
+     * If we set 1, per = 100 * 1 -> 100 / 100 => 1%
+     * 
+     * There are no fractions in solidity
+     *
+     * Emits an {RoyaltyFractionChanged} event.
+     *
+     * Requirements:
+     *
+     * - Only Admin can call this method
+     * - The royaltyReceiver must not be a zero address
+     * 
+     * Notes 
+     * - If _royaltyFraction is zero hen royalties are disabled for new items for that moment
+     * 
+     */
+    function setRoyalties(
+        uint96 _royaltyFraction,
+        address _royaltyReceiver
+    ) public onlyAdmin {
+        if(_royaltyReceiver != address(0)){
+            royaltyReceiver = payable(_royaltyReceiver);
+        }
+        if(_royaltyFraction == 0){
+            royaltiesEnabled = false;
+        }
+        royaltyFraction = _royaltyFraction;
+        _setDefaultRoyalty(_royaltyReceiver, _royaltyFraction);
     }
  
     /**

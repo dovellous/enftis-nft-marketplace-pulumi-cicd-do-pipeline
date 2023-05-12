@@ -15,9 +15,6 @@ contract ERCConstants {
 
     /********************************** Constants *********************************/
 
-    /// Implementation type for this contract
-    bytes32 public constant IMPLEMENTATION_TYPE = keccak256("ERC721");
-
     /// Admin Role that can manage contract options
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 

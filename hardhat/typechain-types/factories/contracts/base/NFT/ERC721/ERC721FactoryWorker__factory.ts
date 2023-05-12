@@ -231,19 +231,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "IMPLEMENTATION_TYPE",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "INDEX_OUT_OF_BOUNDS",
     outputs: [
       {

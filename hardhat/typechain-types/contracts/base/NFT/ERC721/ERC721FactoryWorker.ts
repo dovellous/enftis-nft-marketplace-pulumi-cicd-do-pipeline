@@ -33,7 +33,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
     "ADMIN_ROLE()": FunctionFragment;
     "AMOUNT_BELOW_MINTING_FEE()": FunctionFragment;
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "IMPLEMENTATION_TYPE()": FunctionFragment;
     "INDEX_OUT_OF_BOUNDS()": FunctionFragment;
     "INSUFFICIENT_PERMISSIONS()": FunctionFragment;
     "INVALID_CALLER()": FunctionFragment;
@@ -96,7 +95,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
       | "ADMIN_ROLE"
       | "AMOUNT_BELOW_MINTING_FEE"
       | "DEFAULT_ADMIN_ROLE"
-      | "IMPLEMENTATION_TYPE"
       | "INDEX_OUT_OF_BOUNDS"
       | "INSUFFICIENT_PERMISSIONS"
       | "INVALID_CALLER"
@@ -164,10 +162,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "IMPLEMENTATION_TYPE",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -399,10 +393,6 @@ export interface ERC721FactoryWorkerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "IMPLEMENTATION_TYPE",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -722,8 +712,6 @@ export interface ERC721FactoryWorker extends BaseContract {
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<[string]>;
-
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<[string]>;
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<[string]>;
@@ -964,8 +952,6 @@ export interface ERC721FactoryWorker extends BaseContract {
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<string>;
-
   INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
 
   INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<string>;
@@ -1201,8 +1187,6 @@ export interface ERC721FactoryWorker extends BaseContract {
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<string>;
 
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
 
@@ -1513,8 +1497,6 @@ export interface ERC721FactoryWorker extends BaseContract {
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<BigNumber>;
-
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<BigNumber>;
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1736,10 +1718,6 @@ export interface ERC721FactoryWorker extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    IMPLEMENTATION_TYPE(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

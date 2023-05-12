@@ -3,7 +3,7 @@ import { config as dotEnvConfig } from "dotenv";
 import "@nomicfoundation/hardhat-toolbox";
 dotEnvConfig();
 
-module.exports = {
+const config:HardhatUserConfig = {
   defaultNetwork: `${process.env.DEFAULT_NETWORK_NAME}`,
   etherscan: {
     apiKey: {
@@ -16,11 +16,15 @@ module.exports = {
       url: "http://127.0.0.1:8545"
     },
     hardhat: {
+    },
+    /*
+    hardhat: {
       forking: {
         url: `${process.env.ALCHEMY_URL_SEPOLIA}/${process.env.ALCHEMY_KEY}`,
         blockNumber: 3455485
       }
     },
+    */
     sepolia: {
       url: `${process.env.ALCHEMY_URL_SEPOLIA}/${process.env.ALCHEMY_KEY}`,
       accounts: [`${process.env.DEPLOYER_ACCOUNT_KEY}`]
@@ -52,3 +56,5 @@ module.exports = {
     timeout: 60000
   }
 }
+
+module.exports = config;

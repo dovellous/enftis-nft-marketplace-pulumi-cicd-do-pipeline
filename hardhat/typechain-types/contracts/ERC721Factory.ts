@@ -101,7 +101,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "ADMIN_ROLE()": FunctionFragment;
     "AMOUNT_BELOW_MINTING_FEE()": FunctionFragment;
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "IMPLEMENTATION_TYPE()": FunctionFragment;
     "INDEX_OUT_OF_BOUNDS()": FunctionFragment;
     "INSUFFICIENT_PERMISSIONS()": FunctionFragment;
     "INVALID_CALLER()": FunctionFragment;
@@ -127,7 +126,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "collectionDescription()": FunctionFragment;
     "collectionDisplayPicture()": FunctionFragment;
     "collectionName()": FunctionFragment;
-    "collectionRoyaltiesEnabled()": FunctionFragment;
     "collectionSymbol()": FunctionFragment;
     "contractOptionsStruct()": FunctionFragment;
     "contractTreasury()": FunctionFragment;
@@ -170,7 +168,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
-    "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "photoURL()": FunctionFragment;
     "recoverTokens(address,address,uint8,uint256,uint256)": FunctionFragment;
@@ -200,8 +197,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "setMarketplaceAddress(address)": FunctionFragment;
     "setMintingFee(uint256)": FunctionFragment;
     "setNewOwner(address)": FunctionFragment;
+    "setRoyalties(uint96,address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
+    "togglePause()": FunctionFragment;
     "tokenByIndex(uint256)": FunctionFragment;
     "tokenCategory()": FunctionFragment;
     "tokenIdToNFTItem(uint256)": FunctionFragment;
@@ -214,7 +213,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferToFallback(address)": FunctionFragment;
-    "unpause()": FunctionFragment;
     "withdraw(address,uint256)": FunctionFragment;
     "withdrawAll()": FunctionFragment;
   };
@@ -224,7 +222,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "ADMIN_ROLE"
       | "AMOUNT_BELOW_MINTING_FEE"
       | "DEFAULT_ADMIN_ROLE"
-      | "IMPLEMENTATION_TYPE"
       | "INDEX_OUT_OF_BOUNDS"
       | "INSUFFICIENT_PERMISSIONS"
       | "INVALID_CALLER"
@@ -250,7 +247,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "collectionDescription"
       | "collectionDisplayPicture"
       | "collectionName"
-      | "collectionRoyaltiesEnabled"
       | "collectionSymbol"
       | "contractOptionsStruct"
       | "contractTreasury"
@@ -293,7 +289,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "name"
       | "owner"
       | "ownerOf"
-      | "pause"
       | "paused"
       | "photoURL"
       | "recoverTokens"
@@ -323,8 +318,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "setMarketplaceAddress"
       | "setMintingFee"
       | "setNewOwner"
+      | "setRoyalties"
       | "supportsInterface"
       | "symbol"
+      | "togglePause"
       | "tokenByIndex"
       | "tokenCategory"
       | "tokenIdToNFTItem"
@@ -337,7 +334,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "totalSupply"
       | "transferFrom"
       | "transferToFallback"
-      | "unpause"
       | "withdraw"
       | "withdrawAll"
   ): FunctionFragment;
@@ -352,10 +348,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "IMPLEMENTATION_TYPE",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -453,10 +445,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "collectionName",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "collectionRoyaltiesEnabled",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -622,7 +610,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(functionFragment: "photoURL", values?: undefined): string;
   encodeFunctionData(
@@ -749,10 +736,18 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setRoyalties",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "togglePause",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "tokenByIndex",
     values: [PromiseOrValue<BigNumberish>]
@@ -805,7 +800,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     functionFragment: "transferToFallback",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "withdraw",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
@@ -822,10 +816,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "IMPLEMENTATION_TYPE",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -911,10 +901,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "collectionName",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "collectionRoyaltiesEnabled",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1058,7 +1044,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "photoURL", data: BytesLike): Result;
   decodeFunctionResult(
@@ -1164,10 +1149,18 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setRoyalties",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "togglePause",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "tokenByIndex",
     data: BytesLike
@@ -1213,7 +1206,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     functionFragment: "transferToFallback",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "withdrawAll",
@@ -1361,8 +1353,6 @@ export interface ERC721Factory extends BaseContract {
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<[string]>;
-
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<[string]>;
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<[string]>;
@@ -1432,8 +1422,6 @@ export interface ERC721Factory extends BaseContract {
     collectionDisplayPicture(overrides?: CallOverrides): Promise<[string]>;
 
     collectionName(overrides?: CallOverrides): Promise<[string]>;
-
-    collectionRoyaltiesEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     collectionSymbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1592,10 +1580,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     photoURL(overrides?: CallOverrides): Promise<[string]>;
@@ -1742,12 +1726,22 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setRoyalties(
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _royaltyReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     supportsInterface(
       _interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    togglePause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     tokenByIndex(
       index: PromiseOrValue<BigNumberish>,
@@ -1820,10 +1814,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
@@ -1840,8 +1830,6 @@ export interface ERC721Factory extends BaseContract {
   AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<string>;
 
   INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
 
@@ -1908,8 +1896,6 @@ export interface ERC721Factory extends BaseContract {
   collectionDisplayPicture(overrides?: CallOverrides): Promise<string>;
 
   collectionName(overrides?: CallOverrides): Promise<string>;
-
-  collectionRoyaltiesEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   collectionSymbol(overrides?: CallOverrides): Promise<string>;
 
@@ -2068,10 +2054,6 @@ export interface ERC721Factory extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  pause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   photoURL(overrides?: CallOverrides): Promise<string>;
@@ -2218,12 +2200,22 @@ export interface ERC721Factory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setRoyalties(
+    _royaltyFraction: PromiseOrValue<BigNumberish>,
+    _royaltyReceiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   supportsInterface(
     _interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
+
+  togglePause(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   tokenByIndex(
     index: PromiseOrValue<BigNumberish>,
@@ -2296,10 +2288,6 @@ export interface ERC721Factory extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  unpause(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   withdraw(
     to: PromiseOrValue<string>,
     value: PromiseOrValue<BigNumberish>,
@@ -2316,8 +2304,6 @@ export interface ERC721Factory extends BaseContract {
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<string>;
 
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
 
@@ -2384,8 +2370,6 @@ export interface ERC721Factory extends BaseContract {
     collectionDisplayPicture(overrides?: CallOverrides): Promise<string>;
 
     collectionName(overrides?: CallOverrides): Promise<string>;
-
-    collectionRoyaltiesEnabled(overrides?: CallOverrides): Promise<boolean>;
 
     collectionSymbol(overrides?: CallOverrides): Promise<string>;
 
@@ -2544,8 +2528,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    pause(overrides?: CallOverrides): Promise<void>;
-
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     photoURL(overrides?: CallOverrides): Promise<string>;
@@ -2692,12 +2674,20 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setRoyalties(
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _royaltyReceiver: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     supportsInterface(
       _interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
+
+    togglePause(overrides?: CallOverrides): Promise<void>;
 
     tokenByIndex(
       index: PromiseOrValue<BigNumberish>,
@@ -2769,8 +2759,6 @@ export interface ERC721Factory extends BaseContract {
       _to: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    unpause(overrides?: CallOverrides): Promise<void>;
 
     withdraw(
       to: PromiseOrValue<string>,
@@ -2862,8 +2850,6 @@ export interface ERC721Factory extends BaseContract {
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<BigNumber>;
-
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<BigNumber>;
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2929,8 +2915,6 @@ export interface ERC721Factory extends BaseContract {
     collectionDisplayPicture(overrides?: CallOverrides): Promise<BigNumber>;
 
     collectionName(overrides?: CallOverrides): Promise<BigNumber>;
-
-    collectionRoyaltiesEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
     collectionSymbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -3079,10 +3063,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     photoURL(overrides?: CallOverrides): Promise<BigNumber>;
@@ -3229,12 +3209,22 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setRoyalties(
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _royaltyReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     supportsInterface(
       _interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
+
+    togglePause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     tokenByIndex(
       index: PromiseOrValue<BigNumberish>,
@@ -3292,10 +3282,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
@@ -3315,10 +3301,6 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    IMPLEMENTATION_TYPE(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3411,10 +3393,6 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     collectionName(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    collectionRoyaltiesEnabled(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     collectionSymbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -3585,10 +3563,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    pause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     photoURL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -3735,12 +3709,22 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setRoyalties(
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _royaltyReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     supportsInterface(
       _interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    togglePause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     tokenByIndex(
       index: PromiseOrValue<BigNumberish>,
@@ -3798,10 +3782,6 @@ export interface ERC721Factory extends BaseContract {
     transferToFallback(
       _to: PromiseOrValue<string>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    unpause(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(

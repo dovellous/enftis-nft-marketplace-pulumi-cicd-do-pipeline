@@ -35,9 +35,9 @@ describe("ERC721Factory", async function () {
 
         const [_deployer, _account1, _account2] = await ethers.getSigners();
 
-        console.log("      ✔ Deploying contracts with the account:", _deployer.address);
+        console.log("      🟩Deploying contracts with the account:", _deployer.address);
 
-        console.log("      ✔ Account balance:", (await _deployer.getBalance()).toString());
+        console.log("      🟩Account balance:", (await _deployer.getBalance()).toString());
 
         const CONTRACT_FILE: any = process.env.CONTRACT_FILE;
 
@@ -280,7 +280,7 @@ describe("ERC721Factory", async function () {
 
         it(`Must be able to mint tokens`, async function () {
 
-            console.warn("      ✔ Mint Tokens");
+            console.warn("      🟩Mint Tokens");
 
             await deployerAccount.balanceOf(account1.address).then((amount:number) =>{
                     
@@ -367,7 +367,7 @@ describe("ERC721Factory", async function () {
 
         it(`Must be able to transfer tokens between accounts`, async function () {
         
-            console.warn("      ✔ Transfer Tokens");
+            console.warn("      🟩Transfer Tokens");
 
             await transferTokens();
 
@@ -432,7 +432,7 @@ describe("ERC721Factory", async function () {
 
         it(`Must be able to burn tokens`, async function () {
         
-            console.warn("      ✔ Burn Tokens");
+            console.warn("      🟩Burn Tokens");
 
             await transferTokens();
 
@@ -482,7 +482,7 @@ describe("ERC721Factory", async function () {
 
     describe("Token Owners", () => {
         
-        console.warn("      ✔ Mint Tokens");
+        console.warn("      🟩Mint Tokens");
 
         beforeEach( async () => {
             
@@ -505,7 +505,7 @@ describe("ERC721Factory", async function () {
 
         it("Verifies the token rightful owners, soon after transfers / ownership change", async () => {
         
-            console.warn("      ✔ Transfer Tokens");
+            console.warn("      🟩Transfer Tokens");
 
             await transferTokens();
 
@@ -524,7 +524,7 @@ describe("ERC721Factory", async function () {
 
     describe("Token Minter, Creator & Owner", () => {
         
-        console.warn("      ✔ Mint Tokens");
+        console.warn("      🟩Mint Tokens");
 
         beforeEach( async () => {
             
@@ -544,7 +544,7 @@ describe("ERC721Factory", async function () {
 
         it("Get tokens minted by address : getTokensMintedByAddress", async () => {
 
-            console.warn("      ✔ Get tokens minted");
+            console.warn("      🟩Get tokens minted");
         
             const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensMintedByAddress(deployer.address);
 
@@ -578,7 +578,7 @@ describe("ERC721Factory", async function () {
 
         it("Get tokens created by address : getTokensCreatedByAddress", async () => {
 
-            console.warn("      ✔ Get tokens created");
+            console.warn("      🟩Get tokens created");
         
             const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensCreatedByAddress(deployer.address);
 
@@ -606,7 +606,7 @@ describe("ERC721Factory", async function () {
 
         it("Get tokens owned by address : getTokensOwnedByAddress", async () => {
 
-            console.warn("      ✔ Get tokens owned");
+            console.warn("      🟩Get tokens owned");
         
             const deployerTokens: Array<any> = await ERC721FactorySmartContract.getTokensOwnedByAddress(deployer.address);
 
@@ -638,7 +638,7 @@ describe("ERC721Factory", async function () {
         
         it("Get the base uri : getBaseURI", async () => {
 
-            console.warn("      ✔ URIs");
+            console.warn("      🟩URIs");
 
             let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
 
@@ -668,25 +668,26 @@ describe("ERC721Factory", async function () {
 
         it("Get the token uri : getTokenURI", async () => {
 
-            const deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+            const nftItems:any = await mintTokens();
+
+            //console.log(nftItems);
 
             const tokenId:number = 1;
 
             const _tokenURI: string = `test-nft-metadata-${tokenId}.json`;
-            
-            const baseURI: string = await deployerWallet.getBaseURI();
 
-            const tokenURI: string = await deployerWallet.getTokenURI(tokenId);
+            const baseURI: string = await ERC721FactorySmartContract.getBaseURI();
+
+            const tokenURI: string = await ERC721FactorySmartContract.getTokenURI(tokenId);
 
             expect(tokenURI).to.equal(`${baseURI}${_tokenURI}`);
             
-
         })
 
         
         it("Get the token current counter : getTokenCurrentId", async () => {
 
-            console.warn("      ✔ Token Counter");
+            console.warn("      🟩Token Counter");
 
             let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
 
@@ -712,31 +713,135 @@ describe("ERC721Factory", async function () {
         })
 
 
-        it("Get the token uri : getTokenURI", async () => {
+        it("Get the owner of the smart contract : getOwner", async () => {
+
+            console.warn("      🟩Contract Owner");
 
             let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
 
-            let _tokenURI: string = "test-nft-metadata-1.json";
+            let _owner: string = deployer.address;
+
+            const owner: string = await deployerWallet.getOwner();
+
+            expect(owner).to.equal(_owner);
+
+        })
+
+        it("Get the approved address of the marketplace : getMarketplaceAddress", async () => {
+
+            console.warn("      🟩Approved Address");
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _marketplaceAddress: string = account2.address;
             
             let transaction:any;
                 
-            transaction = await deployerAccount.mintNewToken(
-                account1.address,
-                _tokenURI,
-                10, 
-                {value: args.contractABI[7]}
+            transaction = await deployerAccount.setMarketplaceAddress(
+                _marketplaceAddress
             );
 
             await transaction.wait();
 
-            const baseURI: string = await deployerWallet.getBaseURI();
+            const marketplaceAddress: string = await deployerWallet.getMarketplaceAddress();
 
-            const tokenURI: string = await deployerWallet.getTokenURI(1);
-
-            expect(tokenURI).to.equal(`${baseURI}${_tokenURI}`);
+            expect(marketplaceAddress).to.equal(_marketplaceAddress);
 
         })
 
+        it("Get the royalty percentage : getRoyaltyFraction", async () => {
+
+            console.warn("      🟩Royalties");
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _royaltyFraction:number = 200;
+            
+            let transaction:any;
+                
+            transaction = await deployerAccount.setRoyalties(
+                _royaltyFraction,
+                ethers.constants.AddressZero
+            );
+
+            await transaction.wait();
+
+            const royaltyFraction: string = await deployerWallet.getRoyaltyFraction();
+
+            expect(royaltyFraction).to.equal(_royaltyFraction);
+
+        })
+
+        it("Get the receiver of the royalties : getRoyaltyReceiver", async () => {
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _royaltyReceiver:string = account2.address;
+            
+            let transaction:any;
+                
+            transaction = await deployerAccount.setRoyalties(
+                0,
+                _royaltyReceiver
+            );
+
+            await transaction.wait();
+
+            const royaltyReciever: string = await deployerWallet.getRoyaltyReceiver();
+
+            expect(_royaltyReceiver).to.equal(royaltyReciever);
+
+        })
+
+        it("Get the royalties info of a specified token id : getTokenRoyaltyInfo", async () => {
+
+            const nftItems:any = await mintTokens();
+
+            //console.log(nftItems);
+
+            let deployerWallet:any = await ERC721FactorySmartContract.connect(deployer);
+
+            let _royaltyFraction:number = 25;
+            
+            let _royaltyReceiver:string = account2.address;
+
+            let _tokenId:number = 1;
+
+            let _amount:number = 15_000_000;
+            
+            let transaction:any;
+                
+            transaction = await deployerAccount.setRoyalties(
+                _royaltyFraction,
+                _royaltyReceiver,
+            );
+
+            await transaction.wait();
+
+            const royaltyFraction: string = await deployerWallet.getRoyaltyFraction();
+
+            const royaltyReciever: string = await deployerWallet.getRoyaltyReceiver();
+
+            const royaltyInfo: any = await deployerWallet.getTokenRoyaltyInfo(
+                _tokenId,
+                _amount
+            );
+
+            console.log("ROYALTY INFO",royaltyInfo);
+
+            console.log("royaltyIsDefined", royaltyInfo.royaltyIsDefined, _royaltyFraction>0);
+            console.log("royaltyReceiver", royaltyInfo.royaltyReceiver, royaltyReciever, _royaltyReceiver);
+            console.log("royaltyFraction", royaltyInfo.royaltyFraction, royaltyFraction,  _royaltyFraction);
+            console.log("amount", royaltyInfo.royaltyAmount, (_amount * _royaltyFraction / 100));
+            console.log("tokenId", royaltyInfo.tokenId, _tokenId);
+
+            expect(royaltyInfo.royaltyIsDefined).to.equal(_royaltyFraction>0);
+            expect(royaltyInfo.royaltyReceiver).to.equal(_royaltyReceiver);
+            expect(royaltyInfo.royaltyFraction).to.equal(_royaltyFraction);
+            expect(royaltyInfo.royaltyAmount).to.equal(_amount);
+            expect(royaltyInfo.tokenId).to.equal(_amount * _royaltyFraction / 100);
+
+        })
 
     });
 

@@ -24,7 +24,6 @@ export interface ERCConstantsInterface extends utils.Interface {
   functions: {
     "ADMIN_ROLE()": FunctionFragment;
     "AMOUNT_BELOW_MINTING_FEE()": FunctionFragment;
-    "IMPLEMENTATION_TYPE()": FunctionFragment;
     "INDEX_OUT_OF_BOUNDS()": FunctionFragment;
     "INSUFFICIENT_PERMISSIONS()": FunctionFragment;
     "INVALID_CALLER()": FunctionFragment;
@@ -42,7 +41,6 @@ export interface ERCConstantsInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "ADMIN_ROLE"
       | "AMOUNT_BELOW_MINTING_FEE"
-      | "IMPLEMENTATION_TYPE"
       | "INDEX_OUT_OF_BOUNDS"
       | "INSUFFICIENT_PERMISSIONS"
       | "INVALID_CALLER"
@@ -62,10 +60,6 @@ export interface ERCConstantsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "AMOUNT_BELOW_MINTING_FEE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "IMPLEMENTATION_TYPE",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -116,10 +110,6 @@ export interface ERCConstantsInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "ADMIN_ROLE", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "AMOUNT_BELOW_MINTING_FEE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "IMPLEMENTATION_TYPE",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -201,8 +191,6 @@ export interface ERCConstants extends BaseContract {
 
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<[string]>;
 
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<[string]>;
-
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<[string]>;
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<[string]>;
@@ -230,8 +218,6 @@ export interface ERCConstants extends BaseContract {
 
   AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
-  IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<string>;
-
   INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
 
   INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<string>;
@@ -258,8 +244,6 @@ export interface ERCConstants extends BaseContract {
     ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
-
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<string>;
 
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
 
@@ -291,8 +275,6 @@ export interface ERCConstants extends BaseContract {
 
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    IMPLEMENTATION_TYPE(overrides?: CallOverrides): Promise<BigNumber>;
-
     INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<BigNumber>;
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -320,10 +302,6 @@ export interface ERCConstants extends BaseContract {
     ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     AMOUNT_BELOW_MINTING_FEE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    IMPLEMENTATION_TYPE(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
