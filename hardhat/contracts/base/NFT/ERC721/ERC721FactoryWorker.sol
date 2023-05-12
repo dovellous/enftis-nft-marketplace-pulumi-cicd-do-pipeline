@@ -16,10 +16,10 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
 
     /**
      * @dev Retrieves a list of all available tokens.
-     * @return Structs.NFTItem[] memory nftItems : an array of NFT items.
+     * @return Structs.NFT[] memory nftItems : an array of NFT items.
      *
      */
-    function _tokens() internal view returns (Structs.NFTItem[] memory) {
+    function _tokens() internal view returns (Structs.NFT[] memory) {
 
         // Lets use current id `_tokenIdCounter.current` 
         // as opposed to the maximum supply `tokenMaximumSupply`
@@ -29,7 +29,7 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
         // not be dealing with the actual tokenId on the indices.
         // So we are better off with current token id which is ever incrementally changing.
 
-        Structs.NFTItem[] memory nftItems;
+        Structs.NFT[] memory nftItems;
 
         // Unchecked : @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/unchecked-code-block.md
         unchecked {
@@ -51,7 +51,7 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
             }
 
             // Create a fixed array set with the actual number of tokens computed above
-            nftItems = new Structs.NFTItem[](numberOfAvailableTokens);
+            nftItems = new Structs.NFT[](numberOfAvailableTokens);
 
             // Save gas, free up memory; @see below
             delete numberOfAvailableTokens;
@@ -64,7 +64,14 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                 // Oncemore, check if the token with the current id exists
                 if (_exists((i + 1))) {
                     //If it exists, push the current token to the array
-                    nftItems[currentIndex] = tokenIdToNFTItem[(i + 1)];
+                    Structs.NFTItem memory nftItem = tokenIdToNFTItem[(i + 1)];
+
+                    Structs.NFT memory _NFT = Structs.NFT(
+                        nftItem,
+                        tokenURIs[(i+1)]
+                    );
+
+                    nftItems[currentIndex] = _NFT;
 
                     // Increment the current index for the next valid token
                     // In principle, the max currentIndex mube be equal to (numberOfMintedTokens-1)
@@ -89,7 +96,7 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
      *
      */
     function _search(
-        string memory _itemKey,
+        bytes32 _itemKey,
         bytes memory _data
     ) internal view returns (Structs.NFTItem[] memory) {
         // Get the current token id for minted tokens

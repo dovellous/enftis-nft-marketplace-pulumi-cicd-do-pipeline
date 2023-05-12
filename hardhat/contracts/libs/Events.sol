@@ -31,7 +31,7 @@ library Events {
     event OwnerChanged(address newOwner);
 
     /// Event fired when owner address is modified.
-    event ContractURIChanged(string newURI);
+    event ContractURIChanged(bytes32 newURI);
 
     ///
     event CollectionDescriptionChanged(string description);
@@ -56,6 +56,9 @@ library Events {
 
     /// Event fired when owner address is modified.
     event MintingFeeChanged(uint256 newMintingFee);
+
+    /// Event fired when royalties are changed
+    event RoyaltiesChanged(address _royaltyReceiver, uint96 _royaltyFraction);
 
     /// Event fired when a token has been minted.
     event TokenMinted(

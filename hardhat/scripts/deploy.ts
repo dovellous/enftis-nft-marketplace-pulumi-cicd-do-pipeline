@@ -22,13 +22,18 @@ async function main() {
 
   const [deployer] = await ethers.getSigners();
 
-  console.log("Deploying contracts with the account:", deployer.address);
-
-  console.log("Account balance:", (await deployer.getBalance()).toString());
-
   const CONTRACT_FILE: any = process.env.CONTRACT_FILE;
 
   const CONTRACT_PARAMS:any = require(`./contract-configs/${CONTRACT_FILE}Config.ts`)
+
+  console.log("Deploying contracts with the account:", deployer.address);
+
+  console.log("Account Balance:", (await deployer.getBalance()).toString());
+
+  console.log(
+    "Deploy with the following arguments",
+    CONTRACT_PARAMS.ABI_VALUES
+  );
 
   const ContractLinkedLibrary = await ethers.getContractFactory(CONTRACT_PARAMS.LINKED_LIBRARY);
   const contractLinkedLibrary = await ContractLinkedLibrary.deploy();
@@ -41,11 +46,6 @@ async function main() {
         Snippets: contractLinkedLibrary.address,
       },
     }
-  );
-
-  console.warn(
-    "Deploy with the following arguments",
-    CONTRACT_PARAMS.ABI_VALUES
   );
 
   const _smartContract = await SmartContract.deploy(

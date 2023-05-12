@@ -57,14 +57,14 @@ contract ERC721FactoryBase is
     /// @dev Token Id to NFTItem mapping
     mapping(uint256 => Structs.NFTItem) public tokenIdToNFTItem;
 
+    /// @dev Contract URI where this code resides
+    bytes32 public contractURI;
+
     /// @dev Token Maximum Supply
     uint256 public tokenMaximumSupply;
 
     /// @dev Base Token URI, if = "", default to "ipfs://"
     string public baseTokenURI;
-
-    /// @dev Contract URI where this code resides
-    string public contractURI;
 
     /// @dev Description of this token collection
     string public description;
@@ -104,6 +104,18 @@ contract ERC721FactoryBase is
         uint256 _tokenId
     ) internal virtual override(ERC721, ERC721Royalty, ERC721URIStorage) {
         super._burn(_tokenId);
+    }
+
+    /**
+     * @dev Toggle pauses. See {Pausable}.
+     *
+     * Requirements:
+     *
+     * - Only Admin can call this method
+     * - Only contracts with pausable active can call this method
+     */
+    function togglePause() public onlyAdmin pausable {
+        paused() ? _unpause() : _pause();
     }
 
     /**

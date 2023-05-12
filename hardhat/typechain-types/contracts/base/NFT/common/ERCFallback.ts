@@ -41,6 +41,7 @@ export interface ERCFallbackInterface extends utils.Interface {
     "revokeRole(bytes32,address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transferToFallback(address)": FunctionFragment;
+    "updateContractTreasury(address)": FunctionFragment;
     "withdraw(address,uint256)": FunctionFragment;
     "withdrawAll()": FunctionFragment;
   };
@@ -58,6 +59,7 @@ export interface ERCFallbackInterface extends utils.Interface {
       | "revokeRole"
       | "supportsInterface"
       | "transferToFallback"
+      | "updateContractTreasury"
       | "withdraw"
       | "withdrawAll"
   ): FunctionFragment;
@@ -113,6 +115,10 @@ export interface ERCFallbackInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "updateContractTreasury",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "withdraw",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -154,6 +160,10 @@ export interface ERCFallbackInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferToFallback",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateContractTreasury",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
@@ -294,6 +304,11 @@ export interface ERCFallback extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    updateContractTreasury(
+      _newContractTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
@@ -362,6 +377,11 @@ export interface ERCFallback extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  updateContractTreasury(
+    _newContractTreasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   withdraw(
     to: PromiseOrValue<string>,
     value: PromiseOrValue<BigNumberish>,
@@ -427,6 +447,11 @@ export interface ERCFallback extends BaseContract {
 
     transferToFallback(
       _to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    updateContractTreasury(
+      _newContractTreasury: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -532,6 +557,11 @@ export interface ERCFallback extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    updateContractTreasury(
+      _newContractTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
@@ -601,6 +631,11 @@ export interface ERCFallback extends BaseContract {
     transferToFallback(
       _to: PromiseOrValue<string>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateContractTreasury(
+      _newContractTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(

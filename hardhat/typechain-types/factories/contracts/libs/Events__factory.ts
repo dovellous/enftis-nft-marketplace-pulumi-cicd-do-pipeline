@@ -83,9 +83,9 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "string",
+        internalType: "bytes32",
         name: "newURI",
-        type: "string",
+        type: "bytes32",
       },
     ],
     name: "ContractURIChanged",
@@ -166,6 +166,25 @@ const _abi = [
       },
     ],
     name: "Received",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "_royaltyReceiver",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint96",
+        name: "_royaltyFraction",
+        type: "uint96",
+      },
+    ],
+    name: "RoyaltiesChanged",
     type: "event",
   },
   {
@@ -277,7 +296,7 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220455e3d55389ea9490118113696b6d3e68973a866d30880a587bd1deeb45705fd64736f6c63430008130033";
+  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212201e4513d60c2bf10bb622d57820f15fb4752c02d04ed5d10872b4b1f2e87ef86d64736f6c63430008130033";
 
 type EventsConstructorParams =
   | [signer?: Signer]

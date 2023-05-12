@@ -66,7 +66,7 @@ contract ERC721FactoryGetSet is
          * @param _isBurnable encoded parameters
          */
         (
-            string memory _contractURI,
+            bytes32 _contractURI,
             string memory _baseUri,
             uint256 _tokenMaximumSupply,
             uint96 _royaltyFraction,
@@ -80,7 +80,7 @@ contract ERC721FactoryGetSet is
         ) = abi.decode(
                 _data,
                 (
-                    string,
+                    bytes32,
                     string,
                     uint256,
                     uint96,
@@ -102,24 +102,25 @@ contract ERC721FactoryGetSet is
 
         // Revert if we do not have admins
         if (adminsLength == 0) {
-            revert Errors.NoAdmins({message: NO_ADMINS_SPECIFIED});
+            revert Errors.NoAdmins({message: Snippets.NO_ADMINS_SPECIFIED});
         }
 
         // Revert if we do not have minters
         if (mintersLength == 0) {
-            revert Errors.NoMinters({message: NO_MINTERS_SPECIFIED});
+            revert Errors.NoMinters({message: Snippets.NO_MINTERS_SPECIFIED});
         }
 
         // setup admin roles
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _setupRole(Snippets.ADMIN_ROLE, _msgSender());
         for (uint256 i; i < adminsLength; ++i) {
-            _setupRole(ADMIN_ROLE, adminsArray[i]);
+            _setupRole(Snippets.ADMIN_ROLE, adminsArray[i]);
         }
 
         // setup admin role
-        _setRoleAdmin(MINTER_ROLE, MINTER_ROLE);
+        _setupRole(Snippets.MINTER_ROLE, _msgSender());
         for (uint256 i; i < mintersLength; ++i) {
-            _setupRole(MINTER_ROLE, mintersArray[i]);
+            _setupRole(Snippets.MINTER_ROLE, mintersArray[i]);
         }
 
         // _tokenMaximumSupply of 0 implies no limit
@@ -167,10 +168,10 @@ contract ERC721FactoryGetSet is
 
     /**
      * @dev Retreives the contract url where the source code resides.
-     * @return url string.
+     * @return url bytes32.
      *
      */
-    function getContractURI() external view returns (string memory) {
+    function getContractURI() external view returns (bytes32) {
         return contractURI;
     }
 
@@ -329,7 +330,7 @@ contract ERC721FactoryGetSet is
      *
      */
     function getTokensMintedByMe() external view returns (Structs.NFTItem[] memory) {
-        return _search("minter", abi.encode(_msgSender()));
+        return _search(Snippets.MINTER, abi.encode(_msgSender()));
     }
 
     /**
@@ -341,7 +342,7 @@ contract ERC721FactoryGetSet is
     function getTokensMintedByAddress(
         address _account
     ) external view returns (Structs.NFTItem[] memory) {
-        return _search("minter", abi.encode(_account));
+        return _search(Snippets.MINTER, abi.encode(_account));
     }
 
     /**
@@ -376,7 +377,7 @@ contract ERC721FactoryGetSet is
      *
      */
     function getTokensCreatedByMe() external view returns (Structs.NFTItem[] memory) {
-        return _search("creator", abi.encode(_msgSender()));
+        return _search(Snippets.CREATOR, abi.encode(_msgSender()));
     }
 
     /**
@@ -388,7 +389,7 @@ contract ERC721FactoryGetSet is
     function getTokensCreatedByAddress(
         address _account
     ) external view returns (Structs.NFTItem[] memory) {
-        return _search("creator", abi.encode(_account));
+        return _search(Snippets.CREATOR, abi.encode(_account));
     }
 
     /**
@@ -423,7 +424,7 @@ contract ERC721FactoryGetSet is
      *
      */
     function getTokensOwnedByMe() external view returns (Structs.NFTItem[] memory) {
-        return _search("owner", abi.encode(_msgSender()));
+        return _search(Snippets.OWNER, abi.encode(_msgSender()));
     }
 
     /**
@@ -435,7 +436,7 @@ contract ERC721FactoryGetSet is
     function getTokensOwnedByAddress(
         address _account
     ) external view returns (Structs.NFTItem[] memory) {
-        return _search("owner", abi.encode(_account));
+        return _search(Snippets.OWNER, abi.encode(_account));
     }
 
     /**
@@ -520,7 +521,7 @@ contract ERC721FactoryGetSet is
      * @dev Retrieves a list of all available tokens.
      * @return @return Structs.NFTItem[] memory nftItems : an array of NFT items.
      */
-    function getNFTItems() external view returns (Structs.NFTItem[] memory) {
+    function getNFTItems() external view returns (Structs.NFT[] memory) {
         return _tokens();
     }
 
@@ -590,7 +591,7 @@ contract ERC721FactoryGetSet is
         Structs.NFTItem[] memory
     ) {
         // Encode the _account parameter and pass it to the search function
-        return _search("token_id", abi.encode(_uint256));
+        return _search(Snippets.TOKEN_ID, abi.encode(_uint256));
 
     }
 
@@ -606,7 +607,7 @@ contract ERC721FactoryGetSet is
         Structs.NFTItem[] memory
     ) {
         // Encode the _account parameter and pass it to the search function
-        return _search("token_uri", abi.encode(_query));
+        return _search(Snippets.TOKEN_URI, abi.encode(_query));
 
     }
 
@@ -618,7 +619,7 @@ contract ERC721FactoryGetSet is
      *
      */
     function search(
-        string calldata _itemKey, 
+        bytes32 _itemKey, 
         uint256 _uint256
     ) public view returns (
         Structs.NFTItem[] memory
@@ -636,7 +637,7 @@ contract ERC721FactoryGetSet is
      *
      */
     function search(
-        string calldata _itemKey, 
+        bytes32 _itemKey, 
         address _address
     ) external view returns (
         Structs.NFTItem[] memory
@@ -654,7 +655,7 @@ contract ERC721FactoryGetSet is
      *
      */
     function search(
-        string calldata _itemKey, 
+        bytes32 _itemKey, 
         string calldata _query
     ) external view returns (
         Structs.NFTItem[] memory
@@ -665,18 +666,6 @@ contract ERC721FactoryGetSet is
     }
 
     /******************************* Write Functions ******************************/
-
-    /**
-     * @dev Toggle pauses. See {Pausable}.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     * - Only contracts with pausable active can call this method
-     */
-    function togglePause() public onlyAdmin pausable {
-        paused() ? _unpause() : _pause();
-    }
 
     /**
      * @dev Transfers a token to an account address `_to`.
@@ -711,7 +700,7 @@ contract ERC721FactoryGetSet is
      * - Only Admin can call this method
      */
     function grantAdminRole(address _account) external onlyAdmin {
-        grantRole(ADMIN_ROLE, _account);
+        grantRole(Snippets.ADMIN_ROLE, _account);
     }
 
     /**
@@ -723,7 +712,7 @@ contract ERC721FactoryGetSet is
      * - Only Admin can call this method
      */
     function revokeAdminRole(address _account) external onlyAdmin {
-        revokeRole(ADMIN_ROLE, _account);
+        revokeRole(Snippets.ADMIN_ROLE, _account);
     }
 
     /**
@@ -735,7 +724,7 @@ contract ERC721FactoryGetSet is
      * - Only Admin can call this method
      */
     function renounceAdminRole(address _account) external onlyAdmin {
-        renounceRole(ADMIN_ROLE, _account);
+        renounceRole(Snippets.ADMIN_ROLE, _account);
     }
 
     /**
@@ -747,7 +736,7 @@ contract ERC721FactoryGetSet is
      * - Only Admin can call this method
      */
     function grantMinterRole(address _account) external onlyAdmin {
-        grantRole(MINTER_ROLE, _account);
+        grantRole(Snippets.MINTER_ROLE, _account);
     }
 
     /**
@@ -759,7 +748,7 @@ contract ERC721FactoryGetSet is
      * - Only Admin can call this method
      */
     function revokeMinterRole(address _account) external onlyAdmin {
-        revokeRole(MINTER_ROLE, _account);
+        revokeRole(Snippets.MINTER_ROLE, _account);
     }
 
     /**
@@ -771,7 +760,7 @@ contract ERC721FactoryGetSet is
      * - Only Admin can call this method
      */
     function renounceMinterRole(address _account) external onlyAdmin {
-        renounceRole(MINTER_ROLE, _account);
+        renounceRole(Snippets.MINTER_ROLE, _account);
     }
 
     /**
@@ -801,7 +790,7 @@ contract ERC721FactoryGetSet is
      * - Only Admin can call this method.
      */
     function setContractURI(
-        string calldata _newContractURI
+        bytes32 _newContractURI
     ) external onlyAdmin {
         /**
          * @title:
@@ -916,6 +905,7 @@ contract ERC721FactoryGetSet is
         }
         royaltyFraction = _royaltyFraction;
         _setDefaultRoyalty(_royaltyReceiver, _royaltyFraction);
+        emit Events.RoyaltiesChanged(_royaltyReceiver, _royaltyFraction);
     }
  
     /**

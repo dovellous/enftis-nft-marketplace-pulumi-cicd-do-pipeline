@@ -290,6 +290,19 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "_newContractTreasury",
+        type: "address",
+      },
+    ],
+    name: "updateContractTreasury",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "to",
         type: "address",
       },

@@ -32,6 +32,93 @@ library Snippets {
     using Events for *;
     using Enums for *;
 
+    /********************************** Constants *********************************/
+
+    /// Admin Role that can manage contract options
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant INSUFFICIENT_PERMISSIONS =
+        keccak256("INSUFFICIENT_PERMISSIONS");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant NOT_APPROVED_OWNER =
+        keccak256("NOT_APPROVED_OWNER");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant NO_ADMINS_SPECIFIED =
+        keccak256("NO_ADMINS_SPECIFIED");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant NO_MINTERS_SPECIFIED =
+        keccak256("NO_MINTERS_SPECIFIED");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant MAX_SUPPLY_REACHED =
+        keccak256("MAX_SUPPLY_REACHED");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant INDEX_OUT_OF_BOUNDS =
+        keccak256("INDEX_OUT_OF_BOUNDS");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant AMOUNT_BELOW_MINTING_FEE =
+        keccak256("AMOUNT_BELOW_MINTING_FEE");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant TOKEN_DOES_NOT_EXISTS =
+        keccak256("TOKEN_DOES_NOT_EXISTS");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant TOKEN_URI_EXISTS =
+        keccak256("TOKEN_URI_EXISTS");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant ZERO_ADDRESS =
+        keccak256("ZERO_ADDRESS");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant INVALID_CALLER =
+        keccak256("INVALID_CALLER");
+
+    /// Owner data key
+    bytes32 public constant OWNER = keccak256("OWNER");
+    /// Minter data key
+    bytes32 public constant MINTER = keccak256("MINTER");
+    /// Creator data key
+    bytes32 public constant CREATOR = keccak256("CREATOR");
+    /// Owner data key
+    bytes32 public constant CREATED = keccak256("CREATED");
+    /// Owner data key
+    bytes32 public constant CREATED_AT = keccak256("CREATED_AT");
+    /// Owner data key
+    bytes32 public constant CREATED_BEFORE = keccak256("CREATED_BEFORE");
+    /// Owner data key
+    bytes32 public constant CREATED_AFTER = keccak256("CREATED_AFTER");
+    /// Owner data key
+    bytes32 public constant UPDATED = keccak256("UPDATED");
+    /// Owner data key
+    bytes32 public constant UPDATED_AT = keccak256("UPDATED_AT");
+    /// Owner data key
+    bytes32 public constant UPDATED_BEFORE = keccak256("UPDATED_BEFORE");
+    /// Owner data key
+    bytes32 public constant UPDATED_AFTER = keccak256("UPDATED_AFTER");
+    /// Owner data key
+    bytes32 public constant TIMESTAMP = keccak256("TIMESTAMP");
+    /// Owner data key
+    bytes32 public constant UINT256 = keccak256("MINTER");
+    /// Owner data key
+    bytes32 public constant STRING = keccak256("STRING");
+    /// Owner data key
+    bytes32 public constant ADDRESS = keccak256("ADDRESS");
+    /// Owner data key
+    bytes32 public constant TOKEN_URI = keccak256("TOKEN_URI");
+    /// Owner data key
+    bytes32 public constant TOKEN_ID = keccak256("TOKEN_ID");
+
     function getIPFSPrefix() public pure returns (bytes32) {
         return keccak256("ipfs://");
     }
@@ -112,7 +199,7 @@ library Snippets {
      *
      */
     function searchHasMatch(
-        string memory _itemKey,
+        bytes32 _itemKey,
         bytes memory _data,
         Structs.NFTItem memory _nftItem,
         string memory _tokenURIString
@@ -138,7 +225,7 @@ library Snippets {
             }
 
             // If the key is minter, get the token minter address
-            if (compareStrings(_itemKey, "minter")) {
+            if (_itemKey == Snippets.MINTER) {
                 address _account = abi.decode(_data, (address));
 
                 if (_nftItem.minterAddress == _account) {
@@ -146,7 +233,7 @@ library Snippets {
                 }
             }
             // If the key is creator, get the token creator address
-            else if (compareStrings(_itemKey, "creator")) {
+            else if (_itemKey == Snippets.CREATOR) {
                 address _account = abi.decode(_data, (address));
 
                 if (_nftItem.creatorAddress[1] == _account) {
@@ -154,7 +241,7 @@ library Snippets {
                 }
             }
             // If the key is owner, get the token owner address
-            else if (compareStrings(_itemKey, "owner")) {
+            else if (_itemKey == Snippets.OWNER) {
                 address _account = abi.decode(_data, (address));
 
                 if (_nftItem.ownerAddress == _account) {
@@ -162,7 +249,7 @@ library Snippets {
                 }
             }
             // If the key is address, search any address property
-            else if (compareStrings(_itemKey, "address")) {
+            else if (_itemKey == Snippets.ADDRESS) {
                 // Decode an address from the abi encded data
                 address _account = abi.decode(_data, (address));
 
@@ -182,7 +269,7 @@ library Snippets {
                 }
             }
             // If the key is token_id, search the tokenId property
-            else if (compareStrings(_itemKey, "token_id")) {
+            else if (_itemKey == Snippets.TOKEN_ID) {
                 uint256 _id = abi.decode(_data, (uint256));
 
                 if (_nftItem.tokenId == _id) {
@@ -190,7 +277,7 @@ library Snippets {
                 }
             }
             // If the key is uint256, search the tokenId property
-            else if (compareStrings(_itemKey, "uint256")) {
+            else if (_itemKey == Snippets.UINT256) {
                 uint256 _uint256 = abi.decode(_data, (uint256));
 
                 if (_nftItem.tokenId == _uint256) {
@@ -198,7 +285,7 @@ library Snippets {
                 }
             }
             // If the key is token_uri, search the tokenURI property
-            else if (compareStrings(_itemKey, "token_uri")) {
+            else if (_itemKey == Snippets.TOKEN_URI) {
                 string memory _tokenURIStr = abi.decode(_data, (string));
 
                 if (compareStrings(_tokenURIString, _tokenURIStr)) {
@@ -206,7 +293,7 @@ library Snippets {
                 }
             }
             // If the key is bytes, search the tokenURI property
-            else if (compareStrings(_itemKey, "bytes")) {
+            else if (_itemKey == Snippets.OWNER) {
                 string memory _bytes = abi.decode(_data, (string));
 
                 if (compareStrings(_tokenURIString, _bytes)) {
@@ -214,7 +301,7 @@ library Snippets {
                 }
             }
             // If the key is string, search the tokenURI property
-            else if (compareStrings(_itemKey, "string")) {
+            else if (_itemKey == Snippets.STRING) {
                 string memory _string = abi.decode(_data, (string));
 
                 if (compareStrings(_tokenURIString, _string)) {
@@ -222,7 +309,7 @@ library Snippets {
                 }
             }
             // If the key is created_at, search using the timestamp
-            else if (compareStrings(_itemKey, "created_at")) {
+            else if (_itemKey == Snippets.CREATED_AT) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.createdAt == _timestamp) {
@@ -230,7 +317,7 @@ library Snippets {
                 }
             }
             // If the key is created_before, search using the timestamp
-            else if (compareStrings(_itemKey, "created_before")) {
+            else if (_itemKey == Snippets.CREATED_BEFORE) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.createdAt > _timestamp) {
@@ -238,7 +325,7 @@ library Snippets {
                 }
             }
             // If the key is created_after, search using the timestamp
-            else if (compareStrings(_itemKey, "created_after")) {
+            else if (_itemKey == Snippets.CREATED_AFTER) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.createdAt < _timestamp) {
@@ -246,7 +333,7 @@ library Snippets {
                 }
             }
             // If the key is updated_at, search using the timestamp
-            else if (compareStrings(_itemKey, "updated_at")) {
+            else if (_itemKey == Snippets.UPDATED_AT) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.updatedAt == _timestamp) {
@@ -254,7 +341,7 @@ library Snippets {
                 }
             }
             // If the key is updated_before, search using the timestamp
-            else if (compareStrings(_itemKey, "updated_before")) {
+            else if (_itemKey == Snippets.UPDATED_BEFORE) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.updatedAt > _timestamp) {
@@ -262,7 +349,7 @@ library Snippets {
                 }
             }
             // If the key is updated_after, search using the timestamp
-            else if (compareStrings(_itemKey, "updated_after")) {
+            else if (_itemKey == Snippets.UPDATED_AFTER) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.updatedAt < _timestamp) {
@@ -270,7 +357,7 @@ library Snippets {
                 }
             }
             // If the key is timestamp, search using the timestamp
-            else if (compareStrings(_itemKey, "timestamp")) {
+            else if (_itemKey == Snippets.TIMESTAMP) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.createdAt == _timestamp) {
@@ -305,52 +392,7 @@ library Snippets {
         return _match;
 
     }
-/*
-    // take bytes32 and return a string
-    function bytes32String(bytes32 _data) public pure returns (string memory) {
-        // create new bytes with a length of 32
-        // needs to be bytes type rather than bytes32 in order to be writeable
-        bytes memory _bytesContainer = new bytes(32);
-        // uint to keep track of actual character length of string
-        // bytes32 is always 32 characters long the string may be shorter
-        uint256 _charCount;
-        // loop through every element in bytes32
-        for (uint256 _bytesCounter; _bytesCounter < 32; ++_bytesCounter) {
-            /*
-            TLDR: takes a single character from bytes based on counter
-            convert bytes32 data to uint in order to increase the number enough to
-            shift bytes further left while pushing out leftmost bytes
-            then convert uint256 data back to bytes32
-            then convert to bytes1 where everything but the leftmost hex value (byte)
-            is cutoff leaving only the leftmost byte
-            * /
-            bytes1 _char = bytes1(
-                bytes32(uint256(_data) * 2 ** (8 * _bytesCounter))
-            );
-            // if the character is not empty
-            if (_char != 0) {
-                // add to bytes representing string
-                _bytesContainer[_charCount] = _char;
-                // increment count so we know length later
-                _charCount++;
-            }
-        }
 
-        // create dynamically sized bytes array to use for trimming
-        bytes memory _bytesContainerTrimmed = new bytes(_charCount);
-
-        // loop through for character length of string
-        for (uint256 _charCounter; _charCounter < _charCount; ++_charCounter) {
-            // add each character to trimmed bytes container, leaving out extra
-            _bytesContainerTrimmed[_charCounter] = _bytesContainer[
-                _charCounter
-            ];
-        }
-
-        // return correct length string with no padding
-        return string(_bytesContainerTrimmed);
-    }
-*/
     function bytes32String(bytes32 _bytes32) public pure returns (string memory) {
         uint8 i = 0;
         while(i < 32 && _bytes32[i] != 0) {

@@ -24,7 +24,7 @@ const IS_PAUSABLE: boolean | any = process.env.IS_PAUSABLE;
 const IS_BURNABLE: boolean | any = process.env.IS_BURNABLE;
 
 const abiKeys = [
-    "string",
+    "bytes32",
     "string",
     "uint256",
     "uint96",

@@ -27,12 +27,13 @@ export interface EventsInterface extends utils.Interface {
     "CollectionBannerMediaChanged(string)": EventFragment;
     "CollectionDescriptionChanged(string)": EventFragment;
     "CollectionDisplayPictureChanged(string)": EventFragment;
-    "ContractURIChanged(string)": EventFragment;
+    "ContractURIChanged(bytes32)": EventFragment;
     "Log(string,uint256)": EventFragment;
     "MarketplaceAddressChanged(address)": EventFragment;
     "MintingFeeChanged(uint256)": EventFragment;
     "OwnerChanged(address)": EventFragment;
     "Received(address,uint256)": EventFragment;
+    "RoyaltiesChanged(address,uint96)": EventFragment;
     "TokenBurned(address,address,uint256,uint256)": EventFragment;
     "TokenCategoryChanged(uint8)": EventFragment;
     "TokenMinted(address,address,uint256,uint256)": EventFragment;
@@ -58,6 +59,7 @@ export interface EventsInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "MintingFeeChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RoyaltiesChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenBurned"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenCategoryChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokenMinted"): EventFragment;
@@ -178,6 +180,18 @@ export type ReceivedEvent = TypedEvent<
 
 export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
 
+export interface RoyaltiesChangedEventObject {
+  _royaltyReceiver: string;
+  _royaltyFraction: BigNumber;
+}
+export type RoyaltiesChangedEvent = TypedEvent<
+  [string, BigNumber],
+  RoyaltiesChangedEventObject
+>;
+
+export type RoyaltiesChangedEventFilter =
+  TypedEventFilter<RoyaltiesChangedEvent>;
+
 export interface TokenBurnedEventObject {
   creator: string;
   burner: string;
@@ -292,7 +306,7 @@ export interface Events extends BaseContract {
       photoURL?: null
     ): CollectionDisplayPictureChangedEventFilter;
 
-    "ContractURIChanged(string)"(newURI?: null): ContractURIChangedEventFilter;
+    "ContractURIChanged(bytes32)"(newURI?: null): ContractURIChangedEventFilter;
     ContractURIChanged(newURI?: null): ContractURIChangedEventFilter;
 
     "Log(string,uint256)"(func?: null, gas?: null): LogEventFilter;
@@ -315,6 +329,15 @@ export interface Events extends BaseContract {
 
     "Received(address,uint256)"(arg0?: null, arg1?: null): ReceivedEventFilter;
     Received(arg0?: null, arg1?: null): ReceivedEventFilter;
+
+    "RoyaltiesChanged(address,uint96)"(
+      _royaltyReceiver?: null,
+      _royaltyFraction?: null
+    ): RoyaltiesChangedEventFilter;
+    RoyaltiesChanged(
+      _royaltyReceiver?: null,
+      _royaltyFraction?: null
+    ): RoyaltiesChangedEventFilter;
 
     "TokenBurned(address,address,uint256,uint256)"(
       creator?: null,

@@ -28,20 +28,7 @@ import type {
 
 export interface ERCModifiersInterface extends utils.Interface {
   functions: {
-    "ADMIN_ROLE()": FunctionFragment;
-    "AMOUNT_BELOW_MINTING_FEE()": FunctionFragment;
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "INDEX_OUT_OF_BOUNDS()": FunctionFragment;
-    "INSUFFICIENT_PERMISSIONS()": FunctionFragment;
-    "INVALID_CALLER()": FunctionFragment;
-    "MAX_SUPPLY_REACHED()": FunctionFragment;
-    "MINTER_ROLE()": FunctionFragment;
-    "NOT_APPROVED_OWNER()": FunctionFragment;
-    "NO_ADMINS_SPECIFIED()": FunctionFragment;
-    "NO_MINTERS_SPECIFIED()": FunctionFragment;
-    "TOKEN_DOES_NOT_EXISTS()": FunctionFragment;
-    "TOKEN_URI_EXISTS()": FunctionFragment;
-    "ZERO_ADDRESS()": FunctionFragment;
     "contractOptionsStruct()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
@@ -53,20 +40,7 @@ export interface ERCModifiersInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "ADMIN_ROLE"
-      | "AMOUNT_BELOW_MINTING_FEE"
       | "DEFAULT_ADMIN_ROLE"
-      | "INDEX_OUT_OF_BOUNDS"
-      | "INSUFFICIENT_PERMISSIONS"
-      | "INVALID_CALLER"
-      | "MAX_SUPPLY_REACHED"
-      | "MINTER_ROLE"
-      | "NOT_APPROVED_OWNER"
-      | "NO_ADMINS_SPECIFIED"
-      | "NO_MINTERS_SPECIFIED"
-      | "TOKEN_DOES_NOT_EXISTS"
-      | "TOKEN_URI_EXISTS"
-      | "ZERO_ADDRESS"
       | "contractOptionsStruct"
       | "getRoleAdmin"
       | "grantRole"
@@ -77,59 +51,7 @@ export interface ERCModifiersInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "ADMIN_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "AMOUNT_BELOW_MINTING_FEE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "INDEX_OUT_OF_BOUNDS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "INSUFFICIENT_PERMISSIONS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "INVALID_CALLER",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "MAX_SUPPLY_REACHED",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "MINTER_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "NOT_APPROVED_OWNER",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "NO_ADMINS_SPECIFIED",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "NO_MINTERS_SPECIFIED",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "TOKEN_DOES_NOT_EXISTS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "TOKEN_URI_EXISTS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "ZERO_ADDRESS",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -161,57 +83,8 @@ export interface ERCModifiersInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>]
   ): string;
 
-  decodeFunctionResult(functionFragment: "ADMIN_ROLE", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "AMOUNT_BELOW_MINTING_FEE",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "INDEX_OUT_OF_BOUNDS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "INSUFFICIENT_PERMISSIONS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "INVALID_CALLER",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "MAX_SUPPLY_REACHED",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "MINTER_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "NOT_APPROVED_OWNER",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "NO_ADMINS_SPECIFIED",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "NO_MINTERS_SPECIFIED",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "TOKEN_DOES_NOT_EXISTS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "TOKEN_URI_EXISTS",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "ZERO_ADDRESS",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -309,33 +182,7 @@ export interface ERCModifiers extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<[string]>;
-
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<[string]>;
-
-    INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<[string]>;
-
-    INVALID_CALLER(overrides?: CallOverrides): Promise<[string]>;
-
-    MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<[string]>;
-
-    MINTER_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<[string]>;
-
-    NO_ADMINS_SPECIFIED(overrides?: CallOverrides): Promise<[string]>;
-
-    NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<[string]>;
-
-    TOKEN_DOES_NOT_EXISTS(overrides?: CallOverrides): Promise<[string]>;
-
-    TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<[string]>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
 
     contractOptionsStruct(
       overrides?: CallOverrides
@@ -376,33 +223,7 @@ export interface ERCModifiers extends BaseContract {
     ): Promise<[boolean]>;
   };
 
-  ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
-
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
-
-  INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<string>;
-
-  INVALID_CALLER(overrides?: CallOverrides): Promise<string>;
-
-  MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<string>;
-
-  MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<string>;
-
-  NO_ADMINS_SPECIFIED(overrides?: CallOverrides): Promise<string>;
-
-  NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<string>;
-
-  TOKEN_DOES_NOT_EXISTS(overrides?: CallOverrides): Promise<string>;
-
-  TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<string>;
-
-  ZERO_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
   contractOptionsStruct(
     overrides?: CallOverrides
@@ -443,33 +264,7 @@ export interface ERCModifiers extends BaseContract {
   ): Promise<boolean>;
 
   callStatic: {
-    ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
-
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<string>;
-
-    INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<string>;
-
-    INVALID_CALLER(overrides?: CallOverrides): Promise<string>;
-
-    MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<string>;
-
-    MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<string>;
-
-    NO_ADMINS_SPECIFIED(overrides?: CallOverrides): Promise<string>;
-
-    NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<string>;
-
-    TOKEN_DOES_NOT_EXISTS(overrides?: CallOverrides): Promise<string>;
-
-    TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<string>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
     contractOptionsStruct(
       overrides?: CallOverrides
@@ -546,33 +341,7 @@ export interface ERCModifiers extends BaseContract {
   };
 
   estimateGas: {
-    ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    INDEX_OUT_OF_BOUNDS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    INVALID_CALLER(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MINTER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<BigNumber>;
-
-    NO_ADMINS_SPECIFIED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    TOKEN_DOES_NOT_EXISTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractOptionsStruct(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -612,51 +381,9 @@ export interface ERCModifiers extends BaseContract {
   };
 
   populateTransaction: {
-    ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    AMOUNT_BELOW_MINTING_FEE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     DEFAULT_ADMIN_ROLE(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    INDEX_OUT_OF_BOUNDS(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    INSUFFICIENT_PERMISSIONS(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    INVALID_CALLER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_SUPPLY_REACHED(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    MINTER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    NOT_APPROVED_OWNER(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    NO_ADMINS_SPECIFIED(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    NO_MINTERS_SPECIFIED(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    TOKEN_DOES_NOT_EXISTS(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     contractOptionsStruct(
       overrides?: CallOverrides

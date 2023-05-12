@@ -54,4 +54,10 @@ library Structs {
         uint updatedAt;
     }
 
+    // NFT Object
+    struct NFT {
+        NFTItem nftItem;
+        string tokenURI;
+    }
+
 }

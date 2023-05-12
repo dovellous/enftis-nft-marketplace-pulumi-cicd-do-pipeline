@@ -66,7 +66,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
             revert Errors.MaximumTokenSupplyReached({
                 maxValue: tokenMaximumSupply,
                 value: newTokenId,
-                message: MAX_SUPPLY_REACHED
+                message: Snippets.MAX_SUPPLY_REACHED
             });
         }
 
@@ -75,7 +75,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
             revert Errors.PriceBelowMintingFee({
                 mintingFee: mintingFee,
                 value: msg.value,
-                message: AMOUNT_BELOW_MINTING_FEE
+                message: Snippets.AMOUNT_BELOW_MINTING_FEE
             });
         }
 
@@ -84,7 +84,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
             revert Errors.TokenURIAlreadyExists({
                 tokenURI: _tokenURI,
                 tokenURIExists: usedTokenURIs[_tokenURI],
-                message: TOKEN_URI_EXISTS
+                message: Snippets.TOKEN_URI_EXISTS
             });
         }
 

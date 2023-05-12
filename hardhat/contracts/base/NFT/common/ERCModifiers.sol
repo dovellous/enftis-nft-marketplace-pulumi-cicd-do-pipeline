@@ -8,9 +8,9 @@ pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "./ERCConstants.sol";
+import "./ERCLibrary.sol";
 
-abstract contract ERCModifiers is AccessControl, ERCConstants {
+abstract contract ERCModifiers is AccessControl, ERCLibrary {
     
     ContractOptions public contractOptionsStruct;
 
@@ -26,13 +26,13 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
      */
     function _onlyAdmin() private view {
         if (
-            !hasRole(ADMIN_ROLE, _msgSender()) &&
+            !hasRole(Snippets.ADMIN_ROLE, _msgSender()) &&
             !hasRole(DEFAULT_ADMIN_ROLE, _msgSender())
         ) {
             revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
-                requiredRole: ADMIN_ROLE,
-                message: INSUFFICIENT_PERMISSIONS
+                requiredRole: Snippets.ADMIN_ROLE,
+                message: Snippets.INSUFFICIENT_PERMISSIONS
             });
         }
     }
@@ -50,7 +50,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
             revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
                 requiredRole: DEFAULT_ADMIN_ROLE,
-                message: INSUFFICIENT_PERMISSIONS
+                message: Snippets.INSUFFICIENT_PERMISSIONS
             });
         }
     }
@@ -64,11 +64,11 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
      * @dev : reverts InsufficientPermissions error if caller does not have minter role.
      */
     function _onlyMinter() private view {
-        if (!hasRole(MINTER_ROLE, _msgSender())) {
+        if (!hasRole(Snippets.MINTER_ROLE, _msgSender())) {
             revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
-                requiredRole: MINTER_ROLE,
-                message: INSUFFICIENT_PERMISSIONS
+                requiredRole: Snippets.MINTER_ROLE,
+                message: Snippets.INSUFFICIENT_PERMISSIONS
             });
         }
     }
@@ -127,7 +127,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
      */
     function _validAccount(address _account) private pure {
         if (address(0) == _account) {
-            revert Errors.ZeroAddress({account: _account, message: ZERO_ADDRESS});
+            revert Errors.ZeroAddress({account: _account, message: Snippets.ZERO_ADDRESS});
         }
     }
 
@@ -148,13 +148,13 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
         if (size > 0) {
             revert Errors.UnAuthorizedCaller({
                 account: _account,
-                message: INVALID_CALLER
+                message: Snippets.INVALID_CALLER
             });
         }
         if (_account.code.length > 0) {
             revert Errors.UnAuthorizedCaller({
                 account: _account,
-                message: INVALID_CALLER
+                message: Snippets.INVALID_CALLER
             });
         }
     }
@@ -177,7 +177,7 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
             revert Errors.BelowMinValue({
                 minValue: 1,
                 value: _tokenId,
-                message: INDEX_OUT_OF_BOUNDS
+                message: Snippets.INDEX_OUT_OF_BOUNDS
             });
         }
 
@@ -185,14 +185,14 @@ abstract contract ERCModifiers is AccessControl, ERCConstants {
             revert Errors.ExceededMaxValue({
                 maxValue: _tokenMaximumSupply,
                 value: _tokenId,
-                message: INDEX_OUT_OF_BOUNDS
+                message: Snippets.INDEX_OUT_OF_BOUNDS
             });
         }
 
         if (!_tokenExists) {
             revert Errors.TokenDoesNotExists({
                 tokenId: _tokenId,
-                message: TOKEN_DOES_NOT_EXISTS
+                message: Snippets.TOKEN_DOES_NOT_EXISTS
             });
         }
 

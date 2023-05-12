@@ -35,9 +35,9 @@ describe("ERC721Factory", async function () {
 
         const [_deployer, _account1, _account2] = await ethers.getSigners();
 
-        console.log("      🟩Deploying contracts with the account:", _deployer.address);
+        console.log("      💰Deploying contracts with the account:", _deployer.address);
 
-        console.log("      🟩Account balance:", (await _deployer.getBalance()).toString());
+        console.log("      💴Account balance:", (await _deployer.getBalance()).toString());
 
         const CONTRACT_FILE: any = process.env.CONTRACT_FILE;
 
@@ -56,12 +56,17 @@ describe("ERC721Factory", async function () {
             }
         );
 
-        /*
+        
         console.warn(
             "Deploy with the following arguments",
             CONTRACT_PARAMS.ABI_VALUES
         );
-        */
+        
+        console.warn(
+            "Deploy with the following arguments",
+            CONTRACT_PARAMS.ABI_ENCODED
+        );
+        
 
         const smartContract = await SmartContract.deploy(
             CONTRACT_PARAMS.CONTRACT_NAME,

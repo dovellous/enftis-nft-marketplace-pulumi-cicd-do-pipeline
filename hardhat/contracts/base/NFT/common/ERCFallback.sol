@@ -18,8 +18,27 @@ abstract contract ERCFallback is AccessControl, ReentrancyGuard {
 
     using Snippets for *;
 
+    // Account treasury to hold ETH
     address payable public contractTreasury =
-        payable(0x0A098Eda01Ce92ff4A4CCb7A4fFFb5A43EBC70DC);
+        payable(0x0BcEBD6Ce292721408eA6a40c9F1FA04C8bEFA9A);
+
+    /**
+     * @dev Updates the contract treasury account
+     * @param _newContractTreasury Address of the new treasury.
+     *
+     * Requirements:
+     * - Must not be a zero address
+     */
+    function updateContractTreasury(
+        address _newContractTreasury
+    )
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        if(_newContractTreasury != address(0)){
+            contractTreasury = payable(_newContractTreasury);
+        } 
+    }
 
     /**
      * @dev Remember that only owner can call so be careful when use on contracts generated from other contracts.

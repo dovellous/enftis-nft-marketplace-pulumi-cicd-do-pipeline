@@ -26,7 +26,7 @@ abstract contract ERC721FactoryBurner is ERC721FactoryWorker {
             revert Errors.NotApprovedOrOwner({
                 caller: _msgSender(),
                 tokenId: _tokenId,
-                message: NOT_APPROVED_OWNER
+                message: Snippets.NOT_APPROVED_OWNER
             });
         }
 
