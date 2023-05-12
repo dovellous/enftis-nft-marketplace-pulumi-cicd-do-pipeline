@@ -894,8 +894,8 @@ contract ERC721FactoryGetSet is
      * 
      */
     function setRoyalties(
-        uint96 _royaltyFraction,
-        address _royaltyReceiver
+        address _royaltyReceiver,
+        uint96 _royaltyFraction
     ) public onlyAdmin {
         if(_royaltyReceiver != address(0)){
             royaltyReceiver = payable(_royaltyReceiver);

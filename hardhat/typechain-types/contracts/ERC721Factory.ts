@@ -194,7 +194,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "setMarketplaceAddress(address)": FunctionFragment;
     "setMintingFee(uint256)": FunctionFragment;
     "setNewOwner(address)": FunctionFragment;
-    "setRoyalties(uint96,address)": FunctionFragment;
+    "setRoyalties(address,uint96)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "togglePause()": FunctionFragment;
@@ -671,7 +671,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setRoyalties",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -1594,8 +1594,8 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setRoyalties(
-      _royaltyFraction: PromiseOrValue<BigNumberish>,
       _royaltyReceiver: PromiseOrValue<string>,
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -2045,8 +2045,8 @@ export interface ERC721Factory extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setRoyalties(
-    _royaltyFraction: PromiseOrValue<BigNumberish>,
     _royaltyReceiver: PromiseOrValue<string>,
+    _royaltyFraction: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2496,8 +2496,8 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<void>;
 
     setRoyalties(
-      _royaltyFraction: PromiseOrValue<BigNumberish>,
       _royaltyReceiver: PromiseOrValue<string>,
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -3010,8 +3010,8 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<BigNumber>;
 
     setRoyalties(
-      _royaltyFraction: PromiseOrValue<BigNumberish>,
       _royaltyReceiver: PromiseOrValue<string>,
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3473,8 +3473,8 @@ export interface ERC721Factory extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setRoyalties(
-      _royaltyFraction: PromiseOrValue<BigNumberish>,
       _royaltyReceiver: PromiseOrValue<string>,
+      _royaltyFraction: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

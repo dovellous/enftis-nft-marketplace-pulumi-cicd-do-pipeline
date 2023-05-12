@@ -84,6 +84,7 @@ export interface SnippetsInterface extends utils.Interface {
     "compareStrings(string,string)": FunctionFragment;
     "getIPFSPrefix()": FunctionFragment;
     "searchHasMatch(bytes32,bytes,(address,address[2],address,uint256,uint256,uint256),string)": FunctionFragment;
+    "stringBytes32(string)": FunctionFragment;
     "stringContains(string,string)": FunctionFragment;
     "subString(string,uint256,uint256)": FunctionFragment;
     "trim(string,uint256,uint256)": FunctionFragment;
@@ -125,6 +126,7 @@ export interface SnippetsInterface extends utils.Interface {
       | "compareStrings"
       | "getIPFSPrefix"
       | "searchHasMatch"
+      | "stringBytes32"
       | "stringContains"
       | "subString"
       | "trim"
@@ -239,6 +241,10 @@ export interface SnippetsInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "stringBytes32",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "stringContains",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
@@ -351,6 +357,10 @@ export interface SnippetsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "searchHasMatch",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "stringBytes32",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -471,6 +481,11 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    stringBytes32(
+      source: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { result: string }>;
+
     stringContains(
       what: PromiseOrValue<string>,
       where: PromiseOrValue<string>,
@@ -572,6 +587,11 @@ export interface Snippets extends BaseContract {
     _tokenURIString: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  stringBytes32(
+    source: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   stringContains(
     what: PromiseOrValue<string>,
@@ -675,6 +695,11 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    stringBytes32(
+      source: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     stringContains(
       what: PromiseOrValue<string>,
       where: PromiseOrValue<string>,
@@ -777,6 +802,11 @@ export interface Snippets extends BaseContract {
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
       _tokenURIString: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    stringBytes32(
+      source: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -896,6 +926,11 @@ export interface Snippets extends BaseContract {
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
       _tokenURIString: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    stringBytes32(
+      source: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
