@@ -21,16 +21,23 @@ networks    :   ethereum, polygon, binance
 
 */
 
+import "@openzeppelin/contracts/utils/Strings.sol";
+
+import "hardhat/console.sol";
+
 import "./Structs.sol";
 import "./Errors.sol";
-import "./Events.sol";
+import "./Enums.sol";
 
 library Snippets {
 
+    using Strings for *;
+
     using Structs for *;
     using Errors for *;
-    using Events for *;
     using Enums for *;
+
+    using console for *;
 
     /********************************** Constants *********************************/
 
@@ -84,6 +91,18 @@ library Snippets {
     bytes32 public constant INVALID_CALLER =
         keccak256("INVALID_CALLER");
 
+    /// The amount cannot be zero
+    bytes32 public constant INVALID_AMOUNT =
+        keccak256("INVALID_AMOUNT");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant ROYALTIES_DISABLED =
+        keccak256("ROYALTIES_DISABLED");
+
+    /// Minter Role that can start sales and mint nfts
+    bytes32 public constant NOT_APPROVED_OR_OWNER =
+        keccak256("NOT_APPROVED_OR_OWNER");
+
     /// Owner data key
     bytes32 public constant OWNER = keccak256("OWNER");
     /// Minter data key
@@ -118,9 +137,47 @@ library Snippets {
     bytes32 public constant TOKEN_URI = keccak256("TOKEN_URI");
     /// Owner data key
     bytes32 public constant TOKEN_ID = keccak256("TOKEN_ID");
+    bytes32 public constant IPFS_PREFIX = keccak256("ipfs://");
+    bytes32 public constant BASE_EXTENSION = keccak256(".json");
 
-    function getIPFSPrefix() public pure returns (bytes32) {
-        return keccak256("ipfs://");
+    function getBaseURI(string memory baseURI) public pure returns (string memory) {
+        
+        // If there is no baseURI URI, default to "ipfs://" or return the token URI.
+        if (bytes(baseURI).length == 0) {
+            baseURI = bytes32String(IPFS_PREFIX);
+        }
+
+        return baseURI;
+
+    }
+
+    function getTokenURIFromURI(
+        string memory baseURI, 
+        string memory _tokenURI
+    ) public pure returns (
+        string memory
+    ) {
+        return string(
+                abi.encodePacked(
+                    baseURI, 
+                    _tokenURI
+                )
+            );
+    }
+
+    function getTokenURIFromID(
+        string memory baseURI, 
+        uint256 _tokenId
+    ) public pure returns (
+        string memory
+    ) {
+        return string(
+                abi.encodePacked(
+                    baseURI, 
+                    Strings.toString(_tokenId), 
+                    bytes32String(BASE_EXTENSION)
+                )
+            );
     }
 
     /**
@@ -138,10 +195,16 @@ library Snippets {
         return str[start:end];
     }
 
-    function subString(string memory str, uint startIndex, uint endIndex) public pure returns (string memory) {
+    function subString(
+        string memory str, 
+        uint startIndex, 
+        uint endIndex
+    ) public pure returns (
+        string memory
+    ) {
         bytes memory strBytes = bytes(str);
         bytes memory result = new bytes(endIndex-startIndex);
-        for(uint i = startIndex; i < endIndex; i++) {
+        for(uint i = startIndex; i < endIndex; ++i) {
             result[i-startIndex] = strBytes[i];
         }
         return string(result);
@@ -155,15 +218,15 @@ library Snippets {
         bytes memory string_rep = bytes(str);
 
         while (i < string_rep.length) {
-            if (string_rep[i] >> 7 == 0) i += 1;
+            if (string_rep[i] >> 7 == 0) ++i;
             else if (string_rep[i] >> 5 == bytes1(uint8(0x6))) i += 2;
             else if (string_rep[i] >> 4 == bytes1(uint8(0xE))) i += 3;
             else if (string_rep[i] >> 3 == bytes1(uint8(0x1E)))
                 i += 4;
                 //For safety
-            else i += 1;
+            else ++i;
 
-            length++;
+            ++length;
         }
     }
 
@@ -175,9 +238,9 @@ library Snippets {
         require(whereBytes.length >= whatBytes.length);
 
         bool found = false;
-        for (uint i = 0; i <= whereBytes.length - whatBytes.length; i++) {
+        for (uint i = 0; i <= whereBytes.length - whatBytes.length; ++i) {
             bool flag = true;
-            for (uint j = 0; j < whatBytes.length; j++)
+            for (uint j = 0; j < whatBytes.length; ++j)
                 if (whereBytes [i + j] != whatBytes [j]) {
                     flag = false;
                     break;
@@ -188,6 +251,82 @@ library Snippets {
             }
         }
         return found;
+    }
+
+    struct slice {
+        uint _len;
+        uint _ptr;
+    }
+
+    /*
+     * @dev Returns a slice containing the entire string.
+     * @param self The string to make a slice from.
+     * @return A newly allocated slice containing the entire string.
+     */
+    function toSlice(string memory self) internal pure returns (slice memory) {
+        uint ptr;
+        assembly {
+            ptr := add(self, 0x20)
+        }
+        return slice(bytes(self).length, ptr);
+    }
+
+    // Returns the memory address of the first byte after the last occurrence of
+    // `needle` in `self`, or the address of `self` if not found.
+    function rfindPtr(uint selflen, uint selfptr, uint needlelen, uint needleptr) private pure returns (uint) {
+        uint ptr;
+
+        if (needlelen <= selflen) {
+            if (needlelen <= 32) {
+                bytes32 mask;
+                if (needlelen > 0) {
+                    mask = bytes32(~(2 ** (8 * (32 - needlelen)) - 1));
+                }
+
+                bytes32 needledata;
+                assembly { needledata := and(mload(needleptr), mask) }
+
+                ptr = selfptr + selflen - needlelen;
+                bytes32 ptrdata;
+                assembly { ptrdata := and(mload(ptr), mask) }
+
+                while (ptrdata != needledata) {
+                    if (ptr <= selfptr)
+                        return selfptr;
+                    ptr--;
+                    assembly { ptrdata := and(mload(ptr), mask) }
+                }
+                return ptr + needlelen;
+            } else {
+                // For long needles, use hashing
+                bytes32 hash;
+                assembly { hash := keccak256(needleptr, needlelen) }
+                ptr = selfptr + (selflen - needlelen);
+                while (ptr >= selfptr) {
+                    bytes32 testHash;
+                    assembly { testHash := keccak256(ptr, needlelen) }
+                    if (hash == testHash)
+                        return ptr + needlelen;
+                    ptr -= 1;
+                }
+            }
+        }
+        return selfptr;
+    }
+
+    /*
+     * @dev Returns True if `self` contains `needle`.
+     * @param self The slice to search.
+     * @param needle The text to search for in `self`.
+     * @return True if `needle` is found in `self`, false otherwise.
+     */
+    function searchString(string memory _self, string memory _needle) public pure returns (bool) {
+
+        slice memory self = toSlice(_self);
+
+        slice memory needle = toSlice(_needle);
+
+        return rfindPtr(self._len, self._ptr, needle._len, needle._ptr) != self._ptr;
     }
 
     /**
@@ -203,9 +342,11 @@ library Snippets {
         bytes memory _data,
         Structs.NFTItem memory _nftItem,
         string memory _tokenURIString
-    ) public pure returns (bool) {
+    ) public view returns (bool) {
         
         bool _match;
+
+        console.log("\n\nSEARCHING...");
 
         if (_nftItem.tokenId != 0) {
 
@@ -215,7 +356,7 @@ library Snippets {
             }
 
             // If the creator address is a zero address, thats an invalid token, continue ...
-            if (_nftItem.creatorAddress[1] == address(0)) {
+            if (_nftItem.creatorAddress[0] == address(0)) {
                 return _match;
             }
 
@@ -236,9 +377,14 @@ library Snippets {
             else if (_itemKey == Snippets.CREATOR) {
                 address _account = abi.decode(_data, (address));
 
+                if (_nftItem.creatorAddress[0] == _account) {
+                    _match = true;
+                }
+                
                 if (_nftItem.creatorAddress[1] == _account) {
                     _match = true;
                 }
+                
             }
             // If the key is owner, get the token owner address
             else if (_itemKey == Snippets.OWNER) {
@@ -259,7 +405,7 @@ library Snippets {
                 }
 
                 // Check if the address is the same as the creator
-                if (_nftItem.creatorAddress[1] == _account) {
+                if (_nftItem.creatorAddress[0] == _account) {
                     _match = true;
                 }
 
@@ -304,7 +450,15 @@ library Snippets {
             else if (_itemKey == Snippets.STRING) {
                 string memory _string = abi.decode(_data, (string));
 
-                if (compareStrings(_tokenURIString, _string)) {
+                if( searchString(_tokenURIString, _string) ){
+                    _match = true;
+                }
+            }
+            // If the key is created_before, search using the timestamp
+            else if (_itemKey == Snippets.CREATED_BEFORE) {
+                uint256 _timestamp = abi.decode(_data, (uint256));
+                
+                if (_nftItem.createdAt < _timestamp) {
                     _match = true;
                 }
             }
@@ -316,19 +470,19 @@ library Snippets {
                     _match = true;
                 }
             }
-            // If the key is created_before, search using the timestamp
-            else if (_itemKey == Snippets.CREATED_BEFORE) {
+            // If the key is created_after, search using the timestamp
+            else if (_itemKey == Snippets.CREATED_AFTER) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
                 if (_nftItem.createdAt > _timestamp) {
                     _match = true;
                 }
             }
-            // If the key is created_after, search using the timestamp
-            else if (_itemKey == Snippets.CREATED_AFTER) {
+            // If the key is updated_before, search using the timestamp
+            else if (_itemKey == Snippets.UPDATED_BEFORE) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
-                if (_nftItem.createdAt < _timestamp) {
+                if (_nftItem.updatedAt < _timestamp) {
                     _match = true;
                 }
             }
@@ -340,19 +494,11 @@ library Snippets {
                     _match = true;
                 }
             }
-            // If the key is updated_before, search using the timestamp
-            else if (_itemKey == Snippets.UPDATED_BEFORE) {
-                uint256 _timestamp = abi.decode(_data, (uint256));
-
-                if (_nftItem.updatedAt > _timestamp) {
-                    _match = true;
-                }
-            }
             // If the key is updated_after, search using the timestamp
             else if (_itemKey == Snippets.UPDATED_AFTER) {
                 uint256 _timestamp = abi.decode(_data, (uint256));
 
-                if (_nftItem.updatedAt < _timestamp) {
+                if (_nftItem.updatedAt > _timestamp) {
                     _match = true;
                 }
             }
@@ -368,24 +514,9 @@ library Snippets {
                     _match = true;
                 }
             }
-            // The user has specified a custom key
+            // Can't do anything beyond this point
             else {
-                // Decode the custom key and the query from the ecoded param
-                (string memory _key, string memory _query) = abi.decode(
-                    _data,
-                    (string, string)
-                );
-
-                // search for a pattern in the token URI
-                if (stringLength(_key) == 0) { 
-                    
-                    if (
-                        stringContains(_query, _tokenURIString)
-                    ) {
-                        _match = true;
-                    }
-                     
-                }
+                // Do nothing
             }
         }
 
@@ -396,10 +527,10 @@ library Snippets {
     function bytes32String(bytes32 _bytes32) public pure returns (string memory) {
         uint8 i = 0;
         while(i < 32 && _bytes32[i] != 0) {
-            i++;
+            ++i;
         }
         bytes memory bytesArray = new bytes(i);
-        for (i = 0; i < 32 && _bytes32[i] != 0; i++) {
+        for (i = 0; i < 32 && _bytes32[i] != 0; ++i) {
             bytesArray[i] = _bytes32[i];
         }
         return string(bytesArray);

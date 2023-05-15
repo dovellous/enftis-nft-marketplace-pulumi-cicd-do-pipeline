@@ -41,12 +41,10 @@ library Errors {
     );
 
     /**
-     * Caller is not approved or owner of the token.
+     * @dev Caller is not approved or owner of the token.
      *
-     * @param caller : caller address.
-     * @param tokenId : entered tokenId.
      */
-    error NotApprovedOrOwner(address caller, uint256 tokenId, bytes32 message);
+    error NotApprovedOrOwner();
 
     /**
      * This contract was not initialized with that option
@@ -166,7 +164,7 @@ library Errors {
      * - Value must be more than zero.
      */
 
-    error InvalidAmount();
+    error InvalidAmount(bytes32 message);
 
     /**
      * @dev The caller must not be a contract address.
@@ -191,5 +189,18 @@ library Errors {
      */
 
     error ZeroAddress(address account, bytes32 message);
+
+    /**
+     * Royalties are disabled for the time being.
+     *
+     * @param timestamp the timestamp afterwhich royalties can be set again.
+     * @param message : error message.
+     *
+     * Requirements:
+     *
+     * - account address must not be a zero address(0).
+     */
+
+    error RoyaltiesDisabled(uint256 timestamp, bytes32 message);
 
 }

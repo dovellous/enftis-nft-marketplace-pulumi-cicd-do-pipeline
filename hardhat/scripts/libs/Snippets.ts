@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 const path = require("path");
 
 const Snippets = {
-
+    DEFAULT_ROLE: "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
     ADMIN_ROLE : "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
     MINTER_ROLE : "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
     INSUFFICIENT_PERMISSIONS : "0xdb8ecf91f7fb45f19c7705fc675a1a92284efc9e6304c32b842093cc66a9dc09",
@@ -16,6 +16,9 @@ const Snippets = {
     TOKEN_URI_EXISTS : "0x7224d0b24cbe51460a003681be787a3532eb2369489536477f0d269f69978a94",
     ZERO_ADDRESS  : "0x71869b3729b99fadce3ee30cb1aa2a0d639e6a2d24158c1ae1ae0059e81b72af",
     INVALID_CALLER : "0x4f1f4510b69fad6299ff39d382e74059b0940bed8ddd501bdf0a8ef73b144adc",
+    INVALID_AMOUNT : "0xeb6dbbf3194e9f4dd39c8dabe51ddb59ca6ad00c50b1bc74675ce4b263687722",
+    ROYALTIES_DISABLED : "0xf9ed19e2bd8e74aca1a3f3ee0c07c1469744d94aee20b4891331b7d4dd77f22c",
+    NOT_APPROVED_OR_OWNER: "NOT_APPROVED_OR_OWNER",
     OWNER : "0x6270edb7c868f86fda4adedba75108201087268ea345934db8bad688e1feb91b",
     MINTER : "0xf0887ba65ee2024ea881d91b74c2450ef19e1557f03bed3ea9f16b037cbe2dc9",
     CREATOR : "0x3c2519c4487d47714872f92cf90a50c25f5deaec2789dc2a497b1272df611db6",
@@ -39,6 +42,16 @@ const Snippets = {
     },
     weiToEthers: (value: any) => {
       return ethers.utils.formatEther(value);
+    },
+    
+    fromBytes32ToString: (_bytes32: any) => {
+      return ethers.utils.parseBytes32String(_bytes32);
+    },
+    fromStringToBytes32: (_string: any) => {
+      return ethers.utils.formatBytes32String(_string);
+    },
+    parseNFTItem: (_nftTurple: any) => {
+      return _nftTurple.nftItem;
     },
     saveFrontendFiles: (token: any, tokenName: string) => {
         const fs = require("fs");

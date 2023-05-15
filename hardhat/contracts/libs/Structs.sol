@@ -33,6 +33,7 @@ library Structs {
         address royaltyReceiver;
         uint256 royaltyFraction;
         uint256 royaltyAmount;
+        uint256 tokenPrice;
         uint256 tokenId;
     }
 

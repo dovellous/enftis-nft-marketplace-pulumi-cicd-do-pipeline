@@ -20,16 +20,10 @@ abstract contract ERC721FactoryBurner is ERC721FactoryWorker {
      *
      * - The caller must own `tokenId` or be an approved operator.
      */
-    function burnToken(uint256 _tokenId) public {
+    function burnToken(uint256 _tokenId) public whenIsApprovedOrOwner(
+            _isApprovedOrOwner(_msgSender(), _tokenId)
+        ) {
         
-        if (!_isApprovedOrOwner(_msgSender(), _tokenId)) {
-            revert Errors.NotApprovedOrOwner({
-                caller: _msgSender(),
-                tokenId: _tokenId,
-                message: Snippets.NOT_APPROVED_OWNER
-            });
-        }
-
         _resetTokenRoyalty(_tokenId);
 
         _tokenCurrentSupply.decrement();

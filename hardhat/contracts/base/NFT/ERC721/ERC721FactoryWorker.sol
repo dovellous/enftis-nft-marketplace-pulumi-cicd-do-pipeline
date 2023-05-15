@@ -66,12 +66,10 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                     //If it exists, push the current token to the array
                     Structs.NFTItem memory nftItem = tokenIdToNFTItem[(i + 1)];
 
-                    Structs.NFT memory _NFT = Structs.NFT(
+                    nftItems[currentIndex] = Structs.NFT(
                         nftItem,
                         tokenURIs[(i+1)]
                     );
-
-                    nftItems[currentIndex] = _NFT;
 
                     // Increment the current index for the next valid token
                     // In principle, the max currentIndex mube be equal to (numberOfMintedTokens-1)
@@ -92,13 +90,13 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
      * @dev Search NFTs using a set of key value pair
      * @param _itemKey The NFT key to validate the query against.
      * @param _data The data holds the encoded params to use in the query
-     * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
+     * @return Structs.NFT[] An array of NFTItems returned from the search query.
      *
      */
     function _search(
         bytes32 _itemKey,
         bytes memory _data
-    ) internal view returns (Structs.NFTItem[] memory) {
+    ) internal view returns (Structs.NFT[] memory) {
         // Get the current token id for minted tokens
         // Its safer to use this id as opposed to the maximum supply
         // Because some tokens might have been burned
@@ -112,8 +110,8 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
         uint256 numberOfResultsTokens;
 
         // Declare the variable to hold the results NFT tokens.
-        Structs.NFTItem[] memory nftItems;
-
+        Structs.NFT[] memory nftItems;
+       
         // Unchecked : @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/unchecked-code-block.md
         unchecked {
             // For each index+1 check if the token exists, ignore those that are invalid !exist().
@@ -135,6 +133,7 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                     tokenURIs[(i + 1)]
                 );
 
+
                 // If there is a match increment the 
                 // number of result tokens - numberOfResultsTokens.
                 if (_match) {
@@ -143,7 +142,7 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
             }
 
             // Since we now know the exact number of tokens to return, declare the array variable.
-            nftItems = new Structs.NFTItem[](numberOfResultsTokens);
+            nftItems = new Structs.NFT[](numberOfResultsTokens);
 
             // Let's make sure that the number of tokens expected is greater than zero.
             if (numberOfResultsTokens > 0) {
@@ -175,7 +174,12 @@ abstract contract ERC721FactoryWorker is ERC721FactoryBase {
                     // Only increment the currentIndex when there is a match.
                     if (_match) {
                         // Push the NFT token to query
-                        nftItems[currentIndex] = _nftItem;
+
+                        nftItems[currentIndex] = Structs.NFT(
+                            _nftItem,
+                            tokenURIs[(i+1)]
+                        );
+
                         ++currentIndex;
                     }
 

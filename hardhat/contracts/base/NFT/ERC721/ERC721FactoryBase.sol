@@ -33,16 +33,17 @@ contract ERC721FactoryBase is
 
     using Counters for Counters.Counter;
 
-    /// @dev Counters
+    /// @dev Counters for tokenIds.
     Counters.Counter public _tokenIdCounter;
 
-    /// @dev Counters
+    /// @dev Counters for token current supply.
     Counters.Counter public _tokenCurrentSupply;
 
     /// @dev Collection category
     Enums.TokenCategory public tokenCategory;
 
-    /// Owner of the contract. This is only for compatibility for opensea and other protocols.
+    /// Owner of the contract. 
+    /// This is only for compatibility for other protocols.
     address payable public owner;
 
     /// @dev Marketplace address
@@ -75,6 +76,89 @@ contract ERC721FactoryBase is
     /// @dev URL path to the photo url of this collection
     string public photoURL;
 
+    /*********************************** Events ***********************************/
+
+    /// Dispatched when the contract owner has been updated.
+    event OwnerChanged(
+        address newOwner
+    );
+
+    /// Dispatched when the contract uri has been updated.
+    event ContractURIChanged(
+        bytes32 newURI
+    );
+
+    /// Dispatched when the collection description has been updated.
+    event CollectionDescriptionChanged(
+        string description
+    );
+
+    /// Dispatched when the banner media url has been updated.
+    event CollectionBannerMediaChanged(
+        string bannerURL
+    );
+
+    /// Dispatched when the diplay picture url has been updated.
+    event CollectionDisplayPictureChanged(
+        string photoURL
+    );
+
+    /// Dispatched when the base uri has been updated.
+    event BaseURIChanged(
+        string newURI
+    );
+
+    /// Dispatched when the marketplace address has been updated.
+    event MarketplaceAddressChanged(
+        address newMarketplaceAddress
+    );
+
+    /// Dispatched when the token approved address has been updated.
+    event ApprovedAddressForTokenChanged(
+        address approvedAddress,
+        uint256 tokenId
+    );
+
+    /// Dispatched when the minting fee has bene updated.
+    event MintingFeeChanged(uint256 newMintingFee);
+
+    /// Dispatched when a royalty has been updated.
+    event RoyaltiesChanged(address _royaltyReceiver, uint96 _royaltyFraction, uint256 _tokenId);
+
+    /// Dispatched when royalties are enabled.
+    event RoyaltiesEnabled();
+
+    /// Dispatched when royalties are disabled.
+    event RoyaltiesDisabled(uint256 _timestamp);
+
+    /// Dispatched when a token has been minted.
+    event TokenMinted(
+        address creator,
+        address minter,
+        uint256 indexed newTokenId,
+        uint256 batchSize
+    );
+
+    /// Dispatched when a token has been burned.
+    event TokenBurned(
+        address creator,
+        address burner,
+        uint256 indexed burnedTokenId,
+        uint256 batchSize
+    );
+
+    /// Dispatched when a token has been transfered.
+    event TokenTransfered(
+        address creator,
+        address burner,
+        uint256 indexed transferedTokenId,
+        uint256 batchSize
+    );
+
+    event Received(address, uint);
+
+    event Log(string func, uint gas);
+    
     /**
      * @dev Initialize the  base contract
      * @param _name NFT Name
@@ -146,23 +230,25 @@ contract ERC721FactoryBase is
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        if (!_exists(_tokenId)) {
-            return "";
-        }
 
-        string memory baseURI = _baseURI();
+        string memory baseURI = Snippets.getBaseURI(_baseURI());
         string memory tokenURIById = tokenURIs[_tokenId];
-
-        // If there is no baseURI URI, default to "ipfs://" or return the token URI.
-        if (bytes(baseURI).length == 0) {
-            baseURI = Snippets.bytes32String(Snippets.getIPFSPrefix());
-        }
 
         // If both are set, concatenate the baseURI and tokenURIById (via abi.encodePacked).
         if (bytes(tokenURIById).length != 0) {
-            return string(abi.encodePacked(baseURI, tokenURIById));
+            baseURI = Snippets.getTokenURIFromURI(
+                baseURI, 
+                tokenURIById
+            );
         }
-
+        else
+        {
+            baseURI = Snippets.getTokenURIFromID(
+                baseURI,
+                _tokenId
+            );
+        }
+        
         delete tokenURIById;
 
         return baseURI;
@@ -228,7 +314,7 @@ contract ERC721FactoryBase is
                 block.timestamp
             );
 
-            emit Events.TokenMinted(from, to, firstTokenId, batchSize);
+            emit TokenMinted(from, to, firstTokenId, batchSize);
         }
 
         //Burned
@@ -247,7 +333,7 @@ contract ERC721FactoryBase is
                 block.timestamp
             );
 
-            emit Events.TokenBurned(from, to, firstTokenId, batchSize);
+            emit TokenBurned(from, to, firstTokenId, batchSize);
 
         }
 
@@ -272,7 +358,7 @@ contract ERC721FactoryBase is
                 block.timestamp
             );
 
-            emit Events.TokenTransfered(from, to, firstTokenId, batchSize);
+            emit TokenTransfered(from, to, firstTokenId, batchSize);
 
         }
 
@@ -298,6 +384,7 @@ contract ERC721FactoryBase is
         );
 
         tokenIdToTokenActivityItem[_tokenId].push(_activity);
+        
     }
 
     /**
@@ -319,5 +406,7 @@ contract ERC721FactoryBase is
     fallback() external payable {}
 
     // Receive is a variant of fallback that is triggered when msg.data is empty
-    receive() external payable virtual {}
+    receive() external payable virtual {
+        emit Received(msg.sender, msg.value);
+    }
 }

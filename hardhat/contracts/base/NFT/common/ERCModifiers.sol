@@ -12,12 +12,12 @@ import "./ERCLibrary.sol";
 
 abstract contract ERCModifiers is AccessControl, ERCLibrary {
     
-    ContractOptions public contractOptionsStruct;
-
     struct ContractOptions {
         bool pausable;
         bool burnable;
     }
+
+    ContractOptions public contractOptionsStruct;
 
     /********************************* Modifiers **********************************/
 
@@ -112,7 +112,7 @@ abstract contract ERCModifiers is AccessControl, ERCLibrary {
      */
     function _nonZeroAmount(uint256 _amount) private pure {
         if (_amount == 0) {
-            revert Errors.InvalidAmount();
+            revert Errors.InvalidAmount(Snippets.INVALID_AMOUNT);
         }
     }
 
@@ -207,5 +207,39 @@ abstract contract ERCModifiers is AccessControl, ERCLibrary {
         _;
     }
 
+    /**
+     * @dev : reverts ZeroAddress error if the account is a zero address.
+     * @param _timestamp The timestamp to enable the royalties again
+     */
+    function _whenRoyaltiesAreEnabled(uint256 _timestamp) private view {
+        if (_timestamp > block.timestamp) {
+            revert Errors.RoyaltiesDisabled(
+                {
+                    timestamp: _timestamp, 
+                    message: Snippets.ROYALTIES_DISABLED
+                }
+            );
+        }
+    }
+
+    modifier whenRoyaltiesAreEnabled(uint256 _timestamp) {
+        _whenRoyaltiesAreEnabled(_timestamp);
+        _;
+    }
+
+    /**
+     * @dev : reverts NotApprovedOrOwner error if the account is a not owner or approved.
+     * 
+     */
+    function _whenIsApprovedOrOwner(bool _approved) private pure {
+        if (!_approved) {
+            revert Errors.NotApprovedOrOwner();
+        }
+    }
+
+    modifier whenIsApprovedOrOwner(bool _approved) {
+        _whenIsApprovedOrOwner(_approved);
+        _;
+    }
     /********************************* Modifiers **********************************/
 }

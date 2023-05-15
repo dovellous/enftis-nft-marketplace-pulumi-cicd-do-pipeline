@@ -16,11 +16,11 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
     using Snippets for *;
     /// royalty states
 
-    bool public royaltiesEnabled;
-
     address payable public royaltyReceiver;
 
     uint96 public royaltyFraction;
+
+    uint256 public royaltiesDisabledUntil;
 
     /// Minting fee
     uint256 public mintingFee;
@@ -90,19 +90,6 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
         unchecked {
 
-            /*
-
-            struct NFTItem {
-                address minterAddress;
-                address creatorAddress;
-                address ownerAddress;
-                uint256 tokenId;
-                uint createdAt;
-                uint updatedAt;
-            }
-
-            */
-
             tokenIdToNFTItem[newTokenId] = Structs.NFTItem(
                 _msgSender(),
                 [_msgSender(), _to],
@@ -127,34 +114,12 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
             _tokenCurrentSupply.increment();
 
-            if (royaltiesEnabled) {
+            if (royaltiesDisabledUntil < block.timestamp) {
                 if (_royaltyFraction > 0) {
-                    tokenIdToRoyaltyItem[newTokenId] = Structs.RoyaltyItem(
-                        true,
+                    setRoyalties(
                         _msgSender(),
-                        royaltyFraction,
-                        type(uint256).min,
+                        _royaltyFraction,
                         newTokenId
-                    );
-
-                    _setTokenRoyalty(
-                        newTokenId,
-                        _msgSender(),
-                        _royaltyFraction
-                    );
-                } else {
-                    tokenIdToRoyaltyItem[newTokenId] = Structs.RoyaltyItem(
-                        true,
-                        _msgSender(),
-                        royaltyFraction,
-                        type(uint256).min,
-                        newTokenId
-                    );
-
-                    _setTokenRoyalty(
-                        newTokenId,
-                        royaltyReceiver,
-                        royaltyFraction
                     );
                 }
             }
@@ -164,4 +129,68 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
 
     }
 
+    /**
+     * @dev Sets the new royalty percentage.
+     * @param _royaltyFraction The percentage to pay the royalties.
+     * @param _royaltyReceiver The receiver of the royalties
+     * @param _tokenId The id of the token to set the royalty
+     * 
+     * If we set 1, per = 100 * 1 -> 100 / 100 => 1%
+     * 
+     * There are no fractions in solidity
+     *
+     * Emits an {RoyaltyFractionChanged} event.
+     *
+     * Requirements:
+     *
+     * - Only Admin can call this method
+     * - The royaltyReceiver must not be a zero address
+     * 
+     * Notes 
+     * - If _royaltyFraction is zero hen royalties are disabled for new items for that moment
+     * - If _tokenId is zero or undefined, set the default values
+     * 
+     */
+    function setRoyalties(
+        address _royaltyReceiver,
+        uint96 _royaltyFraction,
+        uint256 _tokenId
+    ) public onlyAdmin whenRoyaltiesAreEnabled(royaltiesDisabledUntil) {
+
+        if(_royaltyReceiver != address(0)){
+            royaltyReceiver = payable(_royaltyReceiver);
+            if(_tokenId != 0){
+                _setTokenRoyalty(
+                    _tokenId,
+                    _royaltyReceiver,
+                    _royaltyFraction
+                );
+            }else{
+                _setDefaultRoyalty(
+                    _royaltyReceiver, 
+                    _royaltyFraction
+                );
+            }
+        }
+        royaltyFraction = _royaltyFraction;
+        emit RoyaltiesChanged(_royaltyReceiver, _royaltyFraction, _tokenId);
+    }
+
+    /*
+     * @dev Enables / Disabled royalties for a specific period
+     * @param _timestamp the block timestamp afterwhich royalties can be set
+     * 
+     * Requirements:
+     * - Only the admin can call this function
+     * 
+     */
+    function disableRoyaltiesUntil(uint256 _timestamp) public onlyAdmin {
+        royaltiesDisabledUntil = _timestamp;
+        if(_timestamp > 0){
+            emit RoyaltiesDisabled(_timestamp);
+        }else{
+            emit RoyaltiesEnabled();
+        }
+    }
+ 
 }
