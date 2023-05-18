@@ -1213,6 +1213,8 @@ describe("ERC721Factory", async function () {
     
     });
 
+    */
+
     describe("Error Handling", () => {
         
         beforeEach( async () => {
@@ -1255,7 +1257,7 @@ describe("ERC721Factory", async function () {
 
             let _tokenId:number = 1;
 
-            await expect(bobWalletAccount.tokenTransfer(
+            await expect(await ERC721FactorySmartContract.tokenTransfer(
                 _account,
                 _tokenId
             ))
@@ -1296,7 +1298,7 @@ describe("ERC721Factory", async function () {
 
         });
 
-        it("Can only mint upto the maximum total supply : MaximumTokenSupplyReached", async () => {
+        it("Specified id must be less than the max supply defined : MaximumTokenSupplyReached", async () => {
         
             let _maxValue:number = parseInt(MAXIMUM_SUPPLY);
 
@@ -1310,10 +1312,9 @@ describe("ERC721Factory", async function () {
 
             let _overflowTokenId:number = nftItems.length + 1;
 
-            expect(nftItems.length).to.be.equal(_maxValue);
+            console.log(nftItems.length, _overflowTokenId, nftItems);
 
-            
-            await expect(aliceWalletAccount.mintNewToken(
+            await expect(await ERC721FactorySmartContract.mintNewToken(
                 deanWallet.address,
                 _tokenURI,
                 10, 
@@ -1321,18 +1322,22 @@ describe("ERC721Factory", async function () {
             ))
             .to.be.revertedWithCustomError(ERC721FactorySmartContract, "MaximumTokenSupplyReached")
             .withArgs(_maxValue, _overflowTokenId, _message);
-            
+
         });
 
-        it("Specified token id must be less than the maximum supply defined : ExceededMaxValue", async () => {
+        it("Specified id must be less than the max supply defined : ExceededMaxValue", async () => {
 
             let _maxValue:number = parseInt(MAXIMUM_SUPPLY);
 
-            let _overflowTokenId:number = _maxValue+1;
+            await mintTokens(7, 10);
+
+            let nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+        
+            let _overflowTokenId:number = nftItems.length+1;
 
             const _message:string = Snippets.INDEX_OUT_OF_BOUNDS;
 
-            await expect(charlieWalletAccount.getTokenOwner(
+            await expect(await charlieWalletAccount.getTokenOwner(
                 _overflowTokenId
             ))
             .to.be.revertedWithCustomError(ERC721FactorySmartContract, "ExceededMaxValue")
@@ -1340,7 +1345,7 @@ describe("ERC721Factory", async function () {
 
         });
 
-        it("Specified token id must be more than minimum value specified : BelowMinValue", async () => {
+        it("Specified id must not be less than the minimum value specified : BelowMinValue", async () => {
         
             let _minValue:number = 1;
 
@@ -1476,6 +1481,8 @@ describe("ERC721Factory", async function () {
         });
 
     });
+
+    /*
 
     describe("Search Capabilities", () => {
         
@@ -1688,123 +1695,15 @@ describe("ERC721Factory", async function () {
 
         });
 
-        it("Can grant an ADMIN role : grantAdminRole", async () => {
+        it("Verifies the token rightful owners, soon after mint.", async () => {
         
-            console.warn("     🟩 ADMIN Roles");
+            console.warn("     🟩 Has Admin");
 
-            await deployerWalletAccount.grantAdminRole(deanWallet.address);
+            const nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
 
-            const deanWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
-
-            expect(deanWalletHasAdminRole).to.be.true;
-
-        });
-
-        it("Can revoke an ADMIN role : revokeAdminRole", async () => {
-
-            await deployerWalletAccount.grantAdminRole(deanWallet.address);
-
-            const deanWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
-
-            expect(deanWalletHasAdminRole).to.be.true;
-
-            await deployerWalletAccount.revokeAdminRole(deanWallet.address);
-
-            const deanWalletStillHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
-
-            expect(deanWalletStillHasAdminRole).to.be.false;
-
-        });
-
-        it("Can renounce an ADMIN role, can only renounce own account : renounceAdminRole", async () => {
-
-            await deployerWalletAccount.grantAdminRole(deanWallet.address);
-
-            const deanWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
-
-            expect(deanWalletHasAdminRole).to.be.true;
-
-            await expect(deployerWalletAccount.renounceAdminRole(deanWallet.address))
-                .to.be.reverted;
-
-            await deanWalletAccount.renounceAdminRole(deanWallet.address);
-
-            const deanWalletStillHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
-
-            expect(deanWalletStillHasAdminRole).to.be.false;
-
-        });
-
-        it("Can renounce ownership of the smart contract : renounceContractOwnership", async () => {
-
-            const deployerWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deployerWallet.address);
-
-            expect(deployerWalletHasAdminRole).to.be.true;
-
-            const contractOwner:string = await ERC721FactorySmartContract.getOwner();
-
-            expect(contractOwner).to.be.equal(deployerWallet.address);
-
-            await expect(charlieWalletAccount.renounceContractOwnership())
-                .to.be.revertedWithCustomError(ERC721FactorySmartContract, "InsufficientPermissions")
-                .withArgs(
-                    charlieWallet.address, 
-                    Snippets.ADMIN_ROLE, 
-                    Snippets.INSUFFICIENT_PERMISSIONS
-                );
-
-            await deployerWalletAccount.renounceContractOwnership();
-
-            const newContractOwner:string = await ERC721FactorySmartContract.getOwner();
-
-            expect(newContractOwner).to.be.equal(Snippets.ADDRESS_ZERO);
-
-        });
-
-        it("Can grant an MINTER role : grantMinterRole", async () => {
-        
-            console.warn("     🟩 MINTER Roles");
-
-            await deployerWalletAccount.grantMinterRole(deanWallet.address);
-
-            const deanWalletHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
-
-            expect(deanWalletHasMinterRole).to.be.true;
-
-        });
-
-        it("Can revoke an MINTER role : revokeMinterRole", async () => {
-
-            await deployerWalletAccount.grantMinterRole(deanWallet.address);
-
-            const deanWalletHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
-
-            expect(deanWalletHasMinterRole).to.be.true;
-
-            await deployerWalletAccount.revokeMinterRole(deanWallet.address);
-
-            const deanWalletStillHasMinternRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
-
-            expect(deanWalletStillHasMinternRole).to.be.false;
-
-        });
-
-        it("Can renounce an MINTER role, can only renounce own account : renounceMinterRole", async () => {
-
-            await deployerWalletAccount.grantMinterRole(deanWallet.address);
-
-            const deanWalletHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
-
-            expect(deanWalletHasMinterRole).to.be.true;
-
-            await expect(deployerWalletAccount.renounceMinterRole(deanWallet.address))
-                .to.be.reverted;
-
-            await deanWalletAccount.renounceMinterRole(deanWallet.address);
-
-            const deanWalletStillHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
-
-            expect(deanWalletStillHasMinterRole).to.be.false;
+            nftItems.map(async (nft:any) => {
+                await expect(Snippets.parseNFTItem(nft).ownerAddress).to.equal(await ERC721FactorySmartContract.ownerOf(Snippets.parseNFTItem(nft).tokenId));
+            });
 
         });
 

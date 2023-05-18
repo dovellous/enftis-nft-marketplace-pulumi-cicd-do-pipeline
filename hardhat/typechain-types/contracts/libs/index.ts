@@ -2,5 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Errors } from "./Errors";
-export type { Events } from "./Events";
 export type { Snippets } from "./Snippets";

@@ -43,23 +43,7 @@ const _abi = [
     type: "error",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "caller",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
+    inputs: [],
     name: "NotApprovedOrOwner",
     type: "error",
   },
@@ -119,11 +103,172 @@ const _abi = [
       {
         indexed: false,
         internalType: "address",
+        name: "approvedAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "ApprovedAddressForTokenChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "newURI",
+        type: "string",
+      },
+    ],
+    name: "BaseURIChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "bannerURL",
+        type: "string",
+      },
+    ],
+    name: "CollectionBannerMediaChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+    ],
+    name: "CollectionDescriptionChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "photoURL",
+        type: "string",
+      },
+    ],
+    name: "CollectionDisplayPictureChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "newURI",
+        type: "bytes32",
+      },
+    ],
+    name: "ContractURIChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string",
+        name: "func",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "gas",
+        type: "uint256",
+      },
+    ],
+    name: "Log",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "newMarketplaceAddress",
+        type: "address",
+      },
+    ],
+    name: "MarketplaceAddressChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newMintingFee",
+        type: "uint256",
+      },
+    ],
+    name: "MintingFeeChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnerChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
         name: "account",
         type: "address",
       },
     ],
     name: "Paused",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "Received",
     type: "event",
   },
   {
@@ -199,6 +344,143 @@ const _abi = [
       },
     ],
     name: "RoleRevoked",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "_royaltyReceiver",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint96",
+        name: "_royaltyFraction",
+        type: "uint96",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "RoyaltiesChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "RoyaltiesDisabled",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [],
+    name: "RoyaltiesEnabled",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "creator",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "burner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "burnedTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "batchSize",
+        type: "uint256",
+      },
+    ],
+    name: "TokenBurned",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "creator",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "minter",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "newTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "batchSize",
+        type: "uint256",
+      },
+    ],
+    name: "TokenMinted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "creator",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "burner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "transferedTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "batchSize",
+        type: "uint256",
+      },
+    ],
+    name: "TokenTransfered",
     type: "event",
   },
   {

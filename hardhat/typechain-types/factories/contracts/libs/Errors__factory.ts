@@ -82,7 +82,13 @@ const _abi = [
     type: "error",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "message",
+        type: "bytes32",
+      },
+    ],
     name: "InvalidAmount",
     type: "error",
   },
@@ -130,23 +136,7 @@ const _abi = [
     type: "error",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "caller",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
+    inputs: [],
     name: "NotApprovedOrOwner",
     type: "error",
   },
@@ -169,6 +159,22 @@ const _abi = [
       },
     ],
     name: "PriceBelowMintingFee",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes32",
+        name: "message",
+        type: "bytes32",
+      },
+    ],
+    name: "RoyaltiesDisabled",
     type: "error",
   },
   {
@@ -243,7 +249,7 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212206caa299c804f9f4477f844a1491e5a63c101211f80aacd684337c4207ed7ca6f64736f6c63430008130033";
+  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209862c478c24bd072a47eae68637fe8fd48dbce8897f1cc17ab1082280668e7a264736f6c63430008130033";
 
 type ErrorsConstructorParams =
   | [signer?: Signer]

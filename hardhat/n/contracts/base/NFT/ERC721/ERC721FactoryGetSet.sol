@@ -731,7 +731,7 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev Renounces an admin role from an account.
+     * @dev Rennounces an admin role from an account.
      * @param _account Account to renounce the admin role.
      *
      * Requirements:
@@ -743,7 +743,7 @@ contract ERC721FactoryGetSet is
     }
 
     /**
-     * @dev Renounces ownership of the smart contract.
+     * @dev Rennounces ownership of the smart contract.
      *
      * Requirements:
      *

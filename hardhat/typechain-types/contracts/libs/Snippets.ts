@@ -53,6 +53,7 @@ export interface SnippetsInterface extends utils.Interface {
     "ADDRESS()": FunctionFragment;
     "ADMIN_ROLE()": FunctionFragment;
     "AMOUNT_BELOW_MINTING_FEE()": FunctionFragment;
+    "BASE_EXTENSION()": FunctionFragment;
     "CREATED()": FunctionFragment;
     "CREATED_AFTER()": FunctionFragment;
     "CREATED_AT()": FunctionFragment;
@@ -60,14 +61,18 @@ export interface SnippetsInterface extends utils.Interface {
     "CREATOR()": FunctionFragment;
     "INDEX_OUT_OF_BOUNDS()": FunctionFragment;
     "INSUFFICIENT_PERMISSIONS()": FunctionFragment;
+    "INVALID_AMOUNT()": FunctionFragment;
     "INVALID_CALLER()": FunctionFragment;
+    "IPFS_PREFIX()": FunctionFragment;
     "MAX_SUPPLY_REACHED()": FunctionFragment;
     "MINTER()": FunctionFragment;
     "MINTER_ROLE()": FunctionFragment;
+    "NOT_APPROVED_OR_OWNER()": FunctionFragment;
     "NOT_APPROVED_OWNER()": FunctionFragment;
     "NO_ADMINS_SPECIFIED()": FunctionFragment;
     "NO_MINTERS_SPECIFIED()": FunctionFragment;
     "OWNER()": FunctionFragment;
+    "ROYALTIES_DISABLED()": FunctionFragment;
     "STRING()": FunctionFragment;
     "TIMESTAMP()": FunctionFragment;
     "TOKEN_DOES_NOT_EXISTS()": FunctionFragment;
@@ -82,8 +87,11 @@ export interface SnippetsInterface extends utils.Interface {
     "ZERO_ADDRESS()": FunctionFragment;
     "bytes32String(bytes32)": FunctionFragment;
     "compareStrings(string,string)": FunctionFragment;
-    "getIPFSPrefix()": FunctionFragment;
+    "getBaseURI(string)": FunctionFragment;
+    "getTokenURIFromID(string,uint256)": FunctionFragment;
+    "getTokenURIFromURI(string,string)": FunctionFragment;
     "searchHasMatch(bytes32,bytes,(address,address[2],address,uint256,uint256,uint256),string)": FunctionFragment;
+    "searchString(string,string)": FunctionFragment;
     "stringBytes32(string)": FunctionFragment;
     "stringContains(string,string)": FunctionFragment;
     "subString(string,uint256,uint256)": FunctionFragment;
@@ -95,6 +103,7 @@ export interface SnippetsInterface extends utils.Interface {
       | "ADDRESS"
       | "ADMIN_ROLE"
       | "AMOUNT_BELOW_MINTING_FEE"
+      | "BASE_EXTENSION"
       | "CREATED"
       | "CREATED_AFTER"
       | "CREATED_AT"
@@ -102,14 +111,18 @@ export interface SnippetsInterface extends utils.Interface {
       | "CREATOR"
       | "INDEX_OUT_OF_BOUNDS"
       | "INSUFFICIENT_PERMISSIONS"
+      | "INVALID_AMOUNT"
       | "INVALID_CALLER"
+      | "IPFS_PREFIX"
       | "MAX_SUPPLY_REACHED"
       | "MINTER"
       | "MINTER_ROLE"
+      | "NOT_APPROVED_OR_OWNER"
       | "NOT_APPROVED_OWNER"
       | "NO_ADMINS_SPECIFIED"
       | "NO_MINTERS_SPECIFIED"
       | "OWNER"
+      | "ROYALTIES_DISABLED"
       | "STRING"
       | "TIMESTAMP"
       | "TOKEN_DOES_NOT_EXISTS"
@@ -124,8 +137,11 @@ export interface SnippetsInterface extends utils.Interface {
       | "ZERO_ADDRESS"
       | "bytes32String"
       | "compareStrings"
-      | "getIPFSPrefix"
+      | "getBaseURI"
+      | "getTokenURIFromID"
+      | "getTokenURIFromURI"
       | "searchHasMatch"
+      | "searchString"
       | "stringBytes32"
       | "stringContains"
       | "subString"
@@ -139,6 +155,10 @@ export interface SnippetsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "AMOUNT_BELOW_MINTING_FEE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "BASE_EXTENSION",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "CREATED", values?: undefined): string;
@@ -164,7 +184,15 @@ export interface SnippetsInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "INVALID_AMOUNT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "INVALID_CALLER",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "IPFS_PREFIX",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -174,6 +202,10 @@ export interface SnippetsInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "MINTER", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "MINTER_ROLE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "NOT_APPROVED_OR_OWNER",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -189,6 +221,10 @@ export interface SnippetsInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "OWNER", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "ROYALTIES_DISABLED",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "STRING", values?: undefined): string;
   encodeFunctionData(functionFragment: "TIMESTAMP", values?: undefined): string;
   encodeFunctionData(
@@ -228,8 +264,16 @@ export interface SnippetsInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getIPFSPrefix",
-    values?: undefined
+    functionFragment: "getBaseURI",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTokenURIFromID",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTokenURIFromURI",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "searchHasMatch",
@@ -239,6 +283,10 @@ export interface SnippetsInterface extends utils.Interface {
       Structs.NFTItemStruct,
       PromiseOrValue<string>
     ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "searchString",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "stringBytes32",
@@ -271,6 +319,10 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "AMOUNT_BELOW_MINTING_FEE",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "BASE_EXTENSION",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "CREATED", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "CREATED_AFTER",
@@ -291,7 +343,15 @@ export interface SnippetsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "INVALID_AMOUNT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "INVALID_CALLER",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "IPFS_PREFIX",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -301,6 +361,10 @@ export interface SnippetsInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "MINTER", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "MINTER_ROLE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "NOT_APPROVED_OR_OWNER",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -316,6 +380,10 @@ export interface SnippetsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "OWNER", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "ROYALTIES_DISABLED",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "STRING", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "TIMESTAMP", data: BytesLike): Result;
   decodeFunctionResult(
@@ -351,12 +419,21 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "compareStrings",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getBaseURI", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getIPFSPrefix",
+    functionFragment: "getTokenURIFromID",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokenURIFromURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "searchHasMatch",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "searchString",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -406,6 +483,8 @@ export interface Snippets extends BaseContract {
 
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<[string]>;
 
+    BASE_EXTENSION(overrides?: CallOverrides): Promise<[string]>;
+
     CREATED(overrides?: CallOverrides): Promise<[string]>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<[string]>;
@@ -420,13 +499,19 @@ export interface Snippets extends BaseContract {
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<[string]>;
 
+    INVALID_AMOUNT(overrides?: CallOverrides): Promise<[string]>;
+
     INVALID_CALLER(overrides?: CallOverrides): Promise<[string]>;
+
+    IPFS_PREFIX(overrides?: CallOverrides): Promise<[string]>;
 
     MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<[string]>;
 
     MINTER(overrides?: CallOverrides): Promise<[string]>;
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<[string]>;
+
+    NOT_APPROVED_OR_OWNER(overrides?: CallOverrides): Promise<[string]>;
 
     NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<[string]>;
 
@@ -435,6 +520,8 @@ export interface Snippets extends BaseContract {
     NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<[string]>;
 
     OWNER(overrides?: CallOverrides): Promise<[string]>;
+
+    ROYALTIES_DISABLED(overrides?: CallOverrides): Promise<[string]>;
 
     STRING(overrides?: CallOverrides): Promise<[string]>;
 
@@ -471,13 +558,34 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    getIPFSPrefix(overrides?: CallOverrides): Promise<[string]>;
+    getBaseURI(
+      baseURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    getTokenURIFromID(
+      baseURI: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    getTokenURIFromURI(
+      baseURI: PromiseOrValue<string>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
       _tokenURIString: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    searchString(
+      _self: PromiseOrValue<string>,
+      _needle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -513,6 +621,8 @@ export interface Snippets extends BaseContract {
 
   AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
+  BASE_EXTENSION(overrides?: CallOverrides): Promise<string>;
+
   CREATED(overrides?: CallOverrides): Promise<string>;
 
   CREATED_AFTER(overrides?: CallOverrides): Promise<string>;
@@ -527,13 +637,19 @@ export interface Snippets extends BaseContract {
 
   INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<string>;
 
+  INVALID_AMOUNT(overrides?: CallOverrides): Promise<string>;
+
   INVALID_CALLER(overrides?: CallOverrides): Promise<string>;
+
+  IPFS_PREFIX(overrides?: CallOverrides): Promise<string>;
 
   MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<string>;
 
   MINTER(overrides?: CallOverrides): Promise<string>;
 
   MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+  NOT_APPROVED_OR_OWNER(overrides?: CallOverrides): Promise<string>;
 
   NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<string>;
 
@@ -542,6 +658,8 @@ export interface Snippets extends BaseContract {
   NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<string>;
 
   OWNER(overrides?: CallOverrides): Promise<string>;
+
+  ROYALTIES_DISABLED(overrides?: CallOverrides): Promise<string>;
 
   STRING(overrides?: CallOverrides): Promise<string>;
 
@@ -578,13 +696,34 @@ export interface Snippets extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  getIPFSPrefix(overrides?: CallOverrides): Promise<string>;
+  getBaseURI(
+    baseURI: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  getTokenURIFromID(
+    baseURI: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  getTokenURIFromURI(
+    baseURI: PromiseOrValue<string>,
+    _tokenURI: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   searchHasMatch(
     _itemKey: PromiseOrValue<BytesLike>,
     _data: PromiseOrValue<BytesLike>,
     _nftItem: Structs.NFTItemStruct,
     _tokenURIString: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  searchString(
+    _self: PromiseOrValue<string>,
+    _needle: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -620,6 +759,8 @@ export interface Snippets extends BaseContract {
 
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
+    BASE_EXTENSION(overrides?: CallOverrides): Promise<string>;
+
     CREATED(overrides?: CallOverrides): Promise<string>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<string>;
@@ -634,13 +775,19 @@ export interface Snippets extends BaseContract {
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<string>;
 
+    INVALID_AMOUNT(overrides?: CallOverrides): Promise<string>;
+
     INVALID_CALLER(overrides?: CallOverrides): Promise<string>;
+
+    IPFS_PREFIX(overrides?: CallOverrides): Promise<string>;
 
     MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<string>;
 
     MINTER(overrides?: CallOverrides): Promise<string>;
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+    NOT_APPROVED_OR_OWNER(overrides?: CallOverrides): Promise<string>;
 
     NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<string>;
 
@@ -649,6 +796,8 @@ export interface Snippets extends BaseContract {
     NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<string>;
 
     OWNER(overrides?: CallOverrides): Promise<string>;
+
+    ROYALTIES_DISABLED(overrides?: CallOverrides): Promise<string>;
 
     STRING(overrides?: CallOverrides): Promise<string>;
 
@@ -685,13 +834,34 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    getIPFSPrefix(overrides?: CallOverrides): Promise<string>;
+    getBaseURI(
+      baseURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    getTokenURIFromID(
+      baseURI: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    getTokenURIFromURI(
+      baseURI: PromiseOrValue<string>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
       _tokenURIString: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    searchString(
+      _self: PromiseOrValue<string>,
+      _needle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -730,6 +900,8 @@ export interface Snippets extends BaseContract {
 
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<BigNumber>;
 
+    BASE_EXTENSION(overrides?: CallOverrides): Promise<BigNumber>;
+
     CREATED(overrides?: CallOverrides): Promise<BigNumber>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<BigNumber>;
@@ -744,13 +916,19 @@ export interface Snippets extends BaseContract {
 
     INSUFFICIENT_PERMISSIONS(overrides?: CallOverrides): Promise<BigNumber>;
 
+    INVALID_AMOUNT(overrides?: CallOverrides): Promise<BigNumber>;
+
     INVALID_CALLER(overrides?: CallOverrides): Promise<BigNumber>;
+
+    IPFS_PREFIX(overrides?: CallOverrides): Promise<BigNumber>;
 
     MAX_SUPPLY_REACHED(overrides?: CallOverrides): Promise<BigNumber>;
 
     MINTER(overrides?: CallOverrides): Promise<BigNumber>;
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    NOT_APPROVED_OR_OWNER(overrides?: CallOverrides): Promise<BigNumber>;
 
     NOT_APPROVED_OWNER(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -759,6 +937,8 @@ export interface Snippets extends BaseContract {
     NO_MINTERS_SPECIFIED(overrides?: CallOverrides): Promise<BigNumber>;
 
     OWNER(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ROYALTIES_DISABLED(overrides?: CallOverrides): Promise<BigNumber>;
 
     STRING(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -795,13 +975,34 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getIPFSPrefix(overrides?: CallOverrides): Promise<BigNumber>;
+    getBaseURI(
+      baseURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getTokenURIFromID(
+      baseURI: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getTokenURIFromURI(
+      baseURI: PromiseOrValue<string>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
       _tokenURIString: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    searchString(
+      _self: PromiseOrValue<string>,
+      _needle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -840,6 +1041,8 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    BASE_EXTENSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     CREATED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -858,7 +1061,11 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    INVALID_AMOUNT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     INVALID_CALLER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    IPFS_PREFIX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     MAX_SUPPLY_REACHED(
       overrides?: CallOverrides
@@ -867,6 +1074,10 @@ export interface Snippets extends BaseContract {
     MINTER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    NOT_APPROVED_OR_OWNER(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     NOT_APPROVED_OWNER(
       overrides?: CallOverrides
@@ -881,6 +1092,10 @@ export interface Snippets extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     OWNER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ROYALTIES_DISABLED(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     STRING(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -919,13 +1134,34 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getIPFSPrefix(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBaseURI(
+      baseURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTokenURIFromID(
+      baseURI: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTokenURIFromURI(
+      baseURI: PromiseOrValue<string>,
+      _tokenURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,
       _data: PromiseOrValue<BytesLike>,
       _nftItem: Structs.NFTItemStruct,
       _tokenURIString: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    searchString(
+      _self: PromiseOrValue<string>,
+      _needle: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

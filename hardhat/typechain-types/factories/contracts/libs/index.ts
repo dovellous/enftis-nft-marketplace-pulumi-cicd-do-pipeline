@@ -2,5 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Errors__factory } from "./Errors__factory";
-export { Events__factory } from "./Events__factory";
 export { Snippets__factory } from "./Snippets__factory";

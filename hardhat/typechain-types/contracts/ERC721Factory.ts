@@ -88,6 +88,7 @@ export declare namespace Structs {
     royaltyReceiver: PromiseOrValue<string>;
     royaltyFraction: PromiseOrValue<BigNumberish>;
     royaltyAmount: PromiseOrValue<BigNumberish>;
+    tokenPrice: PromiseOrValue<BigNumberish>;
     tokenId: PromiseOrValue<BigNumberish>;
   };
 
@@ -96,12 +97,14 @@ export declare namespace Structs {
     string,
     BigNumber,
     BigNumber,
+    BigNumber,
     BigNumber
   ] & {
     royaltyIsDefined: boolean;
     royaltyReceiver: string;
     royaltyFraction: BigNumber;
     royaltyAmount: BigNumber;
+    tokenPrice: BigNumber;
     tokenId: BigNumber;
   };
 }
@@ -112,6 +115,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "_tokenCurrentSupply()": FunctionFragment;
     "_tokenIdCounter()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
+    "approveAddressForToken(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "bannerURL()": FunctionFragment;
     "baseTokenURI()": FunctionFragment;
@@ -128,6 +132,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "contractTreasury()": FunctionFragment;
     "contractURI()": FunctionFragment;
     "description()": FunctionFragment;
+    "disableRoyaltiesUntil(uint256)": FunctionFragment;
     "getAccountTokenBalance(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "getBaseURI()": FunctionFragment;
@@ -137,6 +142,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "getNFTItems()": FunctionFragment;
     "getOwner()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
+    "getRoyaltyFeeDenominator()": FunctionFragment;
     "getRoyaltyFraction()": FunctionFragment;
     "getRoyaltyReceiver()": FunctionFragment;
     "getTokenAuditTrail(uint256)": FunctionFragment;
@@ -144,8 +150,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "getTokenCurrentId()": FunctionFragment;
     "getTokenCurrentSupply()": FunctionFragment;
     "getTokenMaximumSupply()": FunctionFragment;
+    "getTokenMintee(uint256)": FunctionFragment;
     "getTokenMinter(uint256)": FunctionFragment;
     "getTokenMintingFee()": FunctionFragment;
+    "getTokenOwner(uint256)": FunctionFragment;
     "getTokenRoyaltyInfo(uint256,uint256)": FunctionFragment;
     "getTokenURI(uint256)": FunctionFragment;
     "getTokensCreatedByAddress(address)": FunctionFragment;
@@ -169,22 +177,22 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "photoURL()": FunctionFragment;
     "recoverTokens(address,address,uint8,uint256,uint256)": FunctionFragment;
     "renounceAdminRole(address)": FunctionFragment;
+    "renounceContractOwnership()": FunctionFragment;
     "renounceMinterRole(address)": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
     "revokeAdminRole(address)": FunctionFragment;
     "revokeMinterRole(address)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
-    "royaltiesEnabled()": FunctionFragment;
+    "royaltiesDisabledUntil()": FunctionFragment;
     "royaltyFraction()": FunctionFragment;
     "royaltyInfo(uint256,uint256)": FunctionFragment;
     "royaltyReceiver()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
-    "search(bytes32,uint256)": FunctionFragment;
-    "search(bytes32,address)": FunctionFragment;
-    "search(bytes32,string)": FunctionFragment;
-    "search(string)": FunctionFragment;
-    "search(uint256)": FunctionFragment;
+    "searchAddress(bytes32,address)": FunctionFragment;
+    "searchTimestamp(bytes32,uint256)": FunctionFragment;
+    "searchTokenId(uint256)": FunctionFragment;
+    "searchTokenURI(string)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseURI(string)": FunctionFragment;
     "setCollectionBannerMedia(string)": FunctionFragment;
@@ -194,7 +202,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "setMarketplaceAddress(address)": FunctionFragment;
     "setMintingFee(uint256)": FunctionFragment;
     "setNewOwner(address)": FunctionFragment;
-    "setRoyalties(address,uint96)": FunctionFragment;
+    "setRoyalties(address,uint96,uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "togglePause()": FunctionFragment;
@@ -221,6 +229,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "_tokenCurrentSupply"
       | "_tokenIdCounter"
       | "approve"
+      | "approveAddressForToken"
       | "balanceOf"
       | "bannerURL"
       | "baseTokenURI"
@@ -237,6 +246,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "contractTreasury"
       | "contractURI"
       | "description"
+      | "disableRoyaltiesUntil"
       | "getAccountTokenBalance"
       | "getApproved"
       | "getBaseURI"
@@ -246,6 +256,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "getNFTItems"
       | "getOwner"
       | "getRoleAdmin"
+      | "getRoyaltyFeeDenominator"
       | "getRoyaltyFraction"
       | "getRoyaltyReceiver"
       | "getTokenAuditTrail"
@@ -253,8 +264,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "getTokenCurrentId"
       | "getTokenCurrentSupply"
       | "getTokenMaximumSupply"
+      | "getTokenMintee"
       | "getTokenMinter"
       | "getTokenMintingFee"
+      | "getTokenOwner"
       | "getTokenRoyaltyInfo"
       | "getTokenURI"
       | "getTokensCreatedByAddress"
@@ -278,22 +291,22 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "photoURL"
       | "recoverTokens"
       | "renounceAdminRole"
+      | "renounceContractOwnership"
       | "renounceMinterRole"
       | "renounceRole"
       | "revokeAdminRole"
       | "revokeMinterRole"
       | "revokeRole"
-      | "royaltiesEnabled"
+      | "royaltiesDisabledUntil"
       | "royaltyFraction"
       | "royaltyInfo"
       | "royaltyReceiver"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
-      | "search(bytes32,uint256)"
-      | "search(bytes32,address)"
-      | "search(bytes32,string)"
-      | "search(string)"
-      | "search(uint256)"
+      | "searchAddress"
+      | "searchTimestamp"
+      | "searchTokenId"
+      | "searchTokenURI"
       | "setApprovalForAll"
       | "setBaseURI"
       | "setCollectionBannerMedia"
@@ -338,6 +351,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approveAddressForToken",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -402,6 +419,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "disableRoyaltiesUntil",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getAccountTokenBalance",
     values: [PromiseOrValue<string>]
   ): string;
@@ -435,6 +456,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
+    functionFragment: "getRoyaltyFeeDenominator",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getRoyaltyFraction",
     values?: undefined
   ): string;
@@ -463,12 +488,20 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "getTokenMintee",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getTokenMinter",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getTokenMintingFee",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTokenOwner",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getTokenRoyaltyInfo",
@@ -561,6 +594,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "renounceContractOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "renounceMinterRole",
     values: [PromiseOrValue<string>]
   ): string;
@@ -581,7 +618,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "royaltiesEnabled",
+    functionFragment: "royaltiesDisabledUntil",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -614,24 +651,20 @@ export interface ERC721FactoryInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "search(bytes32,uint256)",
+    functionFragment: "searchAddress",
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "searchTimestamp",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "search(bytes32,address)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "search(bytes32,string)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "search(string)",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "search(uint256)",
+    functionFragment: "searchTokenId",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "searchTokenURI",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
@@ -671,7 +704,11 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setRoyalties",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -760,6 +797,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "approveAddressForToken",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bannerURL", data: BytesLike): Result;
   decodeFunctionResult(
@@ -813,6 +854,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "disableRoyaltiesUntil",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getAccountTokenBalance",
     data: BytesLike
   ): Result;
@@ -837,6 +882,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "getOwner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getRoleAdmin",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRoyaltyFeeDenominator",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -868,11 +917,19 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getTokenMintee",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getTokenMinter",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getTokenMintingFee",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokenOwner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -944,6 +1001,10 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "renounceContractOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "renounceMinterRole",
     data: BytesLike
   ): Result;
@@ -961,7 +1022,7 @@ export interface ERC721FactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "royaltiesEnabled",
+    functionFragment: "royaltiesDisabledUntil",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -985,23 +1046,19 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "search(bytes32,uint256)",
+    functionFragment: "searchAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "search(bytes32,address)",
+    functionFragment: "searchTimestamp",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "search(bytes32,string)",
+    functionFragment: "searchTokenId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "search(string)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "search(uint256)",
+    functionFragment: "searchTokenURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1108,20 +1165,62 @@ export interface ERC721FactoryInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "ApprovedAddressForTokenChanged(address,uint256)": EventFragment;
+    "BaseURIChanged(string)": EventFragment;
+    "CollectionBannerMediaChanged(string)": EventFragment;
+    "CollectionDescriptionChanged(string)": EventFragment;
+    "CollectionDisplayPictureChanged(string)": EventFragment;
+    "ContractURIChanged(bytes32)": EventFragment;
+    "Log(string,uint256)": EventFragment;
+    "MarketplaceAddressChanged(address)": EventFragment;
+    "MintingFeeChanged(uint256)": EventFragment;
+    "OwnerChanged(address)": EventFragment;
     "Paused(address)": EventFragment;
+    "Received(address,uint256)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
     "RoleRevoked(bytes32,address,address)": EventFragment;
+    "RoyaltiesChanged(address,uint96,uint256)": EventFragment;
+    "RoyaltiesDisabled(uint256)": EventFragment;
+    "RoyaltiesEnabled()": EventFragment;
+    "TokenBurned(address,address,uint256,uint256)": EventFragment;
+    "TokenMinted(address,address,uint256,uint256)": EventFragment;
+    "TokenTransfered(address,address,uint256,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ApprovedAddressForTokenChanged"
+  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BaseURIChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "CollectionBannerMediaChanged"
+  ): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "CollectionDescriptionChanged"
+  ): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "CollectionDisplayPictureChanged"
+  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ContractURIChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Log"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MarketplaceAddressChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MintingFeeChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RoyaltiesChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RoyaltiesDisabled"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RoyaltiesEnabled"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokenBurned"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokenMinted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokenTransfered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
 }
@@ -1150,12 +1249,126 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
+export interface ApprovedAddressForTokenChangedEventObject {
+  approvedAddress: string;
+  tokenId: BigNumber;
+}
+export type ApprovedAddressForTokenChangedEvent = TypedEvent<
+  [string, BigNumber],
+  ApprovedAddressForTokenChangedEventObject
+>;
+
+export type ApprovedAddressForTokenChangedEventFilter =
+  TypedEventFilter<ApprovedAddressForTokenChangedEvent>;
+
+export interface BaseURIChangedEventObject {
+  newURI: string;
+}
+export type BaseURIChangedEvent = TypedEvent<
+  [string],
+  BaseURIChangedEventObject
+>;
+
+export type BaseURIChangedEventFilter = TypedEventFilter<BaseURIChangedEvent>;
+
+export interface CollectionBannerMediaChangedEventObject {
+  bannerURL: string;
+}
+export type CollectionBannerMediaChangedEvent = TypedEvent<
+  [string],
+  CollectionBannerMediaChangedEventObject
+>;
+
+export type CollectionBannerMediaChangedEventFilter =
+  TypedEventFilter<CollectionBannerMediaChangedEvent>;
+
+export interface CollectionDescriptionChangedEventObject {
+  description: string;
+}
+export type CollectionDescriptionChangedEvent = TypedEvent<
+  [string],
+  CollectionDescriptionChangedEventObject
+>;
+
+export type CollectionDescriptionChangedEventFilter =
+  TypedEventFilter<CollectionDescriptionChangedEvent>;
+
+export interface CollectionDisplayPictureChangedEventObject {
+  photoURL: string;
+}
+export type CollectionDisplayPictureChangedEvent = TypedEvent<
+  [string],
+  CollectionDisplayPictureChangedEventObject
+>;
+
+export type CollectionDisplayPictureChangedEventFilter =
+  TypedEventFilter<CollectionDisplayPictureChangedEvent>;
+
+export interface ContractURIChangedEventObject {
+  newURI: string;
+}
+export type ContractURIChangedEvent = TypedEvent<
+  [string],
+  ContractURIChangedEventObject
+>;
+
+export type ContractURIChangedEventFilter =
+  TypedEventFilter<ContractURIChangedEvent>;
+
+export interface LogEventObject {
+  func: string;
+  gas: BigNumber;
+}
+export type LogEvent = TypedEvent<[string, BigNumber], LogEventObject>;
+
+export type LogEventFilter = TypedEventFilter<LogEvent>;
+
+export interface MarketplaceAddressChangedEventObject {
+  newMarketplaceAddress: string;
+}
+export type MarketplaceAddressChangedEvent = TypedEvent<
+  [string],
+  MarketplaceAddressChangedEventObject
+>;
+
+export type MarketplaceAddressChangedEventFilter =
+  TypedEventFilter<MarketplaceAddressChangedEvent>;
+
+export interface MintingFeeChangedEventObject {
+  newMintingFee: BigNumber;
+}
+export type MintingFeeChangedEvent = TypedEvent<
+  [BigNumber],
+  MintingFeeChangedEventObject
+>;
+
+export type MintingFeeChangedEventFilter =
+  TypedEventFilter<MintingFeeChangedEvent>;
+
+export interface OwnerChangedEventObject {
+  newOwner: string;
+}
+export type OwnerChangedEvent = TypedEvent<[string], OwnerChangedEventObject>;
+
+export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
+
 export interface PausedEventObject {
   account: string;
 }
 export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
+
+export interface ReceivedEventObject {
+  arg0: string;
+  arg1: BigNumber;
+}
+export type ReceivedEvent = TypedEvent<
+  [string, BigNumber],
+  ReceivedEventObject
+>;
+
+export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
 
 export interface RoleAdminChangedEventObject {
   role: string;
@@ -1193,6 +1406,75 @@ export type RoleRevokedEvent = TypedEvent<
 >;
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
+
+export interface RoyaltiesChangedEventObject {
+  _royaltyReceiver: string;
+  _royaltyFraction: BigNumber;
+  _tokenId: BigNumber;
+}
+export type RoyaltiesChangedEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  RoyaltiesChangedEventObject
+>;
+
+export type RoyaltiesChangedEventFilter =
+  TypedEventFilter<RoyaltiesChangedEvent>;
+
+export interface RoyaltiesDisabledEventObject {
+  _timestamp: BigNumber;
+}
+export type RoyaltiesDisabledEvent = TypedEvent<
+  [BigNumber],
+  RoyaltiesDisabledEventObject
+>;
+
+export type RoyaltiesDisabledEventFilter =
+  TypedEventFilter<RoyaltiesDisabledEvent>;
+
+export interface RoyaltiesEnabledEventObject {}
+export type RoyaltiesEnabledEvent = TypedEvent<[], RoyaltiesEnabledEventObject>;
+
+export type RoyaltiesEnabledEventFilter =
+  TypedEventFilter<RoyaltiesEnabledEvent>;
+
+export interface TokenBurnedEventObject {
+  creator: string;
+  burner: string;
+  burnedTokenId: BigNumber;
+  batchSize: BigNumber;
+}
+export type TokenBurnedEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber],
+  TokenBurnedEventObject
+>;
+
+export type TokenBurnedEventFilter = TypedEventFilter<TokenBurnedEvent>;
+
+export interface TokenMintedEventObject {
+  creator: string;
+  minter: string;
+  newTokenId: BigNumber;
+  batchSize: BigNumber;
+}
+export type TokenMintedEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber],
+  TokenMintedEventObject
+>;
+
+export type TokenMintedEventFilter = TypedEventFilter<TokenMintedEvent>;
+
+export interface TokenTransferedEventObject {
+  creator: string;
+  burner: string;
+  transferedTokenId: BigNumber;
+  batchSize: BigNumber;
+}
+export type TokenTransferedEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber],
+  TokenTransferedEventObject
+>;
+
+export type TokenTransferedEventFilter = TypedEventFilter<TokenTransferedEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -1256,6 +1538,12 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    approveAddressForToken(
+      _account: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     balanceOf(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1302,6 +1590,11 @@ export interface ERC721Factory extends BaseContract {
 
     description(overrides?: CallOverrides): Promise<[string]>;
 
+    disableRoyaltiesUntil(
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     getAccountTokenBalance(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1334,6 +1627,8 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    getRoyaltyFeeDenominator(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     getRoyaltyFraction(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRoyaltyReceiver(overrides?: CallOverrides): Promise<[string]>;
@@ -1354,6 +1649,11 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenMaximumSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    getTokenMintee(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     getTokenMinter(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1361,9 +1661,14 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenMintingFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    getTokenOwner(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
-      price: PromiseOrValue<BigNumberish>,
+      _tokenPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[Structs.RoyaltyItemStructOutput]>;
 
@@ -1375,29 +1680,29 @@ export interface ERC721Factory extends BaseContract {
     getTokensCreatedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
     getTokensCreatedByMe(
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
     getTokensMintedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
     getTokensMintedByMe(
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
     getTokensOwnedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
     getTokensOwnedByMe(
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
     grantAdminRole(
       _account: PromiseOrValue<string>,
@@ -1465,6 +1770,10 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    renounceContractOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     renounceMinterRole(
       _account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1492,7 +1801,7 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    royaltiesEnabled(overrides?: CallOverrides): Promise<[boolean]>;
+    royaltiesDisabledUntil(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     royaltyFraction(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -1519,33 +1828,27 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "search(bytes32,uint256)"(
-      _itemKey: PromiseOrValue<BytesLike>,
-      _uint256: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
-
-    "search(bytes32,address)"(
+    searchAddress(
       _itemKey: PromiseOrValue<BytesLike>,
       _address: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
-    "search(bytes32,string)"(
+    searchTimestamp(
       _itemKey: PromiseOrValue<BytesLike>,
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
-
-    "search(string)"(
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
-
-    "search(uint256)"(
       _uint256: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[Structs.NFTItemStructOutput[]]>;
+    ): Promise<[Structs.NFTStructOutput[]]>;
+
+    searchTokenId(
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[Structs.NFTStructOutput[]]>;
+
+    searchTokenURI(
+      _string: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[Structs.NFTStructOutput[]]>;
 
     setApprovalForAll(
       operator: PromiseOrValue<string>,
@@ -1596,6 +1899,7 @@ export interface ERC721Factory extends BaseContract {
     setRoyalties(
       _royaltyReceiver: PromiseOrValue<string>,
       _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1709,6 +2013,12 @@ export interface ERC721Factory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  approveAddressForToken(
+    _account: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   balanceOf(
     owner: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -1755,6 +2065,11 @@ export interface ERC721Factory extends BaseContract {
 
   description(overrides?: CallOverrides): Promise<string>;
 
+  disableRoyaltiesUntil(
+    _timestamp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   getAccountTokenBalance(
     _account: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -1785,6 +2100,8 @@ export interface ERC721Factory extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  getRoyaltyFeeDenominator(overrides?: CallOverrides): Promise<BigNumber>;
+
   getRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
   getRoyaltyReceiver(overrides?: CallOverrides): Promise<string>;
@@ -1805,6 +2122,11 @@ export interface ERC721Factory extends BaseContract {
 
   getTokenMaximumSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getTokenMintee(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   getTokenMinter(
     _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -1812,9 +2134,14 @@ export interface ERC721Factory extends BaseContract {
 
   getTokenMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getTokenOwner(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   getTokenRoyaltyInfo(
     _tokenId: PromiseOrValue<BigNumberish>,
-    price: PromiseOrValue<BigNumberish>,
+    _tokenPrice: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<Structs.RoyaltyItemStructOutput>;
 
@@ -1826,29 +2153,29 @@ export interface ERC721Factory extends BaseContract {
   getTokensCreatedByAddress(
     _account: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
 
   getTokensCreatedByMe(
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
 
   getTokensMintedByAddress(
     _account: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
 
   getTokensMintedByMe(
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
 
   getTokensOwnedByAddress(
     _account: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
 
   getTokensOwnedByMe(
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
 
   grantAdminRole(
     _account: PromiseOrValue<string>,
@@ -1916,6 +2243,10 @@ export interface ERC721Factory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  renounceContractOwnership(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   renounceMinterRole(
     _account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1943,7 +2274,7 @@ export interface ERC721Factory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  royaltiesEnabled(overrides?: CallOverrides): Promise<boolean>;
+  royaltiesDisabledUntil(overrides?: CallOverrides): Promise<BigNumber>;
 
   royaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1970,33 +2301,27 @@ export interface ERC721Factory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "search(bytes32,uint256)"(
-    _itemKey: PromiseOrValue<BytesLike>,
-    _uint256: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
-
-  "search(bytes32,address)"(
+  searchAddress(
     _itemKey: PromiseOrValue<BytesLike>,
     _address: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
 
-  "search(bytes32,string)"(
+  searchTimestamp(
     _itemKey: PromiseOrValue<BytesLike>,
-    _query: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
-
-  "search(string)"(
-    _query: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
-
-  "search(uint256)"(
     _uint256: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<Structs.NFTItemStructOutput[]>;
+  ): Promise<Structs.NFTStructOutput[]>;
+
+  searchTokenId(
+    _uint256: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<Structs.NFTStructOutput[]>;
+
+  searchTokenURI(
+    _string: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<Structs.NFTStructOutput[]>;
 
   setApprovalForAll(
     operator: PromiseOrValue<string>,
@@ -2047,6 +2372,7 @@ export interface ERC721Factory extends BaseContract {
   setRoyalties(
     _royaltyReceiver: PromiseOrValue<string>,
     _royaltyFraction: PromiseOrValue<BigNumberish>,
+    _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2160,6 +2486,12 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    approveAddressForToken(
+      _account: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     balanceOf(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -2206,6 +2538,11 @@ export interface ERC721Factory extends BaseContract {
 
     description(overrides?: CallOverrides): Promise<string>;
 
+    disableRoyaltiesUntil(
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     getAccountTokenBalance(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -2236,6 +2573,8 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    getRoyaltyFeeDenominator(overrides?: CallOverrides): Promise<BigNumber>;
+
     getRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoyaltyReceiver(overrides?: CallOverrides): Promise<string>;
@@ -2256,6 +2595,11 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenMaximumSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTokenMintee(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     getTokenMinter(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -2263,9 +2607,14 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTokenOwner(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
-      price: PromiseOrValue<BigNumberish>,
+      _tokenPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<Structs.RoyaltyItemStructOutput>;
 
@@ -2277,29 +2626,29 @@ export interface ERC721Factory extends BaseContract {
     getTokensCreatedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
 
     getTokensCreatedByMe(
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
 
     getTokensMintedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
 
     getTokensMintedByMe(
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
 
     getTokensOwnedByAddress(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
 
     getTokensOwnedByMe(
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
 
     grantAdminRole(
       _account: PromiseOrValue<string>,
@@ -2367,6 +2716,8 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    renounceContractOwnership(overrides?: CallOverrides): Promise<void>;
+
     renounceMinterRole(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -2394,7 +2745,7 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    royaltiesEnabled(overrides?: CallOverrides): Promise<boolean>;
+    royaltiesDisabledUntil(overrides?: CallOverrides): Promise<BigNumber>;
 
     royaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2421,33 +2772,27 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "search(bytes32,uint256)"(
-      _itemKey: PromiseOrValue<BytesLike>,
-      _uint256: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
-
-    "search(bytes32,address)"(
+    searchAddress(
       _itemKey: PromiseOrValue<BytesLike>,
       _address: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
 
-    "search(bytes32,string)"(
+    searchTimestamp(
       _itemKey: PromiseOrValue<BytesLike>,
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
-
-    "search(string)"(
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
-
-    "search(uint256)"(
       _uint256: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<Structs.NFTItemStructOutput[]>;
+    ): Promise<Structs.NFTStructOutput[]>;
+
+    searchTokenId(
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<Structs.NFTStructOutput[]>;
+
+    searchTokenURI(
+      _string: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<Structs.NFTStructOutput[]>;
 
     setApprovalForAll(
       operator: PromiseOrValue<string>,
@@ -2498,6 +2843,7 @@ export interface ERC721Factory extends BaseContract {
     setRoyalties(
       _royaltyReceiver: PromiseOrValue<string>,
       _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -2618,8 +2964,65 @@ export interface ERC721Factory extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
+    "ApprovedAddressForTokenChanged(address,uint256)"(
+      approvedAddress?: null,
+      tokenId?: null
+    ): ApprovedAddressForTokenChangedEventFilter;
+    ApprovedAddressForTokenChanged(
+      approvedAddress?: null,
+      tokenId?: null
+    ): ApprovedAddressForTokenChangedEventFilter;
+
+    "BaseURIChanged(string)"(newURI?: null): BaseURIChangedEventFilter;
+    BaseURIChanged(newURI?: null): BaseURIChangedEventFilter;
+
+    "CollectionBannerMediaChanged(string)"(
+      bannerURL?: null
+    ): CollectionBannerMediaChangedEventFilter;
+    CollectionBannerMediaChanged(
+      bannerURL?: null
+    ): CollectionBannerMediaChangedEventFilter;
+
+    "CollectionDescriptionChanged(string)"(
+      description?: null
+    ): CollectionDescriptionChangedEventFilter;
+    CollectionDescriptionChanged(
+      description?: null
+    ): CollectionDescriptionChangedEventFilter;
+
+    "CollectionDisplayPictureChanged(string)"(
+      photoURL?: null
+    ): CollectionDisplayPictureChangedEventFilter;
+    CollectionDisplayPictureChanged(
+      photoURL?: null
+    ): CollectionDisplayPictureChangedEventFilter;
+
+    "ContractURIChanged(bytes32)"(newURI?: null): ContractURIChangedEventFilter;
+    ContractURIChanged(newURI?: null): ContractURIChangedEventFilter;
+
+    "Log(string,uint256)"(func?: null, gas?: null): LogEventFilter;
+    Log(func?: null, gas?: null): LogEventFilter;
+
+    "MarketplaceAddressChanged(address)"(
+      newMarketplaceAddress?: null
+    ): MarketplaceAddressChangedEventFilter;
+    MarketplaceAddressChanged(
+      newMarketplaceAddress?: null
+    ): MarketplaceAddressChangedEventFilter;
+
+    "MintingFeeChanged(uint256)"(
+      newMintingFee?: null
+    ): MintingFeeChangedEventFilter;
+    MintingFeeChanged(newMintingFee?: null): MintingFeeChangedEventFilter;
+
+    "OwnerChanged(address)"(newOwner?: null): OwnerChangedEventFilter;
+    OwnerChanged(newOwner?: null): OwnerChangedEventFilter;
+
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
+
+    "Received(address,uint256)"(arg0?: null, arg1?: null): ReceivedEventFilter;
+    Received(arg0?: null, arg1?: null): ReceivedEventFilter;
 
     "RoleAdminChanged(bytes32,bytes32,bytes32)"(
       role?: PromiseOrValue<BytesLike> | null,
@@ -2654,6 +3057,64 @@ export interface ERC721Factory extends BaseContract {
       sender?: PromiseOrValue<string> | null
     ): RoleRevokedEventFilter;
 
+    "RoyaltiesChanged(address,uint96,uint256)"(
+      _royaltyReceiver?: null,
+      _royaltyFraction?: null,
+      _tokenId?: null
+    ): RoyaltiesChangedEventFilter;
+    RoyaltiesChanged(
+      _royaltyReceiver?: null,
+      _royaltyFraction?: null,
+      _tokenId?: null
+    ): RoyaltiesChangedEventFilter;
+
+    "RoyaltiesDisabled(uint256)"(
+      _timestamp?: null
+    ): RoyaltiesDisabledEventFilter;
+    RoyaltiesDisabled(_timestamp?: null): RoyaltiesDisabledEventFilter;
+
+    "RoyaltiesEnabled()"(): RoyaltiesEnabledEventFilter;
+    RoyaltiesEnabled(): RoyaltiesEnabledEventFilter;
+
+    "TokenBurned(address,address,uint256,uint256)"(
+      creator?: null,
+      burner?: null,
+      burnedTokenId?: PromiseOrValue<BigNumberish> | null,
+      batchSize?: null
+    ): TokenBurnedEventFilter;
+    TokenBurned(
+      creator?: null,
+      burner?: null,
+      burnedTokenId?: PromiseOrValue<BigNumberish> | null,
+      batchSize?: null
+    ): TokenBurnedEventFilter;
+
+    "TokenMinted(address,address,uint256,uint256)"(
+      creator?: null,
+      minter?: null,
+      newTokenId?: PromiseOrValue<BigNumberish> | null,
+      batchSize?: null
+    ): TokenMintedEventFilter;
+    TokenMinted(
+      creator?: null,
+      minter?: null,
+      newTokenId?: PromiseOrValue<BigNumberish> | null,
+      batchSize?: null
+    ): TokenMintedEventFilter;
+
+    "TokenTransfered(address,address,uint256,uint256)"(
+      creator?: null,
+      burner?: null,
+      transferedTokenId?: PromiseOrValue<BigNumberish> | null,
+      batchSize?: null
+    ): TokenTransferedEventFilter;
+    TokenTransfered(
+      creator?: null,
+      burner?: null,
+      transferedTokenId?: PromiseOrValue<BigNumberish> | null,
+      batchSize?: null
+    ): TokenTransferedEventFilter;
+
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
@@ -2679,6 +3140,12 @@ export interface ERC721Factory extends BaseContract {
     approve(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    approveAddressForToken(
+      _account: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2726,6 +3193,11 @@ export interface ERC721Factory extends BaseContract {
 
     description(overrides?: CallOverrides): Promise<BigNumber>;
 
+    disableRoyaltiesUntil(
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     getAccountTokenBalance(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -2756,6 +3228,8 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getRoyaltyFeeDenominator(overrides?: CallOverrides): Promise<BigNumber>;
+
     getRoyaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoyaltyReceiver(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2776,6 +3250,11 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenMaximumSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTokenMintee(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getTokenMinter(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -2783,9 +3262,14 @@ export interface ERC721Factory extends BaseContract {
 
     getTokenMintingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTokenOwner(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
-      price: PromiseOrValue<BigNumberish>,
+      _tokenPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2881,6 +3365,10 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    renounceContractOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     renounceMinterRole(
       _account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2908,7 +3396,7 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    royaltiesEnabled(overrides?: CallOverrides): Promise<BigNumber>;
+    royaltiesDisabledUntil(overrides?: CallOverrides): Promise<BigNumber>;
 
     royaltyFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2935,31 +3423,25 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "search(bytes32,uint256)"(
-      _itemKey: PromiseOrValue<BytesLike>,
-      _uint256: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "search(bytes32,address)"(
+    searchAddress(
       _itemKey: PromiseOrValue<BytesLike>,
       _address: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "search(bytes32,string)"(
+    searchTimestamp(
       _itemKey: PromiseOrValue<BytesLike>,
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "search(string)"(
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "search(uint256)"(
       _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    searchTokenId(
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    searchTokenURI(
+      _string: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -3012,6 +3494,7 @@ export interface ERC721Factory extends BaseContract {
     setRoyalties(
       _royaltyReceiver: PromiseOrValue<string>,
       _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -3115,6 +3598,12 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    approveAddressForToken(
+      _account: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     balanceOf(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -3169,6 +3658,11 @@ export interface ERC721Factory extends BaseContract {
 
     description(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    disableRoyaltiesUntil(
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     getAccountTokenBalance(
       _account: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -3201,6 +3695,10 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getRoyaltyFeeDenominator(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getRoyaltyFraction(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -3229,6 +3727,11 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getTokenMintee(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getTokenMinter(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -3238,9 +3741,14 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getTokenOwner(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getTokenRoyaltyInfo(
       _tokenId: PromiseOrValue<BigNumberish>,
-      price: PromiseOrValue<BigNumberish>,
+      _tokenPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3344,6 +3852,10 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    renounceContractOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     renounceMinterRole(
       _account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -3371,7 +3883,9 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    royaltiesEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    royaltiesDisabledUntil(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     royaltyFraction(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -3398,31 +3912,25 @@ export interface ERC721Factory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "search(bytes32,uint256)"(
-      _itemKey: PromiseOrValue<BytesLike>,
-      _uint256: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "search(bytes32,address)"(
+    searchAddress(
       _itemKey: PromiseOrValue<BytesLike>,
       _address: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "search(bytes32,string)"(
+    searchTimestamp(
       _itemKey: PromiseOrValue<BytesLike>,
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "search(string)"(
-      _query: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "search(uint256)"(
       _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    searchTokenId(
+      _uint256: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    searchTokenURI(
+      _string: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -3475,6 +3983,7 @@ export interface ERC721Factory extends BaseContract {
     setRoyalties(
       _royaltyReceiver: PromiseOrValue<string>,
       _royaltyFraction: PromiseOrValue<BigNumberish>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
