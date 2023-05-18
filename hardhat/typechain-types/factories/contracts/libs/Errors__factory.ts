@@ -10,27 +10,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "minValue",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
-        type: "bytes32",
-      },
-    ],
-    name: "BelowMinValue",
-    type: "error",
-  },
-  {
-    inputs: [
-      {
         internalType: "bool",
         name: "active",
         type: "bool",
@@ -43,12 +22,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "maxValue",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "value",
+        name: "tokenId",
         type: "uint256",
       },
       {
@@ -57,7 +31,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "ExceededMaxValue",
+    name: "IndexOutOfBounds",
     type: "error",
   },
   {
@@ -249,7 +223,7 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209862c478c24bd072a47eae68637fe8fd48dbce8897f1cc17ab1082280668e7a264736f6c63430008130033";
+  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212200ae4b2365f0ee89598efcfdd35e5cb437412c825160d6f8c4f7d0760d9eea5df64736f6c63430008130033";
 
 type ErrorsConstructorParams =
   | [signer?: Signer]

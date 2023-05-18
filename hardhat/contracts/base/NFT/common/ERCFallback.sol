@@ -106,21 +106,12 @@ abstract contract ERCFallback is AccessControl, ReentrancyGuard {
         uint256 value
     ) external payable onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         require(getBalance() >= value, "INSUFFICIENT_BALANCE");
-        (bool sent, ) = to.call{value: value}("");
-        require(sent, "FAILED_TO_WITHDRAW");
-    }
-
-    /**
-     * @dev :
-     */
-    function withdrawAll()
-        external
-        payable
-        onlyRole(DEFAULT_ADMIN_ROLE)
-        nonReentrant
-    {
-        require(getBalance() != 0, "INSUFFICIENT_BALANCE");
-        payable(_msgSender()).transfer(getBalance());
+        if(to == address(0)){
+            payable(_msgSender()).transfer(getBalance());
+        }else{
+            (bool sent, ) = to.call{value: value}("");
+            require(sent, "FAILED_TO_WITHDRAW");
+        }
     }
 
     function transferToFallback(address payable _to) public payable {

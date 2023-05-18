@@ -1346,13 +1346,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "withdrawAll",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
     stateMutability: "payable",
     type: "receive",
   },

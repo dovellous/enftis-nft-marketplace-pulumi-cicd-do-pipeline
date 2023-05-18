@@ -110,15 +110,11 @@ library Snippets {
     /// Creator data key
     bytes32 public constant CREATOR = keccak256("CREATOR");
     /// Owner data key
-    bytes32 public constant CREATED = keccak256("CREATED");
-    /// Owner data key
     bytes32 public constant CREATED_AT = keccak256("CREATED_AT");
     /// Owner data key
     bytes32 public constant CREATED_BEFORE = keccak256("CREATED_BEFORE");
     /// Owner data key
     bytes32 public constant CREATED_AFTER = keccak256("CREATED_AFTER");
-    /// Owner data key
-    bytes32 public constant UPDATED = keccak256("UPDATED");
     /// Owner data key
     bytes32 public constant UPDATED_AT = keccak256("UPDATED_AT");
     /// Owner data key
@@ -137,7 +133,9 @@ library Snippets {
     bytes32 public constant TOKEN_URI = keccak256("TOKEN_URI");
     /// Owner data key
     bytes32 public constant TOKEN_ID = keccak256("TOKEN_ID");
+
     bytes32 public constant IPFS_PREFIX = keccak256("ipfs://");
+
     bytes32 public constant BASE_EXTENSION = keccak256(".json");
 
     function getBaseURI(string memory baseURI) public pure returns (string memory) {
@@ -189,25 +187,6 @@ library Snippets {
     ) public pure returns (bool) {
         return (keccak256(abi.encodePacked((a))) ==
             keccak256(abi.encodePacked((b))));
-    }
-
-    function trim(string calldata str, uint start, uint end) public pure returns(string memory) {
-        return str[start:end];
-    }
-
-    function subString(
-        string memory str, 
-        uint startIndex, 
-        uint endIndex
-    ) public pure returns (
-        string memory
-    ) {
-        bytes memory strBytes = bytes(str);
-        bytes memory result = new bytes(endIndex-startIndex);
-        for(uint i = startIndex; i < endIndex; ++i) {
-            result[i-startIndex] = strBytes[i];
-        }
-        return string(result);
     }
 
     function stringLength(

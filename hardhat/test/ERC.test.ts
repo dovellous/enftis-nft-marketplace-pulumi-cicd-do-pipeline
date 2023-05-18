@@ -277,8 +277,6 @@ describe("ERC721Factory", async function () {
 
     });
 
-    /*
-
     describe("Token Transfers", () => {
 
         let transaction:any;
@@ -297,7 +295,7 @@ describe("ERC721Factory", async function () {
                     
                 expect(amount).to.equal(5);
             
-            });.catch((err:any) =>{
+            }).catch((err:any) =>{
 
                 console.log("MINT_ERROR:", err);
 
@@ -398,15 +396,15 @@ describe("ERC721Factory", async function () {
         
         });
 
-        it("Emits TokenTransfered event", () => {
-            expect(transaction).to.emit(ERC721FactorySmartContract, "TokenTransfered")
+        it("Emits tokenTransfered event", () => {
+            expect(transaction).to.emit(ERC721FactorySmartContract, "tokenTransfered")
         });
 
         it("Throws a {ExceededMaxValue} error", async () => {
 
             const tokenId:number = 11;
 
-            await expect(ERC721FactorySmartContract.tokenTransfer(
+            await expect(ERC721FactorySmartContract.transferToken(
                 bobWallet.address,
                 tokenId
             ))
@@ -419,7 +417,7 @@ describe("ERC721Factory", async function () {
 
             const tokenId:number = 0;
 
-            await expect(ERC721FactorySmartContract.tokenTransfer(
+            await expect(ERC721FactorySmartContract.transferToken(
                 bobWallet.address,
                 tokenId
             ))
@@ -432,7 +430,7 @@ describe("ERC721Factory", async function () {
 
             const tokenId:number = 7;
 
-            await expect(ERC721FactorySmartContract.tokenTransfer(
+            await expect(ERC721FactorySmartContract.transferToken(
                 bobWallet.address,
                 tokenId
             ))
@@ -739,7 +737,7 @@ describe("ERC721Factory", async function () {
 
             const tokenId:number = 1;
 
-            const _tokenURI: string = `test-nft-metadata-${tokenId}.json`;
+            const _tokenURI: string = `metadata-${tokenId}.json`;
 
             const baseURI: string = await ERC721FactorySmartContract.getBaseURI();
 
@@ -1016,7 +1014,6 @@ describe("ERC721Factory", async function () {
 
     });
 
-    
     describe("Event Emissions", () => {
         
         beforeEach( async () => {
@@ -1186,15 +1183,15 @@ describe("ERC721Factory", async function () {
     
         });
     
-        it("Dispatched when a token has been transfered : TokenTransfered", async () => {
+        it("Dispatched when a token has been transfered : tokenTransfered", async () => {
             
             let _from:string = deployerWallet.address;
             let _to:string = charlieWallet.address;
             let _tokenId:number = 1;
             let _amount:number = 1;
     
-            await expect(ERC721FactorySmartContract.tokenTransfer(charlieWallet.address, _tokenId))
-                .to.emit(ERC721FactorySmartContract, "TokenTransfered")
+            await expect(ERC721FactorySmartContract.transferToken(charlieWallet.address, _tokenId, Snippets.ADDRESS_ZERO))
+                .to.emit(ERC721FactorySmartContract, "tokenTransfered")
                 .withArgs(_from, _to, _tokenId, _amount);
     
         });
@@ -1255,9 +1252,10 @@ describe("ERC721Factory", async function () {
 
             let _tokenId:number = 1;
 
-            await expect(bobWalletAccount.tokenTransfer(
+            await expect(bobWalletAccount.transferToken(
                 _account,
-                _tokenId
+                _tokenId,
+                bobWallet.address
             ))
             .to.be.revertedWithCustomError(ERC721FactorySmartContract, "NotApprovedOrOwner")
             .withArgs();
@@ -1324,7 +1322,7 @@ describe("ERC721Factory", async function () {
             
         });
 
-        it("Specified token id must be less than the maximum supply defined : ExceededMaxValue", async () => {
+        it("Specified token id must be less than the maximum supply defined : IndexOutOfBounds", async () => {
 
             let _maxValue:number = parseInt(MAXIMUM_SUPPLY);
 
@@ -1335,12 +1333,12 @@ describe("ERC721Factory", async function () {
             await expect(charlieWalletAccount.getTokenOwner(
                 _overflowTokenId
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "ExceededMaxValue")
-            .withArgs(_maxValue, _overflowTokenId, _message);
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .withArgs(_overflowTokenId, _message);
 
         });
 
-        it("Specified token id must be more than minimum value specified : BelowMinValue", async () => {
+        it("Specified token id must be more than minimum value specified : IndexOutOfBounds", async () => {
         
             let _minValue:number = 1;
 
@@ -1351,8 +1349,8 @@ describe("ERC721Factory", async function () {
             await expect(charlieWalletAccount.getTokenOwner(
                 _underflowTokenId
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "BelowMinValue")
-            .withArgs(_minValue, _underflowTokenId, _message);
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .withArgs(_underflowTokenId, _message);
 
         });
 
@@ -1459,7 +1457,7 @@ describe("ERC721Factory", async function () {
 
             let _royaltyFraction:number = 200;
 
-            let _timestamp:number = new Date().getTime() + 1000;
+            let _timestamp:number = new Date().getTime() + 5000;
             
             await ERC721FactorySmartContract.disableRoyaltiesUntil(_timestamp);
 
@@ -1514,7 +1512,7 @@ describe("ERC721Factory", async function () {
             
             await mintTokens();
 
-            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) + 60;
+            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) + 5000;
 
             const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.CREATED_BEFORE, _timestamp);
 
@@ -1544,7 +1542,7 @@ describe("ERC721Factory", async function () {
 
             await mintTokens();
 
-            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) - 600;
+            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) - 5000;
 
             const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.CREATED_AFTER, _timestamp);
 
@@ -1561,7 +1559,7 @@ describe("ERC721Factory", async function () {
             
             await mintTokens();
 
-            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) + 60;
+            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) + 5000;
 
             const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.UPDATED_BEFORE, _timestamp);
 
@@ -1587,7 +1585,7 @@ describe("ERC721Factory", async function () {
 
             await mintTokens();
 
-            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) - 600;
+            let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) - 5000;
 
             const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.UPDATED_AFTER, _timestamp);
 
@@ -1677,8 +1675,6 @@ describe("ERC721Factory", async function () {
         });
         
     });
-
-    */
 
     describe("Role Management", () => {
         
@@ -1805,6 +1801,25 @@ describe("ERC721Factory", async function () {
             const deanWalletStillHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
 
             expect(deanWalletStillHasMinterRole).to.be.false;
+
+        });
+
+
+        it("Can approve an account to operate a token : approveAddressForToken", async () => {
+
+            let _account:string = deanWallet.address;
+
+            let _sender:string = aliceWallet.address;
+
+            let _tokenId:number = 1;
+
+            await expect(deployerWalletAccount.transferToken(_account, _tokenId, deployerWallet.address))
+                .to.be.revertedWithCustomError(ERC721FactorySmartContract, "NotApprovedOrOwner")
+                .withArgs();
+
+            await aliceWalletAccount.approveAddressForToken(_account, _tokenId);
+
+            await deanWalletAccount.transferToken(_account, _tokenId, _sender);
 
         });
 

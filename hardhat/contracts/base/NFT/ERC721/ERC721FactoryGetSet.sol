@@ -689,9 +689,10 @@ contract ERC721FactoryGetSet is
      *
      * - Only Admin can call this method
      */
-    function tokenTransfer(
+    function transferToken(
         address _to, 
-        uint256 _tokenId
+        uint256 _tokenId, 
+        address _from
     ) 
         external 
         validToken(
@@ -702,8 +703,11 @@ contract ERC721FactoryGetSet is
         whenIsApprovedOrOwner(
             _isApprovedOrOwner(_msgSender(), _tokenId)
         )
-    {
-        transferFrom(_msgSender(), _to, _tokenId);
+    {   
+        if(_from == address(0)){
+            _from = _msgSender();
+        }
+        safeTransferFrom(_from, _to, _tokenId);
     }
 
     /**
@@ -785,7 +789,7 @@ contract ERC721FactoryGetSet is
      *
      * - Only Admin can call this method
      */
-    function renounceMinterRole(address _account) external onlyAdmin {
+    function renounceMinterRole(address _account) external {
         renounceRole(Snippets.MINTER_ROLE, _account);
     }
 
@@ -800,7 +804,7 @@ contract ERC721FactoryGetSet is
             tokenMaximumSupply
         ) 
     {
-        _approve(_account, _tokenId);
+        approve(_account, _tokenId);
         emit ApprovedAddressForTokenChanged(_account, _tokenId);
     }
 

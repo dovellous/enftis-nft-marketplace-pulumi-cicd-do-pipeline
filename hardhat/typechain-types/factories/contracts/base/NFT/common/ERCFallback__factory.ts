@@ -317,13 +317,6 @@ const _abi = [
     stateMutability: "payable",
     type: "function",
   },
-  {
-    inputs: [],
-    name: "withdrawAll",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
 ] as const;
 
 export class ERCFallback__factory {

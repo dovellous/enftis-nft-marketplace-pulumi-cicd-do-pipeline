@@ -85,29 +85,15 @@ library Errors {
     /**
      * Specified id must be less than the max supply defined.
      *
-     * @param maxValue : max supply specified during initialization.
-     * @param value : entered value.
+     * @param tokenId : entered tokenId.
      * @param message : error message.
      *
      * Requirements:
      *
      * - tokenId must be below tokenMaximumSupply.
      */
-    error ExceededMaxValue(uint256 maxValue, uint256 value, bytes32 message);
-
-    /**
-     * Specified id must not be less than the minimum value specified.
-     *
-     * @param minValue : minimum value for token supply, normally it's 1.
-     * @param value : entered value.
-     * @param message : error message.
-     *
-     * Requirements:
-     *
-     * - tokenId must not be zero.
-     */
-    error BelowMinValue(uint256 minValue, uint256 value, bytes32 message);
-
+    error IndexOutOfBounds(uint256 tokenId, bytes32 message);
+ 
     /**
      * Specified id must represent an already minted token. Also the token must not have been burned.
      *

@@ -84,7 +84,6 @@ export interface ERC721FactoryMinterInterface extends utils.Interface {
     "transferToFallback(address)": FunctionFragment;
     "updateContractTreasury(address)": FunctionFragment;
     "withdraw(address,uint256)": FunctionFragment;
-    "withdrawAll()": FunctionFragment;
   };
 
   getFunction(
@@ -143,7 +142,6 @@ export interface ERC721FactoryMinterInterface extends utils.Interface {
       | "transferToFallback"
       | "updateContractTreasury"
       | "withdraw"
-      | "withdrawAll"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -371,10 +369,6 @@ export interface ERC721FactoryMinterInterface extends utils.Interface {
     functionFragment: "withdraw",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawAll",
-    values?: undefined
-  ): string;
 
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
@@ -544,10 +538,6 @@ export interface ERC721FactoryMinterInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawAll",
-    data: BytesLike
-  ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
@@ -1158,10 +1148,6 @@ export interface ERC721FactoryMinter extends BaseContract {
       value: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    withdrawAll(
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -1410,10 +1396,6 @@ export interface ERC721FactoryMinter extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  withdrawAll(
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
@@ -1658,8 +1640,6 @@ export interface ERC721FactoryMinter extends BaseContract {
       value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    withdrawAll(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -2080,10 +2060,6 @@ export interface ERC721FactoryMinter extends BaseContract {
       value: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    withdrawAll(
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -2325,10 +2301,6 @@ export interface ERC721FactoryMinter extends BaseContract {
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    withdrawAll(
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

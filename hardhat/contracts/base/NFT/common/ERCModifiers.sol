@@ -8,9 +8,9 @@ pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "./ERCLibrary.sol";
+import "./ERCFallback.sol";
 
-abstract contract ERCModifiers is AccessControl, ERCLibrary {
+abstract contract ERCModifiers is AccessControl, ERCFallback {
     
     struct ContractOptions {
         bool pausable;
@@ -173,18 +173,9 @@ abstract contract ERCModifiers is AccessControl, ERCLibrary {
         uint256 _tokenMaximumSupply
     ) private pure {
 
-        if (_tokenId == 0) {
-            revert Errors.BelowMinValue({
-                minValue: 1,
-                value: _tokenId,
-                message: Snippets.INDEX_OUT_OF_BOUNDS
-            });
-        }
-
-        if (_tokenId > _tokenMaximumSupply) {
-            revert Errors.ExceededMaxValue({
-                maxValue: _tokenMaximumSupply,
-                value: _tokenId,
+        if (_tokenId == 0 || _tokenId > _tokenMaximumSupply) {
+            revert Errors.IndexOutOfBounds({
+                tokenId: _tokenId,
                 message: Snippets.INDEX_OUT_OF_BOUNDS
             });
         }

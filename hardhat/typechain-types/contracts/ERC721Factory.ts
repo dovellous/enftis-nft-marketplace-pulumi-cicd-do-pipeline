@@ -212,15 +212,14 @@ export interface ERC721FactoryInterface extends utils.Interface {
     "tokenIdToTokenActivityItem(uint256,uint256)": FunctionFragment;
     "tokenMaximumSupply()": FunctionFragment;
     "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
-    "tokenTransfer(address,uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "tokenURIExists(string)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferToFallback(address)": FunctionFragment;
+    "transferToken(address,uint256,address)": FunctionFragment;
     "updateContractTreasury(address)": FunctionFragment;
     "withdraw(address,uint256)": FunctionFragment;
-    "withdrawAll()": FunctionFragment;
   };
 
   getFunction(
@@ -326,15 +325,14 @@ export interface ERC721FactoryInterface extends utils.Interface {
       | "tokenIdToTokenActivityItem"
       | "tokenMaximumSupply"
       | "tokenOfOwnerByIndex"
-      | "tokenTransfer"
       | "tokenURI"
       | "tokenURIExists"
       | "totalSupply"
       | "transferFrom"
       | "transferToFallback"
+      | "transferToken"
       | "updateContractTreasury"
       | "withdraw"
-      | "withdrawAll"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -744,10 +742,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenTransfer",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "tokenURI",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -772,16 +766,20 @@ export interface ERC721FactoryInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "transferToken",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "updateContractTreasury",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawAll",
-    values?: undefined
   ): string;
 
   decodeFunctionResult(
@@ -1131,10 +1129,6 @@ export interface ERC721FactoryInterface extends utils.Interface {
     functionFragment: "tokenOfOwnerByIndex",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenTransfer",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "tokenURIExists",
@@ -1153,14 +1147,14 @@ export interface ERC721FactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "transferToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "updateContractTreasury",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawAll",
-    data: BytesLike
-  ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
@@ -1955,12 +1949,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    tokenTransfer(
-      _to: PromiseOrValue<string>,
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     tokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1985,6 +1973,13 @@ export interface ERC721Factory extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    transferToken(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     updateContractTreasury(
       _newContractTreasury: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1993,10 +1988,6 @@ export interface ERC721Factory extends BaseContract {
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    withdrawAll(
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -2428,12 +2419,6 @@ export interface ERC721Factory extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  tokenTransfer(
-    _to: PromiseOrValue<string>,
-    _tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   tokenURI(
     _tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -2458,6 +2443,13 @@ export interface ERC721Factory extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  transferToken(
+    _to: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _from: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   updateContractTreasury(
     _newContractTreasury: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2466,10 +2458,6 @@ export interface ERC721Factory extends BaseContract {
   withdraw(
     to: PromiseOrValue<string>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  withdrawAll(
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -2897,12 +2885,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    tokenTransfer(
-      _to: PromiseOrValue<string>,
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     tokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -2927,6 +2909,13 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    transferToken(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updateContractTreasury(
       _newContractTreasury: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -2937,8 +2926,6 @@ export interface ERC721Factory extends BaseContract {
       value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    withdrawAll(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -3535,12 +3522,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    tokenTransfer(
-      _to: PromiseOrValue<string>,
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     tokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -3565,6 +3546,13 @@ export interface ERC721Factory extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    transferToken(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     updateContractTreasury(
       _newContractTreasury: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -3573,10 +3561,6 @@ export interface ERC721Factory extends BaseContract {
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    withdrawAll(
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -4026,12 +4010,6 @@ export interface ERC721Factory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    tokenTransfer(
-      _to: PromiseOrValue<string>,
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     tokenURI(
       _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -4056,6 +4034,13 @@ export interface ERC721Factory extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    transferToken(
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     updateContractTreasury(
       _newContractTreasury: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -4064,10 +4049,6 @@ export interface ERC721Factory extends BaseContract {
     withdraw(
       to: PromiseOrValue<string>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    withdrawAll(
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

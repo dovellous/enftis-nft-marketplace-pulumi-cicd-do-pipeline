@@ -54,7 +54,6 @@ export interface SnippetsInterface extends utils.Interface {
     "ADMIN_ROLE()": FunctionFragment;
     "AMOUNT_BELOW_MINTING_FEE()": FunctionFragment;
     "BASE_EXTENSION()": FunctionFragment;
-    "CREATED()": FunctionFragment;
     "CREATED_AFTER()": FunctionFragment;
     "CREATED_AT()": FunctionFragment;
     "CREATED_BEFORE()": FunctionFragment;
@@ -80,7 +79,6 @@ export interface SnippetsInterface extends utils.Interface {
     "TOKEN_URI()": FunctionFragment;
     "TOKEN_URI_EXISTS()": FunctionFragment;
     "UINT256()": FunctionFragment;
-    "UPDATED()": FunctionFragment;
     "UPDATED_AFTER()": FunctionFragment;
     "UPDATED_AT()": FunctionFragment;
     "UPDATED_BEFORE()": FunctionFragment;
@@ -94,8 +92,6 @@ export interface SnippetsInterface extends utils.Interface {
     "searchString(string,string)": FunctionFragment;
     "stringBytes32(string)": FunctionFragment;
     "stringContains(string,string)": FunctionFragment;
-    "subString(string,uint256,uint256)": FunctionFragment;
-    "trim(string,uint256,uint256)": FunctionFragment;
   };
 
   getFunction(
@@ -104,7 +100,6 @@ export interface SnippetsInterface extends utils.Interface {
       | "ADMIN_ROLE"
       | "AMOUNT_BELOW_MINTING_FEE"
       | "BASE_EXTENSION"
-      | "CREATED"
       | "CREATED_AFTER"
       | "CREATED_AT"
       | "CREATED_BEFORE"
@@ -130,7 +125,6 @@ export interface SnippetsInterface extends utils.Interface {
       | "TOKEN_URI"
       | "TOKEN_URI_EXISTS"
       | "UINT256"
-      | "UPDATED"
       | "UPDATED_AFTER"
       | "UPDATED_AT"
       | "UPDATED_BEFORE"
@@ -144,8 +138,6 @@ export interface SnippetsInterface extends utils.Interface {
       | "searchString"
       | "stringBytes32"
       | "stringContains"
-      | "subString"
-      | "trim"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "ADDRESS", values?: undefined): string;
@@ -161,7 +153,6 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "BASE_EXTENSION",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "CREATED", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "CREATED_AFTER",
     values?: undefined
@@ -238,7 +229,6 @@ export interface SnippetsInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "UINT256", values?: undefined): string;
-  encodeFunctionData(functionFragment: "UPDATED", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "UPDATED_AFTER",
     values?: undefined
@@ -296,22 +286,6 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "stringContains",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "subString",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "trim",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
 
   decodeFunctionResult(functionFragment: "ADDRESS", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ADMIN_ROLE", data: BytesLike): Result;
@@ -323,7 +297,6 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "BASE_EXTENSION",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "CREATED", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "CREATED_AFTER",
     data: BytesLike
@@ -397,7 +370,6 @@ export interface SnippetsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "UINT256", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "UPDATED", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "UPDATED_AFTER",
     data: BytesLike
@@ -444,8 +416,6 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "stringContains",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "subString", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "trim", data: BytesLike): Result;
 
   events: {};
 }
@@ -484,8 +454,6 @@ export interface Snippets extends BaseContract {
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<[string]>;
 
     BASE_EXTENSION(overrides?: CallOverrides): Promise<[string]>;
-
-    CREATED(overrides?: CallOverrides): Promise<[string]>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<[string]>;
 
@@ -536,8 +504,6 @@ export interface Snippets extends BaseContract {
     TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<[string]>;
 
     UINT256(overrides?: CallOverrides): Promise<[string]>;
-
-    UPDATED(overrides?: CallOverrides): Promise<[string]>;
 
     UPDATED_AFTER(overrides?: CallOverrides): Promise<[string]>;
 
@@ -599,20 +565,6 @@ export interface Snippets extends BaseContract {
       where: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    subString(
-      str: PromiseOrValue<string>,
-      startIndex: PromiseOrValue<BigNumberish>,
-      endIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    trim(
-      str: PromiseOrValue<string>,
-      start: PromiseOrValue<BigNumberish>,
-      end: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
   };
 
   ADDRESS(overrides?: CallOverrides): Promise<string>;
@@ -622,8 +574,6 @@ export interface Snippets extends BaseContract {
   AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
   BASE_EXTENSION(overrides?: CallOverrides): Promise<string>;
-
-  CREATED(overrides?: CallOverrides): Promise<string>;
 
   CREATED_AFTER(overrides?: CallOverrides): Promise<string>;
 
@@ -674,8 +624,6 @@ export interface Snippets extends BaseContract {
   TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<string>;
 
   UINT256(overrides?: CallOverrides): Promise<string>;
-
-  UPDATED(overrides?: CallOverrides): Promise<string>;
 
   UPDATED_AFTER(overrides?: CallOverrides): Promise<string>;
 
@@ -738,20 +686,6 @@ export interface Snippets extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  subString(
-    str: PromiseOrValue<string>,
-    startIndex: PromiseOrValue<BigNumberish>,
-    endIndex: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  trim(
-    str: PromiseOrValue<string>,
-    start: PromiseOrValue<BigNumberish>,
-    end: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   callStatic: {
     ADDRESS(overrides?: CallOverrides): Promise<string>;
 
@@ -760,8 +694,6 @@ export interface Snippets extends BaseContract {
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<string>;
 
     BASE_EXTENSION(overrides?: CallOverrides): Promise<string>;
-
-    CREATED(overrides?: CallOverrides): Promise<string>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<string>;
 
@@ -812,8 +744,6 @@ export interface Snippets extends BaseContract {
     TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<string>;
 
     UINT256(overrides?: CallOverrides): Promise<string>;
-
-    UPDATED(overrides?: CallOverrides): Promise<string>;
 
     UPDATED_AFTER(overrides?: CallOverrides): Promise<string>;
 
@@ -875,20 +805,6 @@ export interface Snippets extends BaseContract {
       where: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    subString(
-      str: PromiseOrValue<string>,
-      startIndex: PromiseOrValue<BigNumberish>,
-      endIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    trim(
-      str: PromiseOrValue<string>,
-      start: PromiseOrValue<BigNumberish>,
-      end: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
   };
 
   filters: {};
@@ -901,8 +817,6 @@ export interface Snippets extends BaseContract {
     AMOUNT_BELOW_MINTING_FEE(overrides?: CallOverrides): Promise<BigNumber>;
 
     BASE_EXTENSION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    CREATED(overrides?: CallOverrides): Promise<BigNumber>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -953,8 +867,6 @@ export interface Snippets extends BaseContract {
     TOKEN_URI_EXISTS(overrides?: CallOverrides): Promise<BigNumber>;
 
     UINT256(overrides?: CallOverrides): Promise<BigNumber>;
-
-    UPDATED(overrides?: CallOverrides): Promise<BigNumber>;
 
     UPDATED_AFTER(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1016,20 +928,6 @@ export interface Snippets extends BaseContract {
       where: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    subString(
-      str: PromiseOrValue<string>,
-      startIndex: PromiseOrValue<BigNumberish>,
-      endIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    trim(
-      str: PromiseOrValue<string>,
-      start: PromiseOrValue<BigNumberish>,
-      end: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1042,8 +940,6 @@ export interface Snippets extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     BASE_EXTENSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    CREATED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     CREATED_AFTER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1113,8 +1009,6 @@ export interface Snippets extends BaseContract {
 
     UINT256(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    UPDATED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     UPDATED_AFTER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     UPDATED_AT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1173,20 +1067,6 @@ export interface Snippets extends BaseContract {
     stringContains(
       what: PromiseOrValue<string>,
       where: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    subString(
-      str: PromiseOrValue<string>,
-      startIndex: PromiseOrValue<BigNumberish>,
-      endIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    trim(
-      str: PromiseOrValue<string>,
-      start: PromiseOrValue<BigNumberish>,
-      end: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
