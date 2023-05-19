@@ -12,7 +12,7 @@
 
 name        :   Enftis NFT Factory Token
 symbol      :   ENFTIS
-tokenTypes  :   ERC721, ERC165, ERC2968
+tokenTypes  :   ERC1155, ERC165, ERC2968
 maxSupply   :   uint256.max()
 solhcVersion:   0.8.20
 version     :   1.0.0
@@ -38,14 +38,14 @@ networks    :   ethereum, polygon, binance
 pragma solidity ^0.8.19;
 pragma experimental ABIEncoderV2;
 
-import "./base/ERC721/ERC721FactoryGetSet.sol";
+import "./base/ERC1155/ERC1155FactoryGetSet.sol";
 
-contract ERC721Factory is ERC721FactoryGetSet {
+contract ERC1155Factory is ERC1155FactoryGetSet {
     constructor(
         string memory _name,
         string memory _symbol,
         bytes  memory _data
-    ) payable ERC721FactoryGetSet(
+    ) payable ERC1155FactoryGetSet(
         _name,
         _symbol,
         _data
