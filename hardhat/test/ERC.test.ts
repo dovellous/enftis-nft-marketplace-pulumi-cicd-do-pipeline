@@ -400,29 +400,31 @@ describe("ERC721Factory", async function () {
             expect(transaction).to.emit(ERC721FactorySmartContract, "tokenTransfered")
         });
 
-        it("Throws a {ExceededMaxValue} error", async () => {
+        it("Throws a {IndexOutOfBounds} error on HIGHER index", async () => {
 
             const tokenId:number = 11;
 
             await expect(ERC721FactorySmartContract.transferToken(
                 bobWallet.address,
-                tokenId
+                tokenId,
+                aliceWallet.address
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "ExceededMaxValue")
-            .withArgs(await ERC721FactorySmartContract.getTokenMaximumSupply(), tokenId, Snippets.INDEX_OUT_OF_BOUNDS);
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .withArgs(tokenId, Snippets.INDEX_OUT_OF_BOUNDS);
 
         });
 
-        it("Throws a {BelowMinValue} error", async () => {
+        it("Throws a {IndexOutOfBounds} error on LOWER index", async () => {
 
             const tokenId:number = 0;
 
             await expect(ERC721FactorySmartContract.transferToken(
                 bobWallet.address,
-                tokenId
+                tokenId,
+                aliceWallet.address
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "BelowMinValue")
-            .withArgs(1, tokenId, Snippets.INDEX_OUT_OF_BOUNDS);
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .withArgs(tokenId, Snippets.INDEX_OUT_OF_BOUNDS);
             
         });
 
@@ -432,7 +434,8 @@ describe("ERC721Factory", async function () {
 
             await expect(ERC721FactorySmartContract.transferToken(
                 bobWallet.address,
-                tokenId
+                tokenId,
+                aliceWallet.address
             ))
             .to.be.revertedWithCustomError(ERC721FactorySmartContract, "TokenDoesNotExists")
             .withArgs(tokenId, Snippets.TOKEN_DOES_NOT_EXISTS);
@@ -773,7 +776,6 @@ describe("ERC721Factory", async function () {
 
         });
 
-
         it("Get the owner of the smart contract : getOwner", async () => {
 
             console.warn("     🟩 Contract Owner");
@@ -783,6 +785,24 @@ describe("ERC721Factory", async function () {
             const owner: string = await deployerWalletAccount.getOwner();
 
             expect(owner).to.equal(_owner);
+
+        });
+
+        it("Set the new owner of the smart contract : setNewOwner", async () => {
+
+            let _owner: string = deployerWallet.address;
+
+            let _newOwner: string = deanWallet.address;
+
+            const owner: string = await deployerWalletAccount.getOwner();
+
+            expect(owner).to.equal(_owner);
+
+            await ERC721FactorySmartContract.setNewOwner(_newOwner);
+
+            const newOwner: string = await deployerWalletAccount.getOwner();
+
+            expect(newOwner).to.equal(_newOwner);
 
         });
 
@@ -1183,7 +1203,7 @@ describe("ERC721Factory", async function () {
     
         });
     
-        it("Dispatched when a token has been transfered : tokenTransfered", async () => {
+        it("Dispatched when a token has been transfered : TokenTransfered", async () => {
             
             let _from:string = deployerWallet.address;
             let _to:string = charlieWallet.address;
@@ -1191,7 +1211,7 @@ describe("ERC721Factory", async function () {
             let _amount:number = 1;
     
             await expect(ERC721FactorySmartContract.transferToken(charlieWallet.address, _tokenId, Snippets.ADDRESS_ZERO))
-                .to.emit(ERC721FactorySmartContract, "tokenTransfered")
+                .to.emit(ERC721FactorySmartContract, "TokenTransfered")
                 .withArgs(_from, _to, _tokenId, _amount);
     
         });
