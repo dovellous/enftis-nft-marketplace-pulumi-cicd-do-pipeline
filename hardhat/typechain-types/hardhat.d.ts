@@ -33,9 +33,37 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC2981__factory>;
     getContractFactory(
+      name: "ERC1155",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155__factory>;
+    getContractFactory(
+      name: "ERC1155Burnable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Burnable__factory>;
+    getContractFactory(
+      name: "ERC1155Pausable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Pausable__factory>;
+    getContractFactory(
+      name: "ERC1155Supply",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Supply__factory>;
+    getContractFactory(
+      name: "ERC1155URIStorage",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155URIStorage__factory>;
+    getContractFactory(
+      name: "IERC1155MetadataURI",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC1155MetadataURI__factory>;
+    getContractFactory(
       name: "IERC1155",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC1155__factory>;
+    getContractFactory(
+      name: "IERC1155Receiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC1155Receiver__factory>;
     getContractFactory(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -85,6 +113,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "Multicall",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Multicall__factory>;
+    getContractFactory(
       name: "ERCFallback",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERCFallback__factory>;
@@ -93,29 +125,33 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERCModifiers__factory>;
     getContractFactory(
-      name: "ERC721FactoryBase",
+      name: "ERC1155FactoryBase",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721FactoryBase__factory>;
+    ): Promise<Contracts.ERC1155FactoryBase__factory>;
     getContractFactory(
-      name: "ERC721FactoryBurner",
+      name: "ERC1155FactoryBurner",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721FactoryBurner__factory>;
+    ): Promise<Contracts.ERC1155FactoryBurner__factory>;
     getContractFactory(
-      name: "ERC721FactoryGetSet",
+      name: "ERC1155FactoryGetSet",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721FactoryGetSet__factory>;
+    ): Promise<Contracts.ERC1155FactoryGetSet__factory>;
     getContractFactory(
-      name: "ERC721FactoryMinter",
+      name: "ERC1155FactoryMinter",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721FactoryMinter__factory>;
+    ): Promise<Contracts.ERC1155FactoryMinter__factory>;
     getContractFactory(
-      name: "ERC721FactoryWorker",
+      name: "ERC1155FactoryProxyRegistry",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721FactoryWorker__factory>;
+    ): Promise<Contracts.ERC1155FactoryProxyRegistry__factory>;
     getContractFactory(
-      name: "ERC721Factory",
+      name: "ERC1155FactoryWorker",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721Factory__factory>;
+    ): Promise<Contracts.ERC1155FactoryWorker__factory>;
+    getContractFactory(
+      name: "ERC1155Factory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Factory__factory>;
     getContractFactory(
       name: "Errors",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -151,10 +187,45 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC2981>;
     getContractAt(
+      name: "ERC1155",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155>;
+    getContractAt(
+      name: "ERC1155Burnable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Burnable>;
+    getContractAt(
+      name: "ERC1155Pausable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Pausable>;
+    getContractAt(
+      name: "ERC1155Supply",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Supply>;
+    getContractAt(
+      name: "ERC1155URIStorage",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155URIStorage>;
+    getContractAt(
+      name: "IERC1155MetadataURI",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC1155MetadataURI>;
+    getContractAt(
       name: "IERC1155",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC1155>;
+    getContractAt(
+      name: "IERC1155Receiver",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC1155Receiver>;
     getContractAt(
       name: "IERC20",
       address: string,
@@ -216,6 +287,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
+      name: "Multicall",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Multicall>;
+    getContractAt(
       name: "ERCFallback",
       address: string,
       signer?: ethers.Signer
@@ -226,35 +302,40 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERCModifiers>;
     getContractAt(
-      name: "ERC721FactoryBase",
+      name: "ERC1155FactoryBase",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC721FactoryBase>;
+    ): Promise<Contracts.ERC1155FactoryBase>;
     getContractAt(
-      name: "ERC721FactoryBurner",
+      name: "ERC1155FactoryBurner",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC721FactoryBurner>;
+    ): Promise<Contracts.ERC1155FactoryBurner>;
     getContractAt(
-      name: "ERC721FactoryGetSet",
+      name: "ERC1155FactoryGetSet",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC721FactoryGetSet>;
+    ): Promise<Contracts.ERC1155FactoryGetSet>;
     getContractAt(
-      name: "ERC721FactoryMinter",
+      name: "ERC1155FactoryMinter",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC721FactoryMinter>;
+    ): Promise<Contracts.ERC1155FactoryMinter>;
     getContractAt(
-      name: "ERC721FactoryWorker",
+      name: "ERC1155FactoryProxyRegistry",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC721FactoryWorker>;
+    ): Promise<Contracts.ERC1155FactoryProxyRegistry>;
     getContractAt(
-      name: "ERC721Factory",
+      name: "ERC1155FactoryWorker",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC721Factory>;
+    ): Promise<Contracts.ERC1155FactoryWorker>;
+    getContractAt(
+      name: "ERC1155Factory",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Factory>;
     getContractAt(
       name: "Errors",
       address: string,

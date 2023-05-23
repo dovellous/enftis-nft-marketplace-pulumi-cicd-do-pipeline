@@ -5,4 +5,4 @@ import type * as base from "./base";
 export type { base };
 import type * as libs from "./libs";
 export type { libs };
-export type { ERC721Factory } from "./ERC721Factory";
+export type { ERC1155Factory } from "./ERC1155Factory";

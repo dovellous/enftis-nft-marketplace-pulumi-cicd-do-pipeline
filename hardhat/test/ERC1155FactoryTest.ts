@@ -6,9 +6,9 @@ const Snippets = require("../scripts/libs/Snippets");
 
 const MAXIMUM_SUPPLY: number | any = parseInt(`${process.env.MAXIMUM_SUPPLY}`);
 
-describe("ERC721Factory", async function () {
+describe("ERC1155Factory", async function () {
 
-    let ERC721FactorySmartContract:any;
+    let ERC1155FactorySmartContract:any;
 
     let deployerWallet:any, aliceWallet:any, bobWallet:any, charlieWallet:any, deanWallet:any, args:any;
 
@@ -22,7 +22,7 @@ describe("ERC721Factory", async function () {
 
         const { smartContract, _deployerWallet, _aliceWallet, _bobWallet, _charlieWallet, _deanWallet, _args } = await loadFixture(deploySmartContract);
 
-        ERC721FactorySmartContract = smartContract;
+        ERC1155FactorySmartContract = smartContract;
         deployerWallet = _deployerWallet;
         aliceWallet = _aliceWallet;
         bobWallet = _bobWallet;
@@ -30,11 +30,11 @@ describe("ERC721Factory", async function () {
         deanWallet = _deanWallet;
         args = _args;
 
-        deployerWalletAccount = await ERC721FactorySmartContract.connect(deployerWallet);
-        aliceWalletAccount = await ERC721FactorySmartContract.connect(aliceWallet);
-        bobWalletAccount = await ERC721FactorySmartContract.connect(bobWallet);
-        charlieWalletAccount = await ERC721FactorySmartContract.connect(charlieWallet);
-        deanWalletAccount = await ERC721FactorySmartContract.connect(deanWallet);
+        deployerWalletAccount = await ERC1155FactorySmartContract.connect(deployerWallet);
+        aliceWalletAccount = await ERC1155FactorySmartContract.connect(aliceWallet);
+        bobWalletAccount = await ERC1155FactorySmartContract.connect(bobWallet);
+        charlieWalletAccount = await ERC1155FactorySmartContract.connect(charlieWallet);
+        deanWalletAccount = await ERC1155FactorySmartContract.connect(deanWallet);
 
     });
 
@@ -48,7 +48,7 @@ describe("ERC721Factory", async function () {
 
         const CONTRACT_FILE: any = process.env.CONTRACT_FILE;
 
-        const CONTRACT_PARAMS: any = require(`../scripts/contract-configs/${CONTRACT_FILE}Config.ts`)
+        const CONTRACT_PARAMS: any = require(`../scripts/contract-configs/${CONTRACT_FILE}.Config.ts`)
 
         const ContractLinkedLibrary = await ethers.getContractFactory(CONTRACT_PARAMS.LINKED_LIBRARY);
         const contractLinkedLibrary = await ContractLinkedLibrary.deploy();
@@ -76,16 +76,14 @@ describe("ERC721Factory", async function () {
         
 
         const smartContract = await SmartContract.deploy(
-            CONTRACT_PARAMS.CONTRACT_NAME,
-            CONTRACT_PARAMS.CONTRACT_SYMBOL,
+            CONTRACT_PARAMS.BASE_URI,
             CONTRACT_PARAMS.ABI_ENCODED
         );
 
         await smartContract.deployed();
 
         const _args:any = {
-            contractName: CONTRACT_PARAMS.CONTRACT_NAME,
-            contractSymbol: CONTRACT_PARAMS.CONTRACT_SYMBOL,
+            contractName: CONTRACT_PARAMS.BASE_URI,
             contractABI: CONTRACT_PARAMS.ABI_VALUES
         }
 
@@ -101,7 +99,7 @@ describe("ERC721Factory", async function () {
 
         for(let i=offset; i<(offset+count); i++){
                 
-            let txn:any = await ERC721FactorySmartContract.mintNewToken(
+            let txn:any = await ERC1155FactorySmartContract.mintNewToken(
                 aliceWallet.address,
                 `metadata-${i}.json`,
                 i, 
@@ -121,7 +119,7 @@ describe("ERC721Factory", async function () {
 
         await transaction.wait();
 
-        const items:any = await ERC721FactorySmartContract.getNFTItems();
+        const items:any = await ERC1155FactorySmartContract.getNFTItems();
 
         return items;
 
@@ -171,97 +169,97 @@ describe("ERC721Factory", async function () {
 
         it("Should deploy the contract successfully!", async function () {
 
-            expect(ERC721FactorySmartContract.address).to.be.properAddress;
+            expect(ERC1155FactorySmartContract.address).to.be.properAddress;
 
         });
 
         it("It has a name", async function () {
 
-            expect(await ERC721FactorySmartContract.name()).to.equal(args.contractName);
+            expect(await ERC1155FactorySmartContract.name()).to.equal(args.contractName);
 
         });
 
         it("It has a symbol", async function () {
 
-            expect(await ERC721FactorySmartContract.symbol()).to.equal(args.contractSymbol);
+            expect(await ERC1155FactorySmartContract.symbol()).to.equal(args.contractSymbol);
 
         });
 
         it("It has a contract uri", async function () {
 
-            expect(await ERC721FactorySmartContract.contractURI()).to.equal(args.contractABI[0]);
+            expect(await ERC1155FactorySmartContract.contractURI()).to.equal(args.contractABI[0]);
 
         });
 
         it("It has a base uri", async function () {
 
-            expect(await ERC721FactorySmartContract.getBaseURI()).to.equal(args.contractABI[1]);
+            expect(await ERC1155FactorySmartContract.getBaseURI()).to.equal(args.contractABI[1]);
 
         });
 
         it("It has a maximum supply", async function () {
 
-            expect(await ERC721FactorySmartContract.getTokenMaximumSupply()).to.equal(args.contractABI[2]);
+            expect(await ERC1155FactorySmartContract.getTokenMaximumSupply()).to.equal(args.contractABI[2]);
 
         });
 
         it("It sets the royalty fraction", async function () {
 
-            expect(await ERC721FactorySmartContract.getRoyaltyFraction()).to.equal(args.contractABI[3]);
+            expect(await ERC1155FactorySmartContract.getRoyaltyFraction()).to.equal(args.contractABI[3]);
 
         });
 
         it("It sets the royalty receiver", async function () {
 
-            expect(await ERC721FactorySmartContract.getRoyaltyReceiver()).to.equal(args.contractABI[4]);
+            expect(await ERC1155FactorySmartContract.getRoyaltyReceiver()).to.equal(args.contractABI[4]);
 
         });
 
         it("It has admins", async function () {
 
-            expect(await ERC721FactorySmartContract.getRoyaltyFraction()).to.equal(args.contractABI[3]);
+            expect(await ERC1155FactorySmartContract.getRoyaltyFraction()).to.equal(args.contractABI[3]);
 
         });
 
         it("It has minters", async function () {
 
-            expect(await ERC721FactorySmartContract.getRoyaltyFraction()).to.equal(args.contractABI[3]);
+            expect(await ERC1155FactorySmartContract.getRoyaltyFraction()).to.equal(args.contractABI[3]);
 
         });
 
         it("It sets the minting fee", async function () {
 
-            expect(await ERC721FactorySmartContract.getTokenMintingFee()).to.equal(args.contractABI[7]);
+            expect(await ERC1155FactorySmartContract.getTokenMintingFee()).to.equal(args.contractABI[7]);
 
         });
 
         it("It has owner", async function () {
 
-            expect(await ERC721FactorySmartContract.getOwner()).to.equal(deployerWallet.address);
+            expect(await ERC1155FactorySmartContract.getOwner()).to.equal(deployerWallet.address);
 
         });
 
         it("It has a minter role", async function () {
 
-            expect(await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deployerWallet.address)).to.be.true;
+            expect(await ERC1155FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deployerWallet.address)).to.be.true;
 
         });
 
         it("It has a admin role", async function () {
 
-            expect(await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deployerWallet.address)).to.be.true;
+            expect(await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deployerWallet.address)).to.be.true;
 
         });
 
         it("It sets the collection category", async function () {
 
-            expect(await ERC721FactorySmartContract.collectionCategory()).to.equal(parseInt(args.contractABI[8]));
+            expect(await ERC1155FactorySmartContract.collectionCategory()).to.equal(parseInt(args.contractABI[8]));
 
         });
 
         it("It is pausable", async function () {
 
-            const {pausable} = await ERC721FactorySmartContract.contractOptionsStruct()
+            const {pausable} = await ERC1155FactorySmartContract.contractOptionsStruct()
 
             expect(pausable).to.be.true;
 
@@ -269,7 +267,7 @@ describe("ERC721Factory", async function () {
 
         it("It is burnable", async function () {
 
-            const {burnable} = await ERC721FactorySmartContract.contractOptionsStruct()
+            const {burnable} = await ERC1155FactorySmartContract.contractOptionsStruct()
 
             expect(burnable).to.be.true;
 
@@ -305,21 +303,21 @@ describe("ERC721Factory", async function () {
 
         it("Updates the total supply after minting", async () => {
         
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+            const nftItems: Array<any> = await ERC1155FactorySmartContract.getNFTItems();
 
-            const currentTotalSupply:number = await ERC721FactorySmartContract.getTokenCurrentSupply();
+            const currentTotalSupply:number = await ERC1155FactorySmartContract.getTokenCurrentSupply();
 
             expect(nftItems.length).to.equal(currentTotalSupply);
 
             const mintedTokensCount = 6;
 
-            expect(await ERC721FactorySmartContract.totalSupply()).to.equal(mintedTokensCount);
+            expect(await ERC1155FactorySmartContract.totalSupply()).to.equal(mintedTokensCount);
 
         });
 
         it("Emits TokenMinted event", async () => {
             
-            expect(transaction).to.emit(ERC721FactorySmartContract, "TokenMinted")
+            expect(transaction).to.emit(ERC1155FactorySmartContract, "TokenMinted")
 
         });
 
@@ -329,13 +327,13 @@ describe("ERC721Factory", async function () {
             
             const mintingFeeTest:number = 6;
 
-            await expect(ERC721FactorySmartContract.mintNewToken(
+            await expect(ERC1155FactorySmartContract.mintNewToken(
                 aliceWallet.address,
                 `test-nft-metadata-1.json`,
                 10, 
                 {value: mintingFeeTest}
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "PriceBelowMintingFee")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "PriceBelowMintingFee")
             .withArgs(mintingFeeExpected, mintingFeeTest, Snippets.AMOUNT_BELOW_MINTING_FEE);
             
         });
@@ -350,7 +348,7 @@ describe("ERC721Factory", async function () {
 
             for(let i=7; i<11; i++){
                 
-                txn = await ERC721FactorySmartContract.mintNewToken(
+                txn = await ERC1155FactorySmartContract.mintNewToken(
                     aliceWallet.address,
                     `test-nft-metadata-${i}.json`,
                     i, 
@@ -361,15 +359,15 @@ describe("ERC721Factory", async function () {
             
             }
 
-            const outOfBoundsTokenId:number = parseInt(await ERC721FactorySmartContract.getTokenCurrentId())+1;
+            const outOfBoundsTokenId:number = parseInt(await ERC1155FactorySmartContract.getTokenCurrentId())+1;
 
-            await expect(ERC721FactorySmartContract.mintNewToken(
+            await expect(ERC1155FactorySmartContract.mintNewToken(
                 aliceWallet.address,
                 `test-nft-metadata-11.json`,
                 11, 
                 {value: mintingFee}
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "MaximumTokenSupplyReached")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "MaximumTokenSupplyReached")
             .withArgs(tokenMaximumSupply, outOfBoundsTokenId, Snippets.MAX_SUPPLY_REACHED);
             
         });
@@ -382,11 +380,11 @@ describe("ERC721Factory", async function () {
 
             let deployerTokens:any, aliceWalletTokens:any, bobWalletTokens:any;
             
-            deployerTokens = await ERC721FactorySmartContract.getAccountTokenBalance(deployerWallet.address);
+            deployerTokens = await ERC1155FactorySmartContract.getAccountTokenBalance(deployerWallet.address);
 
-            aliceWalletTokens = await ERC721FactorySmartContract.getAccountTokenBalance(aliceWallet.address);
+            aliceWalletTokens = await ERC1155FactorySmartContract.getAccountTokenBalance(aliceWallet.address);
 
-            bobWalletTokens = await ERC721FactorySmartContract.getAccountTokenBalance(bobWallet.address);
+            bobWalletTokens = await ERC1155FactorySmartContract.getAccountTokenBalance(bobWallet.address);
 
             expect(deployerTokens).to.equal(2);
         
@@ -397,19 +395,19 @@ describe("ERC721Factory", async function () {
         });
 
         it("Emits tokenTransfered event", () => {
-            expect(transaction).to.emit(ERC721FactorySmartContract, "tokenTransfered")
+            expect(transaction).to.emit(ERC1155FactorySmartContract, "tokenTransfered")
         });
 
         it("Throws a {IndexOutOfBounds} error on HIGHER index", async () => {
 
             const tokenId:number = 11;
 
-            await expect(ERC721FactorySmartContract.transferToken(
+            await expect(ERC1155FactorySmartContract.transferToken(
                 bobWallet.address,
                 tokenId,
                 aliceWallet.address
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "IndexOutOfBounds")
             .withArgs(tokenId, Snippets.INDEX_OUT_OF_BOUNDS);
 
         });
@@ -418,12 +416,12 @@ describe("ERC721Factory", async function () {
 
             const tokenId:number = 0;
 
-            await expect(ERC721FactorySmartContract.transferToken(
+            await expect(ERC1155FactorySmartContract.transferToken(
                 bobWallet.address,
                 tokenId,
                 aliceWallet.address
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "IndexOutOfBounds")
             .withArgs(tokenId, Snippets.INDEX_OUT_OF_BOUNDS);
             
         });
@@ -432,12 +430,12 @@ describe("ERC721Factory", async function () {
 
             const tokenId:number = 7;
 
-            await expect(ERC721FactorySmartContract.transferToken(
+            await expect(ERC1155FactorySmartContract.transferToken(
                 bobWallet.address,
                 tokenId,
                 aliceWallet.address
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "TokenDoesNotExists")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "TokenDoesNotExists")
             .withArgs(tokenId, Snippets.TOKEN_DOES_NOT_EXISTS);
             
         });
@@ -452,11 +450,11 @@ describe("ERC721Factory", async function () {
 
             let deployerTokens:any, aliceWalletTokens:any, bobWalletTokens:any;
 
-            deployerTokens = await ERC721FactorySmartContract.getAccountTokenBalance(deployerWallet.address);
+            deployerTokens = await ERC1155FactorySmartContract.getAccountTokenBalance(deployerWallet.address);
 
-            aliceWalletTokens = await ERC721FactorySmartContract.getAccountTokenBalance(aliceWallet.address);
+            aliceWalletTokens = await ERC1155FactorySmartContract.getAccountTokenBalance(aliceWallet.address);
 
-            bobWalletTokens = await ERC721FactorySmartContract.getAccountTokenBalance(bobWallet.address);
+            bobWalletTokens = await ERC1155FactorySmartContract.getAccountTokenBalance(bobWallet.address);
 
             //console.log("TOKEN BALANCES AFTER BURN", deployerTokens, aliceWalletTokens, bobWalletTokens);
 
@@ -466,7 +464,7 @@ describe("ERC721Factory", async function () {
         
             expect(bobWalletTokens).to.equal(1);
 
-            const currentTotalSupply:number = await ERC721FactorySmartContract.getTokenCurrentSupply();
+            const currentTotalSupply:number = await ERC1155FactorySmartContract.getTokenCurrentSupply();
 
             expect(currentTotalSupply).to.equal(4);
         });
@@ -477,38 +475,38 @@ describe("ERC721Factory", async function () {
 
             await burnTokens();
 
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+            const nftItems: Array<any> = await ERC1155FactorySmartContract.getNFTItems();
 
-            const currentTotalSupply:number = await ERC721FactorySmartContract.getTokenCurrentSupply();
+            const currentTotalSupply:number = await ERC1155FactorySmartContract.getTokenCurrentSupply();
 
             expect(nftItems.length).to.equal(currentTotalSupply);
             
         });
 
-        it("Reverts with a {ERC721: invalid token ID} error", async () => {
+        it("Reverts with a {ERC1155: invalid token ID} error", async () => {
 
             const tokenId:number = 0;
 
-            await expect(ERC721FactorySmartContract.burnToken(
+            await expect(ERC1155FactorySmartContract.burnToken(
                 tokenId
             ))
-            .to.be.revertedWith("ERC721: invalid token ID");
+            .to.be.revertedWith("ERC1155: invalid token ID");
             
         });
 
-        it("Reverts with a {ERC721: invalid token ID} error", async () => {
+        it("Reverts with a {ERC1155: invalid token ID} error", async () => {
 
             const tokenId:number = 7;
 
-            await expect(ERC721FactorySmartContract.burnToken(
+            await expect(ERC1155FactorySmartContract.burnToken(
                 tokenId
             ))
-            .to.be.revertedWith("ERC721: invalid token ID");
+            .to.be.revertedWith("ERC1155: invalid token ID");
             
         });
 
         it("Emits TokenBurned event", () => {
-            expect(transaction).to.emit(ERC721FactorySmartContract, "TokenBurned")
+            expect(transaction).to.emit(ERC1155FactorySmartContract, "TokenBurned")
         });
 
 
@@ -526,10 +524,10 @@ describe("ERC721Factory", async function () {
         
             console.warn("     🟩 Mint Tokens");
 
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+            const nftItems: Array<any> = await ERC1155FactorySmartContract.getNFTItems();
 
             nftItems.map(async (nft:any) => {
-                await expect(Snippets.parseNFTItem(nft).ownerAddress).to.equal(await ERC721FactorySmartContract.ownerOf(Snippets.parseNFTItem(nft).tokenId));
+                await expect(Snippets.parseNFTItem(nft).ownerAddress).to.equal(await ERC1155FactorySmartContract.ownerOf(Snippets.parseNFTItem(nft).tokenId));
             });
 
         });
@@ -540,10 +538,10 @@ describe("ERC721Factory", async function () {
 
             await transferTokens();
 
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+            const nftItems: Array<any> = await ERC1155FactorySmartContract.getNFTItems();
 
             nftItems.map(async (nft:any) => {
-                await expect(Snippets.parseNFTItem(nft).ownerAddress).to.equal(await ERC721FactorySmartContract.ownerOf(Snippets.parseNFTItem(nft).tokenId));
+                await expect(Snippets.parseNFTItem(nft).ownerAddress).to.equal(await ERC1155FactorySmartContract.ownerOf(Snippets.parseNFTItem(nft).tokenId));
             });
 
         });
@@ -564,7 +562,7 @@ describe("ERC721Factory", async function () {
         
             console.warn("     🟩 Mint Tokens");
 
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+            const nftItems: Array<any> = await ERC1155FactorySmartContract.getNFTItems();
             
             expect(nftItems.length).to.equal(6);
             
@@ -588,7 +586,7 @@ describe("ERC721Factory", async function () {
 
             console.warn("     🟩 Set n Get tokens minted");
         
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensMintedByAddress(deployerWallet.address);
+            const nftItems: Array<any> = await ERC1155FactorySmartContract.getTokensMintedByAddress(deployerWallet.address);
 
             expect(nftItems.length).to.equal(6);
 
@@ -614,7 +612,7 @@ describe("ERC721Factory", async function () {
 
             let _tokenId:number = 1;
         
-            const tokenMinter:string = await ERC721FactorySmartContract.getTokenMinter(_tokenId);
+            const tokenMinter:string = await ERC1155FactorySmartContract.getTokenMinter(_tokenId);
 
             expect(tokenMinter).to.equal(deployerWallet.address);
             
@@ -624,7 +622,7 @@ describe("ERC721Factory", async function () {
 
             let _tokenId:number = 2;
 
-            const tokenMintee:string = await ERC721FactorySmartContract.getTokenMintee(_tokenId);
+            const tokenMintee:string = await ERC1155FactorySmartContract.getTokenMintee(_tokenId);
 
             expect(tokenMintee).to.equal(aliceWallet.address);
             
@@ -634,7 +632,7 @@ describe("ERC721Factory", async function () {
 
             console.warn("     🟩 Set n Get tokens created");
         
-            const nftItems: Array<any> = await ERC721FactorySmartContract.getTokensCreatedByAddress(deployerWallet.address);
+            const nftItems: Array<any> = await ERC1155FactorySmartContract.getTokensCreatedByAddress(deployerWallet.address);
 
             let nftItem:any = Snippets.parseNFTItem(nftItems[0]);
 
@@ -658,7 +656,7 @@ describe("ERC721Factory", async function () {
 
             let _tokenId:number = 1;
         
-            const tokenCreator:string = await ERC721FactorySmartContract.getTokenCreator(_tokenId);
+            const tokenCreator:string = await ERC1155FactorySmartContract.getTokenCreator(_tokenId);
 
             expect(tokenCreator).to.equal(deployerWallet.address);
             
@@ -668,15 +666,15 @@ describe("ERC721Factory", async function () {
 
             console.warn("     🟩 Set n Get tokens owned");
         
-            const deployerTokens: Array<any> = await ERC721FactorySmartContract.getTokensOwnedByAddress(deployerWallet.address);
+            const deployerTokens: Array<any> = await ERC1155FactorySmartContract.getTokensOwnedByAddress(deployerWallet.address);
 
             expect(deployerTokens.length).to.equal(2);
 
-            const address1Tokens: Array<any> = await ERC721FactorySmartContract.getTokensOwnedByAddress(aliceWallet.address);
+            const address1Tokens: Array<any> = await ERC1155FactorySmartContract.getTokensOwnedByAddress(aliceWallet.address);
 
             expect(address1Tokens.length).to.equal(3);
 
-            const address2Tokens: Array<any> = await ERC721FactorySmartContract.getTokensOwnedByAddress(bobWallet.address);
+            const address2Tokens: Array<any> = await ERC1155FactorySmartContract.getTokensOwnedByAddress(bobWallet.address);
 
             expect(address2Tokens.length).to.equal(1);
 
@@ -694,7 +692,7 @@ describe("ERC721Factory", async function () {
 
             let _tokenId:number = 2;
         
-            const tokenOwner:string = await ERC721FactorySmartContract.getTokenOwner(_tokenId);
+            const tokenOwner:string = await ERC1155FactorySmartContract.getTokenOwner(_tokenId);
 
             expect(tokenOwner).to.equal(bobWallet.address);
             
@@ -742,9 +740,9 @@ describe("ERC721Factory", async function () {
 
             const _tokenURI: string = `metadata-${tokenId}.json`;
 
-            const baseURI: string = await ERC721FactorySmartContract.getBaseURI();
+            const baseURI: string = await ERC1155FactorySmartContract.getBaseURI();
 
-            const tokenURI: string = await ERC721FactorySmartContract.getTokenURI(tokenId);
+            const tokenURI: string = await ERC1155FactorySmartContract.getTokenURI(tokenId);
 
             expect(tokenURI).to.equal(`${baseURI}${_tokenURI}`);
             
@@ -798,7 +796,7 @@ describe("ERC721Factory", async function () {
 
             expect(owner).to.equal(_owner);
 
-            await ERC721FactorySmartContract.setNewOwner(_newOwner);
+            await ERC1155FactorySmartContract.setNewOwner(_newOwner);
 
             const newOwner: string = await deployerWalletAccount.getOwner();
 
@@ -884,7 +882,7 @@ describe("ERC721Factory", async function () {
             
             let _royaltyFraction:number = 200;
 
-            let _royaltyFractionDenominator:number = await ERC721FactorySmartContract.getRoyaltyFeeDenominator();
+            let _royaltyFractionDenominator:number = await ERC1155FactorySmartContract.getRoyaltyFeeDenominator();
             
             let _tokenId:number = 1;
 
@@ -935,7 +933,7 @@ describe("ERC721Factory", async function () {
                 _royaltyFraction,
                 _tokenId
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "RoyaltiesDisabled")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "RoyaltiesDisabled")
             .withArgs(_disableRoyaltiesUntil, Snippets.ROYALTIES_DISABLED);
 
         });
@@ -970,7 +968,7 @@ describe("ERC721Factory", async function () {
 
             let _collectionName:string = args.contractName;
 
-            let collectionName: string = await ERC721FactorySmartContract.collectionName();
+            let collectionName: string = await ERC1155FactorySmartContract.collectionName();
 
             expect(collectionName).to.equal(_collectionName);
 
@@ -980,7 +978,7 @@ describe("ERC721Factory", async function () {
 
             let _collectionSymbol:string = args.contractSymbol;
 
-            let collectionSymbol: string = await ERC721FactorySmartContract.collectionSymbol();
+            let collectionSymbol: string = await ERC1155FactorySmartContract.collectionSymbol();
 
             expect(collectionSymbol).to.equal(_collectionSymbol);
 
@@ -990,7 +988,7 @@ describe("ERC721Factory", async function () {
 
             let _collectionCategory:number = parseInt(args.contractABI[8]);
 
-            let collectionCategory:number = await ERC721FactorySmartContract.collectionCategory();
+            let collectionCategory:number = await ERC1155FactorySmartContract.collectionCategory();
 
             expect(collectionCategory).to.equal(_collectionCategory);
 
@@ -1002,7 +1000,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.setCollectionDescription(_collectionDescription);
 
-            let collectionDescription: string = await ERC721FactorySmartContract.collectionDescription();
+            let collectionDescription: string = await ERC1155FactorySmartContract.collectionDescription();
 
             expect(collectionDescription).to.equal(_collectionDescription);
 
@@ -1014,7 +1012,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.setCollectionBannerMedia(_collectionBannerMedia);
 
-            let collectionBannerMedia: string = await ERC721FactorySmartContract.collectionBannerMedia();
+            let collectionBannerMedia: string = await ERC1155FactorySmartContract.collectionBannerMedia();
 
             expect(collectionBannerMedia).to.equal(_collectionBannerMedia);
 
@@ -1026,7 +1024,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.setCollectionDisplayPicture(_collectionDisplayPicture);
 
-            let collectionDisplayPicture: string = await ERC721FactorySmartContract.collectionDisplayPicture();
+            let collectionDisplayPicture: string = await ERC1155FactorySmartContract.collectionDisplayPicture();
 
             expect(collectionDisplayPicture).to.equal(_collectionDisplayPicture);
 
@@ -1048,8 +1046,8 @@ describe("ERC721Factory", async function () {
         
             console.warn("     🟩 Emit Events");
 
-            await expect(ERC721FactorySmartContract.setNewOwner(deanWallet.address))
-                .to.emit(ERC721FactorySmartContract, "OwnerChanged")
+            await expect(ERC1155FactorySmartContract.setNewOwner(deanWallet.address))
+                .to.emit(ERC1155FactorySmartContract, "OwnerChanged")
                 .withArgs(deanWallet.address);
 
         });
@@ -1058,8 +1056,8 @@ describe("ERC721Factory", async function () {
         
             let _contractURI:string = Snippets.fromStringToBytes32("ipfs://<ID>");
 
-            await expect(ERC721FactorySmartContract.setContractURI(_contractURI))
-                .to.emit(ERC721FactorySmartContract, "ContractURIChanged")
+            await expect(ERC1155FactorySmartContract.setContractURI(_contractURI))
+                .to.emit(ERC1155FactorySmartContract, "ContractURIChanged")
                 .withArgs(_contractURI);
 
         });
@@ -1068,8 +1066,8 @@ describe("ERC721Factory", async function () {
         
             let _description:string = "Lorem ipsum dolor sit amet, consectet dolor sit amet.";
     
-            await expect(ERC721FactorySmartContract.setCollectionDescription(_description))
-                .to.emit(ERC721FactorySmartContract, "CollectionDescriptionChanged")
+            await expect(ERC1155FactorySmartContract.setCollectionDescription(_description))
+                .to.emit(ERC1155FactorySmartContract, "CollectionDescriptionChanged")
                 .withArgs(_description);
     
         });
@@ -1078,8 +1076,8 @@ describe("ERC721Factory", async function () {
             
             let _bannerURL:string = "ipfs://<ID>";
     
-            await expect(ERC721FactorySmartContract.setCollectionBannerMedia(_bannerURL))
-                .to.emit(ERC721FactorySmartContract, "CollectionBannerMediaChanged")
+            await expect(ERC1155FactorySmartContract.setCollectionBannerMedia(_bannerURL))
+                .to.emit(ERC1155FactorySmartContract, "CollectionBannerMediaChanged")
                 .withArgs(_bannerURL);
     
         });
@@ -1088,8 +1086,8 @@ describe("ERC721Factory", async function () {
             
             let _photoURL:string = "ipfs://<ID>";
     
-            await expect(ERC721FactorySmartContract.setCollectionDisplayPicture(_photoURL))
-                .to.emit(ERC721FactorySmartContract, "CollectionDisplayPictureChanged")
+            await expect(ERC1155FactorySmartContract.setCollectionDisplayPicture(_photoURL))
+                .to.emit(ERC1155FactorySmartContract, "CollectionDisplayPictureChanged")
                 .withArgs(_photoURL);
     
         });
@@ -1098,8 +1096,8 @@ describe("ERC721Factory", async function () {
             
             let _baseURI:string = "http://<HOSTNAME>";
     
-            await expect(ERC721FactorySmartContract.setBaseURI(_baseURI))
-                .to.emit(ERC721FactorySmartContract, "BaseURIChanged")
+            await expect(ERC1155FactorySmartContract.setBaseURI(_baseURI))
+                .to.emit(ERC1155FactorySmartContract, "BaseURIChanged")
                 .withArgs(_baseURI);
     
         });
@@ -1108,8 +1106,8 @@ describe("ERC721Factory", async function () {
             
             let _marketplacecAddress:string = deanWallet.address;
     
-            await expect(ERC721FactorySmartContract.setMarketplaceAddress(_marketplacecAddress))
-                .to.emit(ERC721FactorySmartContract, "MarketplaceAddressChanged")
+            await expect(ERC1155FactorySmartContract.setMarketplaceAddress(_marketplacecAddress))
+                .to.emit(ERC1155FactorySmartContract, "MarketplaceAddressChanged")
                 .withArgs(_marketplacecAddress);
     
         });
@@ -1119,8 +1117,8 @@ describe("ERC721Factory", async function () {
             let _account:any = deanWallet.address;
             let _tokenId:number = 1;
     
-            await expect(ERC721FactorySmartContract.approveAddressForToken(deanWallet.address, _tokenId))
-                .to.emit(ERC721FactorySmartContract, "ApprovedAddressForTokenChanged")
+            await expect(ERC1155FactorySmartContract.approveAddressForToken(deanWallet.address, _tokenId))
+                .to.emit(ERC1155FactorySmartContract, "ApprovedAddressForTokenChanged")
                 .withArgs(_account, _tokenId);
     
         });
@@ -1129,8 +1127,8 @@ describe("ERC721Factory", async function () {
             
             let _newMintingFee:number = 100;
     
-            await expect(ERC721FactorySmartContract.setMintingFee(_newMintingFee))
-                .to.emit(ERC721FactorySmartContract, "MintingFeeChanged")
+            await expect(ERC1155FactorySmartContract.setMintingFee(_newMintingFee))
+                .to.emit(ERC1155FactorySmartContract, "MintingFeeChanged")
                 .withArgs(_newMintingFee);
     
         });
@@ -1141,8 +1139,8 @@ describe("ERC721Factory", async function () {
             let _royaltyFraction:number = 100;
             let _tokenId:number = 1;
     
-            await expect(ERC721FactorySmartContract.setRoyalties(_royaltyReceiver, _royaltyFraction, _tokenId))
-                .to.emit(ERC721FactorySmartContract, "RoyaltiesChanged")
+            await expect(ERC1155FactorySmartContract.setRoyalties(_royaltyReceiver, _royaltyFraction, _tokenId))
+                .to.emit(ERC1155FactorySmartContract, "RoyaltiesChanged")
                 .withArgs(_royaltyReceiver, _royaltyFraction, _tokenId);
     
         });
@@ -1151,8 +1149,8 @@ describe("ERC721Factory", async function () {
             
             let _timestamp:number = 0;
             
-            await expect(ERC721FactorySmartContract.disableRoyaltiesUntil(_timestamp))
-                .to.emit(ERC721FactorySmartContract, "RoyaltiesEnabled")
+            await expect(ERC1155FactorySmartContract.disableRoyaltiesUntil(_timestamp))
+                .to.emit(ERC1155FactorySmartContract, "RoyaltiesEnabled")
                 .withArgs();
     
         });
@@ -1161,8 +1159,8 @@ describe("ERC721Factory", async function () {
     
             let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) + 6000;
             
-            await expect(ERC721FactorySmartContract.disableRoyaltiesUntil(_timestamp))
-                .to.emit(ERC721FactorySmartContract, "RoyaltiesDisabled")
+            await expect(ERC1155FactorySmartContract.disableRoyaltiesUntil(_timestamp))
+                .to.emit(ERC1155FactorySmartContract, "RoyaltiesDisabled")
                 .withArgs(_timestamp);
     
         });
@@ -1176,17 +1174,17 @@ describe("ERC721Factory", async function () {
             let _amount:number = 1;
             let _royaltyFraction:number = 100;
             let _mintingFee:number = 1_000;
-            let _currentSupply:number = parseInt(await ERC721FactorySmartContract.getTokenCurrentSupply());
+            let _currentSupply:number = parseInt(await ERC1155FactorySmartContract.getTokenCurrentSupply());
 
-            await ERC721FactorySmartContract.setMintingFee(_mintingFee);
+            await ERC1155FactorySmartContract.setMintingFee(_mintingFee);
     
-            await expect(ERC721FactorySmartContract.mintNewToken(bobWallet.address, _tokenURI, _royaltyFraction, {value: _mintingFee}))
-                .to.emit(ERC721FactorySmartContract, "TokenMinted")
+            await expect(ERC1155FactorySmartContract.mintNewToken(bobWallet.address, _tokenURI, _royaltyFraction, {value: _mintingFee}))
+                .to.emit(ERC1155FactorySmartContract, "TokenMinted")
                 .withArgs(_from, _to, _tokenId, _amount);
 
-            expect(await ERC721FactorySmartContract.totalSupply()).to.equal(_currentSupply + 1);
+            expect(await ERC1155FactorySmartContract.totalSupply()).to.equal(_currentSupply + 1);
 
-            expect(await ERC721FactorySmartContract.getTokenCurrentSupply()).to.equal(_tokenId);
+            expect(await ERC1155FactorySmartContract.getTokenCurrentSupply()).to.equal(_tokenId);
     
         });
     
@@ -1197,8 +1195,8 @@ describe("ERC721Factory", async function () {
             let _tokenId:number = 1;
             let _amount:number = 1;
     
-            await expect(ERC721FactorySmartContract.burnToken(_tokenId))
-                .to.emit(ERC721FactorySmartContract, "TokenBurned")
+            await expect(ERC1155FactorySmartContract.burnToken(_tokenId))
+                .to.emit(ERC1155FactorySmartContract, "TokenBurned")
                 .withArgs(_from, _to, _tokenId, _amount);
     
         });
@@ -1210,8 +1208,8 @@ describe("ERC721Factory", async function () {
             let _tokenId:number = 1;
             let _amount:number = 1;
     
-            await expect(ERC721FactorySmartContract.transferToken(charlieWallet.address, _tokenId, Snippets.ADDRESS_ZERO))
-                .to.emit(ERC721FactorySmartContract, "TokenTransfered")
+            await expect(ERC1155FactorySmartContract.transferToken(charlieWallet.address, _tokenId, Snippets.ADDRESS_ZERO))
+                .to.emit(ERC1155FactorySmartContract, "TokenTransfered")
                 .withArgs(_from, _to, _tokenId, _amount);
     
         });
@@ -1221,8 +1219,8 @@ describe("ERC721Factory", async function () {
             let _account:string = deployerWallet.address;
             let _amount:number = 100;
     
-            await expect(ERC721FactorySmartContract.fallback({value: _amount}))
-                .to.emit(ERC721FactorySmartContract, "Received")
+            await expect(ERC1155FactorySmartContract.fallback({value: _amount}))
+                .to.emit(ERC1155FactorySmartContract, "Received")
                 .withArgs(_account, _amount);
     
         });
@@ -1261,7 +1259,7 @@ describe("ERC721Factory", async function () {
                 10, 
                 {value: _mintingFee}
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "InsufficientPermissions")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "InsufficientPermissions")
             .withArgs(_account, _role, _message);
 
         });
@@ -1277,7 +1275,7 @@ describe("ERC721Factory", async function () {
                 _tokenId,
                 bobWallet.address
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "NotApprovedOrOwner")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "NotApprovedOrOwner")
             .withArgs();
 
         });
@@ -1286,13 +1284,13 @@ describe("ERC721Factory", async function () {
         
             let _admins: Array<any> = args.contractABI[5];
 
-            let _hasAdminRole: boolean = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deployerWallet.address);
+            let _hasAdminRole: boolean = await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deployerWallet.address);
 
             expect(_hasAdminRole).to.be.true;
 
             _admins.map(async (_account: string) => {
 
-                await expect(await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, _account)).to.be.true;
+                await expect(await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, _account)).to.be.true;
 
             });
 
@@ -1302,13 +1300,13 @@ describe("ERC721Factory", async function () {
         
             let _minters: Array<any> = args.contractABI[6];
 
-            let _hasMinterRole: boolean = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deployerWallet.address);
+            let _hasMinterRole: boolean = await ERC1155FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deployerWallet.address);
 
             expect(_hasMinterRole).to.be.true;
 
             _minters.map(async (_account: string) => {
 
-                await expect(await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, _account)).to.be.true;
+                await expect(await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, _account)).to.be.true;
 
             });
 
@@ -1337,7 +1335,7 @@ describe("ERC721Factory", async function () {
                 10, 
                 {value: _mintingFee}
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "MaximumTokenSupplyReached")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "MaximumTokenSupplyReached")
             .withArgs(_maxValue, _overflowTokenId, _message);
             
         });
@@ -1353,7 +1351,7 @@ describe("ERC721Factory", async function () {
             await expect(charlieWalletAccount.getTokenOwner(
                 _overflowTokenId
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "IndexOutOfBounds")
             .withArgs(_overflowTokenId, _message);
 
         });
@@ -1369,14 +1367,14 @@ describe("ERC721Factory", async function () {
             await expect(charlieWalletAccount.getTokenOwner(
                 _underflowTokenId
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "IndexOutOfBounds")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "IndexOutOfBounds")
             .withArgs(_underflowTokenId, _message);
 
         });
 
         it("Specified id must represent an already minted token. Also the token must not have been burned : TokenDoesNotExists", async () => {
         
-            let nftItems: Array<any> = await ERC721FactorySmartContract.getNFTItems();
+            let nftItems: Array<any> = await ERC1155FactorySmartContract.getNFTItems();
 
             let _invalidTokenId:number = nftItems.length + 1;
 
@@ -1385,7 +1383,7 @@ describe("ERC721Factory", async function () {
             await expect(charlieWalletAccount.getTokenOwner(
                 _invalidTokenId
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "TokenDoesNotExists")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "TokenDoesNotExists")
             .withArgs(_invalidTokenId, _message);
 
         });
@@ -1406,7 +1404,7 @@ describe("ERC721Factory", async function () {
                 10, 
                 {value: _value}
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "PriceBelowMintingFee")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "PriceBelowMintingFee")
             .withArgs(_mintingFee, _value, _message);
 
         });
@@ -1434,7 +1432,7 @@ describe("ERC721Factory", async function () {
                 10, 
                 {value: _mintingFee}
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "TokenURIAlreadyExists")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "TokenURIAlreadyExists")
             .withArgs(_tokenURI, _tokenExists, _message);
 
         });
@@ -1446,7 +1444,7 @@ describe("ERC721Factory", async function () {
             await expect(aliceWalletAccount.setMintingFee(
                 _mintingFee
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "InvalidAmount")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "InvalidAmount")
             .withArgs(Snippets.INVALID_AMOUNT);
 
         });
@@ -1466,7 +1464,7 @@ describe("ERC721Factory", async function () {
             await expect(aliceWalletAccount.setMarketplaceAddress(
                 _account
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "ZeroAddress")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ZeroAddress")
             .withArgs(_account, _message);
 
         });
@@ -1479,16 +1477,16 @@ describe("ERC721Factory", async function () {
 
             let _timestamp:number = new Date().getTime() + 5000;
             
-            await ERC721FactorySmartContract.disableRoyaltiesUntil(_timestamp);
+            await ERC1155FactorySmartContract.disableRoyaltiesUntil(_timestamp);
 
             const _message:string = Snippets.ROYALTIES_DISABLED;
 
-            await expect(ERC721FactorySmartContract.setRoyalties(
+            await expect(ERC1155FactorySmartContract.setRoyalties(
                 _royaltyReceiver,
                 _royaltyFraction, 
                 0
             ))
-            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "RoyaltiesDisabled")
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "RoyaltiesDisabled")
             .withArgs(_timestamp, _message);
 
         });
@@ -1505,7 +1503,7 @@ describe("ERC721Factory", async function () {
 
             let _searchQuery:string = "metadata-1"; // `test-nft-metadata-${i}.json`,
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTokenURI(_searchQuery);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTokenURI(_searchQuery);
 
             expect(searchResults.length).to.equal(1);
 
@@ -1517,7 +1515,7 @@ describe("ERC721Factory", async function () {
 
             let _tokenId:number = 5;
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTokenId(_tokenId);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTokenId(_tokenId);
 
             let nftItem:any = Snippets.parseNFTItem(searchResults[0]);
 
@@ -1534,7 +1532,7 @@ describe("ERC721Factory", async function () {
 
             let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) + 5000;
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.CREATED_BEFORE, _timestamp);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTimestamp(Snippets.CREATED_BEFORE, _timestamp);
 
             let nftItem:any = Snippets.parseNFTItem(searchResults[0]);
 
@@ -1549,7 +1547,7 @@ describe("ERC721Factory", async function () {
 
             let _timestamp:number = Snippets.parseNFTItem(nftItems[0]).createdAt;
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.CREATED_AT, _timestamp);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTimestamp(Snippets.CREATED_AT, _timestamp);
 
             let nftItem:any = Snippets.parseNFTItem(searchResults[0]);
 
@@ -1564,7 +1562,7 @@ describe("ERC721Factory", async function () {
 
             let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) - 5000;
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.CREATED_AFTER, _timestamp);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTimestamp(Snippets.CREATED_AFTER, _timestamp);
 
             let nftItem:any = Snippets.parseNFTItem(searchResults[0]);
 
@@ -1581,7 +1579,7 @@ describe("ERC721Factory", async function () {
 
             let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) + 5000;
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.UPDATED_BEFORE, _timestamp);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTimestamp(Snippets.UPDATED_BEFORE, _timestamp);
 
             expect(searchResults.length).to.equal(6);
             expect(Snippets.parseNFTItem(searchResults[0]).updatedAt).to.lt(_timestamp);
@@ -1594,7 +1592,7 @@ describe("ERC721Factory", async function () {
 
             let _timestamp:number = Snippets.parseNFTItem(nftItems[0]).updatedAt;
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.UPDATED_AT, _timestamp);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTimestamp(Snippets.UPDATED_AT, _timestamp);
 
             expect(searchResults.length).to.gt(0);
             expect(Snippets.parseNFTItem(searchResults[0]).updatedAt).to.equal(_timestamp);
@@ -1607,7 +1605,7 @@ describe("ERC721Factory", async function () {
 
             let _timestamp:number = parseInt(`${new Date().getTime() / 1000}`) - 5000;
 
-            const searchResults: any = await ERC721FactorySmartContract.searchTimestamp(Snippets.UPDATED_AFTER, _timestamp);
+            const searchResults: any = await ERC1155FactorySmartContract.searchTimestamp(Snippets.UPDATED_AFTER, _timestamp);
 
             expect(searchResults.length).to.equal(6);
             expect(Snippets.parseNFTItem(searchResults[0]).updatedAt).to.gt(_timestamp);
@@ -1622,7 +1620,7 @@ describe("ERC721Factory", async function () {
 
             await transferTokens(); 
 
-            const searchResults: any = await ERC721FactorySmartContract.searchAddress(Snippets.ADDRESS, deployerWallet.address);
+            const searchResults: any = await ERC1155FactorySmartContract.searchAddress(Snippets.ADDRESS, deployerWallet.address);
 
             expect(searchResults.length).to.equal(6);
 
@@ -1635,7 +1633,7 @@ describe("ERC721Factory", async function () {
             
             await mintTokens();
 
-            const searchResults: any = await ERC721FactorySmartContract.searchAddress(Snippets.MINTER, deployerWallet.address);
+            const searchResults: any = await ERC1155FactorySmartContract.searchAddress(Snippets.MINTER, deployerWallet.address);
 
             expect(searchResults.length).to.equal(6);
             expect(Snippets.parseNFTItem(searchResults[0]).minterAddress).to.equal(deployerWallet.address);
@@ -1646,7 +1644,7 @@ describe("ERC721Factory", async function () {
             
             await mintTokens();
 
-            const searchResults: any = await ERC721FactorySmartContract.searchAddress(Snippets.CREATOR, aliceWallet.address);
+            const searchResults: any = await ERC1155FactorySmartContract.searchAddress(Snippets.CREATOR, aliceWallet.address);
 
             expect(searchResults.length).to.equal(5);
             expect([deployerWallet.address, aliceWallet.address].includes(Snippets.parseNFTItem(searchResults[0]).minterAddress)).to.be.true;
@@ -1660,33 +1658,33 @@ describe("ERC721Factory", async function () {
             await transferTokens();
 
             // Deployer Account
-            let searchResults: any = await ERC721FactorySmartContract.searchAddress(Snippets.OWNER, deployerWallet.address);
+            let searchResults: any = await ERC1155FactorySmartContract.searchAddress(Snippets.OWNER, deployerWallet.address);
 
             let nftItem: any = Snippets.parseNFTItem(searchResults[0]);
             
-            let tokenOwner: string = await ERC721FactorySmartContract.getTokenOwner(nftItem.tokenId);
+            let tokenOwner: string = await ERC1155FactorySmartContract.getTokenOwner(nftItem.tokenId);
 
             expect(searchResults.length).to.equal(2);
             expect(tokenOwner).to.equal(deployerWallet.address);
             expect(nftItem.ownerAddress).to.equal(deployerWallet.address);
 
             // Alice Wallet
-            searchResults = await ERC721FactorySmartContract.searchAddress(Snippets.OWNER, aliceWallet.address);
+            searchResults = await ERC1155FactorySmartContract.searchAddress(Snippets.OWNER, aliceWallet.address);
 
             nftItem = Snippets.parseNFTItem(searchResults[0]);
 
-            tokenOwner = await ERC721FactorySmartContract.getTokenOwner(nftItem.tokenId);
+            tokenOwner = await ERC1155FactorySmartContract.getTokenOwner(nftItem.tokenId);
 
             expect(searchResults.length).to.equal(3);
             expect(tokenOwner).to.equal(aliceWallet.address);
             expect(nftItem.ownerAddress).to.equal(aliceWallet.address);
 
             // Bob Wallet
-            searchResults = await ERC721FactorySmartContract.searchAddress(Snippets.OWNER, bobWallet.address);
+            searchResults = await ERC1155FactorySmartContract.searchAddress(Snippets.OWNER, bobWallet.address);
 
             nftItem = Snippets.parseNFTItem(searchResults[0]);
 
-            tokenOwner = await ERC721FactorySmartContract.getTokenOwner(nftItem.tokenId);
+            tokenOwner = await ERC1155FactorySmartContract.getTokenOwner(nftItem.tokenId);
 
             expect(searchResults.length).to.equal(1);
             expect(tokenOwner).to.equal(bobWallet.address);
@@ -1710,7 +1708,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.grantAdminRole(deanWallet.address);
 
-            const deanWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
+            const deanWalletHasAdminRole = await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
 
             expect(deanWalletHasAdminRole).to.be.true;
 
@@ -1720,13 +1718,13 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.grantAdminRole(deanWallet.address);
 
-            const deanWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
+            const deanWalletHasAdminRole = await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
 
             expect(deanWalletHasAdminRole).to.be.true;
 
             await deployerWalletAccount.revokeAdminRole(deanWallet.address);
 
-            const deanWalletStillHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
+            const deanWalletStillHasAdminRole = await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
 
             expect(deanWalletStillHasAdminRole).to.be.false;
 
@@ -1736,7 +1734,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.grantAdminRole(deanWallet.address);
 
-            const deanWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
+            const deanWalletHasAdminRole = await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
 
             expect(deanWalletHasAdminRole).to.be.true;
 
@@ -1745,7 +1743,7 @@ describe("ERC721Factory", async function () {
 
             await deanWalletAccount.renounceAdminRole(deanWallet.address);
 
-            const deanWalletStillHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
+            const deanWalletStillHasAdminRole = await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deanWallet.address);
 
             expect(deanWalletStillHasAdminRole).to.be.false;
 
@@ -1753,16 +1751,16 @@ describe("ERC721Factory", async function () {
 
         it("Can renounce ownership of the smart contract : renounceContractOwnership", async () => {
 
-            const deployerWalletHasAdminRole = await ERC721FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deployerWallet.address);
+            const deployerWalletHasAdminRole = await ERC1155FactorySmartContract.hasRole(Snippets.ADMIN_ROLE, deployerWallet.address);
 
             expect(deployerWalletHasAdminRole).to.be.true;
 
-            const contractOwner:string = await ERC721FactorySmartContract.getOwner();
+            const contractOwner:string = await ERC1155FactorySmartContract.getOwner();
 
             expect(contractOwner).to.be.equal(deployerWallet.address);
 
             await expect(charlieWalletAccount.renounceContractOwnership())
-                .to.be.revertedWithCustomError(ERC721FactorySmartContract, "InsufficientPermissions")
+                .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "InsufficientPermissions")
                 .withArgs(
                     charlieWallet.address, 
                     Snippets.ADMIN_ROLE, 
@@ -1771,7 +1769,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.renounceContractOwnership();
 
-            const newContractOwner:string = await ERC721FactorySmartContract.getOwner();
+            const newContractOwner:string = await ERC1155FactorySmartContract.getOwner();
 
             expect(newContractOwner).to.be.equal(Snippets.ADDRESS_ZERO);
 
@@ -1783,7 +1781,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.grantMinterRole(deanWallet.address);
 
-            const deanWalletHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
+            const deanWalletHasMinterRole = await ERC1155FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
 
             expect(deanWalletHasMinterRole).to.be.true;
 
@@ -1793,13 +1791,13 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.grantMinterRole(deanWallet.address);
 
-            const deanWalletHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
+            const deanWalletHasMinterRole = await ERC1155FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
 
             expect(deanWalletHasMinterRole).to.be.true;
 
             await deployerWalletAccount.revokeMinterRole(deanWallet.address);
 
-            const deanWalletStillHasMinternRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
+            const deanWalletStillHasMinternRole = await ERC1155FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
 
             expect(deanWalletStillHasMinternRole).to.be.false;
 
@@ -1809,7 +1807,7 @@ describe("ERC721Factory", async function () {
 
             await deployerWalletAccount.grantMinterRole(deanWallet.address);
 
-            const deanWalletHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
+            const deanWalletHasMinterRole = await ERC1155FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
 
             expect(deanWalletHasMinterRole).to.be.true;
 
@@ -1818,7 +1816,7 @@ describe("ERC721Factory", async function () {
 
             await deanWalletAccount.renounceMinterRole(deanWallet.address);
 
-            const deanWalletStillHasMinterRole = await ERC721FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
+            const deanWalletStillHasMinterRole = await ERC1155FactorySmartContract.hasRole(Snippets.MINTER_ROLE, deanWallet.address);
 
             expect(deanWalletStillHasMinterRole).to.be.false;
 
@@ -1834,7 +1832,7 @@ describe("ERC721Factory", async function () {
             let _tokenId:number = 1;
 
             await expect(deployerWalletAccount.transferToken(_account, _tokenId, deployerWallet.address))
-                .to.be.revertedWithCustomError(ERC721FactorySmartContract, "NotApprovedOrOwner")
+                .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "NotApprovedOrOwner")
                 .withArgs();
 
             await aliceWalletAccount.approveAddressForToken(_account, _tokenId);

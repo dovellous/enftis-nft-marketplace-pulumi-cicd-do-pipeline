@@ -232,5 +232,19 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
         _whenIsApprovedOrOwner(_approved);
         _;
     }
+    /**
+     * @dev : reverts NotApprovedOrOwner error if the account is a not owner or approved.
+     * 
+     */
+    function _whenIsTokenOwner(bool _tokenOwner) private pure {
+        if (!_tokenOwner) {
+            revert Errors.NotApprovedOrOwner();
+        }
+    }
+
+    modifier whenIsTokenOwner(bool _tokenOwner) {
+        _whenIsTokenOwner(_tokenOwner);
+        _;
+    }
     /********************************* Modifiers **********************************/
 }

@@ -28,10 +28,19 @@ library Structs {
     using Enums for *;
 
     // Royalty Object
+    struct MinterHelperParams{
+        uint256 tokenId;
+        uint256 amount;
+        uint256 maxSupply;
+        string  tokenURI;
+        address to;
+    }
+
+    // Royalty Object
     struct RoyaltyItem {
         bool royaltyIsDefined;
         address royaltyReceiver;
-        uint256 royaltyFraction;
+        uint256  royaltyFraction;
         uint256 royaltyAmount;
         uint256 tokenPrice;
         uint256 tokenId;

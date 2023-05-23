@@ -127,7 +127,6 @@ library Errors {
      * The specified tokenURI must be unique. Non fungible token are unique unlike ERC20
      *
      * @param tokenURI : entered tokenURI.
-     * @param tokenURIExists : token uri exists
      * @param message : error message.
      *
      * Requirements:
@@ -137,7 +136,6 @@ library Errors {
 
     error TokenURIAlreadyExists(
         string tokenURI,
-        bool tokenURIExists,
         bytes32 message
     );
 
@@ -188,5 +186,28 @@ library Errors {
      */
 
     error RoyaltiesDisabled(uint256 timestamp, bytes32 message);
+
+    /**
+     * Array lengths are mismatched.
+     */
+    error ArrayLengthMismatch();
+
+    /**
+     * Specified id must be less than the max tokenIds defined.
+     *
+     * @param tokenMaximumSupply max tokenIds specified in initialization.
+     * @param tokenId entered tokenId.
+     *
+     */
+    error ExceededMaxUniqueIds(uint256 tokenMaximumSupply, uint256 tokenId);
+
+    /**
+     * tokenMaximumSupply must be greater than zero.
+     *
+     * @param tokenMaximumSupply max supply specified in initialization.
+     * @param tokenId entered tokenId.
+     *
+     */
+    error ZeroTokenSupply(uint256 tokenMaximumSupply, uint256 tokenId);
 
 }

@@ -8,6 +8,11 @@ import type { Errors, ErrorsInterface } from "../../../contracts/libs/Errors";
 
 const _abi = [
   {
+    inputs: [],
+    name: "ArrayLengthMismatch",
+    type: "error",
+  },
+  {
     inputs: [
       {
         internalType: "bool",
@@ -16,6 +21,22 @@ const _abi = [
       },
     ],
     name: "DisabledOption",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenMaximumSupply",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "ExceededMaxUniqueIds",
     type: "error",
   },
   {
@@ -175,11 +196,6 @@ const _abi = [
         type: "string",
       },
       {
-        internalType: "bool",
-        name: "tokenURIExists",
-        type: "bool",
-      },
-      {
         internalType: "bytes32",
         name: "message",
         type: "bytes32",
@@ -220,10 +236,26 @@ const _abi = [
     name: "ZeroAddress",
     type: "error",
   },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenMaximumSupply",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "ZeroTokenSupply",
+    type: "error",
+  },
 ] as const;
 
 const _bytecode =
-  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212200ae4b2365f0ee89598efcfdd35e5cb437412c825160d6f8c4f7d0760d9eea5df64736f6c63430008130033";
+  "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212203bef1b3e80fcbd78bd464c2bf6413470e6b244e793a9ac55851d69b92d14655764736f6c63430008130033";
 
 type ErrorsConstructorParams =
   | [signer?: Signer]

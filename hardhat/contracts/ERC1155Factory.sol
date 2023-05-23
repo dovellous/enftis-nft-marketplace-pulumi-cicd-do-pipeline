@@ -42,12 +42,10 @@ import "./base/ERC1155/ERC1155FactoryGetSet.sol";
 
 contract ERC1155Factory is ERC1155FactoryGetSet {
     constructor(
-        string memory _name,
-        string memory _symbol,
+        string memory _url,
         bytes  memory _data
     ) payable ERC1155FactoryGetSet(
-        _name,
-        _symbol,
+        _url,
         _data
     ) {}
 }

@@ -88,6 +88,7 @@ export interface SnippetsInterface extends utils.Interface {
     "getBaseURI(string)": FunctionFragment;
     "getTokenURIFromID(string,uint256)": FunctionFragment;
     "getTokenURIFromURI(string,string)": FunctionFragment;
+    "msgSender()": FunctionFragment;
     "searchHasMatch(bytes32,bytes,(address,address[2],address,uint256,uint256,uint256),string)": FunctionFragment;
     "searchString(string,string)": FunctionFragment;
     "stringBytes32(string)": FunctionFragment;
@@ -134,6 +135,7 @@ export interface SnippetsInterface extends utils.Interface {
       | "getBaseURI"
       | "getTokenURIFromID"
       | "getTokenURIFromURI"
+      | "msgSender"
       | "searchHasMatch"
       | "searchString"
       | "stringBytes32"
@@ -265,6 +267,7 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "getTokenURIFromURI",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: "msgSender", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "searchHasMatch",
     values: [
@@ -400,6 +403,7 @@ export interface SnippetsInterface extends utils.Interface {
     functionFragment: "getTokenURIFromURI",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "msgSender", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "searchHasMatch",
     data: BytesLike
@@ -541,6 +545,10 @@ export interface Snippets extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    msgSender(
+      overrides?: CallOverrides
+    ): Promise<[string] & { sender: string }>;
+
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,
       _data: PromiseOrValue<BytesLike>,
@@ -661,6 +669,8 @@ export interface Snippets extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  msgSender(overrides?: CallOverrides): Promise<string>;
+
   searchHasMatch(
     _itemKey: PromiseOrValue<BytesLike>,
     _data: PromiseOrValue<BytesLike>,
@@ -780,6 +790,8 @@ export interface Snippets extends BaseContract {
       _tokenURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    msgSender(overrides?: CallOverrides): Promise<string>;
 
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,
@@ -903,6 +915,8 @@ export interface Snippets extends BaseContract {
       _tokenURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    msgSender(overrides?: CallOverrides): Promise<BigNumber>;
 
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,
@@ -1044,6 +1058,8 @@ export interface Snippets extends BaseContract {
       _tokenURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    msgSender(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     searchHasMatch(
       _itemKey: PromiseOrValue<BytesLike>,

@@ -38,59 +38,51 @@ contract ERC1155FactoryGetSet is
     /**
      * Constructor arguments for erc1155 implementation.
      *
-     * @param _name contract token name
-     * @param _symbol contract token symbol
+     * @param _url contract url
      * @param _data encoded parameters
      */
     constructor (
-        string memory _name,
-        string memory _symbol,
+        string memory _url,
         bytes memory _data
-    ) payable ERC1155FactoryBase(_name, _symbol) {
+    ) payable ERC1155FactoryBase(_url) {
 
         /**
          * initializer arguments for erc1155 implementation.
          *
-         * @param _name encoded parameters
-         * @param _symbol encoded parameters
-         * @param _contractURI encoded parameters
-         * @param _baseUri encoded parameters
-         * @param _tokenMaximumSupply encoded parameters
-         * @param _royaltyFraction encoded parameters
-         * @param _royaltyReceiver encoded parameters
-         * @param _admins encoded parameters
-         * @param _minters encoded parameters
-         * @param _mintingFee encoded parameters
-         * @param _tokenCategoryEnumIndex encoded parameters
          * @param _isPausable encoded parameters
          * @param _isBurnable encoded parameters
+         * @param _admins encoded parameters
+         * @param _minters encoded parameters
+         * @param _royaltyFee encoded parameters
+         * @param _contractURI encoded parameters
+         * @param _mintingFee encoded parameters
+         * @param _tokenMaximumSupply encoded parameters
+         * @param _baseUri encoded parameters
          */
         (
-            bytes32 _contractURI,
-            string memory _baseUri,
-            uint256 _tokenMaximumSupply,
-            uint96 _royaltyFraction,
-            address _royaltyReceiver,
+            
+            
+            bool _isPausable,
+            bool _isBurnable,
             address[] memory _admins,
             address[] memory _minters,
+            uint96 _royaltyFee,
+            bytes32 _contractURI,
             uint256 _mintingFee,
-            Enums.TokenCategory _tokenCategoryEnumIndex,
-            bool _isPausable,
-            bool _isBurnable
+            uint256 _tokenMaximumSupply,
+            string  memory _baseUri
         ) = abi.decode(
                 _data,
-                (
-                    bytes32,
-                    string,
-                    uint256,
-                    uint96,
-                    address,
-                    address[],
-                    address[],
-                    uint256,
-                    Enums.TokenCategory,
+                (   
                     bool,
-                    bool
+                    bool,
+                    address[],
+                    address[],
+                    uint96,
+                    bytes32,
+                    uint256,
+                    uint256,
+                    string
                 )
             );
 
@@ -130,24 +122,16 @@ contract ERC1155FactoryGetSet is
             tokenMaximumSupply = type(uint256).max;
         }
 
-        // setup the royalties receiver for each secondary purchase and above
-        if (_royaltyFraction != 0 && _royaltyReceiver != address(0)) {
-            royaltiesDisabledUntil = 0;
-            royaltyReceiver = payable(_royaltyReceiver);
-            royaltyFraction = _royaltyFraction;
-            _setDefaultRoyalty(_royaltyReceiver, _royaltyFraction);
-        }
-
         // setup states
-        baseTokenURI = _baseUri;
+        _setDefaultRoyalty(_msgSender(), _royaltyFee);
+
+        _setURI(_baseUri);
         
         contractURI = _contractURI;
 
         mintingFee = _mintingFee;
         
         contractOptionsStruct = ContractOptions(_isPausable, _isBurnable);
-
-        tokenCategory = _tokenCategoryEnumIndex; 
         
         owner = payable(_msgSender());
 
@@ -163,7 +147,7 @@ contract ERC1155FactoryGetSet is
      *
      */
     function getBaseURI() external view returns (string memory) {
-        return baseTokenURI;
+        return super.uri(0);
     }
 
     /**
@@ -199,100 +183,18 @@ contract ERC1155FactoryGetSet is
         return owner;
     }
 
-    // Marketplace
-
-    /**
-     * @dev Retrieves the marketplace address approved for toke transfers.
-     * @return marketplaceAddress.
-     *
-     */
-    function getMarketplaceAddress() external view returns (address ) {
-        return marketplaceAddress;
-    }
-
-    // Royalties
-
-    /**
-     * @dev Returns current _owner address. This is only for compatibility 
-     * for opensea and other protocols.
-     * @return royaltyFraction.
-     *
-     */
-    function getRoyaltyFraction() external view returns (uint96 ) {
-        return royaltyFraction;
-    }
-
-    /**
-     * @dev The default receiver of the token royalties.
-     * @return address.
-     *
-     */
-    function getRoyaltyReceiver() external view returns (address ) {
-        return royaltyReceiver;
-    }
-
-    /**
-     * @dev Retrieves the royalty info of a token.
-     * @param _tokenId the id of the token.
-     * @param _tokenPrice the price of the token.
-     * @return royaltyItemStruct the royalty info of the token.
-     * 
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     * 
-     */
-    function getTokenRoyaltyInfo(
-        uint256 _tokenId,
-        uint256 _tokenPrice
-    )
-        external
-        view
-        validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-        returns (Structs.RoyaltyItem memory)
-    {
-        (address _royaltyReceiver, uint256 _royaltyAmount) = royaltyInfo(
-            _tokenId,
-            _tokenPrice
-        );
-
-        Structs.RoyaltyItem memory _royaltyItemStruct;
-
-        if (_royaltyAmount != 0 && _royaltyReceiver != address(0)) {
-            _royaltyItemStruct = Structs.RoyaltyItem(
-                true,
-                payable(_royaltyReceiver),
-                (_royaltyAmount * _feeDenominator() / _tokenPrice),
-                _royaltyAmount,
-                _tokenPrice,
-                _tokenId
-            );
-        }
-
-        //Cleanup : @see 
-        // https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/cleanup-variables.md
-
-        delete _royaltyReceiver;
-        delete _royaltyAmount;
-
-        return _royaltyItemStruct;
-    }
-
-    /**
-     * @dev Retrieves the royalty fee dinominator.
-     * @return uint96
-     *
-     * Notes: 
-     * When passing the royalty percentage
-     * - It must not be a decimal
-     * - You have to multiply the percentage by the fee denominator
-     * - For example: 3% => 3 * _feeDenominator()
-     */
-    function getRoyaltyFeeDenominator() external pure returns (uint96 ) {
-        return _feeDenominator();
-    }
-
     // Supply
+
+    /**
+        * @dev Returns the total quantity for a token ID
+        * @param _tokenId uint256 ID of the token to query
+        * @return amount of token in existence
+        */
+    function getTokenMaximumSupplyById(
+        uint256 _tokenId
+    ) public view returns (uint256) {
+        return tokenMaximumSupplyById[_tokenId];
+    }
 
     /**
      * @dev Retrieves the royalty info of a token including the fee base on price supplied.
@@ -317,7 +219,7 @@ contract ERC1155FactoryGetSet is
      * the current token supply.
      * @return _tokenIdCounter.
      */
-    function getTokenCurrentId() external view returns (uint256) {
+    function totalSupply() external view returns (uint256) {
         return _tokenIdCounter.current();
     }
 
@@ -488,18 +390,7 @@ contract ERC1155FactoryGetSet is
         validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
         returns (address)
     {
-        return ownerOf(_tokenId);
-    }
-
-    /**
-     * @dev Retrieves the number of tokens owned  by an account address.
-     * @param _account The account address to get the balance from.
-     * @return The balance of the account.
-     */
-    function getAccountTokenBalance(
-        address _account
-    ) external view returns (uint256) {
-        return balanceOf(_account);
+        return tokenIdToNFTItem[_tokenId].ownerAddress;
     }
 
     // ==================== End Read Owner Data ==================== //
@@ -536,77 +427,7 @@ contract ERC1155FactoryGetSet is
         return _tokens();
     }
 
-    /**
-     * @dev Retrieves the activity history of a token.
-     * @param _tokenId The id of the token to get the activity history.
-     * @return TokenActivityItem[] 
-     * 
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     * 
-     */
-    function getTokenAuditTrail(
-        uint256 _tokenId
-    ) 
-    public 
-    view 
-    validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-    returns (Structs.TokenActivityItem[] memory) {
-        return tokenIdToTokenActivityItem[_tokenId];
-    }
-
     // Collections
-
-    /**
-     * @dev Retrieves the collection name.
-     * @return The token name.
-     */
-    function collectionName() external view returns (string memory ) {
-        return name();
-    }
-
-    /**
-     * @dev Retrieves the collection symbol.
-     * @return The token symbol.
-     */
-    function collectionSymbol() external view returns (string memory) {
-        return symbol();
-    }
-
-    // Category
-
-    /**
-     * @dev Retrieves the category of the collection.
-     * @return Enums.TokenCategory tokenCategory
-     */
-    function collectionCategory() external view returns (Enums.TokenCategory) {
-        return tokenCategory;
-    }
-
-    /**
-     * @dev Retrieves the full description of the collection.
-     * @return description text of the collection
-     */
-    function collectionDescription() external view returns (string memory) {
-        return description;
-    }
-
-    /**
-     * @dev Retrieves a path to a banner media of this collection
-     * @return bannerURL The uri to an image resource
-     */
-    function collectionBannerMedia() external view returns (string memory) {
-        return bannerURL;
-    }
-
-    /**
-     * @dev Retrieves a path to a display picture of this collection
-     * @return photoURL The uri to an image resource
-     */
-    function collectionDisplayPicture() external view returns (string memory) {
-        return photoURL;
-    }
 
     // Search
 
@@ -690,9 +511,11 @@ contract ERC1155FactoryGetSet is
      * - Only Admin can call this method
      */
     function transferToken(
-        address _to, 
-        uint256 _tokenId, 
-        address _from
+        address _from,
+        address _to,
+        uint256 _tokenId,
+        uint256 _amount,
+        bytes memory data
     ) 
         external 
         validToken(
@@ -700,14 +523,14 @@ contract ERC1155FactoryGetSet is
             _tokenId, 
             tokenMaximumSupply
         )
-        whenIsApprovedOrOwner(
-            _isApprovedOrOwner(_msgSender(), _tokenId)
+        whenIsTokenOwner(
+            tokenIdToNFTItem[_tokenId].ownerAddress == _msgSender()
         )
     {   
         if(_from == address(0)){
             _from = _msgSender();
         }
-        safeTransferFrom(_from, _to, _tokenId);
+        safeTransferFrom(_from, _to, _tokenId, _amount, data);
     }
 
     /**
@@ -793,36 +616,20 @@ contract ERC1155FactoryGetSet is
         renounceRole(Snippets.MINTER_ROLE, _account);
     }
 
-    function approveAddressForToken(
-        address _account,
-        uint256 _tokenId
-    ) 
-        external 
-        validToken(
-            _exists(_tokenId), 
-            _tokenId, 
-            tokenMaximumSupply
-        ) 
-    {
-        approve(_account, _tokenId);
-        emit ApprovedAddressForTokenChanged(_account, _tokenId);
-    }
-
-    /**
-     * @dev Sets the new base uri for this contract.
-     * @param _newBaseURI Base uri of the contract to change to.
-     *
-     * Emits an {BaseURIChanged} event.
-     * 
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     */
-    function setBaseURI(string calldata _newBaseURI) external onlyAdmin {
-        baseTokenURI = _newBaseURI;
-        emit BaseURIChanged(_newBaseURI);
-    }
-
+  /**
+   * @dev Will update the base URI for the token
+   * @param _tokenId The token to update. _msgSender() must be its creator.
+   * @param _tokenURI New URI for the token.
+   */
+  function setTokenURI(
+    uint256 _tokenId,
+    string memory _tokenURI
+  ) public  
+  whenIsTokenOwner(
+    tokenIdToNFTItem[_tokenId].ownerAddress == _msgSender()
+  ) {
+    tokenURIs[_tokenId] = _tokenURI;
+  }
     /**
      * @dev Sets the new contract uri for this contract.
      * @param _newContractURI Contract uri of the contract to 
@@ -844,80 +651,6 @@ contract ERC1155FactoryGetSet is
         emit ContractURIChanged(_newContractURI);
     }
 
-    /**
-     * @dev Sets the collection description.
-     * @param _description The lengthy description  of the collection.
-     *
-     * Emits an {CollectionDescriptionChanged} event.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     */
-    function setCollectionDescription(
-        string calldata _description
-    ) external onlyAdmin {
-        description = _description;
-        emit CollectionDescriptionChanged(_description);
-    }
-
-    /**
-     * @dev Sets collection banner media.
-     * @param _bannerURL The uri of the collection dp.
-     *
-     * Emits an {CollectionBannerMediaChanged} event.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     */
-    function setCollectionBannerMedia(
-        string calldata _bannerURL
-    ) external onlyAdmin {
-        bannerURL = _bannerURL;
-        emit CollectionBannerMediaChanged(_bannerURL);
-    }
-
-    /**
-     * @dev Sets collection display picture.
-     * @param _photoURL The uri of the collection dp.
-     *
-     * Emits an {CollectionDisplayPictureChanged} event.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     */
-    function setCollectionDisplayPicture(
-        string calldata _photoURL
-    ) external onlyAdmin {
-        photoURL = _photoURL;
-        emit CollectionDisplayPictureChanged(_photoURL);
-    }
-
-    /**
-     * @dev Sets the new marketplace address.
-     * @param _newMarketplaceAddress marketplace address that will list the collection.
-     *
-     * Emits an {MarketplaceAddressChanged} event.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     * - _newMarketplaceAddress must not be a zero address
-     * 
-     */
-    function setMarketplaceAddress(
-        address _newMarketplaceAddress
-    ) external onlyAdmin validAccount(_newMarketplaceAddress) {
-        if (marketplaceAddress != address(0)) {
-            setApprovalForAll(marketplaceAddress, false);
-        }
-        marketplaceAddress = payable(_newMarketplaceAddress);
-        setApprovalForAll(_newMarketplaceAddress, true);
-        emit MarketplaceAddressChanged(_newMarketplaceAddress);
-    }
- 
     /**
      * @dev Sets the new minting fee.
      * @param _newMintingFee New minting fee.
@@ -952,6 +685,82 @@ contract ERC1155FactoryGetSet is
     ) external onlyOwner validAccount(_newOwner) {
         owner = payable(_newOwner);
         emit OwnerChanged(_newOwner);
+    }
+
+    /**
+     * @dev Burns `amount` tokens of token type `id` from `account`. See {ERC1155-_burn}.
+     *
+     * @param _from address of account to burn .
+     * @param _tokenId tokenId to burn.
+     * @param _amount token amount to burn.
+     *
+     * Emits a TransferSingle event.
+     *
+     * Requirements:
+     * - `from` cannot be the zero address.
+     * - `from` must have at least amount tokens of token type id.
+     * - The caller must own `tokenId` or be an approved operator.
+     */
+    function burn(
+        address _from,
+        uint256 _tokenId,
+        uint256 _amount
+    ) public virtual burnable override(ERC1155Burnable, ERC1155FactoryBurner) {
+        ERC1155FactoryBurner.burn(_from, _tokenId, _amount);
+    }
+
+    /**
+     * @dev Burns `amount` tokens of token type `id` from `from`. See {ERC1155-_burn}.
+     * Extension of {ERC1155} that allows token holders to destroy both their
+     * own tokens and those that they have been approved to use.
+     * @param _account address of account to burn from.
+     * @param _ids tokenIds to burn.
+     * @param _values token amounts to burn.
+     *
+     * Emits a TransferBatch event.
+     *
+     * Requirements:
+     * - `from` cannot be the zero address.
+     * - `from` must have at least amount tokens of token type id.
+     * - The caller must own `tokenId` or be an approved operator.
+     */
+    function burnBatch(
+        address _account, 
+        uint256[] memory _ids, 
+        uint256[] memory _values
+    ) public virtual burnable override(ERC1155Burnable, ERC1155FactoryBurner) {
+        ERC1155FactoryBurner.burnBatch(_account, _ids, _values);
+    }
+
+    /**
+     * @dev Hook that is called before any token transfer. This includes minting
+     * and burning, as well as batched variants.
+     *
+     * The same hook is called on both single and batched variants. For single
+     * transfers, the length of the `ids` and `amounts` arrays will be 1.
+     *
+     * Calling conditions (for each `id` and `amount` pair):
+     *
+     * - When `from` and `to` are both non-zero, `amount` of ``from``'s tokens
+     * of token type `id` will be  transferred to `to`.
+     * - When `from` is zero, `amount` tokens of token type `id` will be minted
+     * for `to`.
+     * - when `to` is zero, `amount` of ``from``'s tokens of token type `id`
+     * will be burned.
+     * - `from` and `to` are never both zero.
+     * - `ids` and `amounts` have the same, non-zero length.
+     *
+     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
+     */
+    function _beforeTokenTransfer(
+        address operator,
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) internal virtual override(ERC1155FactoryBase) {
+        ERC1155FactoryBase._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
 
 }

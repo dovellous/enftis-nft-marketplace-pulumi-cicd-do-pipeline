@@ -3,4 +3,4 @@
 /* eslint-disable */
 export * as base from "./base";
 export * as libs from "./libs";
-export { ERC721Factory__factory } from "./ERC721Factory__factory";
+export { ERC1155Factory__factory } from "./ERC1155Factory__factory";
