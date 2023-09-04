@@ -3,7 +3,7 @@ import { config as dotEnvConfig } from "dotenv";
 import "@nomicfoundation/hardhat-toolbox";
 dotEnvConfig();
 
-const config:HardhatUserConfig = {
+const hardhatConfig:HardhatUserConfig = {
   defaultNetwork: `${process.env.DEFAULT_NETWORK_NAME}`,
   etherscan: {
     apiKey: {
@@ -37,7 +37,7 @@ const config:HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 5,
+            runs: 1,
             details: {
               yul: true
             }
@@ -57,4 +57,4 @@ const config:HardhatUserConfig = {
   }
 }
 
-module.exports = config;
+module.exports = hardhatConfig;

@@ -10,6 +10,7 @@ pragma experimental ABIEncoderV2;
 /*********************************** Imports **********************************/
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol";
@@ -24,6 +25,7 @@ import '@openzeppelin/contracts/utils/Strings.sol';
 
 import "../common/ERCFallback.sol";
 import "../common/ERCModifiers.sol";
+import "../common/IERCLogging.sol";
 
 contract ERC1155FactoryBase is
     ERC1155,
@@ -47,20 +49,26 @@ contract ERC1155FactoryBase is
     /// This is only for compatibility for other protocols.
     address payable public owner;
 
-    /// @dev Contract URI where this code resides
-    bytes32 public contractURI;
+    /// @dev Marketplace address
+    address payable public marketplaceAddress;
 
     /// @dev Token Maximum Supply
     uint256 public tokenMaximumSupply;
 
-    // current supply for each tokenId
-    mapping(uint256 => uint256) public tokenMaximumSupplyById;
+    /// @dev Logger address
+    address public loggerAddress;
+    
+    /// @dev Contract URI where this code resides
+    //string public contractURI;
 
     // max supply for each tokenId
     mapping(uint256 => uint256) public maxSupplyById;
 
     // minted supply for each tokenId
     mapping(uint256 => uint256) public mintedSupplyById;
+
+    // minted supply for each tokenId
+    mapping(uint256 => uint256) public currentSupplyById;
 
     /// @dev Token Id to Token URI mapping
     mapping(uint256 => string) internal tokenURIs;
@@ -76,14 +84,14 @@ contract ERC1155FactoryBase is
         address newOwner
     );
 
-    /// Dispatched when the contract uri has been updated.
-    event ContractURIChanged(
-        bytes32 newURI
-    );
-
     /// Dispatched when the base uri has been updated.
     event BaseURIChanged(
         string newURI
+    );
+
+    /// Dispatched when the marketplace address has been updated.
+    event MarketplaceAddressChanged(
+        address newMarketplaceAddress
     );
 
     /// Dispatched when the minting fee has bene updated.
@@ -114,8 +122,6 @@ contract ERC1155FactoryBase is
     );
 
     event Received(address, uint);
-
-    event Log(string func, uint gas);
     
     /**
      * @dev Initialize the  base contract
@@ -135,19 +141,7 @@ contract ERC1155FactoryBase is
     function _exists(
         uint256 _tokenId
     ) internal view returns (bool) {
-        return tokenIdToNFTItem[_tokenId].tokenId != 0;
-    }
-
-    /**
-     * This is used instead of msg.sender as transactions won't be sent by the original token owner, but by OpenSea.
-     */
-    function _msgSender()
-        internal
-        override
-        view
-        returns (address sender)
-    {
-        return Snippets.msgSender();
+        return tokenIdToNFTItem[_tokenId].tokenId > 0;
     }
 
     
@@ -166,17 +160,9 @@ contract ERC1155FactoryBase is
      * @return string the base URI concatenated with the specified tokenURI for a tokenId.
      *
      */
-    function _baseURI() internal view virtual returns (string memory) {
-        return super.uri(0);
-    }
 
-    /**
-     * @dev Returns base token URI.
-     *
-     * @return string the base URI of the contract.
-     */
     function baseURI() external view returns (string memory) {
-        return _baseURI();
+        return super.uri(0);
     }
 
     /**
@@ -187,7 +173,7 @@ contract ERC1155FactoryBase is
     */
     function setBaseURI(
         string memory _newURI
-    ) public onlyOwner {
+    ) external onlyOwner {
         _setURI(_newURI);
         emit BaseURIChanged(_newURI);
     }
@@ -204,17 +190,20 @@ contract ERC1155FactoryBase is
      *
      * Concatenates the base URI with a tokenURI based on the tokenId.
      *
-     * @param tokenId the tokenId pointing to the tokenURI in the tokenURIs mapping.
+     * @param _tokenId the tokenId pointing to the tokenURI in the tokenURIs mapping.
      * @return string the base URI concatenated with the specified tokenURI for a tokenId.
      */
-    function uri(uint256 tokenId)
+    function uri(uint256 _tokenId)
         public
         view
         virtual
         override(ERC1155, ERC1155URIStorage)
         returns (string memory)
     {
-        return tokenURI(tokenId);
+        if(_tokenId == 0){
+            return super.uri(0);
+        }
+        return tokenURI(_tokenId);
     }
 
     
@@ -226,51 +215,19 @@ contract ERC1155FactoryBase is
         virtual
         returns (string memory)
     {
-
-        string memory _contractBaseURI = Snippets.getBaseURI(_baseURI());
-        string memory tokenURIById = tokenURIs[_tokenId];
-
-        // If both are set, concatenate the baseURI and tokenURIById (via abi.encodePacked).
-        if (bytes(tokenURIById).length != 0) 
-        {
-            _contractBaseURI = Snippets.getTokenURIFromURI(
-                _contractBaseURI, 
-                tokenURIById
+            
+            return Snippets.getTokenURIFromID(
+                _tokenId,
+                super.uri(0),
+                tokenURIs[_tokenId]
             );
-        }
-        else if (bytes(_contractBaseURI).length != 0) 
-        {
-            _contractBaseURI = Snippets.getTokenURIFromID(
-                _contractBaseURI,
-                _tokenId
-            );
-        }
-        else 
-        {
-            _contractBaseURI = super.uri(_tokenId);
-        }
         
-        delete tokenURIById;
-
-        return _contractBaseURI;
-    }
-    
-    /**
-     * @dev Toggle pauses. See {Pausable}.
-     *
-     * Requirements:
-     *
-     * - Only Admin can call this method
-     * - Only contracts with pausable active can call this method
-     */
-    function togglePause() public onlyAdmin pausable {
-        paused() ? _unpause() : _pause();
     }
     
     /// @dev Set the royalty for all collection
     /// @param _feeNumerator The fee for collection
     function setDefaultRoyalty(address _receiver, uint96 _feeNumerator)
-        public
+        external
         onlyOwner
     {
         _setDefaultRoyalty(_receiver, _feeNumerator);
@@ -284,7 +241,7 @@ contract ERC1155FactoryBase is
         uint256 _tokenId,
         address _receiver,
         uint96 _feeNumerator
-    ) public onlyOwner {
+    ) external onlyOwner {
         _setTokenRoyalty(_tokenId, _receiver, _feeNumerator);
     }
 
@@ -327,6 +284,9 @@ contract ERC1155FactoryBase is
         uint256[] memory amounts,
         bytes memory data
     ) internal virtual override {
+        if(paused()){
+            revert Errors.DisabledOption('PAUSED');
+        }
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
 
@@ -359,32 +319,63 @@ contract ERC1155FactoryBase is
         bytes memory data
     ) internal virtual  override {
 
-        for(uint256 i; i < amounts.length; ++i){
+        console.log(loggerAddress, operator, from, to);
 
-            //Minted
-            if (from == address(0)) {
-                emit TokenMinted(from, to, ids[i], amounts[i]);
-            }
+        unchecked {
+                
+            for(uint256 i; i < amounts.length; ++i){
 
-            //Burned
-            if (to == address(0)) {
-                emit TokenBurned(from, to, ids[i], amounts[i]);
-            }
+                //Minted
+                if (from == address(0)) {
+                    IERCLogging(loggerAddress).logTokenActivity(
+                        address(this),
+                        from,
+                        to,
+                        ids[i],
+                        Enums.TokenActivityType.Mint,
+                        block.timestamp
+                    );
+                    emit TokenMinted(from, to, ids[i], amounts[i]);
+                }
 
-            //Transfered
-            if (to != address(0) && from != address(0)) {
-                //Log Eventnin after transfer
+                //Burned
+                if (to == address(0)) {
+                    IERCLogging(loggerAddress).logTokenActivity(
+                        address(this),
+                        from,
+                        to,
+                        ids[i],
+                        Enums.TokenActivityType.Burn,
+                        block.timestamp
+                    );
+                    emit TokenBurned(from, to, ids[i], amounts[i]);
+                }
 
-                Structs.NFTItem memory _NFT = tokenIdToNFTItem[ids[i]];
+                //Transfered
+                if (to != address(0) && from != address(0)) {
+                    //Log Eventnin after transfer
 
-                _NFT.ownerAddress = to;
-                _NFT.updatedAt = block.timestamp;
+                    Structs.NFTItem memory _NFT = tokenIdToNFTItem[ids[i]];
 
-                tokenIdToNFTItem[ids[i]] = _NFT;
+                    _NFT.ownerAddress = to;
+                    _NFT.updatedAt = block.timestamp;
 
-                delete _NFT;
+                    tokenIdToNFTItem[ids[i]] = _NFT;
+                    
+                    IERCLogging(loggerAddress).logTokenActivity(
+                        address(this),
+                        from,
+                        to,
+                        ids[i],
+                        Enums.TokenActivityType.Transfer,
+                        block.timestamp
+                    );
 
-                emit TokenTransfered(from, to, ids[i], amounts[i]);
+                    emit TokenTransfered(from, to, ids[i], amounts[i]);
+
+                    delete _NFT;
+
+                }
 
             }
 
@@ -393,6 +384,8 @@ contract ERC1155FactoryBase is
         super._afterTokenTransfer(operator, from, to, ids, amounts, data);
 
     }
+
+
 
     /**
      * @dev See {IERC165-supportsInterface}.

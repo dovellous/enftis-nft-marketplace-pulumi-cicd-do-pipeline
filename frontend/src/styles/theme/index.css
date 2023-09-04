@@ -1,9 +1,0 @@
-@import "./reset.css";
-@import "./fonts.css";
-@import "./glass.css";
-
-:root {
-    color-scheme: light !important;
-    background-color: #ffffff !important;
-    color: hsla(var(--bc) / var(--tw-text-opacity, 1));
-}

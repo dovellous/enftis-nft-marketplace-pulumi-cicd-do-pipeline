@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   ERC2981,
   ERC2981Interface,
@@ -14,12 +13,12 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_tokenId",
+        name: "tokenId",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_salePrice",
+        name: "salePrice",
         type: "uint256",
       },
     ],
@@ -63,12 +62,9 @@ const _abi = [
 export class ERC2981__factory {
   static readonly abi = _abi;
   static createInterface(): ERC2981Interface {
-    return new utils.Interface(_abi) as ERC2981Interface;
+    return new Interface(_abi) as ERC2981Interface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): ERC2981 {
-    return new Contract(address, _abi, signerOrProvider) as ERC2981;
+  static connect(address: string, runner?: ContractRunner | null): ERC2981 {
+    return new Contract(address, _abi, runner) as unknown as ERC2981;
   }
 }

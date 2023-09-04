@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Errors } from "./Errors";
+export type { MarketplaceErrors } from "./MarketplaceErrors";
 export type { Snippets } from "./Snippets";

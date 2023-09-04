@@ -12,12 +12,10 @@ import "./ERCFallback.sol";
 
 abstract contract ERCModifiers is AccessControl, ERCFallback {
     
-    struct ContractOptions {
-        bool pausable;
-        bool burnable;
-    }
-
-    ContractOptions public contractOptionsStruct;
+    bool public contractOptionIsBurnable;
+    bool public contractOptionIsMintable;
+    bool public contractOptionIsPausable;
+    bool public contractOptionIsSnapshotable;
 
     /********************************* Modifiers **********************************/
 
@@ -31,8 +29,7 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
         ) {
             revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
-                requiredRole: Snippets.ADMIN_ROLE,
-                message: Snippets.INSUFFICIENT_PERMISSIONS
+                requiredRole: Snippets.ADMIN_ROLE
             });
         }
     }
@@ -49,8 +46,7 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
         if (!hasRole(DEFAULT_ADMIN_ROLE, _msgSender())) {
             revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
-                requiredRole: DEFAULT_ADMIN_ROLE,
-                message: Snippets.INSUFFICIENT_PERMISSIONS
+                requiredRole: DEFAULT_ADMIN_ROLE
             });
         }
     }
@@ -67,8 +63,7 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
         if (!hasRole(Snippets.MINTER_ROLE, _msgSender())) {
             revert Errors.InsufficientPermissions({
                 caller: _msgSender(),
-                requiredRole: Snippets.MINTER_ROLE,
-                message: Snippets.INSUFFICIENT_PERMISSIONS
+                requiredRole: Snippets.MINTER_ROLE
             });
         }
     }
@@ -82,8 +77,8 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
      * @dev : reverts DisabledOption error if contract is not burnable.
      */
     function _burnable() private view {
-        if (!contractOptionsStruct.burnable) {
-            revert Errors.DisabledOption({active: contractOptionsStruct.burnable});
+        if (!contractOptionIsBurnable) {
+            revert Errors.DisabledOption('burnable');
         }
     }
 
@@ -96,13 +91,41 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
      * @dev : reverts DisabledOption error if contract is not pausable.
      */
     function _pausable() private view {
-        if (!contractOptionsStruct.pausable) {
-            revert Errors.DisabledOption({active: contractOptionsStruct.pausable});
+        if (!contractOptionIsPausable) {
+            revert Errors.DisabledOption('pausable');
         }
     }
 
-    modifier pausable() {
+    modifier onlyWhenIsPausable() {
         _pausable();
+        _;
+    }
+
+    /**
+     * @dev : reverts DisabledOption error if contract is not mintable.
+     */
+    function _mintable() private view {
+        if (!contractOptionIsMintable) {
+            revert Errors.DisabledOption('mintable');
+        }
+    }
+
+    modifier onlyWhenIsMintable() {
+        _mintable();
+        _;
+    }
+
+    /**
+     * @dev : reverts DisabledOption error if contract is not snapshot.
+     */
+    function _snapshottable() private view {
+        if (!contractOptionIsSnapshotable) {
+            revert Errors.DisabledOption('snapshottable');
+        }
+    }
+
+    modifier snapshottable() {
+        _snapshottable();
         _;
     }
 
@@ -112,7 +135,7 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
      */
     function _nonZeroAmount(uint256 _amount) private pure {
         if (_amount == 0) {
-            revert Errors.InvalidAmount(Snippets.INVALID_AMOUNT);
+            revert Errors.InvalidAmount();
         }
     }
 
@@ -127,7 +150,7 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
      */
     function _validAccount(address _account) private pure {
         if (address(0) == _account) {
-            revert Errors.ZeroAddress({account: _account, message: Snippets.ZERO_ADDRESS});
+            revert Errors.ZeroAddress({account: _account});
         }
     }
 
@@ -140,27 +163,25 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
      * @dev : reverts UnAuthorizedCaller error if address is a smart contract.
      * @param _account :
      */
-    function _authorizedCaller(address _account) private view {
+    function _onlyWalletAddress(address _account) private view {
         uint32 size;
         assembly {
             size := extcodesize(_account)
         }
         if (size > 0) {
             revert Errors.UnAuthorizedCaller({
-                account: _account,
-                message: Snippets.INVALID_CALLER
+                account: _account
             });
         }
         if (_account.code.length > 0) {
             revert Errors.UnAuthorizedCaller({
-                account: _account,
-                message: Snippets.INVALID_CALLER
+                account: _account
             });
         }
     }
 
-    modifier authorizedCaller(address _account) {
-        _authorizedCaller(_account);
+    modifier onlyWalletAddress(address _account) {
+        _onlyWalletAddress(_account);
         _;
     }
 
@@ -175,15 +196,13 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
 
         if (_tokenId == 0 || _tokenId > _tokenMaximumSupply) {
             revert Errors.IndexOutOfBounds({
-                tokenId: _tokenId,
-                message: Snippets.INDEX_OUT_OF_BOUNDS
+                tokenId: _tokenId
             });
         }
 
         if (!_tokenExists) {
             revert Errors.TokenDoesNotExists({
-                tokenId: _tokenId,
-                message: Snippets.TOKEN_DOES_NOT_EXISTS
+                tokenId: _tokenId
             });
         }
 
@@ -206,8 +225,7 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
         if (_timestamp > block.timestamp) {
             revert Errors.RoyaltiesDisabled(
                 {
-                    timestamp: _timestamp, 
-                    message: Snippets.ROYALTIES_DISABLED
+                    timestamp: _timestamp
                 }
             );
         }
@@ -236,15 +254,16 @@ abstract contract ERCModifiers is AccessControl, ERCFallback {
      * @dev : reverts NotApprovedOrOwner error if the account is a not owner or approved.
      * 
      */
-    function _whenIsTokenOwner(bool _tokenOwner) private pure {
-        if (!_tokenOwner) {
-            revert Errors.NotApprovedOrOwner();
+    function _whenIsTokenOwner(address nftOwnerAddress) private view {
+        if (nftOwnerAddress != msg.sender) {
+            revert Errors.NotTokenOwner();
         }
     }
 
-    modifier whenIsTokenOwner(bool _tokenOwner) {
-        _whenIsTokenOwner(_tokenOwner);
+    modifier whenIsTokenOwner(address nftOwnerAddress) {
+        _whenIsTokenOwner(nftOwnerAddress);
         _;
     }
+    
     /********************************* Modifiers **********************************/
 }

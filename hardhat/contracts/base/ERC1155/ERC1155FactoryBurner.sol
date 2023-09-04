@@ -37,8 +37,7 @@ abstract contract ERC1155FactoryBurner is ERC1155FactoryWorker {
         }
         _burn(_from, _tokenId, _amount);
         _resetTokenRoyalty(_tokenId);
-        tokenMaximumSupplyById[_tokenId] = tokenMaximumSupplyById[_tokenId] - _amount;
-        _tokenCurrentSupply.decrement();
+        currentSupplyById[_tokenId] = currentSupplyById[_tokenId] - _amount;
     }
 
     /**
@@ -67,8 +66,7 @@ abstract contract ERC1155FactoryBurner is ERC1155FactoryWorker {
         _burnBatch(_account, _ids, _values);
         for (uint256 i; i < _values.length; ++i) {
             _resetTokenRoyalty(_ids[i]);
-            tokenMaximumSupplyById[_ids[i]] = tokenMaximumSupplyById[_ids[i]] - _values[i];
-            _tokenCurrentSupply.decrement();
+            currentSupplyById[_ids[i]] = currentSupplyById[_ids[i]] - _values[i];
         }
     }
 

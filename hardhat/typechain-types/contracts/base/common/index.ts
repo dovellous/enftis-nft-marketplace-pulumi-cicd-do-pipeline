@@ -2,4 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ERCFallback } from "./ERCFallback";
+export type { ERCLogging } from "./ERCLogging";
+export type { ERCMKTPModifiers } from "./ERCMKTPModifiers";
 export type { ERCModifiers } from "./ERCModifiers";
+export type { IERCLogging } from "./IERCLogging";

@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   ERC1155FactoryBurner,
   ERC1155FactoryBurnerInterface,
@@ -13,9 +12,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bool",
-        name: "active",
-        type: "bool",
+        internalType: "string",
+        name: "option",
+        type: "string",
       },
     ],
     name: "DisabledOption",
@@ -31,11 +30,6 @@ const _abi = [
       {
         internalType: "bytes32",
         name: "requiredRole",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "message",
         type: "bytes32",
       },
     ],
@@ -90,31 +84,12 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "bytes32",
-        name: "newURI",
-        type: "bytes32",
+        internalType: "address",
+        name: "newMarketplaceAddress",
+        type: "address",
       },
     ],
-    name: "ContractURIChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "func",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "gas",
-        type: "uint256",
-      },
-    ],
-    name: "Log",
+    name: "MarketplaceAddressChanged",
     type: "event",
   },
   {
@@ -614,16 +589,50 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "contractOptionsStruct",
+    name: "contractOptionIsBurnable",
     outputs: [
       {
         internalType: "bool",
-        name: "pausable",
+        name: "",
         type: "bool",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractOptionIsMintable",
+    outputs: [
       {
         internalType: "bool",
-        name: "burnable",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractOptionIsPausable",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractOptionIsSnapshotable",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
         type: "bool",
       },
     ],
@@ -644,13 +653,19 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "contractURI",
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "currentSupplyById",
     outputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -743,6 +758,32 @@ const _abi = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "loggerAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "marketplaceAddress",
+    outputs: [
+      {
+        internalType: "address payable",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -898,12 +939,12 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_tokenId",
+        name: "tokenId",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_salePrice",
+        name: "salePrice",
         type: "uint256",
       },
     ],
@@ -1081,13 +1122,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "togglePause",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -1129,25 +1163,6 @@ const _abi = [
   {
     inputs: [],
     name: "tokenMaximumSupply",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "tokenMaximumSupplyById",
     outputs: [
       {
         internalType: "uint256",
@@ -1207,7 +1222,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "tokenId",
+        name: "_tokenId",
         type: "uint256",
       },
     ],
@@ -1249,16 +1264,16 @@ const _abi = [
 export class ERC1155FactoryBurner__factory {
   static readonly abi = _abi;
   static createInterface(): ERC1155FactoryBurnerInterface {
-    return new utils.Interface(_abi) as ERC1155FactoryBurnerInterface;
+    return new Interface(_abi) as ERC1155FactoryBurnerInterface;
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    runner?: ContractRunner | null
   ): ERC1155FactoryBurner {
     return new Contract(
       address,
       _abi,
-      signerOrProvider
-    ) as ERC1155FactoryBurner;
+      runner
+    ) as unknown as ERC1155FactoryBurner;
   }
 }

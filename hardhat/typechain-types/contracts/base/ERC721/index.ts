@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ERC721FactoryBase } from "./ERC721FactoryBase";
-export type { ERC721FactoryConstants } from "./ERC721FactoryConstants";
-export type { ERC721FactoryErrors } from "./ERC721FactoryErrors";
-export type { ERC721FactoryEvents } from "./ERC721FactoryEvents";
-export type { ERC721FactoryImplementation } from "./ERC721FactoryImplementation";
-export type { ERC721FactoryModifiers } from "./ERC721FactoryModifiers";
+export type { ERC721FactoryBurner } from "./ERC721FactoryBurner";
+export type { ERC721FactoryGetSet } from "./ERC721FactoryGetSet";
+export type { ERC721FactoryMinter } from "./ERC721FactoryMinter";
+export type { ERC721FactoryWorker } from "./ERC721FactoryWorker";
+export type { IERC721Factory } from "./IERC721Factory";

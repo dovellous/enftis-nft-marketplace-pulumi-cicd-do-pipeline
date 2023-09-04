@@ -22,6 +22,16 @@ networks    :   ethereum, polygon, binance
 */
 
 library Enums {
+
+    enum Errors {
+        ITEM_ALREADY_SOLD,
+        ITEM_NOT_FOR_AUCTION,
+        AMOUNT_BELOW_PRICE_FLOOR,
+        AMOUNT_BELOW_CURRENT_HIGHEST_BID,
+        AUCTION_NOT_YET_ENDED,
+        SENDER_NOT_HIGHEST_BIDDER,
+        ADDRESS_INVALID
+    }
     
     enum TokenStandards {
         ERC20,
@@ -67,18 +77,28 @@ library Enums {
     }
 
     enum TokenActivityType {
+        Mint,
+        List,
         Bid,
         Sold,
         Burn,
-        Mint,
-        List,
         Delist,
-        PayRoyalty,
-        ChangeRoyalty,
-        ChangeTokenURI,
-        TransferSingle,
+        Transfer,
         TransferBatch,
-        TransferOwnership
+        TransferSingle,
+        TransferOwnership,
+        ChangeTokenURI,
+        ChangeRoyalty,
+        PayRoyalty
+    }
+
+    enum NFTMarketItemActivityType {
+        Created,
+        Minted,
+        Listed,
+        Delisted,
+        Bid,
+        Sold
     }
 
 }

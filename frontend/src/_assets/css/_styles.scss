@@ -1,0 +1,48 @@
+// Root
+@import "_root";
+// Fonts
+@import "_fonts";
+
+// Properties
+@import "./utils/_properties";
+
+.ant-app>.ant-layout {
+
+    width: 100%;
+    min-height: 100vh;
+
+    .nav-logo {
+        width: 135px;
+        margin-top: 0px;
+        border: none;
+    }
+
+    .inline-flex{
+        display: inline-flex !important;
+    }
+
+    .ant-space-item{
+        line-height: initial !important;
+    }
+
+    .ant-drawer-content-wrapper{
+        width: 450px !important;
+    }
+
+}
+.text-right {
+    text-align: right !important;
+}.fs-18 {
+    font-size: 18px !important;
+}
+.border-radius-10px{
+    border-radius: 10px !important;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.d-block {
+    display: block !important;
+}

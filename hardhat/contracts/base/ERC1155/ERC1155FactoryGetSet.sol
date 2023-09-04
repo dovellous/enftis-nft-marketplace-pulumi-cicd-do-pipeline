@@ -41,11 +41,10 @@ contract ERC1155FactoryGetSet is
      * @param _url contract url
      * @param _data encoded parameters
      */
-    constructor (
+    constructor(
         string memory _url,
         bytes memory _data
     ) payable ERC1155FactoryBase(_url) {
-
         /**
          * initializer arguments for erc1155 implementation.
          *
@@ -54,32 +53,28 @@ contract ERC1155FactoryGetSet is
          * @param _admins encoded parameters
          * @param _minters encoded parameters
          * @param _royaltyFee encoded parameters
-         * @param _contractURI encoded parameters
          * @param _mintingFee encoded parameters
          * @param _tokenMaximumSupply encoded parameters
          * @param _baseUri encoded parameters
+         * @param _contractURI encoded parameters
          */
         (
-            
-            
             bool _isPausable,
             bool _isBurnable,
             address[] memory _admins,
             address[] memory _minters,
             uint96 _royaltyFee,
-            bytes32 _contractURI,
             uint256 _mintingFee,
             uint256 _tokenMaximumSupply,
-            string  memory _baseUri
+            string memory _baseUri
         ) = abi.decode(
                 _data,
-                (   
+                (
                     bool,
                     bool,
                     address[],
                     address[],
                     uint96,
-                    bytes32,
                     uint256,
                     uint256,
                     string
@@ -94,23 +89,23 @@ contract ERC1155FactoryGetSet is
 
         // Revert if we do not have admins
         if (adminsLength == 0) {
-            revert Errors.NoAdmins({message: Snippets.NO_ADMINS_SPECIFIED});
+            revert Errors.NoAdmins();
         }
 
         // Revert if we do not have minters
         if (mintersLength == 0) {
-            revert Errors.NoMinters({message: Snippets.NO_MINTERS_SPECIFIED});
+            revert Errors.NoMinters();
         }
 
         // setup admin roles
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        _setupRole(Snippets.ADMIN_ROLE, _msgSender());
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(Snippets.ADMIN_ROLE, msg.sender);
         for (uint256 i; i < adminsLength; ++i) {
             _setupRole(Snippets.ADMIN_ROLE, adminsArray[i]);
         }
 
         // setup admin role
-        _setupRole(Snippets.MINTER_ROLE, _msgSender());
+        _setupRole(Snippets.MINTER_ROLE, msg.sender);
         for (uint256 i; i < mintersLength; ++i) {
             _setupRole(Snippets.MINTER_ROLE, mintersArray[i]);
         }
@@ -123,18 +118,19 @@ contract ERC1155FactoryGetSet is
         }
 
         // setup states
-        _setDefaultRoyalty(_msgSender(), _royaltyFee);
+        _setDefaultRoyalty(msg.sender, _royaltyFee);
 
         _setURI(_baseUri);
-        
-        contractURI = _contractURI;
+
+        //contractURI = _contractURI;
 
         mintingFee = _mintingFee;
-        
-        contractOptionsStruct = ContractOptions(_isPausable, _isBurnable);
-        
-        owner = payable(_msgSender());
 
+        contractOptionIsPausable = _isPausable;
+
+        contractOptionIsBurnable = _isBurnable;
+
+        owner = payable(msg.sender);
     }
 
     // ==================== Begin Reading State Variables ==================== //
@@ -148,15 +144,6 @@ contract ERC1155FactoryGetSet is
      */
     function getBaseURI() external view returns (string memory) {
         return super.uri(0);
-    }
-
-    /**
-     * @dev Retreives the contract url where the source code resides.
-     * @return url bytes32.
-     *
-     */
-    function getContractURI() external view returns (bytes32) {
-        return contractURI;
     }
 
     /**
@@ -174,26 +161,43 @@ contract ERC1155FactoryGetSet is
     // Admin
 
     /**
-     * @dev Returns current _owner address. This is only for compatibility 
+     * @dev Returns current _owner address. This is only for compatibility
      * for other protocols.
      * @return _owner address.
      *
      */
-    function getOwner() external view returns (address ) {
+    function getOwner() external view returns (address) {
         return owner;
+    }
+
+    // Marketplace
+
+    /**
+     * @dev Retrieves the marketplace address approved for toke transfers.
+     * @return marketplaceAddress.
+     *
+     */
+    function getMarketplaceAddress() external view returns (address) {
+        return marketplaceAddress;
     }
 
     // Supply
 
     /**
-        * @dev Returns the total quantity for a token ID
-        * @param _tokenId uint256 ID of the token to query
-        * @return amount of token in existence
-        */
-    function getTokenMaximumSupplyById(
+     * @dev Returns the total quantity for a token ID
+     * @param _tokenId uint256 ID of the token to query
+     * @return Structs.Supplies
+     *
+     */
+    function getTokenSupplies(
         uint256 _tokenId
-    ) public view returns (uint256) {
-        return tokenMaximumSupplyById[_tokenId];
+    ) external view returns (Structs.Supplies memory) {
+        return
+            Structs.Supplies(
+                mintedSupplyById[_tokenId],
+                currentSupplyById[_tokenId],
+                maxSupplyById[_tokenId]
+            );
     }
 
     /**
@@ -201,17 +205,8 @@ contract ERC1155FactoryGetSet is
      * @return `tokenMaximumSupply`
      *
      */
-    function getTokenMaximumSupply() external view returns (uint256 ) {
+    function getTokenMaximumSupply() external view returns (uint256) {
         return tokenMaximumSupply;
-    }
-
-    /**
-     * @dev Retrieves the royalty info of a token including the fee base on price supplied.
-     * @return `_tokenCurrentSupply`
-     *
-     */
-    function getTokenCurrentSupply() external view returns (uint256) {
-        return _tokenCurrentSupply.current();
     }
 
     /**
@@ -219,7 +214,7 @@ contract ERC1155FactoryGetSet is
      * the current token supply.
      * @return _tokenIdCounter.
      */
-    function totalSupply() external view returns (uint256) {
+    function getTokenCurrentSupply() external view returns (uint256) {
         return _tokenIdCounter.current();
     }
 
@@ -240,7 +235,11 @@ contract ERC1155FactoryGetSet is
      * @return Structs.NFTItem[] An array of NFTItems returned from the search query.
      *
      */
-    function getTokensMintedByMe() external view returns (Structs.NFT[] memory) {
+    function getTokensMintedByMe()
+        external
+        view
+        returns (Structs.NFT[] memory)
+    {
         return _search(Snippets.MINTER, abi.encode(_msgSender()));
     }
 
@@ -260,11 +259,11 @@ contract ERC1155FactoryGetSet is
      * @dev Get the minter of the token id
      * @param _tokenId The id of the token to get the minter from.
      * @return address
-     * 
+     *
      * Requirements:
      *
      * - `tokenId` must exist.
-     * 
+     *
      */
     function getTokenMinter(
         uint256 _tokenId
@@ -274,7 +273,7 @@ contract ERC1155FactoryGetSet is
         validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
         returns (address)
     {
-        (Structs.NFTItem memory nftItem,) = getNFTItem(_tokenId);
+        (Structs.NFTItem memory nftItem, , ) = getNFTItem(_tokenId);
         return nftItem.minterAddress;
     }
 
@@ -282,11 +281,11 @@ contract ERC1155FactoryGetSet is
      * @dev Get the first account to receive the token id
      * @param _tokenId The id of the token to get the mintee from.
      * @return address
-     * 
+     *
      * Requirements:
      *
      * - `tokenId` must exist.
-     * 
+     *
      */
     function getTokenMintee(
         uint256 _tokenId
@@ -296,7 +295,7 @@ contract ERC1155FactoryGetSet is
         validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
         returns (address)
     {
-        (Structs.NFTItem memory nftItem,) = getNFTItem(_tokenId);
+        (Structs.NFTItem memory nftItem, , ) = getNFTItem(_tokenId);
         return nftItem.creatorAddress[1];
     }
 
@@ -309,7 +308,11 @@ contract ERC1155FactoryGetSet is
      * @return Structs.NFT[] An array of NFTItems returned from the search query.
      *
      */
-    function getTokensCreatedByMe() external view returns (Structs.NFT[] memory) {
+    function getTokensCreatedByMe()
+        external
+        view
+        returns (Structs.NFT[] memory)
+    {
         return _search(Snippets.CREATOR, abi.encode(_msgSender()));
     }
 
@@ -329,22 +332,14 @@ contract ERC1155FactoryGetSet is
      * @dev Get the creator of the token id
      * @param _tokenId The id of the token to get the creator from.
      * @return address
-     * 
+     *
      * Requirements:
      *
      * - `tokenId` must exist.
-     * 
+     *
      */
-    function getTokenCreator(
-        uint256 _tokenId
-    )
-        external
-        view
-        validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-        returns (address)
-    {
-        (Structs.NFTItem memory nftItem,) = getNFTItem(_tokenId);
-        return nftItem.creatorAddress[0];
+    function getTokenCreator(uint256 _tokenId) external view returns (address) {
+        return tokenIdToNFTItem[_tokenId].creatorAddress[0];
     }
 
     // ==================== End Read Creator Data ==================== //
@@ -376,21 +371,17 @@ contract ERC1155FactoryGetSet is
      * @dev Get the owner of the token id
      * @param _tokenId The id of the token to get the owner from.
      * @return address
-     * 
+     *
      * Requirements:
      *
      * - `tokenId` must exist.
-     * 
+     *
      */
-    function getTokenOwner(
-        uint256 _tokenId
-    )
-        public
-        view
-        validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-        returns (address)
-    {
-        return tokenIdToNFTItem[_tokenId].ownerAddress;
+    function getTokenOwner(uint256 _tokenId) public view returns (address) {
+        return
+            _exists(_tokenId)
+                ? tokenIdToNFTItem[_tokenId].ownerAddress
+                : address(0);
     }
 
     // ==================== End Read Owner Data ==================== //
@@ -400,13 +391,13 @@ contract ERC1155FactoryGetSet is
     /**
      * @dev Retrieves full details on an NFT.
      * @param _tokenId The id of the token to get the details from.
-     * @return Structs.NFTItem 
+     * @return Structs.NFTItem
      * @return string The token uri string that contains the metdata { see: tokenURIs }.
-     * 
+     *
      * Requirements:
      *
      * - `tokenId` must exist.
-     * 
+     *
      */
     function getNFTItem(
         uint256 _tokenId
@@ -414,9 +405,17 @@ contract ERC1155FactoryGetSet is
         public
         view
         validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
-        returns (Structs.NFTItem memory, string memory)
+        returns (Structs.NFTItem memory, string memory, Structs.Supplies memory)
     {
-        return (tokenIdToNFTItem[_tokenId], tokenURIs[_tokenId]);
+        return (
+            tokenIdToNFTItem[_tokenId],
+            tokenURI(_tokenId),
+            Structs.Supplies(
+                mintedSupplyById[_tokenId],
+                currentSupplyById[_tokenId],
+                maxSupplyById[_tokenId]
+            )
+        );
     }
 
     /**
@@ -427,7 +426,29 @@ contract ERC1155FactoryGetSet is
         return _tokens();
     }
 
-    // Collections
+    /**
+     * @dev Retrieves the activity history of a token.
+     * @param _tokenId The id of the token to get the activity history.
+     * @return TokenActivityItem[]
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     *
+     */
+    function getTokenAuditTrail(
+        uint256 _tokenId
+    )
+        external
+        validToken(_exists(_tokenId), _tokenId, tokenMaximumSupply)
+        returns (Structs.TokenActivityItem[] memory)
+    {
+        return
+            IERCLogging(loggerAddress).getERCTokenLogging(
+                address(this),
+                _tokenId
+            );
+    }
 
     // Search
 
@@ -439,12 +460,9 @@ contract ERC1155FactoryGetSet is
      */
     function searchTokenId(
         uint256 _uint256
-    ) public view returns (
-        Structs.NFT[] memory
-    ) {
+    ) external view returns (Structs.NFT[] memory) {
         // Encode the _account parameter and pass it to the search function
         return _search(Snippets.TOKEN_ID, abi.encode(_uint256));
-
     }
 
     /**
@@ -455,12 +473,9 @@ contract ERC1155FactoryGetSet is
      */
     function searchTokenURI(
         string memory _string
-    ) external view returns (
-        Structs.NFT[] memory
-    ) {
+    ) external view returns (Structs.NFT[] memory) {
         // Encode the _account parameter and pass it to the search function
         return _search(Snippets.STRING, abi.encode(_string));
-
     }
 
     /**
@@ -471,14 +486,11 @@ contract ERC1155FactoryGetSet is
      *
      */
     function searchTimestamp(
-        bytes32 _itemKey, 
+        bytes32 _itemKey,
         uint256 _uint256
-    ) external view returns (
-        Structs.NFT[] memory
-    ) {
+    ) external view returns (Structs.NFT[] memory) {
         // Encode the _account parameter and pass it to the search function
         return _search(_itemKey, abi.encode(_uint256));
-
     }
 
     /**
@@ -489,14 +501,11 @@ contract ERC1155FactoryGetSet is
      *
      */
     function searchAddress(
-        bytes32 _itemKey, 
+        bytes32 _itemKey,
         address _address
-    ) external view returns (
-        Structs.NFT[] memory
-    ) {
+    ) external view returns (Structs.NFT[] memory) {
         // Encode the _account parameter and pass it to the search function
         return _search(_itemKey, abi.encode(_address));
-
     }
 
     /******************************* Write Functions ******************************/
@@ -516,20 +525,17 @@ contract ERC1155FactoryGetSet is
         uint256 _tokenId,
         uint256 _amount,
         bytes memory data
-    ) 
-        external 
-        validToken(
-            _exists(_tokenId), 
-            _tokenId, 
-            tokenMaximumSupply
-        )
-        whenIsTokenOwner(
-            tokenIdToNFTItem[_tokenId].ownerAddress == _msgSender()
-        )
-    {   
-        if(_from == address(0)){
-            _from = _msgSender();
+    ) external
+     {
+        /*
+        address _tokenOwner = tokenIdToNFTItem[_tokenId].creatorAddress[1];
+        if (_tokenOwner == address(0)_tokenOwner == address(0)) {
+            revert Errors.TokenDoesNotExists();
         }
+        if (!_tokenOwner, msg.sender) {
+            revert Errors.NotApprovedOrOwner(_tokenId);
+        }
+        */
         safeTransferFrom(_from, _to, _tokenId, _amount, data);
     }
 
@@ -616,39 +622,40 @@ contract ERC1155FactoryGetSet is
         renounceRole(Snippets.MINTER_ROLE, _account);
     }
 
-  /**
-   * @dev Will update the base URI for the token
-   * @param _tokenId The token to update. _msgSender() must be its creator.
-   * @param _tokenURI New URI for the token.
-   */
-  function setTokenURI(
-    uint256 _tokenId,
-    string memory _tokenURI
-  ) public  
-  whenIsTokenOwner(
-    tokenIdToNFTItem[_tokenId].ownerAddress == _msgSender()
-  ) {
-    tokenURIs[_tokenId] = _tokenURI;
-  }
     /**
-     * @dev Sets the new contract uri for this contract.
-     * @param _newContractURI Contract uri of the contract to 
-     * change to (for contract level metadata).
+     * @dev Will update the base URI for the token
+     * @param _tokenId The token to update. msg.sender must be its creator.
+     * @param _tokenURI New URI for the token.
+     */
+    function setTokenURI(uint256 _tokenId, string memory _tokenURI) external {
+        require(_exists(_tokenId), "TDE");
+        if (tokenIdToNFTItem[_tokenId].creatorAddress[1] != msg.sender) {
+            revert Errors.NotTokenOwner();
+        }
+        tokenURIs[_tokenId] = _tokenURI;
+    }
+
+    /**
+     * @dev Sets the new marketplace address.
+     * @param _newMarketplaceAddress marketplace address that will list the collection.
      *
-     * Emits an {ContractURIChanged} event.
+     * Emits an {MarketplaceAddressChanged} event.
      *
      * Requirements:
      *
-     * - Only Admin can call this method.
+     * - Only Admin can call this method
+     * - _newMarketplaceAddress must not be a zero address
+     *
      */
-    function setContractURI(
-        bytes32 _newContractURI
-    ) external onlyAdmin {
-        /**
-         * @title:
-         */
-        contractURI = _newContractURI;
-        emit ContractURIChanged(_newContractURI);
+    function setMarketplaceAddress(
+        address _newMarketplaceAddress
+    ) external validAccount(_newMarketplaceAddress) onlyAdmin {
+        if (marketplaceAddress != address(0)) {
+            setApprovalForAll(marketplaceAddress, false);
+        }
+        marketplaceAddress = payable(_newMarketplaceAddress);
+        setApprovalForAll(_newMarketplaceAddress, true);
+        emit MarketplaceAddressChanged(_newMarketplaceAddress);
     }
 
     /**
@@ -656,35 +663,48 @@ contract ERC1155FactoryGetSet is
      * @param _newMintingFee New minting fee.
      *
      * Emits an {MintingFeeChanged} event.
-     * 
+     *
      * Requirements:
      *
      * - Only Admin can call this method
      */
-    function setMintingFee(
-        uint256 _newMintingFee
-    ) external onlyAdmin nonZeroAmount(_newMintingFee) {
-        mintingFee = _newMintingFee;
-        emit MintingFeeChanged(_newMintingFee);
+    function setMintingFee(uint256 _newMintingFee) external onlyAdmin {
+        if (_newMintingFee > 0) {
+            mintingFee = _newMintingFee;
+            emit MintingFeeChanged(_newMintingFee);
+        }
     }
 
     /**
-     * @dev Sets the new _owner for this contract. 
+     * @dev Sets the logger address.
+     * @param _logger Address of the logger.
+     *
+     * Requirements:
+     *
+     * - Only Admin can call this method
+     */
+    function setLoggerAddress(address _logger) external onlyAdmin {
+        require(_logger != address(0), "ILA");
+        loggerAddress = _logger;
+    }
+
+    /**
+     * @dev Sets the new _owner for this contract.
      * This is only for compatibility for opensea and other protocols.
      * @param _newOwner New Owner address to set _owner to.
      *
      * Emits an {OwnerChanged} event.
-     * 
+     *
      * Requirements:
      *
      * - Only Owner can call this method
      * - `_newOwner` must not be a zero address.
      */
-    function setNewOwner(
-        address _newOwner
-    ) external onlyOwner validAccount(_newOwner) {
-        owner = payable(_newOwner);
-        emit OwnerChanged(_newOwner);
+    function setNewOwner(address _newOwner) external onlyOwner {
+        if (_newOwner != address(0)) {
+            owner = payable(_newOwner);
+            emit OwnerChanged(_newOwner);
+        }
     }
 
     /**
@@ -705,7 +725,7 @@ contract ERC1155FactoryGetSet is
         address _from,
         uint256 _tokenId,
         uint256 _amount
-    ) public virtual burnable override(ERC1155Burnable, ERC1155FactoryBurner) {
+    ) public virtual override(ERC1155Burnable, ERC1155FactoryBurner) burnable {
         ERC1155FactoryBurner.burn(_from, _tokenId, _amount);
     }
 
@@ -725,10 +745,10 @@ contract ERC1155FactoryGetSet is
      * - The caller must own `tokenId` or be an approved operator.
      */
     function burnBatch(
-        address _account, 
-        uint256[] memory _ids, 
+        address _account,
+        uint256[] memory _ids,
         uint256[] memory _values
-    ) public virtual burnable override(ERC1155Burnable, ERC1155FactoryBurner) {
+    ) public virtual override(ERC1155Burnable, ERC1155FactoryBurner) burnable {
         ERC1155FactoryBurner.burnBatch(_account, _ids, _values);
     }
 
@@ -760,7 +780,13 @@ contract ERC1155FactoryGetSet is
         uint256[] memory amounts,
         bytes memory data
     ) internal virtual override(ERC1155FactoryBase) {
-        ERC1155FactoryBase._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+        ERC1155FactoryBase._beforeTokenTransfer(
+            operator,
+            from,
+            to,
+            ids,
+            amounts,
+            data
+        );
     }
-
 }

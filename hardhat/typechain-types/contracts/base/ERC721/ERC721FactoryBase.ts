@@ -3,73 +3,58 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumber,
   BigNumberish,
   BytesLike,
-  CallOverrides,
-  ContractTransaction,
-  Overrides,
-  PopulatedTransaction,
-  Signer,
-  utils,
-} from "ethers";
-import type {
   FunctionFragment,
   Result,
+  Interface,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+  AddressLike,
+  ContractRunner,
+  ContractMethod,
+  Listener,
+} from "ethers";
 import type {
-  TypedEventFilter,
-  TypedEvent,
+  TypedContractEvent,
+  TypedDeferredTopicFilter,
+  TypedEventLog,
+  TypedLogDescription,
   TypedListener,
-  OnEvent,
-  PromiseOrValue,
+  TypedContractMethod,
 } from "../../../common";
 
-export interface ERC721FactoryBaseInterface extends utils.Interface {
-  functions: {
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "burn(uint256)": FunctionFragment;
-    "getApproved(uint256)": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
-    "isApprovedForAll(address,address)": FunctionFragment;
-    "name()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "paused()": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
-    "royaltyInfo(uint256,uint256)": FunctionFragment;
-    "safeTransferFrom(address,address,uint256)": FunctionFragment;
-    "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
-    "setApprovalForAll(address,bool)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenByIndex(uint256)": FunctionFragment;
-    "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
-  };
-
+export interface ERC721FactoryBaseInterface extends Interface {
   getFunction(
-    nameOrSignatureOrTopic:
+    nameOrSignature:
       | "DEFAULT_ADMIN_ROLE"
+      | "_tokenCurrentSupply"
+      | "_tokenIdCounter"
       | "approve"
       | "balanceOf"
+      | "bannerURL"
+      | "baseTokenURI"
       | "burn"
+      | "callFallback"
+      | "contractOptionIsBurnable"
+      | "contractOptionIsMintable"
+      | "contractOptionIsPausable"
+      | "contractOptionIsSnapshotable"
+      | "contractTreasury"
+      | "contractURI"
+      | "description"
       | "getApproved"
       | "getRoleAdmin"
       | "grantRole"
       | "hasRole"
       | "isApprovedForAll"
+      | "loggerAddress"
+      | "marketplaceAddress"
       | "name"
+      | "owner"
       | "ownerOf"
       | "paused"
+      | "photoURL"
+      | "recoverTokens"
       | "renounceRole"
       | "revokeRole"
       | "royaltyInfo"
@@ -79,103 +64,199 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
       | "supportsInterface"
       | "symbol"
       | "tokenByIndex"
+      | "tokenCategory"
+      | "tokenIdToNFTItem"
+      | "tokenMaximumSupply"
       | "tokenOfOwnerByIndex"
       | "tokenURI"
       | "totalSupply"
       | "transferFrom"
+      | "transferToFallback"
+      | "updateContractTreasury"
+      | "withdraw"
   ): FunctionFragment;
+
+  getEvent(
+    nameOrSignatureOrTopic:
+      | "Approval"
+      | "ApprovalForAll"
+      | "ApprovedAddressForTokenChanged"
+      | "BaseURIChanged"
+      | "BatchMetadataUpdate"
+      | "CollectionBannerMediaChanged"
+      | "CollectionDescriptionChanged"
+      | "CollectionDisplayPictureChanged"
+      | "ContractURIChanged"
+      | "Log"
+      | "MarketplaceAddressChanged"
+      | "MetadataUpdate"
+      | "MintingFeeChanged"
+      | "OwnerChanged"
+      | "Paused"
+      | "Received"
+      | "RoleAdminChanged"
+      | "RoleGranted"
+      | "RoleRevoked"
+      | "RoyaltiesChanged"
+      | "RoyaltiesDisabled"
+      | "RoyaltiesEnabled"
+      | "TokenBurned"
+      | "TokenMinted"
+      | "TokenTransfered"
+      | "Transfer"
+      | "Unpaused"
+  ): EventFragment;
 
   encodeFunctionData(
     functionFragment: "DEFAULT_ADMIN_ROLE",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "_tokenCurrentSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_tokenIdCounter",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(functionFragment: "bannerURL", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "baseTokenURI",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "callFallback",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "burn",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: "contractOptionIsBurnable",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "contractOptionIsMintable",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "contractOptionIsPausable",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "contractOptionIsSnapshotable",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "contractTreasury",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "contractURI",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "description",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "grantRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "hasRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [AddressLike, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "loggerAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "marketplaceAddress",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
+  encodeFunctionData(functionFragment: "photoURL", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "recoverTokens",
+    values: [AddressLike, AddressLike, BigNumberish, BigNumberish, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [BytesLike, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "royaltyInfo",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [AddressLike, AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "safeTransferFrom(address,address,uint256,bytes)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [AddressLike, AddressLike, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [AddressLike, boolean]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
-    values: [PromiseOrValue<BytesLike>]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "tokenByIndex",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenCategory",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenIdToNFTItem",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenMaximumSupply",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "tokenOfOwnerByIndex",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -183,20 +264,73 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [AddressLike, AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferToFallback",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateContractTreasury",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdraw",
+    values: [AddressLike, BigNumberish]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "_tokenCurrentSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_tokenIdCounter",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "bannerURL", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "baseTokenURI",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "callFallback",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "contractOptionIsBurnable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "contractOptionIsMintable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "contractOptionIsPausable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "contractOptionIsSnapshotable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "contractTreasury",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "contractURI",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "description",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
@@ -211,9 +345,23 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "loggerAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "marketplaceAddress",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "photoURL", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "recoverTokens",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "renounceRole",
     data: BytesLike
@@ -245,6 +393,18 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "tokenCategory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenIdToNFTItem",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenMaximumSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "tokenOfOwnerByIndex",
     data: BytesLike
   ): Result;
@@ -257,852 +417,1390 @@ export interface ERC721FactoryBaseInterface extends utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
-
-  events: {
-    "Approval(address,address,uint256)": EventFragment;
-    "ApprovalForAll(address,address,bool)": EventFragment;
-    "Paused(address)": EventFragment;
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
-    "Unpaused(address)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
+  decodeFunctionResult(
+    functionFragment: "transferToFallback",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateContractTreasury",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 }
 
-export interface ApprovalEventObject {
-  owner: string;
-  approved: string;
-  tokenId: BigNumber;
+export namespace ApprovalEvent {
+  export type InputTuple = [
+    owner: AddressLike,
+    approved: AddressLike,
+    tokenId: BigNumberish
+  ];
+  export type OutputTuple = [owner: string, approved: string, tokenId: bigint];
+  export interface OutputObject {
+    owner: string;
+    approved: string;
+    tokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ApprovalEventObject
->;
 
-export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
-
-export interface ApprovalForAllEventObject {
-  owner: string;
-  operator: string;
-  approved: boolean;
+export namespace ApprovalForAllEvent {
+  export type InputTuple = [
+    owner: AddressLike,
+    operator: AddressLike,
+    approved: boolean
+  ];
+  export type OutputTuple = [
+    owner: string,
+    operator: string,
+    approved: boolean
+  ];
+  export interface OutputObject {
+    owner: string;
+    operator: string;
+    approved: boolean;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type ApprovalForAllEvent = TypedEvent<
-  [string, string, boolean],
-  ApprovalForAllEventObject
->;
 
-export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
-
-export interface PausedEventObject {
-  account: string;
+export namespace ApprovedAddressForTokenChangedEvent {
+  export type InputTuple = [
+    approvedAddress: AddressLike,
+    tokenId: BigNumberish
+  ];
+  export type OutputTuple = [approvedAddress: string, tokenId: bigint];
+  export interface OutputObject {
+    approvedAddress: string;
+    tokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
-export type PausedEventFilter = TypedEventFilter<PausedEvent>;
-
-export interface RoleAdminChangedEventObject {
-  role: string;
-  previousAdminRole: string;
-  newAdminRole: string;
+export namespace BaseURIChangedEvent {
+  export type InputTuple = [newURI: string];
+  export type OutputTuple = [newURI: string];
+  export interface OutputObject {
+    newURI: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type RoleAdminChangedEvent = TypedEvent<
-  [string, string, string],
-  RoleAdminChangedEventObject
->;
 
-export type RoleAdminChangedEventFilter =
-  TypedEventFilter<RoleAdminChangedEvent>;
-
-export interface RoleGrantedEventObject {
-  role: string;
-  account: string;
-  sender: string;
+export namespace BatchMetadataUpdateEvent {
+  export type InputTuple = [
+    _fromTokenId: BigNumberish,
+    _toTokenId: BigNumberish
+  ];
+  export type OutputTuple = [_fromTokenId: bigint, _toTokenId: bigint];
+  export interface OutputObject {
+    _fromTokenId: bigint;
+    _toTokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type RoleGrantedEvent = TypedEvent<
-  [string, string, string],
-  RoleGrantedEventObject
->;
 
-export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
-
-export interface RoleRevokedEventObject {
-  role: string;
-  account: string;
-  sender: string;
+export namespace CollectionBannerMediaChangedEvent {
+  export type InputTuple = [bannerURL: string];
+  export type OutputTuple = [bannerURL: string];
+  export interface OutputObject {
+    bannerURL: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type RoleRevokedEvent = TypedEvent<
-  [string, string, string],
-  RoleRevokedEventObject
->;
 
-export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
-
-export interface TransferEventObject {
-  from: string;
-  to: string;
-  tokenId: BigNumber;
+export namespace CollectionDescriptionChangedEvent {
+  export type InputTuple = [description: string];
+  export type OutputTuple = [description: string];
+  export interface OutputObject {
+    description: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  TransferEventObject
->;
 
-export type TransferEventFilter = TypedEventFilter<TransferEvent>;
-
-export interface UnpausedEventObject {
-  account: string;
+export namespace CollectionDisplayPictureChangedEvent {
+  export type InputTuple = [photoURL: string];
+  export type OutputTuple = [photoURL: string];
+  export interface OutputObject {
+    photoURL: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
-export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
-export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
+export namespace ContractURIChangedEvent {
+  export type InputTuple = [newURI: BytesLike];
+  export type OutputTuple = [newURI: string];
+  export interface OutputObject {
+    newURI: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace LogEvent {
+  export type InputTuple = [func: string, gas: BigNumberish];
+  export type OutputTuple = [func: string, gas: bigint];
+  export interface OutputObject {
+    func: string;
+    gas: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace MarketplaceAddressChangedEvent {
+  export type InputTuple = [newMarketplaceAddress: AddressLike];
+  export type OutputTuple = [newMarketplaceAddress: string];
+  export interface OutputObject {
+    newMarketplaceAddress: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace MetadataUpdateEvent {
+  export type InputTuple = [_tokenId: BigNumberish];
+  export type OutputTuple = [_tokenId: bigint];
+  export interface OutputObject {
+    _tokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace MintingFeeChangedEvent {
+  export type InputTuple = [newMintingFee: BigNumberish];
+  export type OutputTuple = [newMintingFee: bigint];
+  export interface OutputObject {
+    newMintingFee: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace OwnerChangedEvent {
+  export type InputTuple = [newOwner: AddressLike];
+  export type OutputTuple = [newOwner: string];
+  export interface OutputObject {
+    newOwner: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace PausedEvent {
+  export type InputTuple = [account: AddressLike];
+  export type OutputTuple = [account: string];
+  export interface OutputObject {
+    account: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace ReceivedEvent {
+  export type InputTuple = [arg0: AddressLike, arg1: BigNumberish];
+  export type OutputTuple = [arg0: string, arg1: bigint];
+  export interface OutputObject {
+    arg0: string;
+    arg1: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoleAdminChangedEvent {
+  export type InputTuple = [
+    role: BytesLike,
+    previousAdminRole: BytesLike,
+    newAdminRole: BytesLike
+  ];
+  export type OutputTuple = [
+    role: string,
+    previousAdminRole: string,
+    newAdminRole: string
+  ];
+  export interface OutputObject {
+    role: string;
+    previousAdminRole: string;
+    newAdminRole: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoleGrantedEvent {
+  export type InputTuple = [
+    role: BytesLike,
+    account: AddressLike,
+    sender: AddressLike
+  ];
+  export type OutputTuple = [role: string, account: string, sender: string];
+  export interface OutputObject {
+    role: string;
+    account: string;
+    sender: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoleRevokedEvent {
+  export type InputTuple = [
+    role: BytesLike,
+    account: AddressLike,
+    sender: AddressLike
+  ];
+  export type OutputTuple = [role: string, account: string, sender: string];
+  export interface OutputObject {
+    role: string;
+    account: string;
+    sender: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoyaltiesChangedEvent {
+  export type InputTuple = [
+    _royaltyReceiver: AddressLike,
+    _royaltyFraction: BigNumberish,
+    _tokenId: BigNumberish
+  ];
+  export type OutputTuple = [
+    _royaltyReceiver: string,
+    _royaltyFraction: bigint,
+    _tokenId: bigint
+  ];
+  export interface OutputObject {
+    _royaltyReceiver: string;
+    _royaltyFraction: bigint;
+    _tokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoyaltiesDisabledEvent {
+  export type InputTuple = [_timestamp: BigNumberish];
+  export type OutputTuple = [_timestamp: bigint];
+  export interface OutputObject {
+    _timestamp: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace RoyaltiesEnabledEvent {
+  export type InputTuple = [];
+  export type OutputTuple = [];
+  export interface OutputObject {}
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace TokenBurnedEvent {
+  export type InputTuple = [
+    creator: AddressLike,
+    burner: AddressLike,
+    burnedTokenId: BigNumberish,
+    batchSize: BigNumberish
+  ];
+  export type OutputTuple = [
+    creator: string,
+    burner: string,
+    burnedTokenId: bigint,
+    batchSize: bigint
+  ];
+  export interface OutputObject {
+    creator: string;
+    burner: string;
+    burnedTokenId: bigint;
+    batchSize: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace TokenMintedEvent {
+  export type InputTuple = [
+    creator: AddressLike,
+    minter: AddressLike,
+    newTokenId: BigNumberish,
+    batchSize: BigNumberish
+  ];
+  export type OutputTuple = [
+    creator: string,
+    minter: string,
+    newTokenId: bigint,
+    batchSize: bigint
+  ];
+  export interface OutputObject {
+    creator: string;
+    minter: string;
+    newTokenId: bigint;
+    batchSize: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace TokenTransferedEvent {
+  export type InputTuple = [
+    creator: AddressLike,
+    burner: AddressLike,
+    transferedTokenId: BigNumberish,
+    batchSize: BigNumberish
+  ];
+  export type OutputTuple = [
+    creator: string,
+    burner: string,
+    transferedTokenId: bigint,
+    batchSize: bigint
+  ];
+  export interface OutputObject {
+    creator: string;
+    burner: string;
+    transferedTokenId: bigint;
+    batchSize: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace TransferEvent {
+  export type InputTuple = [
+    from: AddressLike,
+    to: AddressLike,
+    tokenId: BigNumberish
+  ];
+  export type OutputTuple = [from: string, to: string, tokenId: bigint];
+  export interface OutputObject {
+    from: string;
+    to: string;
+    tokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace UnpausedEvent {
+  export type InputTuple = [account: AddressLike];
+  export type OutputTuple = [account: string];
+  export interface OutputObject {
+    account: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
 
 export interface ERC721FactoryBase extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(runner?: ContractRunner | null): ERC721FactoryBase;
+  waitForDeployment(): Promise<this>;
 
   interface: ERC721FactoryBaseInterface;
 
-  queryFilter<TEvent extends TypedEvent>(
-    event: TypedEventFilter<TEvent>,
+  queryFilter<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>;
-
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
-
-  functions: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
-    approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    burn(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    name(overrides?: CallOverrides): Promise<[string]>;
-
-    ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    paused(overrides?: CallOverrides): Promise<[boolean]>;
-
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    royaltyInfo(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      _salePrice: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string, BigNumber]>;
-
-    "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    supportsInterface(
-      _interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    tokenByIndex(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    tokenURI(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-  };
-
-  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-  approve(
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  balanceOf(
-    owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  burn(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  getApproved(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  getRoleAdmin(
-    role: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  grantRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  hasRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  isApprovedForAll(
-    owner: PromiseOrValue<string>,
-    operator: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  name(overrides?: CallOverrides): Promise<string>;
-
-  ownerOf(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  paused(overrides?: CallOverrides): Promise<boolean>;
-
-  renounceRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  revokeRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  royaltyInfo(
-    _tokenId: PromiseOrValue<BigNumberish>,
-    _salePrice: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<[string, BigNumber]>;
-
-  "safeTransferFrom(address,address,uint256)"(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  "safeTransferFrom(address,address,uint256,bytes)"(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  setApprovalForAll(
-    operator: PromiseOrValue<string>,
-    approved: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  supportsInterface(
-    _interfaceId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  symbol(overrides?: CallOverrides): Promise<string>;
-
-  tokenByIndex(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  tokenOfOwnerByIndex(
-    owner: PromiseOrValue<string>,
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  tokenURI(
-    _tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  transferFrom(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  callStatic: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
-    approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    burn(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    name(overrides?: CallOverrides): Promise<string>;
-
-    ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    paused(overrides?: CallOverrides): Promise<boolean>;
-
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    royaltyInfo(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      _salePrice: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string, BigNumber]>;
-
-    "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    supportsInterface(
-      _interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    symbol(overrides?: CallOverrides): Promise<string>;
-
-    tokenByIndex(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    tokenURI(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-  };
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
+  queryFilter<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    fromBlockOrBlockhash?: string | number | undefined,
+    toBlock?: string | number | undefined
+  ): Promise<Array<TypedEventLog<TCEvent>>>;
+
+  on<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  on<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+
+  once<TCEvent extends TypedContractEvent>(
+    event: TCEvent,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+  once<TCEvent extends TypedContractEvent>(
+    filter: TypedDeferredTopicFilter<TCEvent>,
+    listener: TypedListener<TCEvent>
+  ): Promise<this>;
+
+  listeners<TCEvent extends TypedContractEvent>(
+    event: TCEvent
+  ): Promise<Array<TypedListener<TCEvent>>>;
+  listeners(eventName?: string): Promise<Array<Listener>>;
+  removeAllListeners<TCEvent extends TypedContractEvent>(
+    event?: TCEvent
+  ): Promise<this>;
+
+  DEFAULT_ADMIN_ROLE: TypedContractMethod<[], [string], "view">;
+
+  _tokenCurrentSupply: TypedContractMethod<[], [bigint], "view">;
+
+  _tokenIdCounter: TypedContractMethod<[], [bigint], "view">;
+
+  approve: TypedContractMethod<
+    [to: AddressLike, tokenId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  balanceOf: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+
+  bannerURL: TypedContractMethod<[], [string], "view">;
+
+  baseTokenURI: TypedContractMethod<[], [string], "view">;
+
+  burn: TypedContractMethod<[tokenId: BigNumberish], [void], "nonpayable">;
+
+  callFallback: TypedContractMethod<[_to: AddressLike], [void], "payable">;
+
+  contractOptionIsBurnable: TypedContractMethod<[], [boolean], "view">;
+
+  contractOptionIsMintable: TypedContractMethod<[], [boolean], "view">;
+
+  contractOptionIsPausable: TypedContractMethod<[], [boolean], "view">;
+
+  contractOptionIsSnapshotable: TypedContractMethod<[], [boolean], "view">;
+
+  contractTreasury: TypedContractMethod<[], [string], "view">;
+
+  contractURI: TypedContractMethod<[], [string], "view">;
+
+  description: TypedContractMethod<[], [string], "view">;
+
+  getApproved: TypedContractMethod<[tokenId: BigNumberish], [string], "view">;
+
+  getRoleAdmin: TypedContractMethod<[role: BytesLike], [string], "view">;
+
+  grantRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  hasRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+
+  isApprovedForAll: TypedContractMethod<
+    [owner: AddressLike, operator: AddressLike],
+    [boolean],
+    "view"
+  >;
+
+  loggerAddress: TypedContractMethod<[], [string], "view">;
+
+  marketplaceAddress: TypedContractMethod<[], [string], "view">;
+
+  name: TypedContractMethod<[], [string], "view">;
+
+  owner: TypedContractMethod<[], [string], "view">;
+
+  ownerOf: TypedContractMethod<[tokenId: BigNumberish], [string], "view">;
+
+  paused: TypedContractMethod<[], [boolean], "view">;
+
+  photoURL: TypedContractMethod<[], [string], "view">;
+
+  recoverTokens: TypedContractMethod<
+    [
+      _token: AddressLike,
+      _account: AddressLike,
+      _standard: BigNumberish,
+      _amount: BigNumberish,
+      _tokenId: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  renounceRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  revokeRole: TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  royaltyInfo: TypedContractMethod<
+    [tokenId: BigNumberish, salePrice: BigNumberish],
+    [[string, bigint]],
+    "view"
+  >;
+
+  "safeTransferFrom(address,address,uint256)": TypedContractMethod<
+    [from: AddressLike, to: AddressLike, tokenId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  "safeTransferFrom(address,address,uint256,bytes)": TypedContractMethod<
+    [
+      from: AddressLike,
+      to: AddressLike,
+      tokenId: BigNumberish,
+      data: BytesLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  setApprovalForAll: TypedContractMethod<
+    [operator: AddressLike, approved: boolean],
+    [void],
+    "nonpayable"
+  >;
+
+  supportsInterface: TypedContractMethod<
+    [_interfaceId: BytesLike],
+    [boolean],
+    "view"
+  >;
+
+  symbol: TypedContractMethod<[], [string], "view">;
+
+  tokenByIndex: TypedContractMethod<[index: BigNumberish], [bigint], "view">;
+
+  tokenCategory: TypedContractMethod<[], [bigint], "view">;
+
+  tokenIdToNFTItem: TypedContractMethod<
+    [arg0: BigNumberish],
+    [
+      [string, string, bigint, bigint, bigint] & {
+        minterAddress: string;
+        ownerAddress: string;
+        tokenId: bigint;
+        createdAt: bigint;
+        updatedAt: bigint;
+      }
+    ],
+    "view"
+  >;
+
+  tokenMaximumSupply: TypedContractMethod<[], [bigint], "view">;
+
+  tokenOfOwnerByIndex: TypedContractMethod<
+    [owner: AddressLike, index: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  tokenURI: TypedContractMethod<[_tokenId: BigNumberish], [string], "view">;
+
+  totalSupply: TypedContractMethod<[], [bigint], "view">;
+
+  transferFrom: TypedContractMethod<
+    [from: AddressLike, to: AddressLike, tokenId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  transferToFallback: TypedContractMethod<
+    [_to: AddressLike],
+    [void],
+    "payable"
+  >;
+
+  updateContractTreasury: TypedContractMethod<
+    [_newContractTreasury: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  withdraw: TypedContractMethod<
+    [to: AddressLike, value: BigNumberish],
+    [void],
+    "payable"
+  >;
+
+  getFunction<T extends ContractMethod = ContractMethod>(
+    key: string | FunctionFragment
+  ): T;
+
+  getFunction(
+    nameOrSignature: "DEFAULT_ADMIN_ROLE"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "_tokenCurrentSupply"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "_tokenIdCounter"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "approve"
+  ): TypedContractMethod<
+    [to: AddressLike, tokenId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "balanceOf"
+  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "bannerURL"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "baseTokenURI"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "burn"
+  ): TypedContractMethod<[tokenId: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "callFallback"
+  ): TypedContractMethod<[_to: AddressLike], [void], "payable">;
+  getFunction(
+    nameOrSignature: "contractOptionIsBurnable"
+  ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "contractOptionIsMintable"
+  ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "contractOptionIsPausable"
+  ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "contractOptionIsSnapshotable"
+  ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "contractTreasury"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "contractURI"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "description"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "getApproved"
+  ): TypedContractMethod<[tokenId: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "getRoleAdmin"
+  ): TypedContractMethod<[role: BytesLike], [string], "view">;
+  getFunction(
+    nameOrSignature: "grantRole"
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "hasRole"
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [boolean],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "isApprovedForAll"
+  ): TypedContractMethod<
+    [owner: AddressLike, operator: AddressLike],
+    [boolean],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "loggerAddress"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "marketplaceAddress"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "name"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "owner"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "ownerOf"
+  ): TypedContractMethod<[tokenId: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "paused"
+  ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "photoURL"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "recoverTokens"
+  ): TypedContractMethod<
+    [
+      _token: AddressLike,
+      _account: AddressLike,
+      _standard: BigNumberish,
+      _amount: BigNumberish,
+      _tokenId: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "renounceRole"
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "revokeRole"
+  ): TypedContractMethod<
+    [role: BytesLike, account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "royaltyInfo"
+  ): TypedContractMethod<
+    [tokenId: BigNumberish, salePrice: BigNumberish],
+    [[string, bigint]],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "safeTransferFrom(address,address,uint256)"
+  ): TypedContractMethod<
+    [from: AddressLike, to: AddressLike, tokenId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "safeTransferFrom(address,address,uint256,bytes)"
+  ): TypedContractMethod<
+    [
+      from: AddressLike,
+      to: AddressLike,
+      tokenId: BigNumberish,
+      data: BytesLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "setApprovalForAll"
+  ): TypedContractMethod<
+    [operator: AddressLike, approved: boolean],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "supportsInterface"
+  ): TypedContractMethod<[_interfaceId: BytesLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "symbol"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "tokenByIndex"
+  ): TypedContractMethod<[index: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "tokenCategory"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "tokenIdToNFTItem"
+  ): TypedContractMethod<
+    [arg0: BigNumberish],
+    [
+      [string, string, bigint, bigint, bigint] & {
+        minterAddress: string;
+        ownerAddress: string;
+        tokenId: bigint;
+        createdAt: bigint;
+        updatedAt: bigint;
+      }
+    ],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "tokenMaximumSupply"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "tokenOfOwnerByIndex"
+  ): TypedContractMethod<
+    [owner: AddressLike, index: BigNumberish],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "tokenURI"
+  ): TypedContractMethod<[_tokenId: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "totalSupply"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "transferFrom"
+  ): TypedContractMethod<
+    [from: AddressLike, to: AddressLike, tokenId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "transferToFallback"
+  ): TypedContractMethod<[_to: AddressLike], [void], "payable">;
+  getFunction(
+    nameOrSignature: "updateContractTreasury"
+  ): TypedContractMethod<
+    [_newContractTreasury: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "withdraw"
+  ): TypedContractMethod<
+    [to: AddressLike, value: BigNumberish],
+    [void],
+    "payable"
+  >;
+
+  getEvent(
+    key: "Approval"
+  ): TypedContractEvent<
+    ApprovalEvent.InputTuple,
+    ApprovalEvent.OutputTuple,
+    ApprovalEvent.OutputObject
+  >;
+  getEvent(
+    key: "ApprovalForAll"
+  ): TypedContractEvent<
+    ApprovalForAllEvent.InputTuple,
+    ApprovalForAllEvent.OutputTuple,
+    ApprovalForAllEvent.OutputObject
+  >;
+  getEvent(
+    key: "ApprovedAddressForTokenChanged"
+  ): TypedContractEvent<
+    ApprovedAddressForTokenChangedEvent.InputTuple,
+    ApprovedAddressForTokenChangedEvent.OutputTuple,
+    ApprovedAddressForTokenChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "BaseURIChanged"
+  ): TypedContractEvent<
+    BaseURIChangedEvent.InputTuple,
+    BaseURIChangedEvent.OutputTuple,
+    BaseURIChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "BatchMetadataUpdate"
+  ): TypedContractEvent<
+    BatchMetadataUpdateEvent.InputTuple,
+    BatchMetadataUpdateEvent.OutputTuple,
+    BatchMetadataUpdateEvent.OutputObject
+  >;
+  getEvent(
+    key: "CollectionBannerMediaChanged"
+  ): TypedContractEvent<
+    CollectionBannerMediaChangedEvent.InputTuple,
+    CollectionBannerMediaChangedEvent.OutputTuple,
+    CollectionBannerMediaChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "CollectionDescriptionChanged"
+  ): TypedContractEvent<
+    CollectionDescriptionChangedEvent.InputTuple,
+    CollectionDescriptionChangedEvent.OutputTuple,
+    CollectionDescriptionChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "CollectionDisplayPictureChanged"
+  ): TypedContractEvent<
+    CollectionDisplayPictureChangedEvent.InputTuple,
+    CollectionDisplayPictureChangedEvent.OutputTuple,
+    CollectionDisplayPictureChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "ContractURIChanged"
+  ): TypedContractEvent<
+    ContractURIChangedEvent.InputTuple,
+    ContractURIChangedEvent.OutputTuple,
+    ContractURIChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Log"
+  ): TypedContractEvent<
+    LogEvent.InputTuple,
+    LogEvent.OutputTuple,
+    LogEvent.OutputObject
+  >;
+  getEvent(
+    key: "MarketplaceAddressChanged"
+  ): TypedContractEvent<
+    MarketplaceAddressChangedEvent.InputTuple,
+    MarketplaceAddressChangedEvent.OutputTuple,
+    MarketplaceAddressChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "MetadataUpdate"
+  ): TypedContractEvent<
+    MetadataUpdateEvent.InputTuple,
+    MetadataUpdateEvent.OutputTuple,
+    MetadataUpdateEvent.OutputObject
+  >;
+  getEvent(
+    key: "MintingFeeChanged"
+  ): TypedContractEvent<
+    MintingFeeChangedEvent.InputTuple,
+    MintingFeeChangedEvent.OutputTuple,
+    MintingFeeChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "OwnerChanged"
+  ): TypedContractEvent<
+    OwnerChangedEvent.InputTuple,
+    OwnerChangedEvent.OutputTuple,
+    OwnerChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Paused"
+  ): TypedContractEvent<
+    PausedEvent.InputTuple,
+    PausedEvent.OutputTuple,
+    PausedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Received"
+  ): TypedContractEvent<
+    ReceivedEvent.InputTuple,
+    ReceivedEvent.OutputTuple,
+    ReceivedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleAdminChanged"
+  ): TypedContractEvent<
+    RoleAdminChangedEvent.InputTuple,
+    RoleAdminChangedEvent.OutputTuple,
+    RoleAdminChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleGranted"
+  ): TypedContractEvent<
+    RoleGrantedEvent.InputTuple,
+    RoleGrantedEvent.OutputTuple,
+    RoleGrantedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoleRevoked"
+  ): TypedContractEvent<
+    RoleRevokedEvent.InputTuple,
+    RoleRevokedEvent.OutputTuple,
+    RoleRevokedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoyaltiesChanged"
+  ): TypedContractEvent<
+    RoyaltiesChangedEvent.InputTuple,
+    RoyaltiesChangedEvent.OutputTuple,
+    RoyaltiesChangedEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoyaltiesDisabled"
+  ): TypedContractEvent<
+    RoyaltiesDisabledEvent.InputTuple,
+    RoyaltiesDisabledEvent.OutputTuple,
+    RoyaltiesDisabledEvent.OutputObject
+  >;
+  getEvent(
+    key: "RoyaltiesEnabled"
+  ): TypedContractEvent<
+    RoyaltiesEnabledEvent.InputTuple,
+    RoyaltiesEnabledEvent.OutputTuple,
+    RoyaltiesEnabledEvent.OutputObject
+  >;
+  getEvent(
+    key: "TokenBurned"
+  ): TypedContractEvent<
+    TokenBurnedEvent.InputTuple,
+    TokenBurnedEvent.OutputTuple,
+    TokenBurnedEvent.OutputObject
+  >;
+  getEvent(
+    key: "TokenMinted"
+  ): TypedContractEvent<
+    TokenMintedEvent.InputTuple,
+    TokenMintedEvent.OutputTuple,
+    TokenMintedEvent.OutputObject
+  >;
+  getEvent(
+    key: "TokenTransfered"
+  ): TypedContractEvent<
+    TokenTransferedEvent.InputTuple,
+    TokenTransferedEvent.OutputTuple,
+    TokenTransferedEvent.OutputObject
+  >;
+  getEvent(
+    key: "Transfer"
+  ): TypedContractEvent<
+    TransferEvent.InputTuple,
+    TransferEvent.OutputTuple,
+    TransferEvent.OutputObject
+  >;
+  getEvent(
+    key: "Unpaused"
+  ): TypedContractEvent<
+    UnpausedEvent.InputTuple,
+    UnpausedEvent.OutputTuple,
+    UnpausedEvent.OutputObject
+  >;
 
   filters: {
-    "Approval(address,address,uint256)"(
-      owner?: PromiseOrValue<string> | null,
-      approved?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): ApprovalEventFilter;
-    Approval(
-      owner?: PromiseOrValue<string> | null,
-      approved?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): ApprovalEventFilter;
+    "Approval(address,address,uint256)": TypedContractEvent<
+      ApprovalEvent.InputTuple,
+      ApprovalEvent.OutputTuple,
+      ApprovalEvent.OutputObject
+    >;
+    Approval: TypedContractEvent<
+      ApprovalEvent.InputTuple,
+      ApprovalEvent.OutputTuple,
+      ApprovalEvent.OutputObject
+    >;
 
-    "ApprovalForAll(address,address,bool)"(
-      owner?: PromiseOrValue<string> | null,
-      operator?: PromiseOrValue<string> | null,
-      approved?: null
-    ): ApprovalForAllEventFilter;
-    ApprovalForAll(
-      owner?: PromiseOrValue<string> | null,
-      operator?: PromiseOrValue<string> | null,
-      approved?: null
-    ): ApprovalForAllEventFilter;
+    "ApprovalForAll(address,address,bool)": TypedContractEvent<
+      ApprovalForAllEvent.InputTuple,
+      ApprovalForAllEvent.OutputTuple,
+      ApprovalForAllEvent.OutputObject
+    >;
+    ApprovalForAll: TypedContractEvent<
+      ApprovalForAllEvent.InputTuple,
+      ApprovalForAllEvent.OutputTuple,
+      ApprovalForAllEvent.OutputObject
+    >;
 
-    "Paused(address)"(account?: null): PausedEventFilter;
-    Paused(account?: null): PausedEventFilter;
+    "ApprovedAddressForTokenChanged(address,uint256)": TypedContractEvent<
+      ApprovedAddressForTokenChangedEvent.InputTuple,
+      ApprovedAddressForTokenChangedEvent.OutputTuple,
+      ApprovedAddressForTokenChangedEvent.OutputObject
+    >;
+    ApprovedAddressForTokenChanged: TypedContractEvent<
+      ApprovedAddressForTokenChangedEvent.InputTuple,
+      ApprovedAddressForTokenChangedEvent.OutputTuple,
+      ApprovedAddressForTokenChangedEvent.OutputObject
+    >;
 
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
-      role?: PromiseOrValue<BytesLike> | null,
-      previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
-    ): RoleAdminChangedEventFilter;
-    RoleAdminChanged(
-      role?: PromiseOrValue<BytesLike> | null,
-      previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null
-    ): RoleAdminChangedEventFilter;
+    "BaseURIChanged(string)": TypedContractEvent<
+      BaseURIChangedEvent.InputTuple,
+      BaseURIChangedEvent.OutputTuple,
+      BaseURIChangedEvent.OutputObject
+    >;
+    BaseURIChanged: TypedContractEvent<
+      BaseURIChangedEvent.InputTuple,
+      BaseURIChangedEvent.OutputTuple,
+      BaseURIChangedEvent.OutputObject
+    >;
 
-    "RoleGranted(bytes32,address,address)"(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
-    ): RoleGrantedEventFilter;
-    RoleGranted(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
-    ): RoleGrantedEventFilter;
+    "BatchMetadataUpdate(uint256,uint256)": TypedContractEvent<
+      BatchMetadataUpdateEvent.InputTuple,
+      BatchMetadataUpdateEvent.OutputTuple,
+      BatchMetadataUpdateEvent.OutputObject
+    >;
+    BatchMetadataUpdate: TypedContractEvent<
+      BatchMetadataUpdateEvent.InputTuple,
+      BatchMetadataUpdateEvent.OutputTuple,
+      BatchMetadataUpdateEvent.OutputObject
+    >;
 
-    "RoleRevoked(bytes32,address,address)"(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
-    ): RoleRevokedEventFilter;
-    RoleRevoked(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null
-    ): RoleRevokedEventFilter;
+    "CollectionBannerMediaChanged(string)": TypedContractEvent<
+      CollectionBannerMediaChangedEvent.InputTuple,
+      CollectionBannerMediaChangedEvent.OutputTuple,
+      CollectionBannerMediaChangedEvent.OutputObject
+    >;
+    CollectionBannerMediaChanged: TypedContractEvent<
+      CollectionBannerMediaChangedEvent.InputTuple,
+      CollectionBannerMediaChangedEvent.OutputTuple,
+      CollectionBannerMediaChangedEvent.OutputObject
+    >;
 
-    "Transfer(address,address,uint256)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): TransferEventFilter;
-    Transfer(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      tokenId?: PromiseOrValue<BigNumberish> | null
-    ): TransferEventFilter;
+    "CollectionDescriptionChanged(string)": TypedContractEvent<
+      CollectionDescriptionChangedEvent.InputTuple,
+      CollectionDescriptionChangedEvent.OutputTuple,
+      CollectionDescriptionChangedEvent.OutputObject
+    >;
+    CollectionDescriptionChanged: TypedContractEvent<
+      CollectionDescriptionChangedEvent.InputTuple,
+      CollectionDescriptionChangedEvent.OutputTuple,
+      CollectionDescriptionChangedEvent.OutputObject
+    >;
 
-    "Unpaused(address)"(account?: null): UnpausedEventFilter;
-    Unpaused(account?: null): UnpausedEventFilter;
-  };
+    "CollectionDisplayPictureChanged(string)": TypedContractEvent<
+      CollectionDisplayPictureChangedEvent.InputTuple,
+      CollectionDisplayPictureChangedEvent.OutputTuple,
+      CollectionDisplayPictureChangedEvent.OutputObject
+    >;
+    CollectionDisplayPictureChanged: TypedContractEvent<
+      CollectionDisplayPictureChangedEvent.InputTuple,
+      CollectionDisplayPictureChangedEvent.OutputTuple,
+      CollectionDisplayPictureChangedEvent.OutputObject
+    >;
 
-  estimateGas: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+    "ContractURIChanged(bytes32)": TypedContractEvent<
+      ContractURIChangedEvent.InputTuple,
+      ContractURIChangedEvent.OutputTuple,
+      ContractURIChangedEvent.OutputObject
+    >;
+    ContractURIChanged: TypedContractEvent<
+      ContractURIChangedEvent.InputTuple,
+      ContractURIChangedEvent.OutputTuple,
+      ContractURIChangedEvent.OutputObject
+    >;
 
-    approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "Log(string,uint256)": TypedContractEvent<
+      LogEvent.InputTuple,
+      LogEvent.OutputTuple,
+      LogEvent.OutputObject
+    >;
+    Log: TypedContractEvent<
+      LogEvent.InputTuple,
+      LogEvent.OutputTuple,
+      LogEvent.OutputObject
+    >;
 
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    "MarketplaceAddressChanged(address)": TypedContractEvent<
+      MarketplaceAddressChangedEvent.InputTuple,
+      MarketplaceAddressChangedEvent.OutputTuple,
+      MarketplaceAddressChangedEvent.OutputObject
+    >;
+    MarketplaceAddressChanged: TypedContractEvent<
+      MarketplaceAddressChangedEvent.InputTuple,
+      MarketplaceAddressChangedEvent.OutputTuple,
+      MarketplaceAddressChangedEvent.OutputObject
+    >;
 
-    burn(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "MetadataUpdate(uint256)": TypedContractEvent<
+      MetadataUpdateEvent.InputTuple,
+      MetadataUpdateEvent.OutputTuple,
+      MetadataUpdateEvent.OutputObject
+    >;
+    MetadataUpdate: TypedContractEvent<
+      MetadataUpdateEvent.InputTuple,
+      MetadataUpdateEvent.OutputTuple,
+      MetadataUpdateEvent.OutputObject
+    >;
 
-    getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    "MintingFeeChanged(uint256)": TypedContractEvent<
+      MintingFeeChangedEvent.InputTuple,
+      MintingFeeChangedEvent.OutputTuple,
+      MintingFeeChangedEvent.OutputObject
+    >;
+    MintingFeeChanged: TypedContractEvent<
+      MintingFeeChangedEvent.InputTuple,
+      MintingFeeChangedEvent.OutputTuple,
+      MintingFeeChangedEvent.OutputObject
+    >;
 
-    getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    "OwnerChanged(address)": TypedContractEvent<
+      OwnerChangedEvent.InputTuple,
+      OwnerChangedEvent.OutputTuple,
+      OwnerChangedEvent.OutputObject
+    >;
+    OwnerChanged: TypedContractEvent<
+      OwnerChangedEvent.InputTuple,
+      OwnerChangedEvent.OutputTuple,
+      OwnerChangedEvent.OutputObject
+    >;
 
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "Paused(address)": TypedContractEvent<
+      PausedEvent.InputTuple,
+      PausedEvent.OutputTuple,
+      PausedEvent.OutputObject
+    >;
+    Paused: TypedContractEvent<
+      PausedEvent.InputTuple,
+      PausedEvent.OutputTuple,
+      PausedEvent.OutputObject
+    >;
 
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    "Received(address,uint256)": TypedContractEvent<
+      ReceivedEvent.InputTuple,
+      ReceivedEvent.OutputTuple,
+      ReceivedEvent.OutputObject
+    >;
+    Received: TypedContractEvent<
+      ReceivedEvent.InputTuple,
+      ReceivedEvent.OutputTuple,
+      ReceivedEvent.OutputObject
+    >;
 
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    "RoleAdminChanged(bytes32,bytes32,bytes32)": TypedContractEvent<
+      RoleAdminChangedEvent.InputTuple,
+      RoleAdminChangedEvent.OutputTuple,
+      RoleAdminChangedEvent.OutputObject
+    >;
+    RoleAdminChanged: TypedContractEvent<
+      RoleAdminChangedEvent.InputTuple,
+      RoleAdminChangedEvent.OutputTuple,
+      RoleAdminChangedEvent.OutputObject
+    >;
 
-    name(overrides?: CallOverrides): Promise<BigNumber>;
+    "RoleGranted(bytes32,address,address)": TypedContractEvent<
+      RoleGrantedEvent.InputTuple,
+      RoleGrantedEvent.OutputTuple,
+      RoleGrantedEvent.OutputObject
+    >;
+    RoleGranted: TypedContractEvent<
+      RoleGrantedEvent.InputTuple,
+      RoleGrantedEvent.OutputTuple,
+      RoleGrantedEvent.OutputObject
+    >;
 
-    ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    "RoleRevoked(bytes32,address,address)": TypedContractEvent<
+      RoleRevokedEvent.InputTuple,
+      RoleRevokedEvent.OutputTuple,
+      RoleRevokedEvent.OutputObject
+    >;
+    RoleRevoked: TypedContractEvent<
+      RoleRevokedEvent.InputTuple,
+      RoleRevokedEvent.OutputTuple,
+      RoleRevokedEvent.OutputObject
+    >;
 
-    paused(overrides?: CallOverrides): Promise<BigNumber>;
+    "RoyaltiesChanged(address,uint96,uint256)": TypedContractEvent<
+      RoyaltiesChangedEvent.InputTuple,
+      RoyaltiesChangedEvent.OutputTuple,
+      RoyaltiesChangedEvent.OutputObject
+    >;
+    RoyaltiesChanged: TypedContractEvent<
+      RoyaltiesChangedEvent.InputTuple,
+      RoyaltiesChangedEvent.OutputTuple,
+      RoyaltiesChangedEvent.OutputObject
+    >;
 
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "RoyaltiesDisabled(uint256)": TypedContractEvent<
+      RoyaltiesDisabledEvent.InputTuple,
+      RoyaltiesDisabledEvent.OutputTuple,
+      RoyaltiesDisabledEvent.OutputObject
+    >;
+    RoyaltiesDisabled: TypedContractEvent<
+      RoyaltiesDisabledEvent.InputTuple,
+      RoyaltiesDisabledEvent.OutputTuple,
+      RoyaltiesDisabledEvent.OutputObject
+    >;
 
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "RoyaltiesEnabled()": TypedContractEvent<
+      RoyaltiesEnabledEvent.InputTuple,
+      RoyaltiesEnabledEvent.OutputTuple,
+      RoyaltiesEnabledEvent.OutputObject
+    >;
+    RoyaltiesEnabled: TypedContractEvent<
+      RoyaltiesEnabledEvent.InputTuple,
+      RoyaltiesEnabledEvent.OutputTuple,
+      RoyaltiesEnabledEvent.OutputObject
+    >;
 
-    royaltyInfo(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      _salePrice: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    "TokenBurned(address,address,uint256,uint256)": TypedContractEvent<
+      TokenBurnedEvent.InputTuple,
+      TokenBurnedEvent.OutputTuple,
+      TokenBurnedEvent.OutputObject
+    >;
+    TokenBurned: TypedContractEvent<
+      TokenBurnedEvent.InputTuple,
+      TokenBurnedEvent.OutputTuple,
+      TokenBurnedEvent.OutputObject
+    >;
 
-    "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "TokenMinted(address,address,uint256,uint256)": TypedContractEvent<
+      TokenMintedEvent.InputTuple,
+      TokenMintedEvent.OutputTuple,
+      TokenMintedEvent.OutputObject
+    >;
+    TokenMinted: TypedContractEvent<
+      TokenMintedEvent.InputTuple,
+      TokenMintedEvent.OutputTuple,
+      TokenMintedEvent.OutputObject
+    >;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "TokenTransfered(address,address,uint256,uint256)": TypedContractEvent<
+      TokenTransferedEvent.InputTuple,
+      TokenTransferedEvent.OutputTuple,
+      TokenTransferedEvent.OutputObject
+    >;
+    TokenTransfered: TypedContractEvent<
+      TokenTransferedEvent.InputTuple,
+      TokenTransferedEvent.OutputTuple,
+      TokenTransferedEvent.OutputObject
+    >;
 
-    setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    "Transfer(address,address,uint256)": TypedContractEvent<
+      TransferEvent.InputTuple,
+      TransferEvent.OutputTuple,
+      TransferEvent.OutputObject
+    >;
+    Transfer: TypedContractEvent<
+      TransferEvent.InputTuple,
+      TransferEvent.OutputTuple,
+      TransferEvent.OutputObject
+    >;
 
-    supportsInterface(
-      _interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    tokenByIndex(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    tokenURI(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    approve(
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    balanceOf(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    burn(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getApproved(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getRoleAdmin(
-      role: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    isApprovedForAll(
-      owner: PromiseOrValue<string>,
-      operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    ownerOf(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    royaltyInfo(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      _salePrice: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "safeTransferFrom(address,address,uint256)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setApprovalForAll(
-      operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    supportsInterface(
-      _interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    tokenByIndex(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    tokenOfOwnerByIndex(
-      owner: PromiseOrValue<string>,
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    tokenURI(
-      _tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    "Unpaused(address)": TypedContractEvent<
+      UnpausedEvent.InputTuple,
+      UnpausedEvent.OutputTuple,
+      UnpausedEvent.OutputObject
+    >;
+    Unpaused: TypedContractEvent<
+      UnpausedEvent.InputTuple,
+      UnpausedEvent.OutputTuple,
+      UnpausedEvent.OutputObject
+    >;
   };
 }

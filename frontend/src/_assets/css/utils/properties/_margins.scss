@@ -1,0 +1,45 @@
+/*
+$position: (
+    top: 't',
+    right: 'r',
+    left: 'l',
+    bottom: 'b'
+);
+
+$unit: (
+    rem: 't',
+    per: 'r',
+    px: 'l',
+);
+
+@for $size from -100 through 100 {
+
+    @each $unit, $ut in $unit {
+        @each $position, $pos in $position {
+            .m-#{#pos}-#{$size}#{$unit} { margin-#{$position}: #{$size}#{$ut} !important}
+            .p-#{#pos}-#{$size}#{$unit} { padding-#{$position}: #{$size}#{$ut} !important}
+        }
+    }
+
+    .m-#{$size}#{$unit} { margin: #{$size}#{$ut} !important}
+    .m-v-#{$size}#{$unit} { margin-top: #{$size}#{$ut} !important; margin-bottom: #{$size}#{$ut} !important; }
+    .m-y-#{$size}#{$unit} { margin-top: #{$size}#{$ut} !important; margin-bottom: #{$size}#{$ut} !important; }
+    .m-h-#{$size}#{$unit} { margin-left: #{$size}#{$ut} !important; margin-right: #{$size}#{$ut} !important; }
+    .m-x-#{$size}#{$unit} { margin-left: #{$size}#{$ut} !important; margin-right: #{$size}#{$ut} !important; }
+    
+    .-m-#{$size}#{$unit} { margin: -#{$size}#{$ut} !important}
+    .-m-v-#{$size}#{$unit} { margin-top: -#{$size}#{$ut} !important; margin-bottom: -#{$size}#{$ut} !important; }
+    .-m-y-#{$size}#{$unit} { margin-top: -#{$size}#{$ut} !important; margin-bottom: -#{$size}#{$ut} !important; }
+    .-m-h-#{$size}#{$unit} { margin-left: -#{$size}#{$ut} !important; margin-right: -#{$size}#{$ut} !important; }
+    .-m-x-#{$size}#{$unit} { margin-left: -#{$size}#{$ut} !important; margin-right: -#{$size}#{$ut} !important; }
+    
+    .p-#{$size}#{$unit} { padding: #{$size}#{$ut} !important}
+    .p-v-#{$size}#{$unit} { padding-top: #{$size}#{$ut} !important; padding-bottom: #{$size}#{$ut} !important; }
+    .p-y-#{$size}#{$unit} { padding-top: #{$size}#{$ut} !important; padding-bottom: #{$size}#{$ut} !important; }
+    .p-h-#{$size}#{$unit} { padding-left: #{$size}#{$ut} !important; padding-right: #{$size}#{$ut} !important; }
+    .p-x-#{$size}#{$unit} { padding-left: #{$size}#{$ut} !important; padding-right: #{$size}#{$ut} !important; }
+
+    .w-#{$size}#{$unit} { width: #{$size}#{$ut} !important}
+    
+}
+*/

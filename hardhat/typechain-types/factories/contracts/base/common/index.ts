@@ -2,4 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { ERCFallback__factory } from "./ERCFallback__factory";
+export { ERCLogging__factory } from "./ERCLogging__factory";
+export { ERCMKTPModifiers__factory } from "./ERCMKTPModifiers__factory";
 export { ERCModifiers__factory } from "./ERCModifiers__factory";
+export { IERCLogging__factory } from "./IERCLogging__factory";

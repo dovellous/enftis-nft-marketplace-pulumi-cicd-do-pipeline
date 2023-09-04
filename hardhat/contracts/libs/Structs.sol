@@ -40,7 +40,7 @@ library Structs {
     struct RoyaltyItem {
         bool royaltyIsDefined;
         address royaltyReceiver;
-        uint256  royaltyFraction;
+        uint256 royaltyFraction;
         uint256 royaltyAmount;
         uint256 tokenPrice;
         uint256 tokenId;
@@ -51,7 +51,7 @@ library Structs {
         Enums.TokenActivityType activityType;
         address fromAddress;
         address toAddress;
-        uint timestamp;
+        uint256 timestamp;
     }
 
     // NFT Object
@@ -68,6 +68,46 @@ library Structs {
     struct NFT {
         NFTItem nftItem;
         string tokenURI;
+    }
+
+    struct NFTMarketItem {
+        bytes4 tokenInterfaceId;
+        bool sold;
+        bool isListed;
+        bool isAuction;
+        bool supportsRoyalties;
+        address tokenContractAddress;
+        address payable[3] creatorSellerOwner;
+        uint256 price;
+        uint256 createdAt;
+        uint256 updatedAt;
+        uint256 tokenId;
+        uint256 tokenIndexedID;
+    }
+
+    struct NFTMarketItemActivity {
+        Enums.NFTMarketItemActivityType activityType;
+        address fromAddress;
+        address toAddress;
+        uint timestamp;
+    }
+
+    struct AuctionDetails {
+        uint256 highestBid;
+        address highestBidder;
+        uint256 timeEnding;
+    }
+
+    // NFT Object
+    struct Supplies {
+        uint256 minted;
+        uint256 current;
+        uint256 maximum;
+    }
+
+    struct NFTFull {
+        NFTMarketItem _NFTMarketItem;
+        AuctionDetails _AuctionDetails;
     }
 
 }

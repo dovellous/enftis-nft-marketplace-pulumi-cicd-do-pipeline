@@ -1,0 +1,155 @@
+.antx-wallet-widget {
+
+    .wallet-card {
+        border-radius: 20px;
+        color: #ffffff;
+        background: transparent;
+        max-height: 225px !important;
+
+        .video {
+            width: 100%;
+
+            .video-el {
+                width: 100%;
+                height: auto;
+                border-radius: 20px;
+            }
+
+        }
+
+        .image {
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            width: 100px;
+        }
+
+        .info {
+            padding: 18px 24px;
+            color: #ffffff;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+            position: relative;
+            top: -200px;
+
+            h1 {
+                margin-bottom: 10px;
+            }
+        }
+
+        .anticon.anticon-sketch {
+            position: absolute;
+            top: 10px;
+            right: 0px;
+            width: 100px;
+            height: 100px;
+
+            svg {
+                width: 200px;
+                height: 200px;
+                opacity: 0.09;
+            }
+        }
+
+    }
+
+    .wallet-connector-card {
+
+        padding: 16px;
+        border-radius: 16px;
+        margin: 10px 0;
+        border: 2px solid #eaeaea;
+
+        .ant-badge .ant-badge-dot {
+            width: 10px;
+            min-width: 10px;
+            height: 10px;
+            border-radius: 100%;
+        }
+
+        .ml-2 {
+            margin-left: 20px !important;
+        }
+
+        .wallet-header {
+
+            .wallet-connector {
+                margin-left: 0 !important;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+            }
+
+            .wallet-status {
+
+                .wallet-network {
+                    display: block !important;
+                    font-weight: 400;
+                    clear: both;
+                }
+
+                .wallet-chain {
+                    display: block !important;
+                    font-weight: 400;
+                    clear: both;
+                    opacity: 0.7;
+                }
+
+                .wallet-connecting {
+                    color: #1677ff;
+                    max-width: 220px !important;
+                    width: 100%;
+                    display: block;
+                }
+
+                .wallet-info {
+                    max-width: 220px !important;
+                    width: 100%;
+                    display: block;
+                }
+
+                .wallet-error {
+                    color: #ff004c;
+                    max-width: 220px !important;
+                    width: 100%;
+                    display: block;
+                }
+            }
+
+        }
+
+        &:hover {
+            height: auto;
+        }
+
+        &.supported:hover {
+            cursor: pointer;
+            background-color: #d3e5ff;
+            border-color: #1677ff;
+        }
+
+        &.not-supported:hover {
+            cursor: not-allowed;
+            background-color: #efefef;
+            border-color: #bfbfbf;
+        }
+
+        &.supported.connected {
+            cursor: pointer;
+            background-color: #d6fde8;
+            border-color: #b4f7c8;
+        }
+
+        &.supported.connected:hover {
+            cursor: pointer;
+            background-color: #bcffda;
+            border-color: #73e495;
+        }
+    }
+
+    .legal-text-foot-print {
+        font-size: 12px;
+    }
+
+}
+
+.ant-drawer {
+    z-index: 88 !important;
+}

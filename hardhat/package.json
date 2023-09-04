@@ -1,7 +1,7 @@
 {
   "name": "com-dovellous-hardhat",
   "version": "1.0.0",
-  "description": "Hardhad boilertemplate",
+  "description": "Hardhat boilertemplate",
   "main": "index.js",
   "repository": "https://github.com/dovellous/com-dovellous-hardhat",
   "author": "@Dovellous, @Code_Writer",
@@ -9,34 +9,37 @@
   "scripts": {
     "init-node": "npx hardhat node --network hardhat",
     "test": "npx hardhat test --network localhost",
+    "test-mkt": "hardhat test ./test/4_ERCMKTPFactoryTest.ts --network localhost",
+    "test-dao": "hardhat test ./test/5_ERC20DAOTest.ts --network localhost",
+    "test-721": "hardhat test ./test/2_ERC721FactoryTest.ts --network localhost",
+    "test-1155": "hardhat test ./test/3_ERC1155FactoryTest.ts --network localhost",
+    "test-logger": "hardhat test ./test/1_ERC00LoggerTest.ts --network localhost",
     "deploy-local": "npx hardhat run scripts/deploy.ts --network localhost",
     "deploy-sepolia": "npx hardhat run scripts/deploy.ts --network sepolia"
   },
   "devDependencies": {
-    "@ethersproject/abi": "^5.7.0",
-    "@ethersproject/providers": "^5.7.2",
-    "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
+    "@nomicfoundation/hardhat-chai-matchers": "2",
+    "@nomicfoundation/hardhat-ethers": "3",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
-    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "@nomiclabs/hardhat-etherscan": "^3.1.7",
-    "@typechain/ethers-v5": "^10.2.0",
-    "@typechain/hardhat": "^6.1.5",
-    "@types/chai": "^4.2.0",
+    "@nomicfoundation/hardhat-toolbox": "3",
+    "@typechain/hardhat": "8",
+    "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18.16.0",
+    "@types/node": "^20.4.4",
     "chai": "^4.3.7",
-    "ethers": "^5.7.2",
-    "hardhat": "^2.14.0",
+    "ethers": "6",
+    "hardhat": "^2.17.0",
     "hardhat-gas-reporter": "^1.0.9",
-    "solidity-coverage": "^0.8.2",
+    "solidity-coverage": "^0.8.4",
     "ts-node": "^10.9.1",
-    "typechain": "^8.1.1",
-    "typescript": "^5.0.4"
+    "typechain": "^8.3.0",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.3",
-    "@openzeppelin/contracts-upgradeable": "^4.8.3",
-    "dotenv": "^16.0.3"
+    "@nomicfoundation/hardhat-verify": "^1.0.4",
+    "@openzeppelin/contracts": "^4.9.2",
+    "@openzeppelin/contracts-upgradeable": "^4.9.2",
+    "@typechain/ethers-v6": "^0.4.2",
+    "dotenv": "^16.3.1"
   }
 }

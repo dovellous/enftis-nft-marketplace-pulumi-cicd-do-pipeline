@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export { ERC721FactoryBase__factory } from "./ERC721FactoryBase__factory";
-export { ERC721FactoryConstants__factory } from "./ERC721FactoryConstants__factory";
-export { ERC721FactoryErrors__factory } from "./ERC721FactoryErrors__factory";
-export { ERC721FactoryEvents__factory } from "./ERC721FactoryEvents__factory";
-export { ERC721FactoryImplementation__factory } from "./ERC721FactoryImplementation__factory";
-export { ERC721FactoryModifiers__factory } from "./ERC721FactoryModifiers__factory";
+export { ERC721FactoryBurner__factory } from "./ERC721FactoryBurner__factory";
+export { ERC721FactoryGetSet__factory } from "./ERC721FactoryGetSet__factory";
+export { ERC721FactoryMinter__factory } from "./ERC721FactoryMinter__factory";
+export { ERC721FactoryWorker__factory } from "./ERC721FactoryWorker__factory";
+export { IERC721Factory__factory } from "./IERC721Factory__factory";

@@ -5,5 +5,5 @@ export type { ERC1155FactoryBase } from "./ERC1155FactoryBase";
 export type { ERC1155FactoryBurner } from "./ERC1155FactoryBurner";
 export type { ERC1155FactoryGetSet } from "./ERC1155FactoryGetSet";
 export type { ERC1155FactoryMinter } from "./ERC1155FactoryMinter";
-export type { ERC1155FactoryProxyRegistry } from "./ERC1155FactoryProxyRegistry";
 export type { ERC1155FactoryWorker } from "./ERC1155FactoryWorker";
+export type { IERC1155Factory } from "./IERC1155Factory";

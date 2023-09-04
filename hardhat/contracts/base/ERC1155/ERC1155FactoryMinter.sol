@@ -70,6 +70,8 @@ abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
         bytes memory _data
     ) public payable onlyMinter {
 
+        // Ensure that the amount supplied is equal to the minting fee specified.
+        
         _mintHelper(Structs.MinterHelperParams(
             _tokenId,
             _amount,
@@ -140,20 +142,31 @@ abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
     function _mintHelper(
         Structs.MinterHelperParams memory _data
     ) internal {
+
         // Ensure that the amount supplied is equal to the minting fee specified.
         if (msg.value < mintingFee) {
             revert Errors.PriceBelowMintingFee({
                 mintingFee: mintingFee,
-                value: msg.value,
-                message: Snippets.AMOUNT_BELOW_MINTING_FEE
+                value: msg.value
             });
         }
 
         if(maxSupplyById[_data.tokenId] == 0){
 
+            //Token Creation
+
+            _tokenIdCounter.increment();
+                
+            if (_tokenIdCounter.current() > tokenMaximumSupply) {
+                revert Errors.MaximumTokenSupplyReached({
+                    maxValue: tokenMaximumSupply,
+                    value: _data.tokenId
+                });
+            }
+        
             if (_data.maxSupply == 0) {
                 revert Errors.ZeroTokenSupply({
-                    tokenMaximumSupply: tokenMaximumSupply,
+                    maxSupplyById: tokenMaximumSupply,
                     tokenId: _data.tokenId
                 });
             }
@@ -162,22 +175,10 @@ abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
 
         }
         
-        _tokenIdCounter.increment();
-            
-        if (_tokenIdCounter.current() > tokenMaximumSupply) {
-            revert Errors.ExceededMaxUniqueIds({
-                tokenMaximumSupply: tokenMaximumSupply,
-                tokenId: _data.tokenId
-            });
-        }
-        
-        maxSupplyById[_data.tokenId] = _data.maxSupply;
-        
         if (mintedSupplyById[_data.tokenId] + _data.amount > maxSupplyById[_data.tokenId]) {
-            revert Errors.MaximumTokenSupplyReached({
-                maxValue: maxSupplyById[_data.tokenId],
-                value: _data.tokenId,
-                message: Snippets.MAX_SUPPLY_REACHED
+            revert Errors.SpecifiedTokenSupplyReached({
+                maxSupplyById: maxSupplyById[_data.tokenId],
+                tokenId: _data.tokenId
             });
         }
 
@@ -196,9 +197,7 @@ abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
 
         mintedSupplyById[_data.tokenId] = mintedSupplyById[_data.tokenId] + _data.amount;
 
-        tokenMaximumSupplyById[_data.tokenId] = tokenMaximumSupplyById[_data.tokenId] + _data.amount;
-
-        _tokenCurrentSupply.increment();
+        currentSupplyById[_data.tokenId] = currentSupplyById[_data.tokenId] + _data.amount;
 
     }
 
@@ -210,7 +209,7 @@ abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
      * - Only Owner/Admin can call this method.
      * - Only contracts with pausable active can call this method.
      */
-    function pause() public onlyAdmin pausable {
+    function pause() public onlyAdmin onlyWhenIsPausable {
         _pause();
     }
 
@@ -222,7 +221,7 @@ abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
      * - Only Owner/Admin can call this method.
      * - Only contracts with pausable active can call this method.
      */
-    function unpause() public onlyAdmin pausable {
+    function unpause() public onlyAdmin onlyWhenIsPausable {
         _unpause();
     }
 

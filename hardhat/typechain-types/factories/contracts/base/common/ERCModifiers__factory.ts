@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
   ERCModifiers,
   ERCModifiersInterface,
@@ -113,16 +112,50 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "contractOptionsStruct",
+    name: "contractOptionIsBurnable",
     outputs: [
       {
         internalType: "bool",
-        name: "pausable",
+        name: "",
         type: "bool",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractOptionIsMintable",
+    outputs: [
       {
         internalType: "bool",
-        name: "burnable",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractOptionIsPausable",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractOptionIsSnapshotable",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
         type: "bool",
       },
     ],
@@ -340,12 +373,12 @@ const _abi = [
 export class ERCModifiers__factory {
   static readonly abi = _abi;
   static createInterface(): ERCModifiersInterface {
-    return new utils.Interface(_abi) as ERCModifiersInterface;
+    return new Interface(_abi) as ERCModifiersInterface;
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    runner?: ContractRunner | null
   ): ERCModifiers {
-    return new Contract(address, _abi, signerOrProvider) as ERCModifiers;
+    return new Contract(address, _abi, runner) as unknown as ERCModifiers;
   }
 }
