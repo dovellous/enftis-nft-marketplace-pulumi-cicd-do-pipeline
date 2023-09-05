@@ -1,11 +1,11 @@
 import React, { lazy, useState } from 'react';
 import { Routes as BrowserRoutes, Route, Navigate } from 'react-router-dom';
-import { PrivateRoute } from './';
-import { Home } from '_pages';
+import { PrivateRoute } from './'; 
 import { Portal } from '_pages';
 import { Login } from '_pages';
 import { H404 } from '_pages/http';
 import { PageLoader } from '_components/ui/buttons/download-app/loaders/PageLoader';
+import { Home } from '_pages/home/Home';
 
 const Routes: React.FC = () => {
 

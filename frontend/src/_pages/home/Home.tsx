@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Col, Layout, Row, Space, theme } from "antd";
-import { NavBreadcrumb } from "_components/document/body/header/nav";
+import { Col, Layout, Row, Space } from "antd";
 import { Page } from "_components/document";
 
 const { Content } = Layout;
 
 const Home: React.FC = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
   const [pageTitle, setPageTitle] = useState<string>("");
   const [pageDescription, setPageDescription] = useState<string>("");
@@ -31,23 +27,21 @@ const Home: React.FC = () => {
       theme={pageTheme}
       hideHeaderAndFooter={false}
     >
-      <Space className="main" style={{ padding: "0 24px 24px" }}>
+      <Space className="main" direction="vertical" style={{ padding: 0 }}>
         <Row>
-          <Col span={12}>
-            <NavBreadcrumb />
-          </Col>
-          <Col span={12}>
+          <Col span={24}>
             <Content
               style={{
-                padding: 24,
+                padding: 0,
                 margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
+                minHeight: 500,
+                background: "transparent",
               }}
             >
               <div>
                 <h1>HOME PAGE</h1>
               </div>
+              
             </Content>
           </Col>
         </Row>

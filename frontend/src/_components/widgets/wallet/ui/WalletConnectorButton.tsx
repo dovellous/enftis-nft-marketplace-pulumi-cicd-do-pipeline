@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { useEffect, useState } from "react";
 import { dotCase } from "dot-case";
-import { useConnect, useNetwork } from 'wagmi'
+import { useConnect, useDisconnect, useNetwork, useSwitchNetwork } from 'wagmi'
 
 import {
   Row,
@@ -12,7 +13,6 @@ import {
   Button,
   MenuProps,
   Dropdown,
-  Tooltip
 } from "antd";
 
 import Icon, {
@@ -21,10 +21,9 @@ import Icon, {
   DeploymentUnitOutlined,
   InfoCircleOutlined,
   LoadingOutlined,
+  PartitionOutlined,
   QuestionCircleOutlined,
   SettingOutlined,
-  SyncOutlined,
-  WalletOutlined,
 } from "@ant-design/icons";
 
 import { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon";
@@ -63,19 +62,23 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
     pendingConnector
   } = useConnect()
 
+  const { disconnect } = useDisconnect();
+
   const { chain } = useNetwork();
+  
+  const { chains, error: errorSwitchNetwork, isLoading: isSwitchingNetworks, switchNetwork } = useSwitchNetwork()
 
 
   const [statusBadge, setStatusBadge] = useState<BadgeStatus>(
     BadgeStatus.DEFAULT
   );
 
-  const onSwitchNetworkHandler: any = (event: React.MouseEvent<HTMLElement>): void => {
-    throw new Error("Function not implemented.");
+  const onSwitchNetworkHandler: any = (chainId:number): void => {
+    switchNetwork?.(chainId);
   }
 
   const onDisconnectWalletHandler: any = (event: React.MouseEvent<HTMLElement>): void => {
-    throw new Error("Function not implemented.");
+    disconnect();
   }
 
   const EthereumIcon = (props: Partial<CustomIconComponentProps>) => (
@@ -104,17 +107,29 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
       type: "divider",
     },
     {
-      label: "Ethereum Chain - Mainnet",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(1)} >
+          Ethereum Chain - Mainnet
+        </span>
+      ),
       key: "2",
       icon: <EthereumIcon />,
     },
     {
-      label: "Ethereum - Testnet (Goerli)",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(5)} >
+          Ethereum - Testnet (Goerli)
+        </span>
+      ),
       key: "3",
       icon: <EthereumIcon />,
     },
     {
-      label: "Ethereum - Testnet (Sepoli)",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(11155111)} >
+          Ethereum - Testnet (Sepolia)
+        </span>
+      ),
       key: "4",
       icon: <EthereumIcon />,
     },
@@ -122,12 +137,20 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
       type: "divider",
     },
     {
-      label: "Polygon Chain - Mainnet",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(137)} >
+          Polygon Chain - Mainnet
+        </span>
+      ),
       key: "5",
       icon: <PolygonIcon />,
     },
     {
-      label: "Polygon - Testnet (Mumbai)",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(80001)} >
+          Polygon - Testnet (Mumbai)
+        </span>
+      ),
       key: "6",
       icon: <PolygonIcon />,
     },
@@ -135,12 +158,20 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
       type: "divider",
     },
     {
-      label: "Binance Chain - Mainnet",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(56)} >
+          Binance Chain - Mainnet
+        </span>
+      ),
       key: "7",
       icon: <BinanceIcon />,
     },
     {
-      label: "Binance Chain - Testnet",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(97)} >
+          Binance Chain - Testnet
+        </span>
+      ),
       key: "8",
       icon: <BinanceIcon />,
     },
@@ -148,18 +179,22 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
       type: "divider",
     },
     {
-      label: "Disconnect Wallet",
+      label: (
+        <span onClick={()=>onSwitchNetworkHandler(80001)} >
+          Show all supported chains
+        </span>
+      ),
       key: "9",
-      icon: <ApiOutlined />,
+      icon: <PartitionOutlined />,
     },
   ];
 
   const items: MenuProps["items"] = [
   {
       label: (
-        <a href="#" onClick={onSwitchNetworkHandler} >
+        <span onClick={onSwitchNetworkHandler} >
           Switch Network
-        </a>
+        </span>
       ),
       key: "1",
       icon: <DeploymentUnitOutlined />,
@@ -184,9 +219,9 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
     },
     {
       label: (
-        <a href="#" onClick={onDisconnectWalletHandler} >
+        <span onClick={onDisconnectWalletHandler} >
           Disconnect Wallet
-        </a>
+        </span>
       ),
       key: "3",
       icon: <ApiOutlined />,
@@ -288,11 +323,11 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
 
     }
 
-  }, [data, connector])
+  }, [connector, pendingConnector, data, isSuccess])
 
   useEffect(() => {
 
-    if (isLoading && connector.id === pendingConnector?.id) {
+    if ((isLoading && connector.id === pendingConnector?.id) || isSwitchingNetworks) {
 
       setIsConnected(false);
 
@@ -314,7 +349,7 @@ export const WalletConnectorButton: React.FC<WalletConnectorButtonProps> = ({
 
     }
 
-  }, [isLoading])
+  }, [connector, pendingConnector, isLoading, isSwitchingNetworks])
 
   useEffect(() => {
 
