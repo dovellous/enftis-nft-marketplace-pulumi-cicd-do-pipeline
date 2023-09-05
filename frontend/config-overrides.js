@@ -1,5 +1,9 @@
 /* config-overrides.js */
 const webpack = require('webpack');
+
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' })
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
 module.exports = function override(config, env) {
     //do stuff with the webpack config...
 
@@ -20,11 +24,26 @@ module.exports = function override(config, env) {
       "util": require.resolve("util/"),
       //"zlib": require.resolve("browserify-zlib")
     };
+    
     config.plugins.push(
         new webpack.ProvidePlugin({
             process: 'process/browser',
             Buffer: ['buffer', 'Buffer'],
         }),
+    );
+
+    config.plugins.push(
+        new webpack.ProvidePlugin({
+            process: 'process/browser',
+            Buffer: ['buffer', 'Buffer'],
+        }),
+    );
+
+    config.plugins.push(
+    new webpack.DefinePlugin({
+        'process.env': JSON.stringify(dotenv.parsed),
+        'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
+      }),
     );
 
     return config;
