@@ -1,10 +1,12 @@
 /* config-overrides.js */
 const webpack = require('webpack');
 
-const dotenv = require('dotenv').config({ path: __dirname + '/.env' })
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = function override(config, env) {
+
     //do stuff with the webpack config...
 
     config.resolve.fallback = {
@@ -14,7 +16,7 @@ module.exports = function override(config, env) {
       "http": require.resolve("stream-http"),
       "https": require.resolve("https-browserify"),
       "os": require.resolve("os-browserify/browser"),
-      "path": "path-browserify",
+      "path": require.resolve("path-browserify"),
       "process": require.resolve("process/browser"),
       "querystring": require.resolve("querystring-es3"),
       "stream": require.resolve("stream-browserify"),
@@ -33,18 +35,12 @@ module.exports = function override(config, env) {
     );
 
     config.plugins.push(
-        new webpack.ProvidePlugin({
-            process: 'process/browser',
-            Buffer: ['buffer', 'Buffer'],
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(dotenv.parsed),
+            'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
         }),
     );
 
-    config.plugins.push(
-    new webpack.DefinePlugin({
-        'process.env': JSON.stringify(dotenv.parsed),
-        'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
-      }),
-    );
-
     return config;
+
 }
