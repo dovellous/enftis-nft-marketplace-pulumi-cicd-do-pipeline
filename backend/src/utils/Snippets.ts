@@ -5,7 +5,7 @@ import { requestGetData, requestPostData, requestPutData, requestDeleteData, get
 import DatabaseManager from './DatabaseManager';
 import {Logger} from './LoggerHelper';
 
-export default {
+export const Snippets:any = {
 
 	JsonWebToken: { verifyBearerToken, signBearerToken, parseAuthorizationToken },
 
@@ -29,7 +29,17 @@ export default {
 		convertToArray: (obj: any) => {
 			const arr = Object.keys(obj).map((key) => [key, obj[key]]);
 			return arr;
+		},
+		getWhereClause: (col: string, value: any) => {
+			
+			const _whereClause: any = {};
+
+			_whereClause[col] = value;
+
+			return _whereClause;
+
 		}
+		
 	},
 	numbers: {
 

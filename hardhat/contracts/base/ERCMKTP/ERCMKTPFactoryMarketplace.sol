@@ -14,7 +14,6 @@ import "./ERCMKTPFactoryWorker.sol";
 import "hardhat/console.sol";
 
 abstract contract ERCMKTPFactoryMarketplace is ERCMKTPFactoryWorker {
-    using Counters for Counters.Counter;
 
     function createNFTMarketItem(
         address tokenContractAddress,
@@ -60,9 +59,9 @@ abstract contract ERCMKTPFactoryMarketplace is ERCMKTPFactoryWorker {
 
         if (ownershipTransfered) {
 
-            _tokenIndexedIDs.increment();
+            _tokenIndexedIDs++;
 
-            uint256 tokenIndexedID = _tokenIndexedIDs.current();
+            uint256 tokenIndexedID = _tokenIndexedIDs;
 
             address creator;
 
@@ -88,7 +87,7 @@ abstract contract ERCMKTPFactoryMarketplace is ERCMKTPFactoryWorker {
                         (block.timestamp + (auctionHours * 1 hours)) //timeEnding
                     );
 
-                _tokenIndexedAuctionIDs.increment();
+                _tokenIndexedAuctionIDs++;
             }
 
             /*
@@ -130,13 +129,13 @@ abstract contract ERCMKTPFactoryMarketplace is ERCMKTPFactoryWorker {
                     tokenIndexedID
                 );
 
-            _listedItems.increment();
+            _listedItems++;
 
             emit NFTMarketItemCreated(tokenIndexedID);
 
         }
 
-        return (ownershipTransfered, tokenInterfaceId, _tokenIndexedIDs.current(), tokenId);
+        return (ownershipTransfered, tokenInterfaceId, _tokenIndexedIDs, tokenId);
 
     }
 
@@ -232,7 +231,7 @@ abstract contract ERCMKTPFactoryMarketplace is ERCMKTPFactoryWorker {
 
             tokenIndexedID2NFTMarketItem[tokenIndexedID] = _marketplaceItem;
 
-            _listedItems.increment();
+            _listedItems++;
 
             emit NFTMarketItemListed(tokenIndexedID);
         }
@@ -289,7 +288,7 @@ abstract contract ERCMKTPFactoryMarketplace is ERCMKTPFactoryWorker {
                     }
                 }
 
-                _listedItems.decrement();
+                _listedItems--;
 
                 emit NFTMarketItemDelisted(tokenIndexedID);
             }
@@ -407,9 +406,9 @@ abstract contract ERCMKTPFactoryMarketplace is ERCMKTPFactoryWorker {
                 payable(msg.sender).transfer(changeToRefund);
             }
 
-            _soldItems.increment();
+            _soldItems++;
 
-            _listedItems.decrement();
+            _listedItems--;
 
             _marketplaceItem.creatorSellerOwner[2] = payable(msg.sender);
             _marketplaceItem.sold = true;

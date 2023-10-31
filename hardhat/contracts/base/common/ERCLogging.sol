@@ -51,7 +51,7 @@ abstract contract ERCLogging is IERCLogging {
 
     constructor(){}
 
-    function getERCTokenLogging(address _contract, uint256 _tokenId) external returns(Structs.TokenActivityItem[] memory) {
+    function getERCTokenLogging(address _contract, uint256 _tokenId) external view returns(Structs.TokenActivityItem[] memory) {
 
         Structs.TokenActivityItem[] memory _activities = tokenIdToTokenActivityItem[_contract][_tokenId];
 
@@ -90,7 +90,7 @@ abstract contract ERCLogging is IERCLogging {
 
     }
 
-    function getERCMarketplaceLogging(address _contract, uint256 _tokenId) external returns( Structs.NFTMarketItemActivity[] memory) {
+    function getERCMarketplaceLogging(address _contract, uint256 _tokenId) external view returns( Structs.NFTMarketItemActivity[] memory) {
 
         Structs.NFTMarketItemActivity[] memory _activities = tokenIdToNFTMarketItemActivity[_contract][_tokenId];
 

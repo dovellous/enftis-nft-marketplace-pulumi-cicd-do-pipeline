@@ -44,7 +44,6 @@
     "/api/": {
       "get": {
         "description": "",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -55,7 +54,6 @@
     "/api/v1/": {
       "get": {
         "description": "",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -66,7 +64,6 @@
     "/api/v1/auth/": {
       "get": {
         "description": "",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -194,7 +191,6 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
         "responses": {
           "201": {
             "description": "Client updated successfully.",
@@ -493,7 +489,11 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -603,7 +603,6 @@
     "/api/v1/auth*": {
       "get": {
         "description": "",
-        "parameters": [],
         "responses": {
           "404": {
             "description": "Not Found"

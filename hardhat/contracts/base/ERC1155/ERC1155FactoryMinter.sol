@@ -10,7 +10,6 @@ pragma experimental ABIEncoderV2;
 import "./ERC1155FactoryWorker.sol";
 
 abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
-    using Counters for Counters.Counter;
 
     using Snippets for *;
 
@@ -155,9 +154,9 @@ abstract contract ERC1155FactoryMinter is ERC1155FactoryWorker {
 
             //Token Creation
 
-            _tokenIdCounter.increment();
+            _tokenIdCounter++;
                 
-            if (_tokenIdCounter.current() > tokenMaximumSupply) {
+            if (_tokenIdCounter > tokenMaximumSupply) {
                 revert Errors.MaximumTokenSupplyReached({
                     maxValue: tokenMaximumSupply,
                     value: _data.tokenId

@@ -17,10 +17,9 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import '@openzeppelin/contracts/token/common/ERC2981.sol';
 import '@openzeppelin/contracts/access/AccessControl.sol';
-import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
-import "@openzeppelin/contracts/security/Pausable.sol";
+import '@openzeppelin/contracts/utils/ReentrancyGuard.sol';
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import '@openzeppelin/contracts/utils/Multicall.sol';
-import "@openzeppelin/contracts/utils/Counters.sol";
 import '@openzeppelin/contracts/utils/Strings.sol';
 
 import "../common/ERCFallback.sol";
@@ -37,13 +36,11 @@ contract ERC1155FactoryBase is
     ERCModifiers
 {
 
-    using Counters for Counters.Counter;
-
     /// @dev Counters for tokenIds.
-    Counters.Counter public _tokenIdCounter;
+    uint256 public _tokenIdCounter;
 
     /// @dev Counters for token current supply.
-    Counters.Counter public _tokenCurrentSupply;
+    uint256 public _tokenCurrentSupply;
 
     /// Owner of the contract. 
     /// This is only for compatibility for other protocols.
@@ -257,40 +254,6 @@ contract ERC1155FactoryBase is
     }
 
     /**
-     * @dev Hook that is called before any token transfer. This includes minting
-     * and burning, as well as batched variants.
-     *
-     * The same hook is called on both single and batched variants. For single
-     * transfers, the length of the `ids` and `amounts` arrays will be 1.
-     *
-     * Calling conditions (for each `id` and `amount` pair):
-     *
-     * - When `from` and `to` are both non-zero, `amount` of ``from``'s tokens
-     * of token type `id` will be  transferred to `to`.
-     * - When `from` is zero, `amount` tokens of token type `id` will be minted
-     * for `to`.
-     * - when `to` is zero, `amount` of ``from``'s tokens of token type `id`
-     * will be burned.
-     * - `from` and `to` are never both zero.
-     * - `ids` and `amounts` have the same, non-zero length.
-     *
-     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
-     */
-    function _beforeTokenTransfer(
-        address operator,
-        address from,
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
-    ) internal virtual override {
-        if(paused()){
-            revert Errors.DisabledOption('PAUSED');
-        }
-        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
-    }
-
-    /**
      * @dev Hook that is called after any token transfer. This includes minting
      * and burning, as well as batched variants.
      *
@@ -310,17 +273,11 @@ contract ERC1155FactoryBase is
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    function _afterTokenTransfer(
-        address operator,
-        address from,
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
-    ) internal virtual  override {
-
-        console.log(loggerAddress, operator, from, to);
-
+    function _update(address from, address to, uint256[] memory ids, uint256[] memory amounts) internal virtual  override {
+        
+        if(paused()){
+            revert Errors.DisabledOption('PAUSED');
+        }
         unchecked {
                 
             for(uint256 i; i < amounts.length; ++i){
@@ -381,7 +338,7 @@ contract ERC1155FactoryBase is
 
         }
 
-        super._afterTokenTransfer(operator, from, to, ids, amounts, data);
+        super._update(from, to, ids, amounts);
 
     }
 

@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import { config as dotEnvConfig } from "dotenv";
 import "@nomicfoundation/hardhat-toolbox";
+
 dotEnvConfig();
 
 const hardhatConfig:HardhatUserConfig = {
@@ -37,7 +38,7 @@ const hardhatConfig:HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 1,
+            runs: 800,
             details: {
               yul: true
             }
@@ -53,7 +54,7 @@ const hardhatConfig:HardhatUserConfig = {
     artifacts: "./artifacts"
   },
   mocha: {
-    timeout: 60000
+    timeout: 120000
   }
 }
 

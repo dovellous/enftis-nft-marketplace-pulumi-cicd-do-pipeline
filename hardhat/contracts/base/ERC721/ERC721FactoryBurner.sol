@@ -10,7 +10,6 @@ pragma experimental ABIEncoderV2;
 import "./ERC721FactoryWorker.sol";
 
 abstract contract ERC721FactoryBurner is ERC721FactoryWorker {
-    using Counters for Counters.Counter;
 
     /**
      * @dev Burns `tokenId`. See {ERC721-_burn}.
@@ -21,12 +20,12 @@ abstract contract ERC721FactoryBurner is ERC721FactoryWorker {
      * - The caller must own `tokenId` or be an approved operator.
      */
     function burnToken(uint256 _tokenId) public whenIsApprovedOrOwner(
-            _isApprovedOrOwner(_msgSender(), _tokenId)
+            _isAuthorized(_ownerOf(_tokenId), _msgSender(), _tokenId)
         ) {
         
         _resetTokenRoyalty(_tokenId);
 
-        _tokenCurrentSupply.decrement();
+        _tokenCurrentSupply--;
 
         super._burn(_tokenId);
         

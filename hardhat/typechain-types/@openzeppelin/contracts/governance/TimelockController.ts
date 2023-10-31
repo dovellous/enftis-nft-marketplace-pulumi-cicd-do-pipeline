@@ -30,11 +30,11 @@ export interface TimelockControllerInterface extends Interface {
       | "DEFAULT_ADMIN_ROLE"
       | "EXECUTOR_ROLE"
       | "PROPOSER_ROLE"
-      | "TIMELOCK_ADMIN_ROLE"
       | "cancel"
       | "execute"
       | "executeBatch"
       | "getMinDelay"
+      | "getOperationState"
       | "getRoleAdmin"
       | "getTimestamp"
       | "grantRole"
@@ -84,10 +84,6 @@ export interface TimelockControllerInterface extends Interface {
     functionFragment: "PROPOSER_ROLE",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "TIMELOCK_ADMIN_ROLE",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "cancel", values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: "execute",
@@ -100,6 +96,10 @@ export interface TimelockControllerInterface extends Interface {
   encodeFunctionData(
     functionFragment: "getMinDelay",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getOperationState",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
@@ -214,10 +214,6 @@ export interface TimelockControllerInterface extends Interface {
     functionFragment: "PROPOSER_ROLE",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "TIMELOCK_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "cancel", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
   decodeFunctionResult(
@@ -226,6 +222,10 @@ export interface TimelockControllerInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getMinDelay",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getOperationState",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -506,8 +506,6 @@ export interface TimelockController extends BaseContract {
 
   PROPOSER_ROLE: TypedContractMethod<[], [string], "view">;
 
-  TIMELOCK_ADMIN_ROLE: TypedContractMethod<[], [string], "view">;
-
   cancel: TypedContractMethod<[id: BytesLike], [void], "nonpayable">;
 
   execute: TypedContractMethod<
@@ -535,6 +533,8 @@ export interface TimelockController extends BaseContract {
   >;
 
   getMinDelay: TypedContractMethod<[], [bigint], "view">;
+
+  getOperationState: TypedContractMethod<[id: BytesLike], [bigint], "view">;
 
   getRoleAdmin: TypedContractMethod<[role: BytesLike], [string], "view">;
 
@@ -615,7 +615,7 @@ export interface TimelockController extends BaseContract {
   >;
 
   renounceRole: TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
+    [role: BytesLike, callerConfirmation: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -681,9 +681,6 @@ export interface TimelockController extends BaseContract {
     nameOrSignature: "PROPOSER_ROLE"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "TIMELOCK_ADMIN_ROLE"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
     nameOrSignature: "cancel"
   ): TypedContractMethod<[id: BytesLike], [void], "nonpayable">;
   getFunction(
@@ -715,6 +712,9 @@ export interface TimelockController extends BaseContract {
   getFunction(
     nameOrSignature: "getMinDelay"
   ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getOperationState"
+  ): TypedContractMethod<[id: BytesLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "getRoleAdmin"
   ): TypedContractMethod<[role: BytesLike], [string], "view">;
@@ -809,7 +809,7 @@ export interface TimelockController extends BaseContract {
   getFunction(
     nameOrSignature: "renounceRole"
   ): TypedContractMethod<
-    [role: BytesLike, account: AddressLike],
+    [role: BytesLike, callerConfirmation: AddressLike],
     [void],
     "nonpayable"
   >;

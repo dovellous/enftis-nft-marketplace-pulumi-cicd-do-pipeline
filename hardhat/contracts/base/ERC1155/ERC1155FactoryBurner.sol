@@ -10,8 +10,6 @@ pragma experimental ABIEncoderV2;
 import "./ERC1155FactoryWorker.sol";
 
 abstract contract ERC1155FactoryBurner is ERC1155FactoryWorker {
-    
-    using Counters for Counters.Counter;
 
     /**
      * @dev Burns `amount` tokens of token type `id` from `account`. See {ERC1155-_burn}.

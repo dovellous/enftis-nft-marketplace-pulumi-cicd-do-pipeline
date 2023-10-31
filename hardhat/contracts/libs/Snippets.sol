@@ -25,7 +25,7 @@ import "@openzeppelin/contracts/interfaces/IERC20.sol";
 import "@openzeppelin/contracts/interfaces/IERC721.sol";
 import "@openzeppelin/contracts/interfaces/IERC1155.sol";
 import "@openzeppelin/contracts/interfaces/IERC2981.sol";
-
+import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 import "hardhat/console.sol";
@@ -35,6 +35,8 @@ import "./Errors.sol";
 import "./Enums.sol";
 
 library Snippets {
+
+    using Math for uint256;
 
     using Strings for *;
 
@@ -286,7 +288,7 @@ library Snippets {
         bytes memory _data,
         Structs.NFTItem memory _nftItem,
         string memory _tokenURIString
-    ) public view returns (bool) {
+    ) public pure returns (bool) {
 
         bool _match;
 
@@ -480,7 +482,7 @@ library Snippets {
         bytes32 _itemKey,
         bytes memory _data,
         Structs.NFTMarketItem memory _nftItem
-    ) public view returns (bool) {
+    ) public pure returns (bool) {
 
         bool _match;
 
@@ -689,6 +691,294 @@ library Snippets {
 
     function generateRandomHash(uint256 seed) public view returns (bytes32) {
         return keccak256(abi.encodePacked(generateRandomNumber(seed)));
+    }
+
+    /**
+     * @dev Returns the addition of two unsigned integers, with an overflow flag.
+     */
+    function mathAdd(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.tryAdd(a, b);
+        if(success1){
+            answer = add1;
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.
+     */
+    function mathSub(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.trySub(a, b);
+        if(success1){
+            answer = add1;
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
+     */
+    function mathMul(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.tryMul(a, b);
+        if(success1){
+            answer = add1;
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the division of two unsigned integers, with an overflow flag.
+     */
+    function mathDiv(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.tryDiv(a, b);
+        if(success1){
+            answer = add1;
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the addition of three unsigned integers, with an overflow flag.
+     */
+    function mathAddAdd(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.tryAdd(a, b);
+        if(success1){
+            (bool success2, uint256 add2) = Math.tryAdd(add1, c);
+            if(success2){
+                answer = add2;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the addition and subtraction of three unsigned integers, with an overflow flag.
+     */
+    function mathAddSub(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.tryAdd(a, b);
+        if(success1){
+            (bool success2, uint256 sub) = Math.trySub(add1, c);
+            if(success2){
+                answer = sub;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the addition and multiplication of three unsigned integers, with an overflow flag.
+     */
+    function mathAddMul(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.tryAdd(a, b);
+        if(success1){
+            (bool success2, uint256 mul) = Math.tryMul(add1, c);
+            if(success2){
+                answer = mul;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the addition and division of three unsigned integers, with an overflow flag.
+     */
+    function mathAddDiv(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 add1) = Math.tryAdd(a, b);
+        if(success1){
+            (bool success2, uint256 div) = Math.tryDiv(add1, c);
+            if(success2){
+                answer = div;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the subtraction and addition of three unsigned integers, with an overflow flag.
+     */
+    function mathSubAdd(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 sub) = Math.trySub(a, b);
+        if(success1){
+            (bool success2, uint256 add) = Math.tryAdd(sub, c);
+            if(success2){
+                answer = add;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the subtraction of three unsigned integers, with an overflow flag.
+     */
+    function mathSubSub(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 sub1) = Math.trySub(a, b);
+        if(success1){
+            (bool success2, uint256 sub2) = Math.trySub(sub1, c);
+            if(success2){
+                answer = sub2;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the subtraction and multiplication of two unsigned integers, with an overflow flag.
+     */
+    function mathSubMul(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 sub) = Math.trySub(a, b);
+        if(success1){
+            (bool success2, uint256 mul) = Math.tryMul(sub, c);
+            if(success2){
+                answer = mul;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the subtraction and division of three unsigned integers, with an overflow flag.
+     */
+    function mathSubDiv(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 sub) = Math.trySub(a, b);
+        if(success1){
+            (bool success2, uint256 div) = Math.tryDiv(sub, c);
+            if(success2){
+                answer = div;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the multiplication and addition of three unsigned integers, with an overflow flag.
+     */
+    function mathMulAdd(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 mul) = Math.tryMul(a, b);
+        if(success1){
+            (bool success2, uint256 add) = Math.tryAdd(mul, c);
+            if(success2){
+                answer = add;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the multiplication and subtraction of three unsigned integers, with an overflow flag.
+     */
+    function mathMulSub(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 mul) = Math.tryMul(a, b);
+        if(success1){
+            (bool success2, uint256 sub) = Math.trySub(mul, c);
+            if(success2){
+                answer = sub;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the multiplication of three unsigned integers, with an overflow flag.
+     */
+    function mathMulMul(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 mul1) = Math.tryMul(a, b);
+        if(success1){
+            (bool success2, uint256 mul2) = Math.tryMul(mul1, c);
+            if(success2){
+                answer = mul2;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the multiplication and division of three unsigned integers, with an overflow flag.
+     */
+    function mathMulDiv(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 mul) = Math.tryMul(a, b);
+        if(success1){
+            (bool success2, uint256 div) = Math.tryDiv(mul, c);
+            if(success2){
+                answer = div;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the division and addition of three unsigned integers, with an overflow flag.
+     */
+    function mathDivAdd(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 div) = Math.tryDiv(a, b);
+        if(success1){
+            (bool success2, uint256 add) = Math.tryAdd(div, c);
+            if(success2){
+                answer = add;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the division and subtraction of three unsigned integers, with an overflow flag.
+     */
+    function mathDivSub(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 div) = Math.tryDiv(a, b);
+        if(success1){
+            (bool success2, uint256 sub) = Math.trySub(div, c);
+            if(success2){
+                answer = sub;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the division and multiplication of three unsigned integers, with an overflow flag.
+     */
+    function mathDivMul(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 div) = Math.tryDiv(a, b);
+        if(success1){
+            (bool success2, uint256 mul) = Math.tryMul(div, c);
+            if(success2){
+                answer = mul;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * @dev Returns the division of three unsigned integers, with an overflow flag.
+     */
+    function mathDivDiv(uint256 a, uint256 b, uint256 c) internal pure returns (uint256) {
+        uint256 answer;
+        (bool success1, uint256 div1) = Math.tryDiv(a, b);
+        if(success1){
+            (bool success2, uint256 div2) = Math.tryDiv(div1, c);
+            if(success2){
+                answer = div2;
+            }
+        }
+        return answer;
     }
 
 }

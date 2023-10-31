@@ -7,9 +7,13 @@ import { BigNumber } from "ethers";
 import helpers from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { ModifierFlags } from "typescript";
 
+const fs = require('fs');
+
 const Snippets = require("../scripts/libs/Snippets");
 
 const provider:any = ethers.getDefaultProvider();
+
+const CHAIN_IDS:Array<any> = process.env.CHAIN_IDS !== null ? String(process.env.CHAIN_IDS).split(",") : [];
 
 describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
 
@@ -71,9 +75,18 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
             CONTRACT_PARAMS.CONTRACT_SYMBOL, 
             CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY,
             CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY,
+            deployerWallet.address
         );
 
         await ERCGovernanceTokenSmartContract.waitForDeployment();
+
+        const ERCGovernanceTokenSmartContractAddress:string = await ERCGovernanceTokenSmartContract.getAddress();
+
+        const targetDir:string = './test/txt/';
+
+        fs.mkdirSync(targetDir, { recursive: true });
+
+        fs.writeFileSync(`${targetDir}JWLXTKN.txt`, ERCGovernanceTokenSmartContractAddress);
 
         ERCGovernanceTokenSmartContract.on(
             "*",
@@ -94,24 +107,11 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
         const governanaceTokenSupply:number = Math.floor(parseInt(CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY));
         const amountForEachVoter:number = Math.floor(governanaceTokenSupply/6);
 
-        //console.log(`GVN Token Name : `, CONTRACT_PARAMS.CONTRACT_NAME);
-        //console.log(`GVN Token Symb : `, CONTRACT_PARAMS.CONTRACT_SYMBOL);
-        //console.log(`GVN Ini Supply : `, CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY);
-        //console.log(`GVN Max Supply : `, CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY);
-
-        /* console.log(
-            `Amount for each Voter : `, 
-            "\nHolder Amount:", amountForEachVoter, Snippets.ethersToWei(amountForEachVoter), 
-            "\nInitial Supply:", governanaceTokenSupply, 
-            "\nTotal Holdings:", amountForEachVoter*5, Snippets.ethersToWei(amountForEachVoter*5), 
-            "\nPercentage:", Math.floor(amountForEachVoter*5/governanaceTokenSupply*100),"%"
-        ); */
-
-        await ERCGovernanceTokenSmartContract.transfer(voter1Wallet.address, (Snippets.ethersToWei(amountForEachVoter*2)))
-        await ERCGovernanceTokenSmartContract.transfer(voter2Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
-        await ERCGovernanceTokenSmartContract.transfer(voter3Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
-        await ERCGovernanceTokenSmartContract.transfer(voter4Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
-        await ERCGovernanceTokenSmartContract.transfer(voter5Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
+        await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter1Wallet.address, (Snippets.ethersToWei(amountForEachVoter*2)))
+        await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter2Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
+        await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter3Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
+        await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter4Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
+        await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter5Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
         
         //console.log(`Balance of Voter #1: `, await ERCGovernanceTokenSmartContract.balanceOf(voter1Wallet.address));
         //console.log(`Balance of Voter #2: `, await ERCGovernanceTokenSmartContract.balanceOf(voter2Wallet.address));
@@ -231,7 +231,7 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
 
         const proposerRole:any = await ERCTimelockSmartContract.PROPOSER_ROLE()
         const executorRole:any = await ERCTimelockSmartContract.EXECUTOR_ROLE()
-        const adminRole:any = await ERCTimelockSmartContract.TIMELOCK_ADMIN_ROLE()
+        const adminRole:any = await ERCTimelockSmartContract.getTimeLockAdminRole()
 
         //console.log(`Contract OLD OWNER : ERCTimelockSmartContract :`, await ERCTimelockSmartContract.owner());
 
@@ -373,54 +373,31 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
             });
 
             it("Executes a proposal", async () => {
-
                 await createTestProposal();
-
-                //console.log("Proposal created, awaiting execution...");
-
-                const executorInitialBalance: any = await ethers.provider.getBalance(executorWallet.address);
-
-                const tx:any = await ERCTreasurySmartContract.connect(executorWallet).executeProposal(
-                    1
-                );
-
+            
+                const executorInitialBalance = await ethers.provider.getBalance(executorWallet.address);
+            
+                const tx = await ERCTreasurySmartContract.connect(executorWallet).executeProposal(1);
                 await tx.wait(1);
-
-                const proposalPayload: any = await ERCTreasurySmartContract.getProposalDetails(1);
-
-                //console.log("Proposal payload after execution :", proposalPayload);
-
+            
+                const proposalPayload = await ERCTreasurySmartContract.getProposalDetails(1);
+            
                 expect(proposalPayload.proposerWalletAddress).to.be.equal(proposerWallet.address);
                 expect(proposalPayload.executorWalletAddress).to.be.equal(executorWallet.address);
                 expect(proposalPayload.executedAt).to.be.greaterThan(0);
                 expect(proposalPayload.amountDisbursed).to.be.true;
+            
+                const treasuryBalance:bigint = await ethers.provider.getBalance(await ERCTreasurySmartContract.getAddress());
 
-                expect(
-                    parseInt(
-                        Snippets.weiToEthers(
-                            `${await ethers.provider.getBalance(await ERCTreasurySmartContract.getAddress())}`
-                        )
-                    ))
-                    .to.be.equal(0);
+                expect(Snippets.weiToEthers(treasuryBalance)).to.be.equal('0.0');
+
+                let executorBalance: bigint | string = await ethers.provider.getBalance(executorWallet.address);
                 
-                expect(
-                    parseFloat(
-                        Snippets.weiToEthers(
-                            `${await ethers.provider.getBalance(executorWallet.address)}`
-                        )
-                    ).toFixed(5))
-                    .to.be.equal(
-                        (
-                            parseFloat(
-                                Snippets.weiToEthers(proposalPayload.totalFunds)
-                            )
-                            +
-                            parseFloat(
-                                Snippets.weiToEthers(executorInitialBalance)
-                            )
-                        ).toFixed(5)
-                    );
+                executorBalance = parseFloat(Snippets.weiToEthers(executorBalance)).toFixed(6);
 
+                const expectedExecutorBalance = parseFloat(Snippets.weiToEthers(executorInitialBalance+proposalPayload.totalFunds)).toFixed(6);
+                
+                expect(executorBalance).to.be.equal(expectedExecutorBalance);
             });
 
         });

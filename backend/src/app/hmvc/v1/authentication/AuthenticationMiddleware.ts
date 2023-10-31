@@ -86,7 +86,7 @@ const checkToken = (req: any, res: any, next: any) => {
                 
                 if( decoded.exp*1000 < new Date().getTime() ){
                     
-                    return handleError(res, errors.FORBIDDEN_ERROR, 'Token has expired', {created: new Date(decoded.iat*1000)});
+                    return handleError(res, errors.FORBIDDEN_ERROR, 'Token has expired', { created: new Date(decoded.iat * 1000), expired: new Date(decoded.exp * 1000) });
                     
                 }
                 
@@ -133,8 +133,6 @@ const checkParameters = (req: any, res: any, next: any) => {
     } else {
 
         return handleError(res, errors.BAD_REQUEST, 'Missing input parameters', {
-            emailAddress,
-            username,
             password,
             userId
         });

@@ -4,6 +4,42 @@
   "sourceName": "contracts/base/ERCMKTP/ERCMKTPFactoryWorker.sol",
   "abi": [
     {
+      "inputs": [],
+      "name": "AccessControlBadConfirmation",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "neededRole",
+          "type": "bytes32"
+        }
+      ],
+      "name": "AccessControlUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "EnforcedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ExpectedPause",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ReentrancyGuardReentrantCall",
+      "type": "error"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -262,7 +298,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "_value",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -275,7 +311,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "_value",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -288,7 +324,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "_value",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -301,7 +337,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "_value",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -775,7 +811,7 @@
         },
         {
           "internalType": "address",
-          "name": "account",
+          "name": "callerConfirmation",
           "type": "address"
         }
       ],

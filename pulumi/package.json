@@ -29,13 +29,13 @@
     },
     "main": "index.ts",
     "devDependencies": {
-        "@types/node": "^18"
+        "@types/node": "^20"
     },
     "dependencies": {
-        "@pulumi/digitalocean": "^4.19.1",
-        "@pulumi/pulumi": "^3.60.1",
+        "@pulumi/digitalocean": "^4.22.0",
+        "@pulumi/pulumi": "^3.88.1",
         "cross-var": "^1.1.0",
-        "dotenv-cli": "^7.1.0"
+        "dotenv-cli": "^7.3.0"
     },
     "scripts": {
         "config-1": "dotenv cross-var pulumi config set service_instance_count %PULUMI_INSTANCE_COUNT%",

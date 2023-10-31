@@ -30,10 +30,8 @@ export interface ERC20FlashMintInterface extends Interface {
       | "approve"
       | "balanceOf"
       | "decimals"
-      | "decreaseAllowance"
       | "flashFee"
       | "flashLoan"
-      | "increaseAllowance"
       | "maxFlashLoan"
       | "name"
       | "symbol"
@@ -58,20 +56,12 @@ export interface ERC20FlashMintInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "decreaseAllowance",
-    values: [AddressLike, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "flashFee",
     values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "flashLoan",
     values: [AddressLike, AddressLike, BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "increaseAllowance",
-    values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "maxFlashLoan",
@@ -96,16 +86,8 @@ export interface ERC20FlashMintInterface extends Interface {
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "decreaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "flashFee", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "flashLoan", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "maxFlashLoan",
     data: BytesLike
@@ -209,7 +191,7 @@ export interface ERC20FlashMint extends BaseContract {
   >;
 
   approve: TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [spender: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -218,14 +200,8 @@ export interface ERC20FlashMint extends BaseContract {
 
   decimals: TypedContractMethod<[], [bigint], "view">;
 
-  decreaseAllowance: TypedContractMethod<
-    [spender: AddressLike, subtractedValue: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
   flashFee: TypedContractMethod<
-    [token: AddressLike, amount: BigNumberish],
+    [token: AddressLike, value: BigNumberish],
     [bigint],
     "view"
   >;
@@ -234,15 +210,9 @@ export interface ERC20FlashMint extends BaseContract {
     [
       receiver: AddressLike,
       token: AddressLike,
-      amount: BigNumberish,
+      value: BigNumberish,
       data: BytesLike
     ],
-    [boolean],
-    "nonpayable"
-  >;
-
-  increaseAllowance: TypedContractMethod<
-    [spender: AddressLike, addedValue: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -256,13 +226,13 @@ export interface ERC20FlashMint extends BaseContract {
   totalSupply: TypedContractMethod<[], [bigint], "view">;
 
   transfer: TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
 
   transferFrom: TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [from: AddressLike, to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -281,7 +251,7 @@ export interface ERC20FlashMint extends BaseContract {
   getFunction(
     nameOrSignature: "approve"
   ): TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [spender: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -292,16 +262,9 @@ export interface ERC20FlashMint extends BaseContract {
     nameOrSignature: "decimals"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "decreaseAllowance"
-  ): TypedContractMethod<
-    [spender: AddressLike, subtractedValue: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "flashFee"
   ): TypedContractMethod<
-    [token: AddressLike, amount: BigNumberish],
+    [token: AddressLike, value: BigNumberish],
     [bigint],
     "view"
   >;
@@ -311,16 +274,9 @@ export interface ERC20FlashMint extends BaseContract {
     [
       receiver: AddressLike,
       token: AddressLike,
-      amount: BigNumberish,
+      value: BigNumberish,
       data: BytesLike
     ],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "increaseAllowance"
-  ): TypedContractMethod<
-    [spender: AddressLike, addedValue: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -339,14 +295,14 @@ export interface ERC20FlashMint extends BaseContract {
   getFunction(
     nameOrSignature: "transfer"
   ): TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
   getFunction(
     nameOrSignature: "transferFrom"
   ): TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [from: AddressLike, to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;

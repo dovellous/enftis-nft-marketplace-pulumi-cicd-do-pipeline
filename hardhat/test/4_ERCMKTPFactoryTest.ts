@@ -12,6 +12,8 @@ const Snippets = require("../scripts/libs/Snippets");
 
 const MAXIMUM_SUPPLY: number | any = parseInt(`${process.env.MAXIMUM_SUPPLY_1155}`);
 
+const CHAIN_IDS:Array<any> = process.env.CHAIN_IDS !== null ? String(process.env.CHAIN_IDS).split(",") : [];
+
 const provider: any = ethers.getDefaultProvider();
 
 const targetDir:string = './test/txt/';
@@ -139,6 +141,32 @@ describe("ERCMKTPFactory", async function () {
         );
 
         await smartContract.waitForDeployment();
+
+        CHAIN_IDS.map(async (chain: any) => {
+
+            const path: any = `../frontend/src/_services/providers/data/context/libs/artifacts/${chain}`;
+
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+
+            // Addresses
+
+            const smartContractAddress: string = await smartContract.getAddress();
+
+            fs.writeFileSync(
+                `${path}/ERCMKTPFactoryAddress.json`,
+                `{ "address": "${smartContractAddress}" }`
+            );
+
+            // Contracts
+
+            fs.copyFile('./artifacts/contracts/ERCMKTPFactory.sol/ERCMKTPFactory.json', `${path}/ERCMKTPFactoryContract.json`, (err: any) => {
+                if (err) throw err;
+                console.log('Artifact file [ ERCMKTPFactory + Address ] copied successfully!');
+            });
+
+        })
 
         const _args:any = {
             contractABI: CONTRACT_PARAMS.ABI_VALUES

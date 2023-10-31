@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/ERC1155Factory.sol": {
-      "lastModificationDate": 1693900410098,
+      "lastModificationDate": 1698057123569,
       "contentHash": "64eb81be8622a49545ec324fe1b970eb",
       "sourceName": "contracts/ERC1155Factory.sol",
       "solcConfig": {
@@ -10,11 +10,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -42,19 +43,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC1155/ERC1155FactoryGetSet.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "1ae04ae0dcd87d27b45ff70ab804b00c",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "8f6d1b51eb52f0d52c6e82a5cb97e2d7",
       "sourceName": "contracts/base/ERC1155/ERC1155FactoryGetSet.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -85,19 +87,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC1155/ERC1155FactoryBase.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "bfedf5d0462c9aa6071c53332f6e6483",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "a7c9bf28308bd93cd5d1fde4039a4bed",
       "sourceName": "contracts/base/ERC1155/ERC1155FactoryBase.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -123,10 +126,9 @@
         "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
         "@openzeppelin/contracts/token/common/ERC2981.sol",
         "@openzeppelin/contracts/access/AccessControl.sol",
-        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
-        "@openzeppelin/contracts/security/Pausable.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+        "@openzeppelin/contracts/utils/Pausable.sol",
         "@openzeppelin/contracts/utils/Multicall.sol",
-        "@openzeppelin/contracts/utils/Counters.sol",
         "@openzeppelin/contracts/utils/Strings.sol",
         "../common/ERCFallback.sol",
         "../common/ERCModifiers.sol",
@@ -140,19 +142,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC1155/ERC1155FactoryWorker.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "081a30584e65be4e1465307d2fdf4975",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "3549f5d852556420b94aa0cc74378db4",
       "sourceName": "contracts/base/ERC1155/ERC1155FactoryWorker.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -180,19 +183,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC1155/ERC1155FactoryMinter.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "ad200d2c07c10863e31b30d7178f07d2",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "a1066218556309a5011024a727e1b4e1",
       "sourceName": "contracts/base/ERC1155/ERC1155FactoryMinter.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -220,19 +224,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC1155/ERC1155FactoryBurner.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "ba88f2c3688b089850043d1a869ee815",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "a2f91a995f8192801252ecd22d770e34",
       "sourceName": "contracts/base/ERC1155/ERC1155FactoryBurner.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -260,19 +265,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/common/ERCFallback.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "93c3e1e861c5ea2bd600b6ec573bcd69",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "d248253122bafda9c7de2976754e3ab1",
       "sourceName": "contracts/base/common/ERCFallback.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -291,7 +297,7 @@
       },
       "imports": [
         "@openzeppelin/contracts/access/AccessControl.sol",
-        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
         "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
         "@openzeppelin/contracts/token/ERC721/IERC721.sol",
@@ -304,48 +310,8 @@
         "ERCFallback"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/common/IERCLogging.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "96f7bd83ee931790467d2a4be51ed266",
-      "sourceName": "contracts/base/common/IERCLogging.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../libs/Structs.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.19"
-      ],
-      "artifacts": [
-        "IERCLogging"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/common/ERCModifiers.sol": {
-      "lastModificationDate": 1693900410099,
+      "lastModificationDate": 1698057123569,
       "contentHash": "7620b2006073cac927d925575450d313",
       "sourceName": "contracts/base/common/ERCModifiers.sol",
       "solcConfig": {
@@ -353,11 +319,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -385,20 +352,144 @@
         "ERCModifiers"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1693900569921,
-      "contentHash": "25c8108f36fdd472bc78d4c4af240c11",
-      "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/common/IERCLogging.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "96f7bd83ee931790467d2a4be51ed266",
+      "sourceName": "contracts/base/common/IERCLogging.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libs/Structs.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "IERCLogging"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/AccessControl.sol": {
+      "lastModificationDate": 1698057172791,
+      "contentHash": "4c80b7fdf559a9a348e832a57d072a0b",
+      "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IAccessControl.sol",
+        "../utils/Context.sol",
+        "../utils/introspection/ERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AccessControl"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+      "lastModificationDate": 1698057172792,
+      "contentHash": "a92331adac11b453a4de0323fc948119",
+      "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ReentrancyGuard"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Pausable.sol": {
+      "lastModificationDate": 1698057172794,
+      "contentHash": "24e52f6ef3868e6fca664a423140bee9",
+      "sourceName": "@openzeppelin/contracts/utils/Pausable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -419,147 +510,27 @@
         "../utils/Context.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "Pausable"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
-      "lastModificationDate": 1693900569865,
-      "contentHash": "1535f8c0c68463f8c1b5239f7584e71f",
-      "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ReentrancyGuard"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Multicall.sol": {
-      "lastModificationDate": 1693900569930,
-      "contentHash": "5851a44847823be35212ccba46a7ec9e",
-      "sourceName": "@openzeppelin/contracts/utils/Multicall.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Address.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Multicall"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/AccessControl.sol": {
-      "lastModificationDate": 1693900569841,
-      "contentHash": "a2b1ec38a8dad325a596f926890772b8",
-      "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IAccessControl.sol",
-        "../utils/Context.sol",
-        "../utils/Strings.sol",
-        "../utils/introspection/ERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "AccessControl"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
-      "lastModificationDate": 1693900569931,
-      "contentHash": "48686fc32a22a3754b8e63321857dd2a",
+      "lastModificationDate": 1698057172814,
+      "contentHash": "ba57ff4ddf1d9cae9d2009792795b7f6",
       "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -581,64 +552,27 @@
         "./math/SignedMath.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "Strings"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Counters.sol": {
-      "lastModificationDate": 1693900569930,
-      "contentHash": "74654e3ae5d7f39555055dfe244dab7a",
-      "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Multicall.sol": {
+      "lastModificationDate": 1698057172804,
+      "contentHash": "1ee8252d6cce07d5aadd06547a84185e",
+      "sourceName": "@openzeppelin/contracts/utils/Multicall.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Counters"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
-      "lastModificationDate": 1693900577712,
-      "contentHash": "9f8822b72fe2702979e40160cb6d9636",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -656,29 +590,77 @@
         }
       },
       "imports": [
-        "../../utils/introspection/IERC165.sol"
+        "./Address.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "IERC1155Receiver"
+        "Multicall"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol": {
+      "lastModificationDate": 1698057172762,
+      "contentHash": "917e6b867a0e67cd81ca4eb34336ca35",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC1155.sol",
+        "./IERC1155Receiver.sol",
+        "./extensions/IERC1155MetadataURI.sol",
+        "../../utils/Context.sol",
+        "../../utils/introspection/ERC165.sol",
+        "../../utils/Arrays.sol",
+        "../../interfaces/draft-IERC6093.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC1155"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/common/ERC2981.sol": {
-      "lastModificationDate": 1693900577712,
-      "contentHash": "8dbffefc9f90bf604f3b8575e708dc03",
+      "lastModificationDate": 1698057172745,
+      "contentHash": "3c04b86a06ae097ae7001eb03ab78e2d",
       "sourceName": "@openzeppelin/contracts/token/common/ERC2981.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -700,26 +682,27 @@
         "../../utils/introspection/ERC165.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC2981"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol": {
-      "lastModificationDate": 1693900577708,
-      "contentHash": "65c9d9c87e2b4df70e723819774a0482",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
+      "lastModificationDate": 1698057172763,
+      "contentHash": "d14616defa6d417fafa47e416e3cec73",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -737,115 +720,30 @@
         }
       },
       "imports": [
-        "./IERC1155.sol",
-        "./IERC1155Receiver.sol",
-        "./extensions/IERC1155MetadataURI.sol",
-        "../../utils/Address.sol",
-        "../../utils/Context.sol",
-        "../../utils/introspection/ERC165.sol"
+        "../../utils/introspection/IERC165.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "ERC1155"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol": {
-      "lastModificationDate": 1693900580193,
-      "contentHash": "6a99607f60a77d468b7ed41303ea4a6c",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC1155.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC1155Supply"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol": {
-      "lastModificationDate": 1693900580187,
-      "contentHash": "1e97b05bcbabe82a4a3c2b6241fdaf80",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC1155.sol",
-        "../../../security/Pausable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC1155Pausable"
+        "IERC1155Receiver"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol": {
-      "lastModificationDate": 1693900580193,
-      "contentHash": "6046dbdf9591874037a20159d431e11f",
+      "lastModificationDate": 1698057172766,
+      "contentHash": "a1ea90d94ca61dad25654a8e6bb55c9c",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -867,26 +765,27 @@
         "../ERC1155.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC1155URIStorage"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol": {
-      "lastModificationDate": 1693900580193,
-      "contentHash": "319ae047a2324eed34ea1d673e586059",
+      "lastModificationDate": 1698057172769,
+      "contentHash": "b0e85a62dd2562811ca4c7aa2d36f95c",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -907,26 +806,110 @@
         "../ERC1155.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC1155Burnable"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol": {
+      "lastModificationDate": 1698057172767,
+      "contentHash": "65a0d1937089d4a75c0b07814fc18d08",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC1155.sol",
+        "../../../utils/Pausable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC1155Pausable"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol": {
+      "lastModificationDate": 1698057172767,
+      "contentHash": "cd3939898b5ce8fba2c0e737c9408ea0",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC1155.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC1155Supply"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/libs/Snippets.sol": {
-      "lastModificationDate": 1693900410098,
-      "contentHash": "6469a94a465e378f16ede26c739fdfee",
+      "lastModificationDate": 1698314084890,
+      "contentHash": "d82fd824cf11d8a1c6d9d8600efcb570",
       "sourceName": "contracts/libs/Snippets.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -948,6 +931,7 @@
         "@openzeppelin/contracts/interfaces/IERC721.sol",
         "@openzeppelin/contracts/interfaces/IERC1155.sol",
         "@openzeppelin/contracts/interfaces/IERC2981.sol",
+        "@openzeppelin/contracts/utils/math/Math.sol",
         "@openzeppelin/contracts/utils/Strings.sol",
         "hardhat/console.sol",
         "./Structs.sol",
@@ -961,100 +945,21 @@
         "Snippets"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
-      "lastModificationDate": 1693900577708,
-      "contentHash": "93aa9af4f5d2d2095a71ccde917038bb",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC1155"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "48de4c9a3a4ae5ef66a2aa620843413f",
-      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC721"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1693900577711,
-      "contentHash": "df36f7051335cd1e748b1b6463b7fdd3",
+      "lastModificationDate": 1698057172734,
+      "contentHash": "5517c8678c18eb1a8ba58810e7ca39ca",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1073,14 +978,96 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC20"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
+      "lastModificationDate": 1698057172764,
+      "contentHash": "b091cae7bc6a906ec5956ad0dcd55ae0",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1155"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+      "lastModificationDate": 1698057172748,
+      "contentHash": "5df8fdb527e563085847cad29e3c5f2e",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/libs/Structs.sol": {
-      "lastModificationDate": 1693900410098,
+      "lastModificationDate": 1698057123568,
       "contentHash": "3538862bc28315144f6239438421ae69",
       "sourceName": "contracts/libs/Structs.sol",
       "solcConfig": {
@@ -1088,11 +1075,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1120,7 +1108,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/libs/Errors.sol": {
-      "lastModificationDate": 1693900410098,
+      "lastModificationDate": 1698057123568,
       "contentHash": "5a5499d66d08d2fc785e823e00976fd2",
       "sourceName": "contracts/libs/Errors.sol",
       "solcConfig": {
@@ -1128,11 +1116,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1161,7 +1150,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/libs/Enums.sol": {
-      "lastModificationDate": 1693900410098,
+      "lastModificationDate": 1698057123568,
       "contentHash": "28bbfe45628ad9fc0c3ab0c1696a9009",
       "sourceName": "contracts/libs/Enums.sol",
       "solcConfig": {
@@ -1169,11 +1158,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1199,7 +1189,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1693900566786,
+      "lastModificationDate": 1698057172483,
       "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
@@ -1207,11 +1197,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1237,19 +1228,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC20.sol": {
-      "lastModificationDate": 1693900569844,
-      "contentHash": "d151fbfe7939989b9acf22797b32058b",
+      "lastModificationDate": 1698057172958,
+      "contentHash": "79af12d64eacc7d77b9ee2ac4b4d51ee",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC20.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1270,24 +1262,25 @@
         "../token/ERC20/IERC20.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": []
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC721.sol": {
-      "lastModificationDate": 1693900569858,
-      "contentHash": "e6da7798a8c22c5043cc42d64a2a8f80",
+      "lastModificationDate": 1698057172971,
+      "contentHash": "d8d23fc2f55ed934d1a1b91c9afd8526",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC721.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1308,64 +1301,25 @@
         "../token/ERC721/IERC721.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": []
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC2981.sol": {
-      "lastModificationDate": 1693900569844,
-      "contentHash": "23ed9f4f05068d7fc726138726c34bee",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC2981.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC2981"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC1155.sol": {
-      "lastModificationDate": 1693900569843,
-      "contentHash": "f646f2b291e7c83dcc7f1c6c7d1ece30",
+      "lastModificationDate": 1698057172967,
+      "contentHash": "9073ad0d8f70749583dff4c93336fb1a",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC1155.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1386,24 +1340,66 @@
         "../token/ERC1155/IERC1155.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": []
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC2981.sol": {
+      "lastModificationDate": 1698057172963,
+      "contentHash": "a121ffbe9ad90f8eb00e40e96adc5a42",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC2981.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC2981"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
+      "lastModificationDate": 1698057172803,
+      "contentHash": "de0163561b417b800d01749cbbe2147e",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1422,26 +1418,27 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC165"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
-      "lastModificationDate": 1693900577822,
-      "contentHash": "fe63409d8a06818b926cf89e0ea88b1b",
+      "lastModificationDate": 1698057172806,
+      "contentHash": "718fa8ba0ff269c92e364c1429d9de57",
       "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1460,26 +1457,27 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "Math"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/math/SignedMath.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "9488ebd4daacfee8ad04811600d7d061",
+      "lastModificationDate": 1698057172805,
+      "contentHash": "b6c6bdc7aaca4fe5b680760a72e09d3e",
       "sourceName": "@openzeppelin/contracts/utils/math/SignedMath.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1498,26 +1496,27 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "SignedMath"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1693900569939,
-      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "lastModificationDate": 1698057172813,
+      "contentHash": "01c847e2af51f468cb66d9ed83bc3cec",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1536,26 +1535,27 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "Context"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/IAccessControl.sol": {
-      "lastModificationDate": 1693900569841,
-      "contentHash": "57c84298234411cea19c7c284d86be8b",
+      "lastModificationDate": 1698057172789,
+      "contentHash": "e3a14b0714caaaa82d58fa0bc3756079",
       "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1574,26 +1574,27 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IAccessControl"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
+      "lastModificationDate": 1698057172802,
+      "contentHash": "6a55c353946e471d9792965d06208295",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1614,26 +1615,27 @@
         "./IERC165.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC165"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1693900569929,
-      "contentHash": "211ffd288c1588ba8c10eae668ca3c66",
+      "lastModificationDate": 1698057172801,
+      "contentHash": "79c699f80eb8a9b168cb34e37816f894",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1652,26 +1654,110 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.1"
+        "^0.8.20"
       ],
       "artifacts": [
         "Address"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
+      "lastModificationDate": 1698057172968,
+      "contentHash": "4aefc698f77ecbace7f401257dfe182d",
+      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1155Errors",
+        "IERC20Errors",
+        "IERC721Errors"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Arrays.sol": {
+      "lastModificationDate": 1698057172800,
+      "contentHash": "fabe6fe8d403b4f72dec1dc585ab1c7a",
+      "sourceName": "@openzeppelin/contracts/utils/Arrays.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./StorageSlot.sol",
+        "./math/Math.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Arrays"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1693900580195,
-      "contentHash": "9148c2e10c4efb12c71a7f080da5559b",
+      "lastModificationDate": 1698057172768,
+      "contentHash": "96903941ac1966aa14e08bd4ab3c264e",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1692,14 +1778,53 @@
         "../IERC1155.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC1155MetadataURI"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
+      "lastModificationDate": 1698057172804,
+      "contentHash": "08cbccfefa284405c12b4bfa8c8c9c2b",
+      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "StorageSlot"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC1155/IERC1155Factory.sol": {
-      "lastModificationDate": 1693900410100,
+      "lastModificationDate": 1698057123569,
       "contentHash": "08a89fffdeba3d750164f0d29b6b20da",
       "sourceName": "contracts/base/ERC1155/IERC1155Factory.sol",
       "solcConfig": {
@@ -1707,11 +1832,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1742,7 +1868,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/common/ERCMKTPModifiers.sol": {
-      "lastModificationDate": 1693900410099,
+      "lastModificationDate": 1698057123569,
       "contentHash": "281493a830cd293b9840ad4d5afdb11a",
       "sourceName": "contracts/base/common/ERCMKTPModifiers.sol",
       "solcConfig": {
@@ -1750,11 +1876,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1789,7 +1916,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC721/IERC721Factory.sol": {
-      "lastModificationDate": 1693900410099,
+      "lastModificationDate": 1698057123569,
       "contentHash": "e6c936bcacdfe34b20345768c9c01c63",
       "sourceName": "contracts/base/ERC721/IERC721Factory.sol",
       "solcConfig": {
@@ -1797,11 +1924,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1832,7 +1960,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/libs/MarketplaceErrors.sol": {
-      "lastModificationDate": 1693900410098,
+      "lastModificationDate": 1698057123568,
       "contentHash": "4b49a6c18ba62ce8b23ad6f8862698fa",
       "sourceName": "contracts/libs/MarketplaceErrors.sol",
       "solcConfig": {
@@ -1840,11 +1968,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1873,19 +2002,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/introspection/ERC165Checker.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "0a66857c4a2223ad54b814ea56470c97",
+      "lastModificationDate": 1698057172801,
+      "contentHash": "39cb7ad93657f9f444653cf94d6fc392",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1906,26 +2036,27 @@
         "./IERC165.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC165Checker"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC721/ERC721FactoryBase.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "59811d1b9a6119b07330908aafa81a6e",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "354f40b930f393e38fa86c88e78342cd",
       "sourceName": "contracts/base/ERC721/ERC721FactoryBase.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -1944,13 +2075,15 @@
       },
       "imports": [
         "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol",
         "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
-        "@openzeppelin/contracts/security/Pausable.sol",
-        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol",
+        "@openzeppelin/contracts/utils/Pausable.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol",
         "../common/ERCFallback.sol",
         "../common/ERCModifiers.sol",
         "../common/IERCLogging.sol"
@@ -1962,60 +2095,21 @@
         "ERC721FactoryBase"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC721/ERC721FactoryWorker.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "a56041f2deceb1c48ddf94046796568c",
-      "sourceName": "contracts/base/ERC721/ERC721FactoryWorker.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ERC721FactoryBase.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.19"
-      ],
-      "artifacts": [
-        "ERC721FactoryWorker"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC721/ERC721FactoryMinter.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "10a00a583f64422b683bbf543f7a233b",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "fad2fcbc288fb0cdc5fe3bf29b83d112",
       "sourceName": "contracts/base/ERC721/ERC721FactoryMinter.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2043,19 +2137,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC721/ERC721FactoryBurner.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "4f1aad09af418dd28c9481dbdf9b708a",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "6a87406673912aa41cb25f7fedd36a1c",
       "sourceName": "contracts/base/ERC721/ERC721FactoryBurner.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2082,20 +2177,62 @@
         "ERC721FactoryBurner"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC721/ERC721FactoryWorker.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "f15e4f5166a50456880afd708a49224f",
+      "sourceName": "contracts/base/ERC721/ERC721FactoryWorker.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ERC721FactoryBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "ERC721FactoryWorker"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "95602b04f0b53f1139f4668d123ddeb7",
+      "lastModificationDate": 1698057172747,
+      "contentHash": "1e64e2ad597dc5b2dae11346502baad4",
       "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2116,32 +2253,33 @@
         "./IERC721.sol",
         "./IERC721Receiver.sol",
         "./extensions/IERC721Metadata.sol",
-        "../../utils/Address.sol",
         "../../utils/Context.sol",
         "../../utils/Strings.sol",
-        "../../utils/introspection/ERC165.sol"
+        "../../utils/introspection/ERC165.sol",
+        "../../interfaces/draft-IERC6093.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC721"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "c22d4395e33763de693fd440c6fd10e1",
+      "lastModificationDate": 1698057172746,
+      "contentHash": "fc8a9841f4bdd6329c26a00d5e75f4b3",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2160,26 +2298,112 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC721Receiver"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol": {
+      "lastModificationDate": 1698057172757,
+      "contentHash": "6f49fe93ad40dc0bd4cac0cc124d0415",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC721.sol",
+        "./IERC721Enumerable.sol",
+        "../../../utils/introspection/ERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC721Enumerable"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol": {
+      "lastModificationDate": 1698057172752,
+      "contentHash": "82673f10743c1bce4d9254772c9f4a81",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC721.sol",
+        "../../../utils/Pausable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC721Pausable"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol": {
-      "lastModificationDate": 1693900580200,
-      "contentHash": "5a341bfc4fe3ee5357ccdebd3a78ad2c",
+      "lastModificationDate": 1698057172761,
+      "contentHash": "4c81010564fe4bcfa8a3ba8fe66d4773",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2201,26 +2425,27 @@
         "../../../utils/Context.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC721Burnable"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol": {
-      "lastModificationDate": 1693900580201,
-      "contentHash": "de368c6a87e159c86544ae5041b58cf3",
+      "lastModificationDate": 1698057172750,
+      "contentHash": "50d770b698931f015309e77a750f54f6",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2239,29 +2464,32 @@
       },
       "imports": [
         "../ERC721.sol",
-        "../../../interfaces/IERC4906.sol"
+        "../../../utils/Strings.sol",
+        "../../../interfaces/IERC4906.sol",
+        "../../../interfaces/IERC165.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC721URIStorage"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol": {
-      "lastModificationDate": 1693900580201,
-      "contentHash": "d29e32d2fc8b7e02c8a00f69b3223411",
+      "lastModificationDate": 1698057172754,
+      "contentHash": "2e11a891bdfd79c8fe71d8b08a01712b",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2280,71 +2508,30 @@
       },
       "imports": [
         "../ERC721.sol",
-        "../../common/ERC2981.sol",
-        "../../../utils/introspection/ERC165.sol"
+        "../../common/ERC2981.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC721Royalty"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol": {
-      "lastModificationDate": 1693900580201,
-      "contentHash": "212e86880d210b6cac8c3eb0cd6b1fad",
-      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC721.sol",
-        "./IERC721Enumerable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC721Enumerable"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
-      "lastModificationDate": 1693900580205,
-      "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
+      "lastModificationDate": 1698057172752,
+      "contentHash": "12c206f185cb951213799561fdcaa40d",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2365,26 +2552,68 @@
         "../IERC721.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC721Metadata"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
+      "lastModificationDate": 1698057172751,
+      "contentHash": "3fdc14aab706458ae99314f6f7f529a2",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC721Enumerable"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC4906.sol": {
-      "lastModificationDate": 1693900569852,
-      "contentHash": "d3f355e15269d1476d86c84730cebb5e",
+      "lastModificationDate": 1698057172978,
+      "contentHash": "7f130e0d70179d683e9b9df0dda38a51",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC4906.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2406,26 +2635,27 @@
         "./IERC721.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC4906"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC165.sol": {
-      "lastModificationDate": 1693900569864,
-      "contentHash": "ee9624272968c23d93d4c2e39f06e6e2",
+      "lastModificationDate": 1698057172980,
+      "contentHash": "f808b485ee0cdc6768ee8385ae5f9a2a",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC165.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2446,24 +2676,25 @@
         "../utils/introspection/IERC165.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": []
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
-      "lastModificationDate": 1693900580201,
-      "contentHash": "f4dd06783f321aa26179bc2b6e361c29",
-      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol": {
+      "lastModificationDate": 1698057172765,
+      "contentHash": "2724592045c1a732e5ac949356112fb9",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2481,281 +2712,31 @@
         }
       },
       "imports": [
-        "../IERC721.sol"
+        "../../../utils/introspection/ERC165.sol",
+        "../IERC1155Receiver.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "IERC721Enumerable"
+        "ERC1155Holder"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/IGovernor.sol": {
-      "lastModificationDate": 1693900569843,
-      "contentHash": "f25711a41c660275a78153d3fd78dde3",
-      "sourceName": "@openzeppelin/contracts/governance/IGovernor.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol": {
+      "lastModificationDate": 1698057172798,
+      "contentHash": "9e5eec59eaffa554d6cca561dcb914eb",
+      "sourceName": "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../interfaces/IERC165.sol",
-        "../interfaces/IERC6372.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IGovernor"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC6372.sol": {
-      "lastModificationDate": 1693900569858,
-      "contentHash": "f9153597c0095dfaa672b15968161166",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC6372.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC6372"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/IGovernorTimelock.sol": {
-      "lastModificationDate": 1693900577693,
-      "contentHash": "eebb17e144c4fd58549d815db19552da",
-      "sourceName": "@openzeppelin/contracts/governance/extensions/IGovernorTimelock.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IGovernor.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IGovernorTimelock"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol": {
-      "lastModificationDate": 1693900577692,
-      "contentHash": "aac379f435298e7d59ade3da436dbcf5",
-      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IGovernorTimelock.sol",
-        "../Governor.sol",
-        "../TimelockController.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "GovernorTimelockControl"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/Governor.sol": {
-      "lastModificationDate": 1693900569843,
-      "contentHash": "8da311d0dd59badd1cf2348dd9dc7fd6",
-      "sourceName": "@openzeppelin/contracts/governance/Governor.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../token/ERC721/IERC721Receiver.sol",
-        "../token/ERC1155/IERC1155Receiver.sol",
-        "../utils/cryptography/ECDSA.sol",
-        "../utils/cryptography/EIP712.sol",
-        "../utils/introspection/ERC165.sol",
-        "../utils/math/SafeCast.sol",
-        "../utils/structs/DoubleEndedQueue.sol",
-        "../utils/Address.sol",
-        "../utils/Context.sol",
-        "./IGovernor.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Governor"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/TimelockController.sol": {
-      "lastModificationDate": 1693900569843,
-      "contentHash": "39cfb1304186349ce1051fe20ff67567",
-      "sourceName": "@openzeppelin/contracts/governance/TimelockController.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../access/AccessControl.sol",
-        "../token/ERC721/IERC721Receiver.sol",
-        "../token/ERC1155/IERC1155Receiver.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "TimelockController"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol": {
-      "lastModificationDate": 1693900577728,
-      "contentHash": "d822a8a9468649cab463f29f5decf5cc",
-      "sourceName": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2776,64 +2757,27 @@
         "../Strings.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "ECDSA"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/math/SafeCast.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "67cf2dfe1d1c22b4ea7f242e8a17f431",
-      "sourceName": "@openzeppelin/contracts/utils/math/SafeCast.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "SafeCast"
+        "MessageHashUtils"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/cryptography/EIP712.sol": {
-      "lastModificationDate": 1693900577731,
-      "contentHash": "459aeb9cc3fc3c6d67d30ffefb724aba",
+      "lastModificationDate": 1698057172797,
+      "contentHash": "33f2efa11c674f59f4b8365be7a58da9",
       "sourceName": "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2851,71 +2795,32 @@
         }
       },
       "imports": [
-        "./ECDSA.sol",
+        "./MessageHashUtils.sol",
         "../ShortStrings.sol",
         "../../interfaces/IERC5267.sol"
       ],
       "versionPragmas": [
-        "^0.8.8"
+        "^0.8.20"
       ],
       "artifacts": [
         "EIP712"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol": {
-      "lastModificationDate": 1693900577823,
-      "contentHash": "deae946483c170d1eae667c9e35c2f5f",
-      "sourceName": "@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../math/SafeCast.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.4"
-      ],
-      "artifacts": [
-        "DoubleEndedQueue"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/ShortStrings.sol": {
-      "lastModificationDate": 1693900569931,
-      "contentHash": "8dde288da49722a70f34ee369be4bfba",
+      "lastModificationDate": 1698057172813,
+      "contentHash": "1b71929454f558e486d1f4f2471f29d4",
       "sourceName": "@openzeppelin/contracts/utils/ShortStrings.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2936,26 +2841,27 @@
         "./StorageSlot.sol"
       ],
       "versionPragmas": [
-        "^0.8.8"
+        "^0.8.20"
       ],
       "artifacts": [
         "ShortStrings"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC5267.sol": {
-      "lastModificationDate": 1693900569852,
-      "contentHash": "b1756048024350a162c3be27c04aa652",
+      "lastModificationDate": 1698057172974,
+      "contentHash": "94364524cb1a39dcbc3d3afff6d8e53e",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC5267.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -2974,64 +2880,27 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC5267"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
-      "lastModificationDate": 1693900569936,
-      "contentHash": "682f7dd1f2e1147c8390e7575deceb2d",
-      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/utils/Votes.sol": {
+      "lastModificationDate": 1698057172825,
+      "contentHash": "4e568f7f6f52177f72d1fd7a4dc60928",
+      "sourceName": "@openzeppelin/contracts/governance/utils/Votes.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "StorageSlot"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol": {
-      "lastModificationDate": 1693900580200,
-      "contentHash": "55b180cf664783e9a2baac20e82683fb",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3049,609 +2918,37 @@
         }
       },
       "imports": [
-        "../IERC1155Receiver.sol",
-        "../../../utils/introspection/ERC165.sol"
+        "../../interfaces/IERC5805.sol",
+        "../../utils/Context.sol",
+        "../../utils/Nonces.sol",
+        "../../utils/cryptography/EIP712.sol",
+        "../../utils/structs/Checkpoints.sol",
+        "../../utils/math/SafeCast.sol",
+        "../../utils/cryptography/ECDSA.sol",
+        "../../utils/types/Time.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "ERC1155Receiver"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol": {
-      "lastModificationDate": 1693900580197,
-      "contentHash": "c8946432e6d37418cb12a15668e3c0cd",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20Permit.sol",
-        "../ERC20.sol",
-        "../../../utils/cryptography/ECDSA.sol",
-        "../../../utils/cryptography/EIP712.sol",
-        "../../../utils/Counters.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20Permit"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1693900577695,
-      "contentHash": "3ae5166c6827a9cf1a7a462d1632b464",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol",
-        "./extensions/IERC20Metadata.sol",
-        "../../utils/Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol": {
-      "lastModificationDate": 1693900580199,
-      "contentHash": "aa849939a4ae83a4dcb2dca9b3e9e707",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20Permit"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1693900580199,
-      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20Metadata"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol": {
-      "lastModificationDate": 1693900580197,
-      "contentHash": "da89e343119284763a5a135243cdb338",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20Capped"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC20DAO/ERC20TKNBase.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "6b640712926ac7000bd0f2b3f7be145d",
-      "sourceName": "contracts/base/ERC20DAO/ERC20TKNBase.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol",
-        "@openzeppelin/contracts/access/AccessControl.sol",
-        "@openzeppelin/contracts/security/Pausable.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol",
-        "../common/ERCModifiers.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.9"
-      ],
-      "artifacts": [
-        "ERC20TKNBase"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol": {
-      "lastModificationDate": 1693900580197,
-      "contentHash": "a1c7f80ae26f5b2d7d563475627fbf25",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC20.sol",
-        "../../../utils/Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20Burnable"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol": {
-      "lastModificationDate": 1693900580197,
-      "contentHash": "292f409f32d72314aeaf4b63c879eed4",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../../interfaces/IERC3156FlashBorrower.sol",
-        "../../../interfaces/IERC3156FlashLender.sol",
-        "../ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20FlashMint"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol": {
-      "lastModificationDate": 1693900580197,
-      "contentHash": "d56a22fab8dacd27861e0656c740adca",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../ERC20.sol",
-        "../../../utils/Arrays.sol",
-        "../../../utils/Counters.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20Snapshot"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol": {
-      "lastModificationDate": 1693900580197,
-      "contentHash": "c093956f6e012e5967f5377362a91c23",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ERC20Permit.sol",
-        "../../../interfaces/IERC5805.sol",
-        "../../../utils/math/Math.sol",
-        "../../../utils/math/SafeCast.sol",
-        "../../../utils/cryptography/ECDSA.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC20Votes"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol": {
-      "lastModificationDate": 1693900580199,
-      "contentHash": "0ebe4a60af340ba617d3fb68db43c990",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ERC20Permit.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": []
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol": {
-      "lastModificationDate": 1693900569853,
-      "contentHash": "9e16b4d269b399e8ab6342e0cf8a2edd",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC3156FlashBorrower.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC3156FlashLender"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol": {
-      "lastModificationDate": 1693900569852,
-      "contentHash": "9270763cab030181920a67686fb19e01",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC3156FlashBorrower"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Arrays.sol": {
-      "lastModificationDate": 1693900569929,
-      "contentHash": "64b487456525f35e7e8cf06173f748a9",
-      "sourceName": "@openzeppelin/contracts/utils/Arrays.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./StorageSlot.sol",
-        "./math/Math.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Arrays"
+        "Votes"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC5805.sol": {
-      "lastModificationDate": 1693900569854,
-      "contentHash": "78962c5ba0fec9f6cad8f71cf96ae30b",
+      "lastModificationDate": 1698057172959,
+      "contentHash": "65ba9f89b1057e2192e341b286d4e261",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC5805.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3673,26 +2970,27 @@
         "./IERC6372.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "IERC5805"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/utils/IVotes.sol": {
-      "lastModificationDate": 1693900577531,
-      "contentHash": "e2ea5c24dc3967534a8ac4df343668c2",
-      "sourceName": "@openzeppelin/contracts/governance/utils/IVotes.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Nonces.sol": {
+      "lastModificationDate": 1698057172799,
+      "contentHash": "c32d108058718efb9061b88e83a83f79",
+      "sourceName": "@openzeppelin/contracts/utils/Nonces.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3711,26 +3009,27 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "IVotes"
+        "Nonces"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/Checkpoints.sol": {
-      "lastModificationDate": 1693900569971,
-      "contentHash": "92dd35130224b0240e03fdda054a6b77",
-      "sourceName": "@openzeppelin/contracts/utils/Checkpoints.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/structs/Checkpoints.sol": {
+      "lastModificationDate": 1698057172808,
+      "contentHash": "7c2f98cb04ef6c4a9c039ce7bb638b98",
+      "sourceName": "@openzeppelin/contracts/utils/structs/Checkpoints.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3748,30 +3047,30 @@
         }
       },
       "imports": [
-        "./math/Math.sol",
-        "./math/SafeCast.sol"
+        "../math/Math.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "Checkpoints"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotes.sol": {
-      "lastModificationDate": 1693900577692,
-      "contentHash": "9d21e1da315e8e4d9e5962a25eac0c69",
-      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/math/SafeCast.sol": {
+      "lastModificationDate": 1698057172807,
+      "contentHash": "d72cdfaacd4b1b8e090b57f4b7200ddc",
+      "sourceName": "@openzeppelin/contracts/utils/math/SafeCast.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3788,31 +3087,29 @@
           }
         }
       },
-      "imports": [
-        "../Governor.sol",
-        "../../interfaces/IERC5805.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "GovernorVotes"
+        "SafeCast"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol": {
-      "lastModificationDate": 1693900577693,
-      "contentHash": "d8f2eb542aaa4fc25d2deb09bce65760",
-      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol": {
+      "lastModificationDate": 1698057172795,
+      "contentHash": "b96e0d7a3c2b185342c7d083d765b61f",
+      "sourceName": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3829,32 +3126,29 @@
           }
         }
       },
-      "imports": [
-        "./GovernorVotes.sol",
-        "../../utils/Checkpoints.sol",
-        "../../utils/math/SafeCast.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "GovernorVotesQuorumFraction"
+        "ECDSA"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC20DAO/ERC20DAOBase.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "37ac85c95494cc34859c3f372eb02dc4",
-      "sourceName": "contracts/base/ERC20DAO/ERC20DAOBase.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/types/Time.sol": {
+      "lastModificationDate": 1698057172793,
+      "contentHash": "5fde3731fd2a69cf64d4e17da56cf462",
+      "sourceName": "@openzeppelin/contracts/utils/types/Time.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3872,34 +3166,31 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/governance/Governor.sol",
-        "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol",
-        "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol",
-        "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol",
-        "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol",
-        "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol"
+        "../math/Math.sol",
+        "../math/SafeCast.sol"
       ],
       "versionPragmas": [
-        "^0.8.19"
+        "^0.8.20"
       ],
       "artifacts": [
-        "ERC20DAOBase"
+        "Time"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol": {
-      "lastModificationDate": 1693900577687,
-      "contentHash": "15aeb0f6f9276254f8d58e65a678ea3f",
-      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/utils/IVotes.sol": {
+      "lastModificationDate": 1698057172826,
+      "contentHash": "905ffceb29869fee4b5a649abe7e2927",
+      "sourceName": "@openzeppelin/contracts/governance/utils/IVotes.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3916,30 +3207,29 @@
           }
         }
       },
-      "imports": [
-        "../Governor.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "GovernorCountingSimple"
+        "IVotes"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorSettings.sol": {
-      "lastModificationDate": 1693900577687,
-      "contentHash": "80ac7eb356eca556a3023dc3848fb40a",
-      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC6372.sol": {
+      "lastModificationDate": 1698057172972,
+      "contentHash": "414cd6acf090e4009cf016ff62ecbd88",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC6372.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3956,30 +3246,29 @@
           }
         }
       },
-      "imports": [
-        "../Governor.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
-        "GovernorSettings"
+        "IERC6372"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/ERC20DAO.sol": {
-      "lastModificationDate": 1693900410098,
-      "contentHash": "2ee8c4f51a8f0de2f9c3b32c65be9c55",
-      "sourceName": "contracts/ERC20DAO.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/manager/IAccessManager.sol": {
+      "lastModificationDate": 1698057172788,
+      "contentHash": "eac9385eab329e39a4fd006c13d6670c",
+      "sourceName": "@openzeppelin/contracts/access/manager/IAccessManager.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -3997,29 +3286,195 @@
         }
       },
       "imports": [
-        "./base/ERC20DAO/ERC20DAOBase.sol"
+        "./IAccessManaged.sol",
+        "../../utils/types/Time.sol"
       ],
       "versionPragmas": [
-        "^0.8.19"
+        "^0.8.20"
       ],
       "artifacts": [
-        "ERC20DAO"
+        "IAccessManager"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/manager/IAccessManaged.sol": {
+      "lastModificationDate": 1698057172787,
+      "contentHash": "c1b6a9715af4a5093443761a8ac58963",
+      "sourceName": "@openzeppelin/contracts/access/manager/IAccessManaged.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IAccessManaged"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/manager/AccessManaged.sol": {
+      "lastModificationDate": 1698057172785,
+      "contentHash": "493c79926bf9d033e1133a9218858eed",
+      "sourceName": "@openzeppelin/contracts/access/manager/AccessManaged.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IAuthority.sol",
+        "./AuthorityUtils.sol",
+        "./IAccessManager.sol",
+        "./IAccessManaged.sol",
+        "../../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AccessManaged"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/manager/IAuthority.sol": {
+      "lastModificationDate": 1698057172784,
+      "contentHash": "c32de6180bb4898b96ebbcc4cc3a322d",
+      "sourceName": "@openzeppelin/contracts/access/manager/IAuthority.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IAuthority"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/manager/AuthorityUtils.sol": {
+      "lastModificationDate": 1698057172788,
+      "contentHash": "e96b8b2cce8bd8dd292b03bf9310e64a",
+      "sourceName": "@openzeppelin/contracts/access/manager/AuthorityUtils.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IAuthority.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AuthorityUtils"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERCMKTP/ERCMKTPFactoryBase.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "bc7944323e18a26b893ad9a6fe9245ee",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "c6c65b4842e90547818f9a6f5009415f",
       "sourceName": "contracts/base/ERCMKTP/ERCMKTPFactoryBase.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4037,8 +3492,7 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/security/Pausable.sol",
-        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/utils/Pausable.sol",
         "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol",
         "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
         "../ERC721/IERC721Factory.sol",
@@ -4053,60 +3507,21 @@
         "ERCMKTPFactoryBase"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol": {
-      "lastModificationDate": 1693900580199,
-      "contentHash": "88079762e28b246888129028f757e047",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./ERC1155Receiver.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ERC1155Holder"
-      ]
-    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol": {
-      "lastModificationDate": 1693900580205,
-      "contentHash": "6dc9f7bfd1fc143b9124493d089282a2",
+      "lastModificationDate": 1698057172749,
+      "contentHash": "8cd14f03f1cc06f0a638da5209d716d4",
       "sourceName": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4127,26 +3542,27 @@
         "../IERC721Receiver.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "ERC721Holder"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERCMKTP/ERCMKTPFactoryWorker.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "01f3114b80f1d0c9425d38a7c82b40d1",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "60f2a0096751401153d560417f9857cb",
       "sourceName": "contracts/base/ERCMKTP/ERCMKTPFactoryWorker.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4174,19 +3590,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERCMKTP/ERCMKTPFactoryMarketplace.sol": {
-      "lastModificationDate": 1693900410098,
-      "contentHash": "67d0c8fcacf38bb251e4371136cab420",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "482c3213517f9fda7186f26fc9753c52",
       "sourceName": "contracts/base/ERCMKTP/ERCMKTPFactoryMarketplace.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4215,20 +3632,21 @@
         "ERCMKTPFactoryMarketplace"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/common/ERCLogging.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "df06fe52e128d84dd0b4bdec7d256219",
-      "sourceName": "contracts/base/common/ERCLogging.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLDAOGVN/JWLTreasury.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "36ff46276e3d525e2a79d7a72632c64c",
+      "sourceName": "contracts/base/JWLDAOGVN/JWLTreasury.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4246,115 +3664,35 @@
         }
       },
       "imports": [
-        "../../libs/Structs.sol",
-        "./IERCLogging.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.19"
-      ],
-      "artifacts": [
-        "ERCLogging"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/ERCLogger.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "b0f5578a8ff47b98e6e01298a530d603",
-      "sourceName": "contracts/ERCLogger.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./base/common/ERCLogging.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.19"
-      ],
-      "artifacts": [
-        "ERCLogger"
-      ]
-    },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC20DAO/ERC721NFTTreasury.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "eae6e5f0c80320338818299dc70acbcb",
-      "sourceName": "contracts/base/ERC20DAO/ERC721NFTTreasury.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 1,
-            "details": {
-              "yul": true
-            }
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol",
         "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
         "@openzeppelin/contracts/utils/Strings.sol",
-        "@openzeppelin/contracts/utils/Counters.sol",
         "@openzeppelin/contracts/access/Ownable.sol",
         "@openzeppelin/contracts/access/AccessControl.sol",
         "hardhat/console.sol"
       ],
       "versionPragmas": [
-        "^0.8.19"
+        "^0.8.20"
       ],
       "artifacts": [
-        "ERC721NFTTreasury"
+        "JWLTreasury"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1693900569843,
-      "contentHash": "5a20b2cad87ddb61c7a3a6af21289e28",
+      "lastModificationDate": 1698057172780,
+      "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4375,26 +3713,1366 @@
         "../utils/Context.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "^0.8.20"
       ],
       "artifacts": [
         "Ownable"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC20DAO/ERCTimeLock.sol": {
-      "lastModificationDate": 1693900410100,
-      "contentHash": "e78509babc6f67a51da81f9f1f20885c",
-      "sourceName": "contracts/base/ERC20DAO/ERCTimeLock.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/IGovernor.sol": {
+      "lastModificationDate": 1698057172834,
+      "contentHash": "3b0e6475e9ed9d26512a70b6295971b2",
+      "sourceName": "@openzeppelin/contracts/governance/IGovernor.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IERC165.sol",
+        "../interfaces/IERC6372.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IGovernor"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotes.sol": {
+      "lastModificationDate": 1698057172832,
+      "contentHash": "d072e6f9bedf5f954d9d79f18430e16b",
+      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../Governor.sol",
+        "../utils/IVotes.sol",
+        "../../interfaces/IERC5805.sol",
+        "../../utils/math/SafeCast.sol",
+        "../../utils/types/Time.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "GovernorVotes"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/Governor.sol": {
+      "lastModificationDate": 1698057172823,
+      "contentHash": "1dcd286683a0ec64597abe7541197688",
+      "sourceName": "@openzeppelin/contracts/governance/Governor.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../token/ERC721/IERC721Receiver.sol",
+        "../token/ERC1155/IERC1155Receiver.sol",
+        "../utils/cryptography/EIP712.sol",
+        "../utils/cryptography/SignatureChecker.sol",
+        "../utils/introspection/ERC165.sol",
+        "../utils/math/SafeCast.sol",
+        "../utils/structs/DoubleEndedQueue.sol",
+        "../utils/Address.sol",
+        "../utils/Context.sol",
+        "../utils/Nonces.sol",
+        "./IGovernor.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Governor"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol": {
+      "lastModificationDate": 1698057172809,
+      "contentHash": "4988631ce14d39628bfdded2662ef0e2",
+      "sourceName": "@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "DoubleEndedQueue"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol": {
+      "lastModificationDate": 1698057172796,
+      "contentHash": "67e1b232791e1ea1cf6475bd4aaed191",
+      "sourceName": "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ECDSA.sol",
+        "../../interfaces/IERC1271.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SignatureChecker"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC1271.sol": {
+      "lastModificationDate": 1698057172981,
+      "contentHash": "12a8c0358597a0dc191410b1259e61ee",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC1271.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1271"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol": {
+      "lastModificationDate": 1698057172833,
+      "contentHash": "ba87d2cefbc58d280de206ed8ceb1067",
+      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./GovernorVotes.sol",
+        "../../utils/math/SafeCast.sol",
+        "../../utils/structs/Checkpoints.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "GovernorVotesQuorumFraction"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1698057172735,
+      "contentHash": "c6375ef25e84c90b3d15f9ec4eef218f",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./extensions/IERC20Metadata.sol",
+        "../../utils/Context.sol",
+        "../../interfaces/draft-IERC6093.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol": {
+      "lastModificationDate": 1698057172738,
+      "contentHash": "273d8d24b06f67207dd5f35c3a0c1086",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC20.sol",
+        "../../../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20Burnable"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "lastModificationDate": 1698057172736,
+      "contentHash": "697fd27924863e77c17dace2179018b2",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol",
+        "../extensions/IERC20Permit.sol",
+        "../../../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SafeERC20"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1698057172740,
+      "contentHash": "4c02fa6f7ae7b6c289cef80424f0c875",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol": {
+      "lastModificationDate": 1698057172737,
+      "contentHash": "da291753fa4641f2c5837bfc4aa4c01b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20Permit"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol": {
+      "lastModificationDate": 1698057172739,
+      "contentHash": "d3f7511a1805398723f36799db2af4e1",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20Permit.sol",
+        "../ERC20.sol",
+        "../../../utils/cryptography/ECDSA.sol",
+        "../../../utils/cryptography/EIP712.sol",
+        "../../../utils/Nonces.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20Permit"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorSettings.sol": {
+      "lastModificationDate": 1698057172833,
+      "contentHash": "80b3bbc71b44392e967e1b2f7704c692",
+      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../Governor.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "GovernorSettings"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLDAOGVN/JWLDAOGVNBase.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "cc6bbfcae950446f47fe779c6076f670",
+      "sourceName": "contracts/base/JWLDAOGVN/JWLDAOGVNBase.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/governance/Governor.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorStorage.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "JWLDAOGVNBase"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol": {
+      "lastModificationDate": 1698057172829,
+      "contentHash": "dddc910430b6d9baa44bce4b1b4c22c6",
+      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../Governor.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "GovernorCountingSimple"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol": {
+      "lastModificationDate": 1698057172830,
+      "contentHash": "c24ca7b8ac9803560d960758146c0707",
+      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../Governor.sol",
+        "../TimelockController.sol",
+        "../../interfaces/IERC165.sol",
+        "../../utils/math/SafeCast.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "GovernorTimelockControl"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/extensions/GovernorStorage.sol": {
+      "lastModificationDate": 1698057172829,
+      "contentHash": "d3234eb1eb0ec4fb133f47b8523938cb",
+      "sourceName": "@openzeppelin/contracts/governance/extensions/GovernorStorage.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../Governor.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "GovernorStorage"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/governance/TimelockController.sol": {
+      "lastModificationDate": 1698057172835,
+      "contentHash": "2fc80187893d7c844638037fb8ae9465",
+      "sourceName": "@openzeppelin/contracts/governance/TimelockController.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../access/AccessControl.sol",
+        "../token/ERC721/utils/ERC721Holder.sol",
+        "../token/ERC1155/utils/ERC1155Holder.sol",
+        "../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "TimelockController"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/_samples/MyGovernor.sol": {
+      "lastModificationDate": 1698057123568,
+      "contentHash": "5b5208d665b72a691538c8c5c583c8ef",
+      "sourceName": "contracts/_samples/MyGovernor.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/governance/Governor.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorStorage.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol",
+        "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MyGovernor"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/_samples/MyToken721.sol": {
+      "lastModificationDate": 1698057123568,
+      "contentHash": "8f2864a5a99c9c14275c434d4e069d77",
+      "sourceName": "contracts/_samples/MyToken721.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
+        "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/ERC721Votes.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MyToken721"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Votes.sol": {
+      "lastModificationDate": 1698057172755,
+      "contentHash": "687454ef6b1ea6c8e0623a60f40d71a2",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Votes.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC721.sol",
+        "../../../governance/utils/Votes.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC721Votes"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol": {
+      "lastModificationDate": 1698057172743,
+      "contentHash": "599b6100008da0cc7875f57044251679",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20Capped"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLXTKN/JWLXTKNFactoryBase.sol": {
+      "lastModificationDate": 1698171209839,
+      "contentHash": "eb73e435112c1303581c8fefc1a13b9f",
+      "sourceName": "contracts/base/JWLXTKN/JWLXTKNFactoryBase.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol",
+        "@openzeppelin/contracts/access/manager/AccessManaged.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol",
+        "@openzeppelin/contracts/utils/math/Math.sol",
+        "@openzeppelin/contracts/utils/math/Math.sol",
+        "../common/ERCModifiers.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "JWLXTKNFactoryBase"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol": {
+      "lastModificationDate": 1698057172742,
+      "contentHash": "8192e62fa7bc2d5a5ff1e50cb2c6a35b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/IERC3156FlashBorrower.sol",
+        "../../../interfaces/IERC3156FlashLender.sol",
+        "../ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20FlashMint"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol": {
+      "lastModificationDate": 1698057172741,
+      "contentHash": "fb3d36ea29687f5bba57d9e22a2a1613",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC20.sol",
+        "../../../governance/utils/Votes.sol",
+        "../../../utils/structs/Checkpoints.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20Votes"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol": {
+      "lastModificationDate": 1698057172739,
+      "contentHash": "64b7606ccba31af7e49e3b2d8af1b948",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ERC20.sol",
+        "../../../utils/Pausable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20Pausable"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol": {
+      "lastModificationDate": 1698057172964,
+      "contentHash": "9b904b6774216ee04c28d7869f6654cb",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC3156FlashBorrower"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/node_modules/@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol": {
+      "lastModificationDate": 1698057172979,
+      "contentHash": "25ac887070a1ec97078365e550d17a62",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC3156FlashBorrower.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC3156FlashLender"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/_samples/MyToken.sol": {
+      "lastModificationDate": 1698057123568,
+      "contentHash": "09d813ef830f22520e50cd6a506745f0",
+      "sourceName": "contracts/_samples/MyToken.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MyToken"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/JWLXTKN.sol": {
+      "lastModificationDate": 1698057123568,
+      "contentHash": "d636a8dbd7330eb89226b1be9be0c6a5",
+      "sourceName": "contracts/JWLXTKN.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./base/JWLXTKN/JWLXTKNFactoryBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "JWLXTKN"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLDAOGVN/JWLTimeLock.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "353e7a48632941b5ee2401e4b9528f39",
+      "sourceName": "contracts/base/JWLDAOGVN/JWLTimeLock.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4416,26 +5094,113 @@
         "@openzeppelin/contracts/access/Ownable.sol"
       ],
       "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "JWLTimeLock"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/_samples/MyToken1155.sol": {
+      "lastModificationDate": 1698057123568,
+      "contentHash": "7c41d5f7dcf4a219531be30e61e5479a",
+      "sourceName": "contracts/_samples/MyToken1155.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol",
+        "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
+        "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
+        "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MyToken1155"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/JWLDAOGVN.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "8aa0fdbd501461c3fb3d8a1da0b3a948",
+      "sourceName": "contracts/JWLDAOGVN.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./base/JWLDAOGVN/JWLDAOGVNBase.sol"
+      ],
+      "versionPragmas": [
         "^0.8.19"
       ],
       "artifacts": [
-        "ERCTimeLock"
+        "JWLDAOGVN"
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERCMKTP/ERCMKTPFactoryAuction.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "d7e9ac101fa5c04585b8bd30f2778b2b",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "3c1ab10f93b5849d3b1a88915ab8ff76",
       "sourceName": "contracts/base/ERCMKTP/ERCMKTPFactoryAuction.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4464,19 +5229,20 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERCMKTP/ERCMKTPFactoryGetSet.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "4b199c1d03074310ab0809040ced6414",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "d074e5e1a8dac55753b10ecde2ef199d",
       "sourceName": "contracts/base/ERCMKTP/ERCMKTPFactoryGetSet.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4506,7 +5272,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/ERCMKTPFactory.sol": {
-      "lastModificationDate": 1693900410098,
+      "lastModificationDate": 1698057123568,
       "contentHash": "b1d19dfe522afd162181922f3428d1d8",
       "sourceName": "contracts/ERCMKTPFactory.sol",
       "solcConfig": {
@@ -4514,11 +5280,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4545,20 +5312,104 @@
         "ERCMKTPFactory"
       ]
     },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/common/ERCLogging.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "59b10d6cb9643fc2e5614d61fed132c1",
+      "sourceName": "contracts/base/common/ERCLogging.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libs/Structs.sol",
+        "./IERCLogging.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "ERCLogging"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/ERCLogger.sol": {
+      "lastModificationDate": 1698057123569,
+      "contentHash": "b0f5578a8ff47b98e6e01298a530d603",
+      "sourceName": "contracts/ERCLogger.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./base/common/ERCLogging.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "ERCLogger"
+      ]
+    },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/ERC721/ERC721FactoryGetSet.sol": {
-      "lastModificationDate": 1693900410099,
-      "contentHash": "911b1af77cddcf31e339383b726ca16a",
+      "lastModificationDate": 1698057123569,
+      "contentHash": "d25050442f779dffff965b29083bbd90",
       "sourceName": "contracts/base/ERC721/ERC721FactoryGetSet.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4589,7 +5440,7 @@
       ]
     },
     "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/ERC721Factory.sol": {
-      "lastModificationDate": 1693900410098,
+      "lastModificationDate": 1698057123568,
       "contentHash": "2f400fe841647dee150ca63f96cc3fb7",
       "sourceName": "contracts/ERC721Factory.sol",
       "solcConfig": {
@@ -4597,11 +5448,12 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4628,20 +5480,21 @@
         "ERC721Factory"
       ]
     },
-    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/ERC20TKN.sol": {
-      "lastModificationDate": 1693900410098,
-      "contentHash": "0f58baff62eac358d33deb1ec2e73419",
-      "sourceName": "contracts/ERC20TKN.sol",
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLMCF/JWLRewards.sol": {
+      "lastModificationDate": 1698330000895,
+      "contentHash": "f03aefe51e7f8a15f44695998607289d",
+      "sourceName": "contracts/base/JWLMCF/JWLRewards.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 1,
+            "runs": 800,
             "details": {
               "yul": true
             }
           },
+          "evmVersion": "paris",
           "outputSelection": {
             "*": {
               "*": [
@@ -4659,13 +5512,192 @@
         }
       },
       "imports": [
-        "./base/ERC20DAO/ERC20TKNBase.sol"
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/utils/math/Math.sol",
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.7"
+      ],
+      "artifacts": [
+        "JWLRewards"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLMCF/JWLPayouts.sol": {
+      "lastModificationDate": 1698330847667,
+      "contentHash": "2e9ecc1d9a049805bec0283c085151f9",
+      "sourceName": "contracts/base/JWLMCF/JWLPayouts.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol",
+        "./JWLRewards.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.7"
+      ],
+      "artifacts": [
+        "JWLPayouts"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLMCF/JWLMCFBase.sol": {
+      "lastModificationDate": 1698414636428,
+      "contentHash": "37ffae6dfa54defa66553e45e151568c",
+      "sourceName": "contracts/base/JWLMCF/JWLMCFBase.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+        "../../libs/Snippets.sol",
+        "./IJWLX.sol",
+        "../JWLXTKN/JWLXTKNFactoryBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.7"
+      ],
+      "artifacts": [
+        "JWLMCFBase"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/JWLMCF.sol": {
+      "lastModificationDate": 1698414612495,
+      "contentHash": "79c0d5abe3983c552f7437dc028004d8",
+      "sourceName": "contracts/JWLMCF.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./base/JWLMCF/IJWLX.sol",
+        "./base/JWLMCF/JWLMCFBase.sol"
       ],
       "versionPragmas": [
         "^0.8.19"
       ],
       "artifacts": [
-        "ERC20TKN"
+        "JWLMCF"
+      ]
+    },
+    "/Users/inboxdev/Documents/GitHub/dovelous/apps/dvs-x-mern-services/hardhat/contracts/base/JWLMCF/IJWLX.sol": {
+      "lastModificationDate": 1698414559858,
+      "contentHash": "78b0fbf0be968ced7ba40f6ce228d755",
+      "sourceName": "contracts/base/JWLMCF/IJWLX.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 800,
+            "details": {
+              "yul": true
+            }
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.7"
+      ],
+      "artifacts": [
+        "IJWLX"
       ]
     }
   }

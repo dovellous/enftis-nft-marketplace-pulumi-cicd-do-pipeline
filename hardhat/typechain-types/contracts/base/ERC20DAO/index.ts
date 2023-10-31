@@ -2,6 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ERC20DAOBase } from "./ERC20DAOBase";
-export type { ERC20TKNBase } from "./ERC20TKNBase";
 export type { ERC721NFTTreasury } from "./ERC721NFTTreasury";
 export type { ERCTimeLock } from "./ERCTimeLock";

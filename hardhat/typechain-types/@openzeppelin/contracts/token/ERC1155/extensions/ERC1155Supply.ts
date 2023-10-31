@@ -34,7 +34,8 @@ export interface ERC1155SupplyInterface extends Interface {
       | "safeTransferFrom"
       | "setApprovalForAll"
       | "supportsInterface"
-      | "totalSupply"
+      | "totalSupply()"
+      | "totalSupply(uint256)"
       | "uri"
   ): FunctionFragment;
 
@@ -85,7 +86,11 @@ export interface ERC1155SupplyInterface extends Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalSupply",
+    functionFragment: "totalSupply()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply(uint256)",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
@@ -117,7 +122,11 @@ export interface ERC1155SupplyInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "totalSupply",
+    functionFragment: "totalSupply()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply(uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
@@ -282,7 +291,7 @@ export interface ERC1155Supply extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       ids: BigNumberish[],
-      amounts: BigNumberish[],
+      values: BigNumberish[],
       data: BytesLike
     ],
     [void],
@@ -294,7 +303,7 @@ export interface ERC1155Supply extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       id: BigNumberish,
-      amount: BigNumberish,
+      value: BigNumberish,
       data: BytesLike
     ],
     [void],
@@ -313,7 +322,13 @@ export interface ERC1155Supply extends BaseContract {
     "view"
   >;
 
-  totalSupply: TypedContractMethod<[id: BigNumberish], [bigint], "view">;
+  "totalSupply()": TypedContractMethod<[], [bigint], "view">;
+
+  "totalSupply(uint256)": TypedContractMethod<
+    [id: BigNumberish],
+    [bigint],
+    "view"
+  >;
 
   uri: TypedContractMethod<[arg0: BigNumberish], [string], "view">;
 
@@ -352,7 +367,7 @@ export interface ERC1155Supply extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       ids: BigNumberish[],
-      amounts: BigNumberish[],
+      values: BigNumberish[],
       data: BytesLike
     ],
     [void],
@@ -365,7 +380,7 @@ export interface ERC1155Supply extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       id: BigNumberish,
-      amount: BigNumberish,
+      value: BigNumberish,
       data: BytesLike
     ],
     [void],
@@ -382,7 +397,10 @@ export interface ERC1155Supply extends BaseContract {
     nameOrSignature: "supportsInterface"
   ): TypedContractMethod<[interfaceId: BytesLike], [boolean], "view">;
   getFunction(
-    nameOrSignature: "totalSupply"
+    nameOrSignature: "totalSupply()"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "totalSupply(uint256)"
   ): TypedContractMethod<[id: BigNumberish], [bigint], "view">;
   getFunction(
     nameOrSignature: "uri"

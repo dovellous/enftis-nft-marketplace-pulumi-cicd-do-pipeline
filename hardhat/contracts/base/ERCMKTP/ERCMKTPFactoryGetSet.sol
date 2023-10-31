@@ -17,7 +17,6 @@ contract ERCMKTPFactoryGetSet is
     ERCMKTPFactoryWorker,
     ERCMKTPFactoryAuction
 {
-    using Counters for Counters.Counter;
 
     /**
      * Constructor arguments for erc721 implementation.
@@ -58,10 +57,10 @@ contract ERCMKTPFactoryGetSet is
         }
 
         // setup admin roles
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        _setupRole(Snippets.ADMIN_ROLE, _msgSender());
+        _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _grantRole(Snippets.ADMIN_ROLE, _msgSender());
         for (uint256 i; i < adminsLength; ++i) {
-            _setupRole(Snippets.ADMIN_ROLE, adminsArray[i]);
+            _grantRole(Snippets.ADMIN_ROLE, adminsArray[i]);
         }
 
         // setup states
@@ -118,7 +117,7 @@ contract ERCMKTPFactoryGetSet is
      *
      */
     function getCurrentIndexedID() external view returns (uint256 ) {
-        return _tokenIndexedIDs.current();
+        return _tokenIndexedIDs;
     }
     // ==================== End Reading State Variables ==================== //
 

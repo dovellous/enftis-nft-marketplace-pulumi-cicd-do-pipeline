@@ -1,7 +1,8 @@
 'use strict';
+import { I____MODEL_ALL_CAMEL_CASE____Update, SupabaseTableCls } from "../modules";
 import {Logger} from "./LoggerHelper";
 const mongoose = require("mongoose");
-const DatabaseManager = class DatabaseManagerClass {
+export const DatabaseManager = class DatabaseManagerClass {
     /* Private Instance Fields */
 
     cxnString:string;
@@ -64,4 +65,44 @@ const DatabaseManager = class DatabaseManagerClass {
     
 }
 
-export default DatabaseManager;
+const replicateUpdateSupabaseDB: any = (collectionName: string, uuid: String, payload: I____MODEL_ALL_CAMEL_CASE____Update) => {
+    
+    const db: any = new SupabaseTableCls();
+    
+    db.updateMatchingRows();
+    
+}
+
+export const replicateData: any = (primaryDatabase: string, collectionName: string, uuid:String, payload:I____MODEL_ALL_CAMEL_CASE____Update) => {
+    
+    switch (primaryDatabase) {
+        
+        case SUPABASE: {
+            if (payload.updateSource === SUPABASE) {
+                // replicateUpdateSupabaseDB(collectionName, uuid, payload);
+                // replicateUpdateMongoDB(collectionName, uuid, payload);
+                // replicateUpdateFirebaseDB(collectionName, uuid, payload);
+                // replicateUpdateMySQLDB(collectionName, uuid, payload);
+            }
+            break;
+        }
+            
+    }
+}
+
+export const FIREBASE: string = "FIREBASE";
+export const SUPABASE: string = "SUPABASE";
+export const MONGO_DB: string = "MONGO_DB";
+export const MYSQL_DB: string = "MYSQL_DB";
+export const HIGH_AVAILABILITY_DATABASE: string = "HIGH_AVAILABILITY_DATABASE";
+
+export function getOffset(currentPage = 1, listPerPage) {
+    return (currentPage - 1) * [listPerPage];
+  }
+  
+export function emptyOrRows(rows) {
+    if (!rows) {
+      return [];
+    }
+    return rows;
+  }

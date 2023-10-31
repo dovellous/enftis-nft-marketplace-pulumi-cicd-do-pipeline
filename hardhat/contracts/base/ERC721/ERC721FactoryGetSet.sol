@@ -33,7 +33,6 @@ contract ERC721FactoryGetSet is
     ERC721FactoryMinter,
     ERC721FactoryBurner
 {
-    using Counters for Counters.Counter;
 
     /**
      * Constructor arguments for erc721 implementation.
@@ -111,16 +110,16 @@ contract ERC721FactoryGetSet is
         }
 
         // setup admin roles
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(Snippets.ADMIN_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(Snippets.ADMIN_ROLE, msg.sender);
         for (uint256 i; i < adminsLength; ++i) {
-            _setupRole(Snippets.ADMIN_ROLE, adminsArray[i]);
+            _grantRole(Snippets.ADMIN_ROLE, adminsArray[i]);
         }
 
         // setup admin role
-        _setupRole(Snippets.MINTER_ROLE, msg.sender);
+        _grantRole(Snippets.MINTER_ROLE, msg.sender);
         for (uint256 i; i < mintersLength; ++i) {
-            _setupRole(Snippets.MINTER_ROLE, mintersArray[i]);
+            _grantRole(Snippets.MINTER_ROLE, mintersArray[i]);
         }
 
         // _tokenMaximumSupply of 0 implies no limit
@@ -311,7 +310,7 @@ contract ERC721FactoryGetSet is
      *
      */
     function getTokenCurrentSupply() external view returns (uint256) {
-        return _tokenCurrentSupply.current();
+        return _tokenCurrentSupply;
     }
 
     /**
@@ -320,7 +319,7 @@ contract ERC721FactoryGetSet is
      * @return _tokenIdCounter.
      */
     function getTokenCurrentId() external view returns (uint256) {
-        return _tokenIdCounter.current();
+        return _tokenIdCounter;
     }
 
     // ==================== End Reading State Variables ==================== //
@@ -703,7 +702,7 @@ contract ERC721FactoryGetSet is
             tokenMaximumSupply
         ) 
         whenIsApprovedOrOwner(
-            _isApprovedOrOwner(msg.sender, _tokenId)
+            _isAuthorized(_ownerOf(_tokenId), msg.sender, _tokenId)
         )
          
     {   

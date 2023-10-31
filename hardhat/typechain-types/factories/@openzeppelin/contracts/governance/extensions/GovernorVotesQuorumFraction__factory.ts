@@ -11,12 +11,252 @@ import type {
 const _abi = [
   {
     inputs: [],
-    name: "Empty",
+    name: "CheckpointUnorderedInsertion",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "FailedInnerCall",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "voter",
+        type: "address",
+      },
+    ],
+    name: "GovernorAlreadyCastVote",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "proposalId",
+        type: "uint256",
+      },
+    ],
+    name: "GovernorAlreadyQueuedProposal",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "GovernorDisabledDeposit",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "proposer",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "votes",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "threshold",
+        type: "uint256",
+      },
+    ],
+    name: "GovernorInsufficientProposerVotes",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "targets",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "calldatas",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "values",
+        type: "uint256",
+      },
+    ],
+    name: "GovernorInvalidProposalLength",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "quorumNumerator",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "quorumDenominator",
+        type: "uint256",
+      },
+    ],
+    name: "GovernorInvalidQuorumFraction",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "voter",
+        type: "address",
+      },
+    ],
+    name: "GovernorInvalidSignature",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "GovernorInvalidVoteType",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "votingPeriod",
+        type: "uint256",
+      },
+    ],
+    name: "GovernorInvalidVotingPeriod",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "proposalId",
+        type: "uint256",
+      },
+    ],
+    name: "GovernorNonexistentProposal",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "proposalId",
+        type: "uint256",
+      },
+    ],
+    name: "GovernorNotQueuedProposal",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "GovernorOnlyExecutor",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "GovernorOnlyProposer",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "GovernorQueueNotImplemented",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "proposer",
+        type: "address",
+      },
+    ],
+    name: "GovernorRestrictedProposer",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "proposalId",
+        type: "uint256",
+      },
+      {
+        internalType: "enum IGovernor.ProposalState",
+        name: "current",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32",
+        name: "expectedStates",
+        type: "bytes32",
+      },
+    ],
+    name: "GovernorUnexpectedProposalState",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "currentNonce",
+        type: "uint256",
+      },
+    ],
+    name: "InvalidAccountNonce",
     type: "error",
   },
   {
     inputs: [],
     name: "InvalidShortString",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "QueueEmpty",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "QueueFull",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "bits",
+        type: "uint8",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "SafeCastOverflowedUintDowncast",
     type: "error",
   },
   {
@@ -121,6 +361,25 @@ const _abi = [
       },
     ],
     name: "ProposalExecuted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "proposalId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "etaSeconds",
+        type: "uint256",
+      },
+    ],
+    name: "ProposalQueued",
     type: "event",
   },
   {
@@ -345,19 +604,14 @@ const _abi = [
         type: "uint8",
       },
       {
-        internalType: "uint8",
-        name: "v",
-        type: "uint8",
+        internalType: "address",
+        name: "voter",
+        type: "address",
       },
       {
-        internalType: "bytes32",
-        name: "r",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "s",
-        type: "bytes32",
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
       },
     ],
     name: "castVoteBySig",
@@ -447,6 +701,11 @@ const _abi = [
         type: "uint8",
       },
       {
+        internalType: "address",
+        name: "voter",
+        type: "address",
+      },
+      {
         internalType: "string",
         name: "reason",
         type: "string",
@@ -457,19 +716,9 @@ const _abi = [
         type: "bytes",
       },
       {
-        internalType: "uint8",
-        name: "v",
-        type: "uint8",
-      },
-      {
-        internalType: "bytes32",
-        name: "r",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "s",
-        type: "bytes32",
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
       },
     ],
     name: "castVoteWithReasonAndParamsBySig",
@@ -701,6 +950,25 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "nonces",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "",
         type: "address",
       },
@@ -836,6 +1104,44 @@ const _abi = [
         type: "uint256",
       },
     ],
+    name: "proposalEta",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "proposalNeedsQueuing",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "proposalId",
+        type: "uint256",
+      },
+    ],
     name: "proposalProposer",
     outputs: [
       {
@@ -903,6 +1209,40 @@ const _abi = [
       },
     ],
     name: "propose",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "targets",
+        type: "address[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "values",
+        type: "uint256[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "calldatas",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes32",
+        name: "descriptionHash",
+        type: "bytes32",
+      },
+    ],
+    name: "queue",
     outputs: [
       {
         internalType: "uint256",

@@ -9,6 +9,8 @@ const Snippets = require("../scripts/libs/Snippets");
 
 const MAXIMUM_SUPPLY: number | any = parseInt(`${process.env.MAXIMUM_SUPPLY}`);
 
+const CHAIN_IDS:Array<any> = process.env.CHAIN_IDS !== null ? String(process.env.CHAIN_IDS).split(",") : [];
+
 const provider:any = ethers.getDefaultProvider();
 
 describe("ERC721Factory", async function () {
@@ -95,6 +97,30 @@ describe("ERC721Factory", async function () {
         fs.mkdirSync(targetDir, { recursive: true });
 
         fs.writeFileSync(`${targetDir}ERC721.txt`, smartContractAddress);
+
+        CHAIN_IDS.map((chain: any) => {
+
+            const path: any = `../frontend/src/_services/providers/data/context/libs/artifacts/${chain}`;
+
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+
+            // Addresses
+
+            fs.writeFileSync(
+                `${path}/ERC721FactoryAddress.json`,
+                `{ "address": "${smartContractAddress}" }`
+            );
+            
+            // Contracts
+
+            fs.copyFile('./artifacts/contracts/ERC721Factory.sol/ERC721Factory.json', `${path}/ERC721FactoryContract.json`, (err:any) => {
+                if (err) throw err;
+                console.log('Artifact file [ ERC721Factory + Address ] copied successfully!');
+            });
+
+        })
 
         const loggerAddressBuffer: any = fs.readFileSync(`${targetDir}ERCLogger.txt`);
 
@@ -516,7 +542,8 @@ describe("ERC721Factory", async function () {
             await expect(ERC721FactorySmartContract.burnToken(
                 tokenId
             ))
-            .to.be.revertedWith("ERC721: invalid token ID");
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "NotApprovedOrOwner"); 
+            //.to.be.revertedWith("ERC721: invalid token ID"); Todo: =
             
         });
 
@@ -527,7 +554,8 @@ describe("ERC721Factory", async function () {
             await expect(ERC721FactorySmartContract.burnToken(
                 tokenId
             ))
-            .to.be.revertedWith("ERC721: invalid token ID");
+            .to.be.revertedWithCustomError(ERC721FactorySmartContract, "NotApprovedOrOwner"); 
+            //.to.be.revertedWith("ERC721: invalid token ID"); Todo: =
             
         });
 

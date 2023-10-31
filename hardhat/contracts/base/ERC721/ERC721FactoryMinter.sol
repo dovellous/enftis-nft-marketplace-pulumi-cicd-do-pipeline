@@ -10,8 +10,6 @@ pragma experimental ABIEncoderV2;
 import "./ERC721FactoryWorker.sol";
 
 abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
-    
-    using Counters for Counters.Counter;
 
     using Snippets for *;
     /// royalty states
@@ -57,10 +55,11 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
         string calldata _tokenURI,
         uint96 _royaltyFraction
     ) public payable onlyMinter returns (uint256) {
-        // Set the tokenId
-        _tokenIdCounter.increment(); // start tokenId at 1
 
-        uint256 newTokenId = _tokenIdCounter.current();
+        _tokenIdCounter++;
+
+        // Set the tokenId
+        uint256 newTokenId = _tokenIdCounter;
 
         if (newTokenId > tokenMaximumSupply) {
             revert Errors.MaximumTokenSupplyReached({
@@ -108,7 +107,7 @@ abstract contract ERC721FactoryMinter is ERC721FactoryWorker {
                 setApprovalForAll(marketplaceAddress, true);
             } 
 
-            _tokenCurrentSupply.increment();
+            _tokenCurrentSupply++;
 
             if (royaltiesDisabledUntil < block.timestamp) {
                 if (_royaltyFraction > 0) {

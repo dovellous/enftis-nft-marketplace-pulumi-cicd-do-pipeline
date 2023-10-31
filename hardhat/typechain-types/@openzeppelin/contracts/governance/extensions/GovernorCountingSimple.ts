@@ -44,15 +44,19 @@ export interface GovernorCountingSimpleInterface extends Interface {
       | "hasVoted"
       | "hashProposal"
       | "name"
+      | "nonces"
       | "onERC1155BatchReceived"
       | "onERC1155Received"
       | "onERC721Received"
       | "proposalDeadline"
+      | "proposalEta"
+      | "proposalNeedsQueuing"
       | "proposalProposer"
       | "proposalSnapshot"
       | "proposalThreshold"
       | "proposalVotes"
       | "propose"
+      | "queue"
       | "quorum"
       | "relay"
       | "state"
@@ -68,6 +72,7 @@ export interface GovernorCountingSimpleInterface extends Interface {
       | "ProposalCanceled"
       | "ProposalCreated"
       | "ProposalExecuted"
+      | "ProposalQueued"
       | "VoteCast"
       | "VoteCastWithParams"
   ): EventFragment;
@@ -98,7 +103,7 @@ export interface GovernorCountingSimpleInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteBySig",
-    values: [BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike]
+    values: [BigNumberish, BigNumberish, AddressLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteWithReason",
@@ -113,9 +118,8 @@ export interface GovernorCountingSimpleInterface extends Interface {
     values: [
       BigNumberish,
       BigNumberish,
+      AddressLike,
       string,
-      BytesLike,
-      BigNumberish,
       BytesLike,
       BytesLike
     ]
@@ -146,6 +150,7 @@ export interface GovernorCountingSimpleInterface extends Interface {
     values: [AddressLike[], BigNumberish[], BytesLike[], BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "nonces", values: [AddressLike]): string;
   encodeFunctionData(
     functionFragment: "onERC1155BatchReceived",
     values: [
@@ -169,6 +174,14 @@ export interface GovernorCountingSimpleInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "proposalEta",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalNeedsQueuing",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "proposalProposer",
     values: [BigNumberish]
   ): string;
@@ -187,6 +200,10 @@ export interface GovernorCountingSimpleInterface extends Interface {
   encodeFunctionData(
     functionFragment: "propose",
     values: [AddressLike[], BigNumberish[], BytesLike[], string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "queue",
+    values: [AddressLike[], BigNumberish[], BytesLike[], BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "quorum",
@@ -259,6 +276,7 @@ export interface GovernorCountingSimpleInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "onERC1155BatchReceived",
     data: BytesLike
@@ -273,6 +291,14 @@ export interface GovernorCountingSimpleInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "proposalDeadline",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalEta",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalNeedsQueuing",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -292,6 +318,7 @@ export interface GovernorCountingSimpleInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "propose", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "queue", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "quorum", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "relay", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "state", data: BytesLike): Result;
@@ -377,6 +404,19 @@ export namespace ProposalExecutedEvent {
   export type OutputTuple = [proposalId: bigint];
   export interface OutputObject {
     proposalId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace ProposalQueuedEvent {
+  export type InputTuple = [proposalId: BigNumberish, etaSeconds: BigNumberish];
+  export type OutputTuple = [proposalId: bigint, etaSeconds: bigint];
+  export interface OutputObject {
+    proposalId: bigint;
+    etaSeconds: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -515,9 +555,8 @@ export interface GovernorCountingSimple extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      voter: AddressLike,
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -544,11 +583,10 @@ export interface GovernorCountingSimple extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
+      voter: AddressLike,
       reason: string,
       params: BytesLike,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -614,6 +652,8 @@ export interface GovernorCountingSimple extends BaseContract {
 
   name: TypedContractMethod<[], [string], "view">;
 
+  nonces: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+
   onERC1155BatchReceived: TypedContractMethod<
     [
       arg0: AddressLike,
@@ -650,6 +690,18 @@ export interface GovernorCountingSimple extends BaseContract {
     "view"
   >;
 
+  proposalEta: TypedContractMethod<
+    [proposalId: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  proposalNeedsQueuing: TypedContractMethod<
+    [arg0: BigNumberish],
+    [boolean],
+    "view"
+  >;
+
   proposalProposer: TypedContractMethod<
     [proposalId: BigNumberish],
     [string],
@@ -682,6 +734,17 @@ export interface GovernorCountingSimple extends BaseContract {
       values: BigNumberish[],
       calldatas: BytesLike[],
       description: string
+    ],
+    [bigint],
+    "nonpayable"
+  >;
+
+  queue: TypedContractMethod<
+    [
+      targets: AddressLike[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -750,9 +813,8 @@ export interface GovernorCountingSimple extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      voter: AddressLike,
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -782,11 +844,10 @@ export interface GovernorCountingSimple extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
+      voter: AddressLike,
       reason: string,
       params: BytesLike,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -860,6 +921,9 @@ export interface GovernorCountingSimple extends BaseContract {
     nameOrSignature: "name"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "nonces"
+  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+  getFunction(
     nameOrSignature: "onERC1155BatchReceived"
   ): TypedContractMethod<
     [
@@ -896,6 +960,12 @@ export interface GovernorCountingSimple extends BaseContract {
     nameOrSignature: "proposalDeadline"
   ): TypedContractMethod<[proposalId: BigNumberish], [bigint], "view">;
   getFunction(
+    nameOrSignature: "proposalEta"
+  ): TypedContractMethod<[proposalId: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "proposalNeedsQueuing"
+  ): TypedContractMethod<[arg0: BigNumberish], [boolean], "view">;
+  getFunction(
     nameOrSignature: "proposalProposer"
   ): TypedContractMethod<[proposalId: BigNumberish], [string], "view">;
   getFunction(
@@ -925,6 +995,18 @@ export interface GovernorCountingSimple extends BaseContract {
       values: BigNumberish[],
       calldatas: BytesLike[],
       description: string
+    ],
+    [bigint],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "queue"
+  ): TypedContractMethod<
+    [
+      targets: AddressLike[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -984,6 +1066,13 @@ export interface GovernorCountingSimple extends BaseContract {
     ProposalExecutedEvent.OutputObject
   >;
   getEvent(
+    key: "ProposalQueued"
+  ): TypedContractEvent<
+    ProposalQueuedEvent.InputTuple,
+    ProposalQueuedEvent.OutputTuple,
+    ProposalQueuedEvent.OutputObject
+  >;
+  getEvent(
     key: "VoteCast"
   ): TypedContractEvent<
     VoteCastEvent.InputTuple,
@@ -1041,6 +1130,17 @@ export interface GovernorCountingSimple extends BaseContract {
       ProposalExecutedEvent.InputTuple,
       ProposalExecutedEvent.OutputTuple,
       ProposalExecutedEvent.OutputObject
+    >;
+
+    "ProposalQueued(uint256,uint256)": TypedContractEvent<
+      ProposalQueuedEvent.InputTuple,
+      ProposalQueuedEvent.OutputTuple,
+      ProposalQueuedEvent.OutputObject
+    >;
+    ProposalQueued: TypedContractEvent<
+      ProposalQueuedEvent.InputTuple,
+      ProposalQueuedEvent.OutputTuple,
+      ProposalQueuedEvent.OutputObject
     >;
 
     "VoteCast(address,uint256,uint8,uint256,string)": TypedContractEvent<

@@ -42,9 +42,13 @@ export interface IGovernorInterface extends Interface {
       | "hashProposal"
       | "name"
       | "proposalDeadline"
+      | "proposalEta"
+      | "proposalNeedsQueuing"
       | "proposalProposer"
       | "proposalSnapshot"
+      | "proposalThreshold"
       | "propose"
+      | "queue"
       | "quorum"
       | "state"
       | "supportsInterface"
@@ -58,6 +62,7 @@ export interface IGovernorInterface extends Interface {
       | "ProposalCanceled"
       | "ProposalCreated"
       | "ProposalExecuted"
+      | "ProposalQueued"
       | "VoteCast"
       | "VoteCastWithParams"
   ): EventFragment;
@@ -80,7 +85,7 @@ export interface IGovernorInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteBySig",
-    values: [BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike]
+    values: [BigNumberish, BigNumberish, AddressLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteWithReason",
@@ -95,9 +100,8 @@ export interface IGovernorInterface extends Interface {
     values: [
       BigNumberish,
       BigNumberish,
+      AddressLike,
       string,
-      BytesLike,
-      BigNumberish,
       BytesLike,
       BytesLike
     ]
@@ -129,6 +133,14 @@ export interface IGovernorInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "proposalEta",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalNeedsQueuing",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "proposalProposer",
     values: [BigNumberish]
   ): string;
@@ -137,8 +149,16 @@ export interface IGovernorInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "proposalThreshold",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "propose",
     values: [AddressLike[], BigNumberish[], BytesLike[], string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "queue",
+    values: [AddressLike[], BigNumberish[], BytesLike[], BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "quorum",
@@ -200,6 +220,14 @@ export interface IGovernorInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "proposalEta",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalNeedsQueuing",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "proposalProposer",
     data: BytesLike
   ): Result;
@@ -207,7 +235,12 @@ export interface IGovernorInterface extends Interface {
     functionFragment: "proposalSnapshot",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalThreshold",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "propose", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "queue", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "quorum", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "state", data: BytesLike): Result;
   decodeFunctionResult(
@@ -282,6 +315,19 @@ export namespace ProposalExecutedEvent {
   export type OutputTuple = [proposalId: bigint];
   export interface OutputObject {
     proposalId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace ProposalQueuedEvent {
+  export type InputTuple = [proposalId: BigNumberish, etaSeconds: BigNumberish];
+  export type OutputTuple = [proposalId: bigint, etaSeconds: bigint];
+  export interface OutputObject {
+    proposalId: bigint;
+    etaSeconds: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -416,9 +462,8 @@ export interface IGovernor extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      voter: AddressLike,
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -445,11 +490,10 @@ export interface IGovernor extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
+      voter: AddressLike,
       reason: string,
       params: BytesLike,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -505,6 +549,18 @@ export interface IGovernor extends BaseContract {
     "view"
   >;
 
+  proposalEta: TypedContractMethod<
+    [proposalId: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  proposalNeedsQueuing: TypedContractMethod<
+    [proposalId: BigNumberish],
+    [boolean],
+    "view"
+  >;
+
   proposalProposer: TypedContractMethod<
     [proposalId: BigNumberish],
     [string],
@@ -517,12 +573,25 @@ export interface IGovernor extends BaseContract {
     "view"
   >;
 
+  proposalThreshold: TypedContractMethod<[], [bigint], "view">;
+
   propose: TypedContractMethod<
     [
       targets: AddressLike[],
       values: BigNumberish[],
       calldatas: BytesLike[],
       description: string
+    ],
+    [bigint],
+    "nonpayable"
+  >;
+
+  queue: TypedContractMethod<
+    [
+      targets: AddressLike[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -579,9 +648,8 @@ export interface IGovernor extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      voter: AddressLike,
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -611,11 +679,10 @@ export interface IGovernor extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
+      voter: AddressLike,
       reason: string,
       params: BytesLike,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -675,11 +742,20 @@ export interface IGovernor extends BaseContract {
     nameOrSignature: "proposalDeadline"
   ): TypedContractMethod<[proposalId: BigNumberish], [bigint], "view">;
   getFunction(
+    nameOrSignature: "proposalEta"
+  ): TypedContractMethod<[proposalId: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "proposalNeedsQueuing"
+  ): TypedContractMethod<[proposalId: BigNumberish], [boolean], "view">;
+  getFunction(
     nameOrSignature: "proposalProposer"
   ): TypedContractMethod<[proposalId: BigNumberish], [string], "view">;
   getFunction(
     nameOrSignature: "proposalSnapshot"
   ): TypedContractMethod<[proposalId: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "proposalThreshold"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "propose"
   ): TypedContractMethod<
@@ -688,6 +764,18 @@ export interface IGovernor extends BaseContract {
       values: BigNumberish[],
       calldatas: BytesLike[],
       description: string
+    ],
+    [bigint],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "queue"
+  ): TypedContractMethod<
+    [
+      targets: AddressLike[],
+      values: BigNumberish[],
+      calldatas: BytesLike[],
+      descriptionHash: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -731,6 +819,13 @@ export interface IGovernor extends BaseContract {
     ProposalExecutedEvent.InputTuple,
     ProposalExecutedEvent.OutputTuple,
     ProposalExecutedEvent.OutputObject
+  >;
+  getEvent(
+    key: "ProposalQueued"
+  ): TypedContractEvent<
+    ProposalQueuedEvent.InputTuple,
+    ProposalQueuedEvent.OutputTuple,
+    ProposalQueuedEvent.OutputObject
   >;
   getEvent(
     key: "VoteCast"
@@ -779,6 +874,17 @@ export interface IGovernor extends BaseContract {
       ProposalExecutedEvent.InputTuple,
       ProposalExecutedEvent.OutputTuple,
       ProposalExecutedEvent.OutputObject
+    >;
+
+    "ProposalQueued(uint256,uint256)": TypedContractEvent<
+      ProposalQueuedEvent.InputTuple,
+      ProposalQueuedEvent.OutputTuple,
+      ProposalQueuedEvent.OutputObject
+    >;
+    ProposalQueued: TypedContractEvent<
+      ProposalQueuedEvent.InputTuple,
+      ProposalQueuedEvent.OutputTuple,
+      ProposalQueuedEvent.OutputObject
     >;
 
     "VoteCast(address,uint256,uint8,uint256,string)": TypedContractEvent<

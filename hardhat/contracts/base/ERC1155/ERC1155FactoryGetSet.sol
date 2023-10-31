@@ -33,7 +33,6 @@ contract ERC1155FactoryGetSet is
     ERC1155FactoryMinter,
     ERC1155FactoryBurner
 {
-    using Counters for Counters.Counter;
 
     /**
      * Constructor arguments for erc1155 implementation.
@@ -98,16 +97,16 @@ contract ERC1155FactoryGetSet is
         }
 
         // setup admin roles
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(Snippets.ADMIN_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(Snippets.ADMIN_ROLE, msg.sender);
         for (uint256 i; i < adminsLength; ++i) {
-            _setupRole(Snippets.ADMIN_ROLE, adminsArray[i]);
+            _grantRole(Snippets.ADMIN_ROLE, adminsArray[i]);
         }
 
         // setup admin role
-        _setupRole(Snippets.MINTER_ROLE, msg.sender);
+        _grantRole(Snippets.MINTER_ROLE, msg.sender);
         for (uint256 i; i < mintersLength; ++i) {
-            _setupRole(Snippets.MINTER_ROLE, mintersArray[i]);
+            _grantRole(Snippets.MINTER_ROLE, mintersArray[i]);
         }
 
         // _tokenMaximumSupply of 0 implies no limit
@@ -215,7 +214,7 @@ contract ERC1155FactoryGetSet is
      * @return _tokenIdCounter.
      */
     function getTokenCurrentSupply() external view returns (uint256) {
-        return _tokenIdCounter.current();
+        return _tokenIdCounter;
     }
 
     // ==================== End Reading State Variables ==================== //
@@ -772,21 +771,12 @@ contract ERC1155FactoryGetSet is
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    function _beforeTokenTransfer(
-        address operator,
-        address from,
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
-    ) internal virtual override(ERC1155FactoryBase) {
-        ERC1155FactoryBase._beforeTokenTransfer(
-            operator,
+    function _update(address from, address to, uint256[] memory ids, uint256[] memory amounts) internal virtual override(ERC1155FactoryBase) {
+        ERC1155FactoryBase._update(
             from,
             to,
             ids,
-            amounts,
-            data
+            amounts
         );
     }
 }

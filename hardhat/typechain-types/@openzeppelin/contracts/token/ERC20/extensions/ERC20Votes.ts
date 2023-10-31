@@ -23,15 +23,15 @@ import type {
   TypedContractMethod,
 } from "../../../../../common";
 
-export declare namespace ERC20Votes {
-  export type CheckpointStruct = {
-    fromBlock: BigNumberish;
-    votes: BigNumberish;
+export declare namespace Checkpoints {
+  export type Checkpoint208Struct = {
+    _key: BigNumberish;
+    _value: BigNumberish;
   };
 
-  export type CheckpointStructOutput = [fromBlock: bigint, votes: bigint] & {
-    fromBlock: bigint;
-    votes: bigint;
+  export type Checkpoint208StructOutput = [_key: bigint, _value: bigint] & {
+    _key: bigint;
+    _value: bigint;
   };
 }
 
@@ -39,14 +39,12 @@ export interface ERC20VotesInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "CLOCK_MODE"
-      | "DOMAIN_SEPARATOR"
       | "allowance"
       | "approve"
       | "balanceOf"
       | "checkpoints"
       | "clock"
       | "decimals"
-      | "decreaseAllowance"
       | "delegate"
       | "delegateBySig"
       | "delegates"
@@ -54,11 +52,9 @@ export interface ERC20VotesInterface extends Interface {
       | "getPastTotalSupply"
       | "getPastVotes"
       | "getVotes"
-      | "increaseAllowance"
       | "name"
       | "nonces"
       | "numCheckpoints"
-      | "permit"
       | "symbol"
       | "totalSupply"
       | "transfer"
@@ -79,10 +75,6 @@ export interface ERC20VotesInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "DOMAIN_SEPARATOR",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "allowance",
     values: [AddressLike, AddressLike]
   ): string;
@@ -100,10 +92,6 @@ export interface ERC20VotesInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "clock", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "decreaseAllowance",
-    values: [AddressLike, BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "delegate",
     values: [AddressLike]
@@ -139,27 +127,11 @@ export interface ERC20VotesInterface extends Interface {
     functionFragment: "getVotes",
     values: [AddressLike]
   ): string;
-  encodeFunctionData(
-    functionFragment: "increaseAllowance",
-    values: [AddressLike, BigNumberish]
-  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "nonces", values: [AddressLike]): string;
   encodeFunctionData(
     functionFragment: "numCheckpoints",
     values: [AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "permit",
-    values: [
-      AddressLike,
-      AddressLike,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BytesLike,
-      BytesLike
-    ]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -176,10 +148,6 @@ export interface ERC20VotesInterface extends Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "CLOCK_MODE", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "DOMAIN_SEPARATOR",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -189,10 +157,6 @@ export interface ERC20VotesInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "clock", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "decreaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "delegate", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "delegateBySig",
@@ -212,17 +176,12 @@ export interface ERC20VotesInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getVotes", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "numCheckpoints",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -278,18 +237,18 @@ export namespace DelegateChangedEvent {
 export namespace DelegateVotesChangedEvent {
   export type InputTuple = [
     delegate: AddressLike,
-    previousBalance: BigNumberish,
-    newBalance: BigNumberish
+    previousVotes: BigNumberish,
+    newVotes: BigNumberish
   ];
   export type OutputTuple = [
     delegate: string,
-    previousBalance: bigint,
-    newBalance: bigint
+    previousVotes: bigint,
+    newVotes: bigint
   ];
   export interface OutputObject {
     delegate: string;
-    previousBalance: bigint;
-    newBalance: bigint;
+    previousVotes: bigint;
+    newVotes: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -370,8 +329,6 @@ export interface ERC20Votes extends BaseContract {
 
   CLOCK_MODE: TypedContractMethod<[], [string], "view">;
 
-  DOMAIN_SEPARATOR: TypedContractMethod<[], [string], "view">;
-
   allowance: TypedContractMethod<
     [owner: AddressLike, spender: AddressLike],
     [bigint],
@@ -379,7 +336,7 @@ export interface ERC20Votes extends BaseContract {
   >;
 
   approve: TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [spender: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -388,19 +345,13 @@ export interface ERC20Votes extends BaseContract {
 
   checkpoints: TypedContractMethod<
     [account: AddressLike, pos: BigNumberish],
-    [ERC20Votes.CheckpointStructOutput],
+    [Checkpoints.Checkpoint208StructOutput],
     "view"
   >;
 
   clock: TypedContractMethod<[], [bigint], "view">;
 
   decimals: TypedContractMethod<[], [bigint], "view">;
-
-  decreaseAllowance: TypedContractMethod<
-    [spender: AddressLike, subtractedValue: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
 
   delegate: TypedContractMethod<[delegatee: AddressLike], [void], "nonpayable">;
 
@@ -449,44 +400,24 @@ export interface ERC20Votes extends BaseContract {
 
   getVotes: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
-  increaseAllowance: TypedContractMethod<
-    [spender: AddressLike, addedValue: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
   name: TypedContractMethod<[], [string], "view">;
 
   nonces: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
 
   numCheckpoints: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
-  permit: TypedContractMethod<
-    [
-      owner: AddressLike,
-      spender: AddressLike,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
-    ],
-    [void],
-    "nonpayable"
-  >;
-
   symbol: TypedContractMethod<[], [string], "view">;
 
   totalSupply: TypedContractMethod<[], [bigint], "view">;
 
   transfer: TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
 
   transferFrom: TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [from: AddressLike, to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -499,9 +430,6 @@ export interface ERC20Votes extends BaseContract {
     nameOrSignature: "CLOCK_MODE"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "DOMAIN_SEPARATOR"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
     nameOrSignature: "allowance"
   ): TypedContractMethod<
     [owner: AddressLike, spender: AddressLike],
@@ -511,7 +439,7 @@ export interface ERC20Votes extends BaseContract {
   getFunction(
     nameOrSignature: "approve"
   ): TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [spender: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -522,7 +450,7 @@ export interface ERC20Votes extends BaseContract {
     nameOrSignature: "checkpoints"
   ): TypedContractMethod<
     [account: AddressLike, pos: BigNumberish],
-    [ERC20Votes.CheckpointStructOutput],
+    [Checkpoints.Checkpoint208StructOutput],
     "view"
   >;
   getFunction(
@@ -531,13 +459,6 @@ export interface ERC20Votes extends BaseContract {
   getFunction(
     nameOrSignature: "decimals"
   ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "decreaseAllowance"
-  ): TypedContractMethod<
-    [spender: AddressLike, subtractedValue: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
   getFunction(
     nameOrSignature: "delegate"
   ): TypedContractMethod<[delegatee: AddressLike], [void], "nonpayable">;
@@ -589,13 +510,6 @@ export interface ERC20Votes extends BaseContract {
     nameOrSignature: "getVotes"
   ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
   getFunction(
-    nameOrSignature: "increaseAllowance"
-  ): TypedContractMethod<
-    [spender: AddressLike, addedValue: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "name"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
@@ -605,21 +519,6 @@ export interface ERC20Votes extends BaseContract {
     nameOrSignature: "numCheckpoints"
   ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
   getFunction(
-    nameOrSignature: "permit"
-  ): TypedContractMethod<
-    [
-      owner: AddressLike,
-      spender: AddressLike,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
-    ],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "symbol"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
@@ -628,14 +527,14 @@ export interface ERC20Votes extends BaseContract {
   getFunction(
     nameOrSignature: "transfer"
   ): TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;
   getFunction(
     nameOrSignature: "transferFrom"
   ): TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [from: AddressLike, to: AddressLike, value: BigNumberish],
     [boolean],
     "nonpayable"
   >;

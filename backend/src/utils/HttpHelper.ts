@@ -1,6 +1,7 @@
 import {Logger} from "./LoggerHelper";
 
-const errors = {
+const httpStatus = {
+	TRACE: 'OK',
 	OK: 'OK',
 	CREATED: 'CREATED',
 	UPDATED: 'UPDATED',
@@ -12,7 +13,17 @@ const errors = {
 	INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
 }
 
-const handleError = ( res: any, status: any, message: any, payload: any ) => {
+const handleResponse = (res: any, code: number, payload: any) => {
+
+	Logger.log(['HTTP Response', code]);
+
+	res.setHeader('Content-Type', 'application/json');
+
+	res.status(code).json(payload).end();
+
+}
+
+const handleHttpStatus = ( res: any, status: any, message: any, payload: any, model?:string, operation?:string ) => {
 	
 	Logger.error(['HTTP Error', status, message]);
 	
@@ -20,83 +31,110 @@ const handleError = ( res: any, status: any, message: any, payload: any ) => {
 	
 	switch( status ) {
 
-		case  errors.OK : {
-			res.status(200).json({
-				status: errors.OK,
+		case httpStatus.TRACE: {
+			handleResponse(res, 200, {
+				status: httpStatus.TRACE,
 				message: message || 'success',
-				error: payload
+				data: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
 
-		case  errors.CREATED : {
-			res.status(201).json({
-				status: errors.CREATED,
+		case httpStatus.OK: {
+			handleResponse(res, 200, {
+				status: httpStatus.OK,
+				message: message || 'success',
+				data: payload,
+				model: model,
+				operation: operation
+			});
+			break;
+		}
+
+		case  httpStatus.CREATED : {
+			handleResponse(res, 201, {
+				status: httpStatus.CREATED,
 				message: message || 'Item created',
-				error: payload
+				data: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
 
-		case  errors.UPDATED : {
-			res.status(200).json({
-				status: errors.UPDATED,
+		case  httpStatus.UPDATED : {
+			handleResponse(res, 200, {
+				status: httpStatus.UPDATED,
 				message: message || 'Item updated',
-				error: payload
+				data: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
 
-		case  errors.DELETED : {
-			res.status(200).json({
-				status: errors.DELETED,
+		case  httpStatus.DELETED : {
+			handleResponse(res, 200, {
+				status: httpStatus.DELETED,
 				message: message || 'Item deleted',
-				error: payload
+				uuid: payload
 			});
 			break;
 		}
 
-		case  errors.BAD_REQUEST : {
-			res.status(400).json({
-				status: errors.BAD_REQUEST,
+		case  httpStatus.BAD_REQUEST : {
+			handleResponse(res, 400, {
+				status: httpStatus.BAD_REQUEST,
 				message: message || 'Invalid or missing parameters',
-				error: payload
+				error: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
 
-		case  errors.VALIDATION_ERROR : {
-			res.status(400).json({
-				status: errors.VALIDATION_ERROR,
+		case  httpStatus.VALIDATION_ERROR : {
+			handleResponse(res, 400, {
+				status: httpStatus.VALIDATION_ERROR,
 				message: message || 'Validation error',
-				error: payload
+				error: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
 
-		case  errors.UNAUTHORIZED_ERROR : {
-			res.status(401).json({
-				status: errors.UNAUTHORIZED_ERROR,
+		case  httpStatus.UNAUTHORIZED_ERROR : {
+			handleResponse(res, 401, {
+				status: httpStatus.UNAUTHORIZED_ERROR,
 				message: message || 'The user is not authorized',
-				error: payload
+				error: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
 
-		case  errors.FORBIDDEN_ERROR : {
-			res.status(403).json({
-				status: errors.FORBIDDEN_ERROR,
+		case  httpStatus.FORBIDDEN_ERROR : {
+			handleResponse(res, 403, {
+				status: httpStatus.FORBIDDEN_ERROR,
 				message: message || 'The action is forbidden',
-				error: payload
+				error: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
 
-		case  errors.INTERNAL_SERVER_ERROR : {
-			res.status(500).json({
-				status: errors.INTERNAL_SERVER_ERROR,
+		case  httpStatus.INTERNAL_SERVER_ERROR : {
+			handleResponse(res, 500, {
+				status: httpStatus.INTERNAL_SERVER_ERROR,
 				message: message || 'Internal server error',
-				error: payload
+				error: payload,
+				model: model,
+				operation: operation
 			});
 			break;
 		}
@@ -110,14 +148,4 @@ const handleError = ( res: any, status: any, message: any, payload: any ) => {
 	
 }
 
-const handleResponse = (req: any, res: any, next: any, payload: any, code: number = 200) => {
-	
-	Logger.log(['HTTP Response', code]);
-	
-	res.setHeader('Content-Type', 'application/json');
-
-	res.status(code).json(payload).end();
-	
-}
-
-export {errors, handleError, handleResponse}
+export {httpStatus, handleHttpStatus, handleResponse}

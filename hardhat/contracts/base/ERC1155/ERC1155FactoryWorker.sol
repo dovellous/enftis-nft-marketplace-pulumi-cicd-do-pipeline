@@ -11,9 +11,6 @@ import "./ERC1155FactoryBase.sol";
 
 abstract contract ERC1155FactoryWorker is ERC1155FactoryBase {
 
-    
-    using Counters for Counters.Counter;
-
     /**
      * @dev Retrieves a list of all available tokens.
      * @return Structs.NFT[] memory nftItems : an array of NFT items.
@@ -34,7 +31,7 @@ abstract contract ERC1155FactoryWorker is ERC1155FactoryBase {
         // Unchecked : @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/unchecked-code-block.md
         unchecked {
 
-            uint256 numberOfMintedTokens = _tokenIdCounter.current();
+            uint256 numberOfMintedTokens = _tokenIdCounter;
 
             // Specify the array size to save gas
             // Fixed Arrays : @see https://github.com/dovellous/com-enftis/blob/master/gas-saving-tips/fixed-arrays.md
@@ -102,7 +99,7 @@ abstract contract ERC1155FactoryWorker is ERC1155FactoryBase {
         // Because some tokens might have been burned
         // We would rather iterate over, up to the maximum minted tokens
         // Then ignore those that would have been burned by cheking _exists()
-        uint256 numberOfMintedTokens = _tokenIdCounter.current();
+        uint256 numberOfMintedTokens = _tokenIdCounter;
 
         // Declare the number of tokens to return in an array
         // We are going to use a fixed array, so we will compute the

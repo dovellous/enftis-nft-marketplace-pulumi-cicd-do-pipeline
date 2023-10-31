@@ -45,23 +45,42 @@ const verifyBearerToken = (authorizationHeader:string, callBackFunction:any) => 
 
 }
 
+type AvatarType = "S3 | BK | FB"
+
+type UserStatusType = "ACTIVE|BANNED|NOT_ACTIVE|SUSPENDED|DELETED|ARCHIVED"
+
+interface IAvatar {
+    photoURL: String;
+    s3Key: String;
+    bucketId: Number;
+    default: AvatarType;
+}
+
+interface IUserIdentities {
+    uid: String;
+    _id: String;
+    sid: Number;
+    mid: Number;
+    uuid: String;
+}
+
 interface IJsonWebAccessToken {
-    id: String;
+    identities: IUserIdentities;
+    avatar: IAvatar;
     username: String;
     email: String;
-    userId: String;
-    userStatus: String;
     clientId: String;
+    userStatus: UserStatusType;
     roles: String | Array<String> | undefined;
 }
 
 const signBearerToken = (req: any, payload:any, time:number) => {
 
     const accessTokenPayload:IJsonWebAccessToken = {
-        id: payload._id,
+        identities: payload.id,
         username: payload.username,
         email: payload.email,
-        userId: payload.userId,
+        avatar: payload.avatar,
         userStatus: payload.userStatus,
         clientId: req.clientId,
         roles: payload.roles,

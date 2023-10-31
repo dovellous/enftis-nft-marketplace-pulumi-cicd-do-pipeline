@@ -44,11 +44,13 @@ export interface GovernorTimelockControlInterface extends Interface {
       | "hasVoted"
       | "hashProposal"
       | "name"
+      | "nonces"
       | "onERC1155BatchReceived"
       | "onERC1155Received"
       | "onERC721Received"
       | "proposalDeadline"
       | "proposalEta"
+      | "proposalNeedsQueuing"
       | "proposalProposer"
       | "proposalSnapshot"
       | "proposalThreshold"
@@ -103,7 +105,7 @@ export interface GovernorTimelockControlInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteBySig",
-    values: [BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike]
+    values: [BigNumberish, BigNumberish, AddressLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "castVoteWithReason",
@@ -118,9 +120,8 @@ export interface GovernorTimelockControlInterface extends Interface {
     values: [
       BigNumberish,
       BigNumberish,
+      AddressLike,
       string,
-      BytesLike,
-      BigNumberish,
       BytesLike,
       BytesLike
     ]
@@ -151,6 +152,7 @@ export interface GovernorTimelockControlInterface extends Interface {
     values: [AddressLike[], BigNumberish[], BytesLike[], BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "nonces", values: [AddressLike]): string;
   encodeFunctionData(
     functionFragment: "onERC1155BatchReceived",
     values: [
@@ -175,6 +177,10 @@ export interface GovernorTimelockControlInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "proposalEta",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalNeedsQueuing",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -273,6 +279,7 @@ export interface GovernorTimelockControlInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "onERC1155BatchReceived",
     data: BytesLike
@@ -291,6 +298,10 @@ export interface GovernorTimelockControlInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "proposalEta",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalNeedsQueuing",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -405,11 +416,11 @@ export namespace ProposalExecutedEvent {
 }
 
 export namespace ProposalQueuedEvent {
-  export type InputTuple = [proposalId: BigNumberish, eta: BigNumberish];
-  export type OutputTuple = [proposalId: bigint, eta: bigint];
+  export type InputTuple = [proposalId: BigNumberish, etaSeconds: BigNumberish];
+  export type OutputTuple = [proposalId: bigint, etaSeconds: bigint];
   export interface OutputObject {
     proposalId: bigint;
-    eta: bigint;
+    etaSeconds: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -561,9 +572,8 @@ export interface GovernorTimelockControl extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      voter: AddressLike,
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -590,11 +600,10 @@ export interface GovernorTimelockControl extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
+      voter: AddressLike,
       reason: string,
       params: BytesLike,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -660,6 +669,8 @@ export interface GovernorTimelockControl extends BaseContract {
 
   name: TypedContractMethod<[], [string], "view">;
 
+  nonces: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+
   onERC1155BatchReceived: TypedContractMethod<
     [
       arg0: AddressLike,
@@ -699,6 +710,12 @@ export interface GovernorTimelockControl extends BaseContract {
   proposalEta: TypedContractMethod<
     [proposalId: BigNumberish],
     [bigint],
+    "view"
+  >;
+
+  proposalNeedsQueuing: TypedContractMethod<
+    [arg0: BigNumberish],
+    [boolean],
     "view"
   >;
 
@@ -809,9 +826,8 @@ export interface GovernorTimelockControl extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      voter: AddressLike,
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -841,11 +857,10 @@ export interface GovernorTimelockControl extends BaseContract {
     [
       proposalId: BigNumberish,
       support: BigNumberish,
+      voter: AddressLike,
       reason: string,
       params: BytesLike,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike
+      signature: BytesLike
     ],
     [bigint],
     "nonpayable"
@@ -919,6 +934,9 @@ export interface GovernorTimelockControl extends BaseContract {
     nameOrSignature: "name"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "nonces"
+  ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
+  getFunction(
     nameOrSignature: "onERC1155BatchReceived"
   ): TypedContractMethod<
     [
@@ -957,6 +975,9 @@ export interface GovernorTimelockControl extends BaseContract {
   getFunction(
     nameOrSignature: "proposalEta"
   ): TypedContractMethod<[proposalId: BigNumberish], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "proposalNeedsQueuing"
+  ): TypedContractMethod<[arg0: BigNumberish], [boolean], "view">;
   getFunction(
     nameOrSignature: "proposalProposer"
   ): TypedContractMethod<[proposalId: BigNumberish], [string], "view">;

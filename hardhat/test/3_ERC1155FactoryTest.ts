@@ -9,6 +9,8 @@ const Snippets = require("../scripts/libs/Snippets");
 
 const MAXIMUM_SUPPLY: number | any = parseInt(`${process.env.MAXIMUM_SUPPLY_1155}`);
 
+const CHAIN_IDS:Array<any> = process.env.CHAIN_IDS !== null ? String(process.env.CHAIN_IDS).split(",") : [];
+
 const provider:any = ethers.getDefaultProvider();
 
 describe("ERC1155Factory", async function () {
@@ -102,6 +104,30 @@ describe("ERC1155Factory", async function () {
         fs.mkdirSync(targetDir, { recursive: true });
 
         fs.writeFileSync(`${targetDir}ERC1155.txt`, smartContractAddress);
+
+        CHAIN_IDS.map((chain: any) => {
+
+            const path: any = `../frontend/src/_services/providers/data/context/libs/artifacts/${chain}`;
+
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+
+            // Addresses
+
+            fs.writeFileSync(
+                `${path}/ERC1155FactoryAddress.json`,
+                `{ "address": "${smartContractAddress}" }`
+            );
+
+            // Contracts
+
+            fs.copyFile('./artifacts/contracts/ERC1155Factory.sol/ERC1155Factory.json', `${path}/ERC1155FactoryContract.json`, (err: any) => {
+                if (err) throw err;
+                console.log('Artifact file [ ERC1155Factory + Address ] copied successfully!');
+            });
+
+        })
 
         const loggerAddressBuffer: any = fs.readFileSync(`${targetDir}ERCLogger.txt`);
 
@@ -628,7 +654,8 @@ describe("ERC1155Factory", async function () {
                 1,
                 Snippets.ZERO_ADDRESS
             ))
-                .to.be.revertedWith("ERC1155: caller is not token owner or approved");
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ERC1155MissingApprovalForAll");
+            //.to.be.revertedWith("ERC1155: caller is not token owner or approved");
 
             await expect(ERC1155FactorySmartContract.transferToken(
                 bobWallet.address,
@@ -637,7 +664,7 @@ describe("ERC1155Factory", async function () {
                 1,
                 Snippets.ZERO_ADDRESS
             ))
-                .to.be.revertedWith("ERC1155: caller is not token owner or approved");
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ERC1155MissingApprovalForAll");
 
         });
 
@@ -652,7 +679,8 @@ describe("ERC1155Factory", async function () {
                 1,
                 Snippets.ZERO_ADDRESS
             ))
-                .to.be.revertedWith("ERC1155: caller is not token owner or approved");
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ERC1155MissingApprovalForAll");
+            //.to.be.revertedWith("ERC1155: caller is not token owner or approved");
             
         });
 
@@ -667,7 +695,8 @@ describe("ERC1155Factory", async function () {
                 1,
                 Snippets.ZERO_ADDRESS
             ))
-                .to.be.revertedWith("ERC1155: caller is not token owner or approved");
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ERC1155MissingApprovalForAll");
+            //.to.be.revertedWith("ERC1155: caller is not token owner or approved");
             
         });
 
@@ -785,25 +814,27 @@ describe("ERC1155Factory", async function () {
             
         });
 
-        it("Reverts with a {ERC1155: burn amount exceeds balance} error", async () => {
+        it("Reverts with a {ERC1155InsufficientBalance} error", async () => {
 
             const tokenId:number = 0;
 
             const burnAmount:number = 15;
 
             await expect(aliceWalletAccount.burn(aliceWallet.address, tokenId, burnAmount))
-            .to.be.revertedWith("ERC1155: burn amount exceeds balance");
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ERC1155InsufficientBalance");
+            //.to.be.revertedWith("ERC1155: burn amount exceeds balance");
             
         });
 
-        it("Reverts with a {ERC1155: burn amount exceeds balance} error", async () => {
+        it("Reverts with a {ERC1155InsufficientBalance} error", async () => {
 
             const tokenId:number = 6;
 
             const burnAmount:number = 15;
 
             await expect(aliceWalletAccount.burn(aliceWallet.address, tokenId, burnAmount))
-            .to.be.revertedWith("ERC1155: burn amount exceeds balance");
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ERC1155InsufficientBalance");
+            //.to.be.revertedWith("ERC1155: burn amount exceeds balance");
             
         });
 
@@ -1430,7 +1461,8 @@ describe("ERC1155Factory", async function () {
                 _amount,
                 _data
             ))
-                .to.be.revertedWith("ERC1155: insufficient balance for transfer");
+            .to.be.revertedWithCustomError(ERC1155FactorySmartContract, "ERC1155InsufficientBalance")
+            //.to.be.revertedWith("ERC1155: insufficient balance for transfer");
 
         });
 

@@ -1,0 +1,60 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "antd": "^5.9.4",
+    "bootstrap": "^5.3.2",
+    "eslint": "8.51.0",
+    "eslint-config-next": "13.5.4",
+    "ethers": "^5.4.7",
+    "next": "13.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sf-font": "^1.0.0",
+    "viem": "^1.15.4",
+    "@0x/order-utils": "^10.4.28",
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "@uniswap/sdk": "^3.0.3",
+    "axios": "^1.5.1",
+    "console.table": "^0.10.0",
+    "cors": "",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "infura-web3-provider": "0.0.3",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "numeral": "^2.0.6",
+    "play-sound": "",
+    "sha3": "2.1.4",
+    "web3": "",
+    "web3-provider-engine": "",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

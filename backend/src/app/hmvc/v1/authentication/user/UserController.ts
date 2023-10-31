@@ -1,6 +1,6 @@
 import {handleResponse, handleError, errors} from "../../../../../utils/HttpHelper";
 import {signBearerToken} from "../../../../../utils/JWTHelper";
-import {UserModel, IUser} from "./UserModel";
+import {UserModel, IUser} from "./UserMongoModel";
 
 const bcrypt = require("bcryptjs");
 

@@ -289,7 +289,7 @@ export interface ERC1155Burnable extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       ids: BigNumberish[],
-      amounts: BigNumberish[],
+      values: BigNumberish[],
       data: BytesLike
     ],
     [void],
@@ -301,7 +301,7 @@ export interface ERC1155Burnable extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       id: BigNumberish,
-      amount: BigNumberish,
+      value: BigNumberish,
       data: BytesLike
     ],
     [void],
@@ -368,7 +368,7 @@ export interface ERC1155Burnable extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       ids: BigNumberish[],
-      amounts: BigNumberish[],
+      values: BigNumberish[],
       data: BytesLike
     ],
     [void],
@@ -381,7 +381,7 @@ export interface ERC1155Burnable extends BaseContract {
       from: AddressLike,
       to: AddressLike,
       id: BigNumberish,
-      amount: BigNumberish,
+      value: BigNumberish,
       data: BytesLike
     ],
     [void],

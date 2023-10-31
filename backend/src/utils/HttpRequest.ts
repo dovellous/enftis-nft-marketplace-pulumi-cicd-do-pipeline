@@ -5,6 +5,8 @@ require('dotenv').config();
 const apiBaseURL = process.env.BACKEND_API_BASE_URL ?? 'https://127.0.0.1:8080';
 
 const getAccessToken = () => {
+
+	// read var
 	
 	return '';
 	
@@ -45,7 +47,7 @@ const requestPostData = (endpoint:string, payload:any) => {
 	
 }
 
-const requestPutData = (endpoint:string, payload:any) => {
+const requestPutData = (endpoint: string, payload: any) => {
 
 	const config = {
 		method: 'put',
@@ -63,7 +65,25 @@ const requestPutData = (endpoint:string, payload:any) => {
 
 }
 
-const requestDeleteData = (endpoint:string, payload:any) => {
+const requestPatchData = (endpoint: string, payload: any) => {
+
+	const config = {
+		method: 'patch',
+		url: apiBaseURL + '/' + endpoint,
+		headers: {
+			'Authorization': 'Bearer ' + getAccessToken(),
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		data: payload
+	};
+
+	// @ts-ignore
+	return axiosClient(config);
+
+}
+
+const requestDeleteData = (endpoint: string, payload: any) => {
 
 	const config = {
 		method: 'delete',
@@ -81,10 +101,28 @@ const requestDeleteData = (endpoint:string, payload:any) => {
 
 }
 
+const requestTraceData = (endpoint: string, payload: any) => {
+
+	const config = {
+		method: 'trace',
+		url: apiBaseURL + '/' + endpoint,
+		headers: {
+			'Authorization': 'Bearer ' + getAccessToken(),
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		data: payload
+	};
+
+	// @ts-ignore
+	return axiosClient(config);
+
+}
+
 const postData = (url:string, payload:any, callbackSuccess:any, callbackError:any) => {
 	
 	const config = {
-		method: 'delete',
+		method: 'post',
 		url: url,
 		headers: {
 			'Accept': 'application/json',
@@ -124,4 +162,4 @@ const getData = (url:string, callbackSuccess:any, callbackError:any) => {
 	
 }
 
-export {requestGetData, requestPostData, requestPutData, requestDeleteData, getData, postData}
+export { requestGetData, requestPostData, requestPutData, requestPatchData, requestDeleteData, requestTraceData, getData, postData}

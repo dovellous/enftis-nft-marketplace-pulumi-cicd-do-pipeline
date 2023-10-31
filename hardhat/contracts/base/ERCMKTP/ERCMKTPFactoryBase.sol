@@ -9,8 +9,7 @@ pragma experimental ABIEncoderV2;
 
 /*********************************** Imports **********************************/
 
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "../ERC721/IERC721Factory.sol";
@@ -25,15 +24,13 @@ contract ERCMKTPFactoryBase is
     ERCMKTPModifiers
 {
 
-    using Counters for Counters.Counter;
+    uint256 public _tokenIndexedIDs;
 
-    Counters.Counter public _tokenIndexedIDs;
+    uint256 public _tokenIndexedAuctionIDs;
 
-    Counters.Counter public _tokenIndexedAuctionIDs;
+    uint256 public _soldItems;
 
-    Counters.Counter public _soldItems;
-
-    Counters.Counter public _listedItems;
+    uint256 public _listedItems;
     /// Owner of the contract. 
     /// This is only for compatibility for other protocols.
     address payable public owner;
@@ -176,8 +173,8 @@ contract ERCMKTPFactoryBase is
 
     }
 
-    function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC1155Receiver) returns (bool) {
-        return interfaceId == type(IERC1155Receiver).interfaceId || super.supportsInterface(interfaceId);
+    function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC1155Holder) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 
     // Fallback function must be declared as external.

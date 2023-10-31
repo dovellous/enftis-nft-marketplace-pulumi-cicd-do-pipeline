@@ -12,8 +12,6 @@ import "./ERCMKTPFactoryMarketplace.sol";
 
 abstract contract ERCMKTPFactoryAuction is ERCMKTPFactoryWorker, ERCMKTPFactoryMarketplace{
 
-    using Counters for *;
-
     event NFTMarketItemBid( uint256 indexed tokenIndexedID, uint256 amount, address bidder );
 
     function bidNFTMarketAuctionItem(
@@ -137,7 +135,7 @@ abstract contract ERCMKTPFactoryAuction is ERCMKTPFactoryWorker, ERCMKTPFactoryM
         returns (Structs.NFTFull[]  memory)
     {
 
-        uint totalAuctionItemCount = _tokenIndexedAuctionIDs.current();
+        uint totalAuctionItemCount = _tokenIndexedAuctionIDs;
 
         Structs.NFTFull[]  memory _NFTFull = new Structs.NFTFull[](totalAuctionItemCount);
 
@@ -170,9 +168,9 @@ abstract contract ERCMKTPFactoryAuction is ERCMKTPFactoryWorker, ERCMKTPFactoryM
         returns (Structs.NFTFull[]  memory)
     {
         
-        uint totalItemCount = _tokenIndexedIDs.current();
+        uint totalItemCount = _tokenIndexedIDs;
 
-        uint totalAuctionItemCount = _tokenIndexedAuctionIDs.current();
+        uint totalAuctionItemCount = _tokenIndexedAuctionIDs;
 
         uint userAuctionItemCount;
 

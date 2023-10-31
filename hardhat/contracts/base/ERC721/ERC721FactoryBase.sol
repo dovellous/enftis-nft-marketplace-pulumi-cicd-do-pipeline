@@ -10,13 +10,15 @@ pragma experimental ABIEncoderV2;
 /*********************************** Imports **********************************/
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Royalty.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "../common/ERCFallback.sol";
 import "../common/ERCModifiers.sol";
@@ -28,17 +30,16 @@ contract ERC721FactoryBase is
     ERC721URIStorage,
     ERC721Royalty,
     ERC721Burnable,
-    Pausable,
+    ERC721Pausable,
     ERCFallback,
     ERCModifiers
 {
-    using Counters for Counters.Counter;
 
     /// @dev Counters for tokenIds.
-    Counters.Counter public _tokenIdCounter;
+    uint256 public _tokenIdCounter;
 
     /// @dev Counters for token current supply.
-    Counters.Counter public _tokenCurrentSupply;
+    uint256 public _tokenCurrentSupply;
 
     /// @dev Collection category
     Enums.TokenCategory public tokenCategory;
@@ -161,6 +162,18 @@ contract ERC721FactoryBase is
         string memory _symbol
     ) ERC721(_name, _symbol) {}
 
+    function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _pause();
+    }
+
+    function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _unpause();
+    }
+
+    function _exists(uint256 _tokenId) public view returns ( bool  ) {
+       return _ownerOf(_tokenId) != address(0);
+    }
+
     /**
      * @dev Returns the base uri of the contract.
      * @return string base uri of the contract.
@@ -168,17 +181,6 @@ contract ERC721FactoryBase is
      */
     function _baseURI() internal view virtual override returns (string memory) {
         return baseTokenURI;
-    }
-
-    /**
-     * @dev See {ERC721-_burn}. This override additionally checks to see if a
-     * token-specific URI was set for the token, and if so, it deletes the token URI from
-     * the storage mapping.
-     */
-    function _burn(
-        uint256 _tokenId
-    ) internal virtual override(ERC721, ERC721Royalty, ERC721URIStorage) {
-        super._burn(_tokenId);
     }
 
     /**
@@ -191,7 +193,7 @@ contract ERC721FactoryBase is
         override(ERC721Enumerable)
         returns (uint256)
     {
-        return _tokenCurrentSupply.current();
+        return _tokenCurrentSupply;
     }
 
     /**
@@ -228,65 +230,50 @@ contract ERC721FactoryBase is
         return baseURI;
     }
 
-    /**
-     * @dev :
-     */
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 batchSize
-    ) internal virtual override(ERC721, ERC721Enumerable) {
-        //Mint
-        if (from == address(0)) {
-            // Mint amount must not overflow total supply
-            require(!_exists(tokenId), "TAE");
-            require(_tokenCurrentSupply.current() <= tokenMaximumSupply, "OFW");
-        }
-
-        //Burn
-        if (to == address(0)) {
-            // to must be the owner
-            require(ownerOf(tokenId) == _msgSender(), "NTO");
-            // Must not below owned amounts
-            require(tokenMaximumSupply != 0, "UFW");
-        }
-
-        //Transfer
-        if (to == address(0) && from == address(0)) {
-            //Collect fees
-        }
-
-        super._beforeTokenTransfer(from, to, tokenId, batchSize);
-    }
+    // The following functions are overrides required by Solidity.
 
     /**
      * @dev :
      */
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 batchSize
-    ) internal virtual override {
+
+    function _update(address to, uint256 tokenId, address auth)
+        internal
+        override(ERC721, ERC721Enumerable, ERC721Pausable)
+        returns (address)
+    {
+
+        address from = _ownerOf(tokenId);
+ 
         //Minted
         if (from == address(0)) {
+
+            // Mint amount must not overflow total supply
+            // require(!_exists(tokenId), "TAE");
+            require(_tokenCurrentSupply <= tokenMaximumSupply, "OFW");
+
             // Log Event in after mint
 
             IERCLogging(loggerAddress).logTokenActivity(
                 address(this),
-                from,
+                _msgSender(),
                 to,
                 tokenId,
                 Enums.TokenActivityType.Mint,
                 block.timestamp
             );
 
-            emit TokenMinted(from, to, tokenId, batchSize);
+            emit TokenMinted(from, to, tokenId, 1);
+            
         }
 
         //Burned
         if (to == address(0)) {
+
+            // to must be the owner
+            require(ownerOf(tokenId) == from, "NTO");
+            // Must not below owned amounts
+            require(tokenMaximumSupply != 0, "UFW");
+
             // Log Event in after burn
 
             delete tokenURIs[tokenId];
@@ -295,14 +282,14 @@ contract ERC721FactoryBase is
 
             IERCLogging(loggerAddress).logTokenActivity(
                 address(this),
-                from,
+                auth,
                 to,
                 tokenId,
                 Enums.TokenActivityType.Burn,
                 block.timestamp
             );
 
-            emit TokenBurned(from, to, tokenId, batchSize);
+            emit TokenBurned(from, to, tokenId, 1);
         }
 
         //Transfered
@@ -320,17 +307,29 @@ contract ERC721FactoryBase is
 
             IERCLogging(loggerAddress).logTokenActivity(
                 address(this),
-                from,
+                _msgSender(),
                 to,
                 tokenId,
                 Enums.TokenActivityType.TransferSingle,
                 block.timestamp
             );
 
-            emit TokenTransfered(from, to, tokenId, batchSize);
+            emit TokenTransfered(from, to, tokenId, 1);
         }
 
-        super._afterTokenTransfer(from, to, tokenId, batchSize);
+        return super._update(to, tokenId, auth);
+
+    }
+
+    /**
+     * @dev :
+     */
+
+    function _increaseBalance(address account, uint128 value)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._increaseBalance(account, value);
     }
 
     /**

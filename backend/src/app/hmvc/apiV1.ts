@@ -1,6 +1,10 @@
 import {Request, Response} from "express";
 import authenticationRouter from './v1/authentication/AuthenticationRouter';
 
+//
+import ____MODEL_CAMEL_CASE____Router from './v1/template/____MODEL_ALL_CAMEL_CASE____Router';
+//
+
 const express = require('express');
 
 const router = express.Router?.()
@@ -10,6 +14,14 @@ if ("use" in router) {
     router.use('/auth', authenticationRouter);
 
 }
+
+// Injected module
+if ("use" in router) {
+    
+    router.use('/____MODEL_HYPHENATED_CASE____Router', ____MODEL_CAMEL_CASE____Router);
+
+}
+// End injected modules
 
 if ("get" in router) {
     
