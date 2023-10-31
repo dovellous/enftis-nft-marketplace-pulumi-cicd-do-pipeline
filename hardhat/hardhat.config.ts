@@ -17,6 +17,7 @@ const hardhatConfig:HardhatUserConfig = {
       url: "http://127.0.0.1:8545"
     },
     hardhat: {
+
     },
     /*
     hardhat: {
@@ -57,5 +58,7 @@ const hardhatConfig:HardhatUserConfig = {
     timeout: 120000
   }
 }
+
+//console.log(JSON.stringify(hardhatConfig))
 
 module.exports = hardhatConfig;
