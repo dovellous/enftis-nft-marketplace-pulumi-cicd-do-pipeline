@@ -66,10 +66,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.GovernorVotesQuorumFraction__factory>;
     getContractFactory(
-      name: "IGovernorTimelock",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IGovernorTimelock__factory>;
-    getContractFactory(
       name: "Governor",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Governor__factory>;
@@ -134,10 +130,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC6372__factory>;
     getContractFactory(
-      name: "Pausable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Pausable__factory>;
-    getContractFactory(
       name: "ERC2981",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC2981__factory>;
@@ -178,10 +170,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC1155Holder__factory>;
     getContractFactory(
-      name: "ERC1155Receiver",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155Receiver__factory>;
-    getContractFactory(
       name: "ERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20__factory>;
@@ -205,10 +193,6 @@ declare module "hardhat/types/runtime" {
       name: "ERC20Permit",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20Permit__factory>;
-    getContractFactory(
-      name: "ERC20Snapshot",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC20Snapshot__factory>;
     getContractFactory(
       name: "ERC20Votes",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -398,22 +382,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC1155Factory__factory>;
     getContractFactory(
-      name: "ERC20DAOBase",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC20DAOBase__factory>;
-    getContractFactory(
-      name: "ERC20TKNBase",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC20TKNBase__factory>;
-    getContractFactory(
-      name: "ERC721NFTTreasury",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC721NFTTreasury__factory>;
-    getContractFactory(
-      name: "ERCTimeLock",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERCTimeLock__factory>;
-    getContractFactory(
       name: "ERC721FactoryBase",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721FactoryBase__factory>;
@@ -493,14 +461,6 @@ declare module "hardhat/types/runtime" {
       name: "ERC1155Factory",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC1155Factory__factory>;
-    getContractFactory(
-      name: "ERC20DAO",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC20DAO__factory>;
-    getContractFactory(
-      name: "ERC20TKN",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC20TKN__factory>;
     getContractFactory(
       name: "ERC721Factory",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -604,11 +564,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.GovernorVotesQuorumFraction>;
     getContractAt(
-      name: "IGovernorTimelock",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IGovernorTimelock>;
-    getContractAt(
       name: "Governor",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -689,11 +644,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC6372>;
     getContractAt(
-      name: "Pausable",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Pausable>;
-    getContractAt(
       name: "ERC2981",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -744,11 +694,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC1155Holder>;
     getContractAt(
-      name: "ERC1155Receiver",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155Receiver>;
-    getContractAt(
       name: "ERC20",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -778,11 +723,6 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC20Permit>;
-    getContractAt(
-      name: "ERC20Snapshot",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC20Snapshot>;
     getContractAt(
       name: "ERC20Votes",
       address: string | ethers.Addressable,
@@ -1019,26 +959,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC1155Factory>;
     getContractAt(
-      name: "ERC20DAOBase",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC20DAOBase>;
-    getContractAt(
-      name: "ERC20TKNBase",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC20TKNBase>;
-    getContractAt(
-      name: "ERC721NFTTreasury",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC721NFTTreasury>;
-    getContractAt(
-      name: "ERCTimeLock",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERCTimeLock>;
-    getContractAt(
       name: "ERC721FactoryBase",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -1138,16 +1058,6 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC1155Factory>;
-    getContractAt(
-      name: "ERC20DAO",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC20DAO>;
-    getContractAt(
-      name: "ERC20TKN",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC20TKN>;
     getContractAt(
       name: "ERC721Factory",
       address: string | ethers.Addressable,
@@ -1247,10 +1157,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.GovernorVotesQuorumFraction>;
     deployContract(
-      name: "IGovernorTimelock",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IGovernorTimelock>;
-    deployContract(
       name: "Governor",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Governor>;
@@ -1315,10 +1221,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC6372>;
     deployContract(
-      name: "Pausable",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Pausable>;
-    deployContract(
       name: "ERC2981",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC2981>;
@@ -1359,10 +1261,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC1155Holder>;
     deployContract(
-      name: "ERC1155Receiver",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC1155Receiver>;
-    deployContract(
       name: "ERC20",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC20>;
@@ -1386,10 +1284,6 @@ declare module "hardhat/types/runtime" {
       name: "ERC20Permit",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC20Permit>;
-    deployContract(
-      name: "ERC20Snapshot",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20Snapshot>;
     deployContract(
       name: "ERC20Votes",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -1579,22 +1473,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC1155Factory>;
     deployContract(
-      name: "ERC20DAOBase",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20DAOBase>;
-    deployContract(
-      name: "ERC20TKNBase",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20TKNBase>;
-    deployContract(
-      name: "ERC721NFTTreasury",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC721NFTTreasury>;
-    deployContract(
-      name: "ERCTimeLock",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERCTimeLock>;
-    deployContract(
       name: "ERC721FactoryBase",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC721FactoryBase>;
@@ -1674,14 +1552,6 @@ declare module "hardhat/types/runtime" {
       name: "ERC1155Factory",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC1155Factory>;
-    deployContract(
-      name: "ERC20DAO",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20DAO>;
-    deployContract(
-      name: "ERC20TKN",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20TKN>;
     deployContract(
       name: "ERC721Factory",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -1785,11 +1655,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.GovernorVotesQuorumFraction>;
     deployContract(
-      name: "IGovernorTimelock",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IGovernorTimelock>;
-    deployContract(
       name: "Governor",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -1870,11 +1735,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC6372>;
     deployContract(
-      name: "Pausable",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Pausable>;
-    deployContract(
       name: "ERC2981",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -1925,11 +1785,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC1155Holder>;
     deployContract(
-      name: "ERC1155Receiver",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC1155Receiver>;
-    deployContract(
       name: "ERC20",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -1959,11 +1814,6 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC20Permit>;
-    deployContract(
-      name: "ERC20Snapshot",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20Snapshot>;
     deployContract(
       name: "ERC20Votes",
       args: any[],
@@ -2200,26 +2050,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.IERC1155Factory>;
     deployContract(
-      name: "ERC20DAOBase",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20DAOBase>;
-    deployContract(
-      name: "ERC20TKNBase",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20TKNBase>;
-    deployContract(
-      name: "ERC721NFTTreasury",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC721NFTTreasury>;
-    deployContract(
-      name: "ERCTimeLock",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERCTimeLock>;
-    deployContract(
       name: "ERC721FactoryBase",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -2319,16 +2149,6 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC1155Factory>;
-    deployContract(
-      name: "ERC20DAO",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20DAO>;
-    deployContract(
-      name: "ERC20TKN",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ERC20TKN>;
     deployContract(
       name: "ERC721Factory",
       args: any[],
