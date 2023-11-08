@@ -493,7 +493,7 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
             expect(parseInt(`${snapshot}`)+parseInt(contractArgs.CONTRACT_VOTING_PERIOD)).to.be.equal(parseInt(`${deadline}`));
 
             latestBlock = await ethers.provider.getBlock("latest");
-            blockNumber = latestBlock?.number;
+            blockNumber = latestBlock?.number || 0;
 
             //console.log(`Current blocknumber: ${blockNumber}\n`, latestBlock)
 

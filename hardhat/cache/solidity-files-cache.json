@@ -4885,8 +4885,8 @@
       ]
     },
     "C:\\Apps\\dvs-x-mern-services\\hardhat\\contracts\\base\\JWLMCF\\JWLMCFBase.sol": {
-      "lastModificationDate": 1698414636000,
-      "contentHash": "37ffae6dfa54defa66553e45e151568c",
+      "lastModificationDate": 1699324986209,
+      "contentHash": "bed6291453c5bb422e029cc682552ed8",
       "sourceName": "contracts/base/JWLMCF/JWLMCFBase.sol",
       "solcConfig": {
         "version": "0.8.22",
@@ -4932,8 +4932,8 @@
       ]
     },
     "C:\\Apps\\dvs-x-mern-services\\hardhat\\contracts\\base\\JWLXTKN\\JWLXTKNFactoryBase.sol": {
-      "lastModificationDate": 1698330166000,
-      "contentHash": "eb73e435112c1303581c8fefc1a13b9f",
+      "lastModificationDate": 1698759651965,
+      "contentHash": "a234b5353ba82ec42635f3e649a33ac8",
       "sourceName": "contracts/base/JWLXTKN/JWLXTKNFactoryBase.sol",
       "solcConfig": {
         "version": "0.8.22",
@@ -4977,7 +4977,7 @@
         "../common/ERCModifiers.sol"
       ],
       "versionPragmas": [
-        "^0.8.20"
+        "^0.8.22"
       ],
       "artifacts": [
         "JWLXTKNFactoryBase"

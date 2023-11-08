@@ -71,7 +71,7 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
     }
 
     modifier validatePool(uint256 _pid) {
-        require(_pid < poolInfo.length, "pool Id Invalid");
+        require(_pid < poolInfo.length, "INVALID_POOL_ID");
         _;
     }
 
@@ -86,7 +86,7 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
     function checkPoolDuplicate(IJWLX _lpToken) public view {
         uint256 length = poolInfo.length;
         for (uint256 _pid = 0; _pid < length; _pid++) {
-            require(poolInfo[_pid].lpToken != _lpToken, "add: existing pool");
+            require(poolInfo[_pid].lpToken != _lpToken, "TOKEN_POOL_ALREADY_EXISTS");
         }
     }
 
@@ -198,16 +198,22 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
     }
 
     function updatePool(uint256 _pid) public validatePool(_pid) {
+
         PoolInfo storage pool = poolInfo[_pid];
+
         if (block.number <= pool.lastRewardBlock) {
             return;
         }
+
         uint256 lpSupply = pool.lpToken.balanceOf(address(this));
+
         if (lpSupply == 0) {
             pool.lastRewardBlock = block.number;
             return;
         }
+
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
+
         uint256 tokenReward = Snippets.mathMulDiv(
             (multiplier * jwlrPerBlock),
             pool.allocPoint,
@@ -216,14 +222,16 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
 
         jwlx.mint(dev, Snippets.mathDiv(tokenReward, 10));
 
-        //Todo: jwlx.mint(address(jwlp), tokenReward);
+        jwlx.mint(address(jwlx), tokenReward);
 
         pool.rewardTokenPerShare = Snippets.mathAddDiv(
             pool.rewardTokenPerShare,
             (tokenReward * 10 ** 12),
             lpSupply
         );
+
         pool.lastRewardBlock = block.number;
+
     }
 
     function stake(uint256 _pid, uint256 _amount) public validatePool(_pid) {
@@ -231,9 +239,11 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
         UserInfo storage user = userInfo[_pid][msg.sender];
         updatePool(_pid);
         if (user.amount > 0) {
-            uint256 pending = (user.amount * (pool.rewardTokenPerShare)) /
-                (1e12) -
-                (user.pendingReward);
+            uint256 pending = Snippets.mathMulSub(
+                user.amount,
+                (pool.rewardTokenPerShare / (10 ** 12)),
+                user.pendingReward
+            );
             if (pending > 0) {
                 safeJWLXTransfer(msg.sender, pending);
             }
@@ -254,35 +264,14 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
         emit Deposit(msg.sender, _pid, _amount);
     }
 
-    function autoCompound() public {
-        PoolInfo storage pool = poolInfo[0];
-        UserInfo storage user = userInfo[0][msg.sender];
-        updatePool(0);
-        if (user.amount > 0) {
-            uint256 pending = Snippets.mathMulSub(
-                user.amount,
-                (pool.rewardTokenPerShare) / (10 ** 12),
-                user.pendingReward
-            );
-            if (pending > 0) {
-                user.amount = Snippets.mathAdd(user.amount, pending);
-            }
-        }
-        user.pendingReward = Snippets.mathMulDiv(
-            user.amount,
-            pool.rewardTokenPerShare,
-            (10 ** 12)
-        );
-    }
-
     function unstake(uint256 _pid, uint256 _amount) public validatePool(_pid) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
-        require(user.amount >= _amount, "withdraw: not good");
+        require(user.amount >= _amount, "INSUFFICIENT_FUNDS");
         updatePool(_pid);
         uint256 pending = Snippets.mathMulSub(
             user.amount,
-            (pool.rewardTokenPerShare / 10 ** 12),
+            (pool.rewardTokenPerShare / (10 ** 12)),
             user.pendingReward
         );
         if (pending > 0) {
@@ -298,6 +287,27 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
             (10 ** 12)
         );
         emit Withdraw(msg.sender, _pid, _amount);
+    }
+
+    function autoCompound() public {
+        PoolInfo storage pool = poolInfo[0];
+        UserInfo storage user = userInfo[0][msg.sender];
+        updatePool(0);
+        if (user.amount > 0) {
+            uint256 pending = Snippets.mathMulSub(
+                user.amount,
+                (pool.rewardTokenPerShare / (10 ** 12)),
+                user.pendingReward
+            );
+            if (pending > 0) {
+                user.amount = Snippets.mathAdd(user.amount, pending);
+            }
+        }
+        user.pendingReward = Snippets.mathMulDiv(
+            user.amount,
+            pool.rewardTokenPerShare,
+            (10 ** 12)
+        );
     }
 
     function emergencyWithdraw(uint256 _pid) public {
@@ -334,7 +344,7 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
     }
 
     function changeDev(address _dev) public {
-        require(msg.sender == dev, "Not Authorized");
+        require(msg.sender == dev, "NOT_AUTHORIZED");
         dev = _dev;
     }
 }

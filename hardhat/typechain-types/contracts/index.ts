@@ -8,8 +8,6 @@ export type { base };
 import type * as libs from "./libs";
 export type { libs };
 export type { ERC1155Factory } from "./ERC1155Factory";
-export type { ERC20DAO } from "./ERC20DAO";
-export type { ERC20TKN } from "./ERC20TKN";
 export type { ERC721Factory } from "./ERC721Factory";
 export type { ERCLogger } from "./ERCLogger";
 export type { ERCMKTPFactory } from "./ERCMKTPFactory";
