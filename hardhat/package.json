@@ -32,10 +32,10 @@
     "@typechain/hardhat": "9",
     "@types/chai": "^4.3.9",
     "@types/mocha": "^10.0.3",
-    "@types/node": "^20.8.7",
+    "@types/node": "^20.8.10",
     "chai": "^4.3.10",
     "ethers": "6",
-    "hardhat": "^2.18.2",
+    "hardhat": "^2.18.3",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.5",
     "ts-node": "^10.9.1",
@@ -43,7 +43,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
     "@openzeppelin/contracts": "^5",
     "@openzeppelin/contracts-upgradeable": "^5",
     "@typechain/ethers-v6": "^0.5.1",
