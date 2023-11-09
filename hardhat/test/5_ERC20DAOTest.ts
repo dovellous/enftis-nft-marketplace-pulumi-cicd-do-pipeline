@@ -71,10 +71,10 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
 
         const ercGovernanceTokenSmartContract:any = await ethers.getContractFactory(CONTRACT_FILE_TKN);
         ERCGovernanceTokenSmartContract = await ercGovernanceTokenSmartContract.deploy(
-            CONTRACT_PARAMS.CONTRACT_NAME, 
-            CONTRACT_PARAMS.CONTRACT_SYMBOL, 
-            CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY,
-            CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY,
+            CONTRACT_PARAMS.CONTRACT_NAME_TKN, 
+            CONTRACT_PARAMS.CONTRACT_SYMBOL_TKN, 
+            CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY_DAO,
+            CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY_DAO,
             deployerWallet.address
         );
 

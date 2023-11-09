@@ -20,6 +20,13 @@ const CONTRACT_VOTING_PERIOD: string | undefined = process.env.CONTRACT_VOTING_P
 const CONTRACT_QUORUM_PERCENTAGE: string | undefined = process.env.CONTRACT_QUORUM_PERCENTAGE_DAO;
 const CONTRACT_PROPOSAL_THRESHOLD: string | undefined = process.env.CONTRACT_PROPOSAL_THRESHOLD_DAO;
 
+const CONTRACT_FILE_TKN: string | undefined = String(process.env.CONTRACT_FILE_TKN);
+const CONTRACT_NAME_TKN: string | undefined = String(process.env.CONTRACT_NAME_TKN);
+const CONTRACT_SYMBOL_TKN: string | undefined = String(process.env.CONTRACT_SYMBOL_TKN);
+const CONTRACT_DECIMALS_TKN: number | undefined = parseInt(String(process.env.CONTRACT_DECIMALS_TKN));
+const CONTRACT_INITIAL_SUPPLY_DAO: number | undefined = parseInt(String(process.env.CONTRACT_INITIAL_SUPPLY_DAO));
+const CONTRACT_MAXIMUM_SUPPLY_DAO: number | undefined = parseInt(String(process.env.CONTRACT_MAXIMUM_SUPPLY_DAO));
+
   // Do not edit the lines below
 
   interface IConfig {
@@ -36,6 +43,12 @@ const CONTRACT_PROPOSAL_THRESHOLD: string | undefined = process.env.CONTRACT_PRO
     CONTRACT_PROPOSAL_THRESHOLD: string | undefined,
     LINKED_LIBRARY: string | undefined;
     ADDRESS_ZERO: string | undefined;
+    CONTRACT_FILE_TKN: string | undefined;
+    CONTRACT_NAME_TKN: string | undefined;
+    CONTRACT_SYMBOL_TKN: string | undefined;
+    CONTRACT_DECIMALS_TKN: number | undefined;
+    CONTRACT_INITIAL_SUPPLY_DAO: number | undefined;
+    CONTRACT_MAXIMUM_SUPPLY_DAO: number | undefined;
   }
 
   const config:IConfig = {
@@ -51,7 +64,13 @@ const CONTRACT_PROPOSAL_THRESHOLD: string | undefined = process.env.CONTRACT_PRO
     CONTRACT_QUORUM_PERCENTAGE: CONTRACT_QUORUM_PERCENTAGE,
     CONTRACT_PROPOSAL_THRESHOLD: CONTRACT_PROPOSAL_THRESHOLD,
     LINKED_LIBRARY: LINKED_LIBRARY,
-    ADDRESS_ZERO: ADDRESS_ZERO
+    ADDRESS_ZERO: ADDRESS_ZERO,
+    CONTRACT_FILE_TKN: CONTRACT_FILE_TKN,
+    CONTRACT_NAME_TKN: CONTRACT_NAME_TKN,
+    CONTRACT_SYMBOL_TKN: CONTRACT_SYMBOL_TKN,
+    CONTRACT_DECIMALS_TKN: CONTRACT_DECIMALS_TKN,
+    CONTRACT_INITIAL_SUPPLY_DAO: CONTRACT_INITIAL_SUPPLY_DAO,
+    CONTRACT_MAXIMUM_SUPPLY_DAO: CONTRACT_MAXIMUM_SUPPLY_DAO
   }
 
  module.exports = config;

@@ -69,3 +69,6 @@ yarn-debug.log*
 yarn-error.log*
 .idea
 *.zip
+frontend/src/_services/providers/data/context/libs/artifacts
+hardhat/artifacts
+hardhat/test/txt

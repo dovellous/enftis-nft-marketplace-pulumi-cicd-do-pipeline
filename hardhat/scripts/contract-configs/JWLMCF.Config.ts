@@ -10,12 +10,12 @@ const CONTRACT_JWLTKN_PER_BLOCK: number | undefined = parseInt(String(process.en
 const CONTRACT_JWLMCF_START_BLOCK: number | undefined = parseInt(String(process.env.CONTRACT_JWLMCF_START_BLOCK));
 const CONTRACT_JWLMCF_MULTIPLIER: number | undefined = parseInt(String(process.env.CONTRACT_JWLMCF_MULTIPLIER));
 
-const CONTRACT_GVN_FILE: number | undefined = parseInt(String(process.env.CONTRACT_FILE_TKN));
-const CONTRACT_GVN_NAME: number | undefined = parseInt(String(process.env.CONTRACT_NAME_TKN));
-const CONTRACT_GVN_SYMBOL: number | undefined = parseInt(String(process.env.CONTRACT_SYMBOL_TKN));
-const CONTRACT_GVN_DECIMALS: number | undefined = parseInt(String(process.env.CONTRACT_DECIMALS_TKN));
-const CONTRACT_GVN_INITIAL_SUPPLY: number | undefined = parseInt(String(process.env.CONTRACT_JWLMCF_MULTIPLIER));
-const CONTRACT_GVN_TOTAL_SUPPLY: number | undefined = parseInt(String(process.env.CONTRACT_MAXIMUM_SUPPLY_DAO));
+const CONTRACT_FILE_TKN: string | undefined = String(process.env.CONTRACT_FILE_TKN);
+const CONTRACT_NAME_TKN: string | undefined = String(process.env.CONTRACT_NAME_TKN);
+const CONTRACT_SYMBOL_TKN: string | undefined = String(process.env.CONTRACT_SYMBOL_TKN);
+const CONTRACT_DECIMALS_TKN: number | undefined = parseInt(String(process.env.CONTRACT_DECIMALS_TKN));
+const CONTRACT_INITIAL_SUPPLY_DAO: number | undefined = parseInt(String(process.env.CONTRACT_INITIAL_SUPPLY_DAO));
+const CONTRACT_MAXIMUM_SUPPLY_DAO: number | undefined = parseInt(String(process.env.CONTRACT_MAXIMUM_SUPPLY_DAO));
 
   // Do not edit the lines below
 
@@ -27,6 +27,12 @@ const CONTRACT_GVN_TOTAL_SUPPLY: number | undefined = parseInt(String(process.en
     CONTRACT_JWLTKN_PER_BLOCK:  number | undefined;
     CONTRACT_JWLMCF_START_BLOCK:  number | undefined;
     CONTRACT_JWLMCF_MULTIPLIER: number | undefined;
+    CONTRACT_FILE_TKN: string | undefined;
+    CONTRACT_NAME_TKN: string | undefined;
+    CONTRACT_SYMBOL_TKN: string | undefined;
+    CONTRACT_DECIMALS_TKN: number | undefined;
+    CONTRACT_INITIAL_SUPPLY_DAO: number | undefined;
+    CONTRACT_MAXIMUM_SUPPLY_DAO: number | undefined;
   }
 
   const config:IConfig = {
@@ -36,7 +42,13 @@ const CONTRACT_GVN_TOTAL_SUPPLY: number | undefined = parseInt(String(process.en
     CONTRACT_JWLMCF_TREASURY_ACCOUNT: CONTRACT_JWLMCF_TREASURY_ACCOUNT,
     CONTRACT_JWLTKN_PER_BLOCK:  CONTRACT_JWLTKN_PER_BLOCK,
     CONTRACT_JWLMCF_START_BLOCK:  CONTRACT_JWLMCF_START_BLOCK,
-    CONTRACT_JWLMCF_MULTIPLIER: CONTRACT_JWLMCF_MULTIPLIER
+    CONTRACT_JWLMCF_MULTIPLIER: CONTRACT_JWLMCF_MULTIPLIER,
+    CONTRACT_FILE_TKN: CONTRACT_FILE_TKN,
+    CONTRACT_NAME_TKN: CONTRACT_NAME_TKN,
+    CONTRACT_SYMBOL_TKN: CONTRACT_SYMBOL_TKN,
+    CONTRACT_DECIMALS_TKN: CONTRACT_DECIMALS_TKN,
+    CONTRACT_INITIAL_SUPPLY_DAO: CONTRACT_INITIAL_SUPPLY_DAO,
+    CONTRACT_MAXIMUM_SUPPLY_DAO: CONTRACT_MAXIMUM_SUPPLY_DAO
   }
 
  module.exports = config;

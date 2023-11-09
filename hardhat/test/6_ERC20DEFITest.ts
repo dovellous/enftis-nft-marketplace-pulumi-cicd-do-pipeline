@@ -122,11 +122,12 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
         const _args:any = {
             contractGVNAddress: ERCJWLXTKNSmartContractAddress,
-            contractGVNName: CONTRACT_PARAMS.CONTRACT_GVN_NAME,
-            contractGVNSymbol: CONTRACT_PARAMS.CONTRACT_GVN_SYMBOL,
-            contractGVNDecimals: CONTRACT_PARAMS.CONTRACT_GVN_DECIMALS,
-            contractGVNInitialSupply: CONTRACT_PARAMS.CONTRACT_GVN_INITIAL_SUPPLY,
-            contractGVNTotalSupply: CONTRACT_PARAMS.CONTRACT_GVN_TOTAL_SUPPLY,
+            contractGVNFile: CONTRACT_PARAMS.CONTRACT_FILE_TKN,
+            contractGVNName: CONTRACT_PARAMS.CONTRACT_NAME_TKN,
+            contractGVNSymbol: CONTRACT_PARAMS.CONTRACT_SYMBOL_TKN,
+            contractGVNDecimals: CONTRACT_PARAMS.CONTRACT_DECIMALS_TKN,
+            contractGVNInitialSupply: CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY_DAO,
+            contractGVNTotalSupply: CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY_DAO,
             contractTreasuryAccount: CONTRACT_PARAMS.CONTRACT_JWLMCF_TREASURY_ACCOUNT,
             contractTokenspErBlock: CONTRACT_PARAMS.CONTRACT_JWLTKN_PER_BLOCK,
             contractStartBlock: CONTRACT_PARAMS.CONTRACT_JWLMCF_START_BLOCK,
@@ -162,7 +163,7 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
                 const address: any = await ERCJWLXTKNSmartContract.getAddress();
 
-                console.log(address);
+                //console.log(address);
 
                 expect(address).to.equal(args.contractGVNAddress);
 
@@ -172,7 +173,7 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
                 const name: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).name();
 
-                console.log(name);
+                //console.log(name);
 
                 expect(name).to.equal(args.contractGVNName);
 
@@ -182,7 +183,7 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
                 const symbol: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).symbol();
 
-                console.log(symbol);
+                //console.log(symbol);
 
                 expect(symbol).to.equal(args.contractGVNSymbol);
 
@@ -190,29 +191,29 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
             it("Has 18 decimals", async () => {
 
-                const decimals: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).decimals();
+                const decimals: bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).decimals();
 
-                console.log(decimals);
+                //console.log(decimals);
 
-                expect(decimals).to.equal(args.contractGVNDecimals);
+                expect(decimals).to.equal(BigInt(args.contractGVNDecimals));
 
             });
 
             it("Has a total supply", async () => {
 
-                const totalSupply: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).totalSupply();
+                const totalSupply: bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).totalSupply();
 
-                console.log(totalSupply);
+                //console.log(totalSupply);
 
-                expect(totalSupply).to.equal(args.contractGVNTotalSupply);
+                expect(totalSupply).to.equal(Snippets.ethersToWei(args.contractGVNTotalSupply));
 
             });
 
             it("Has its own balance in JWLTKN", async () => {
 
-                const balance: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(await ERCJWLXTKNSmartContract.getAddress());
+                const balance: bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(await ERCJWLXTKNSmartContract.getAddress());
 
-                console.log(balance);
+                //console.log(balance);
 
                 expect(balance).to.equal(BigInt(0));
 
@@ -220,7 +221,23 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
             it("Shows a balance of a deployer", async () => {
 
-                const balance: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+                let balance: bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                console.log(balance);
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(aliceWallet.address);
+
+                console.log(balance);
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(bobWallet.address);
+
+                console.log(balance);
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(charlieWallet.address);
+
+                console.log(balance);
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(donWallet.address);
 
                 console.log(balance);
 
