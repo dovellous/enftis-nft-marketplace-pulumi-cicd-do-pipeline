@@ -1,17 +1,11 @@
-import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { castVotes, delegateAccounts, makeProposal, queueProposal, executeProposal, moveTime } from "../scripts/helpers/deployer-helper";
-import { BigNumber } from "ethers";
-import helpers from "@nomicfoundation/hardhat-toolbox/network-helpers";
-import { ModifierFlags } from "typescript";
 
 const fs = require('fs');
 
 const Snippets = require("../scripts/libs/Snippets");
-
-const provider:any = ethers.getDefaultProvider();
 
 const CHAIN_IDS:Array<any> = process.env.CHAIN_IDS !== null ? String(process.env.CHAIN_IDS).split(",") : [];
 
@@ -105,7 +99,9 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
         ); */
 
         const governanaceTokenSupply:number = Math.floor(parseInt(CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY));
-        const amountForEachVoter:number = Math.floor(governanaceTokenSupply/6);
+        const amountForEachVoter:number = Math.floor(governanaceTokenSupply/100);
+
+        console.log(`Balance of Deployer: `, await ERCGovernanceTokenSmartContract.balanceOf(deployerWallet.address));
 
         await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter1Wallet.address, (Snippets.ethersToWei(amountForEachVoter*2)))
         await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter2Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
@@ -113,11 +109,14 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
         await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter4Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
         await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter5Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))
         
-        //console.log(`Balance of Voter #1: `, await ERCGovernanceTokenSmartContract.balanceOf(voter1Wallet.address));
-        //console.log(`Balance of Voter #2: `, await ERCGovernanceTokenSmartContract.balanceOf(voter2Wallet.address));
-        //console.log(`Balance of Voter #3: `, await ERCGovernanceTokenSmartContract.balanceOf(voter3Wallet.address));
-        //console.log(`Balance of Voter #4: `, await ERCGovernanceTokenSmartContract.balanceOf(voter4Wallet.address));
-        //console.log(`Balance of Voter #5: `, await ERCGovernanceTokenSmartContract.balanceOf(voter5Wallet.address));
+        console.log(`Balance of Deployer: `, await ERCGovernanceTokenSmartContract.balanceOf(deployerWallet.address));
+        console.log(`Balance of Proposer: `, await ERCGovernanceTokenSmartContract.balanceOf(proposerWallet.address));
+        console.log(`Balance of Executor: `, await ERCGovernanceTokenSmartContract.balanceOf(executorWallet.address));
+        console.log(`Balance of Voter #1: `, await ERCGovernanceTokenSmartContract.balanceOf(voter1Wallet.address));
+        console.log(`Balance of Voter #2: `, await ERCGovernanceTokenSmartContract.balanceOf(voter2Wallet.address));
+        console.log(`Balance of Voter #3: `, await ERCGovernanceTokenSmartContract.balanceOf(voter3Wallet.address));
+        console.log(`Balance of Voter #4: `, await ERCGovernanceTokenSmartContract.balanceOf(voter4Wallet.address));
+        console.log(`Balance of Voter #5: `, await ERCGovernanceTokenSmartContract.balanceOf(voter5Wallet.address));
 
         // ++++++++++++
 
@@ -417,14 +416,14 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
             //console.log(`voter4Wallet:   ${voter4Wallet.address}`)
             //console.log(`voter5Wallet:   ${voter5Wallet.address}`)
 
-            //console.log(`deployerWallet BAL: ${await ERCGovernanceTokenSmartContract.balanceOf(deployerWallet.address)}`)
-            //console.log(`executorWallet BAL: ${await ERCGovernanceTokenSmartContract.balanceOf(executorWallet.address)}`)
-            //console.log(`proposerWallet BAL: ${await ERCGovernanceTokenSmartContract.balanceOf(proposerWallet.address)}`)
-            //console.log(`voter1Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter1Wallet.address)}`)
-            //console.log(`voter2Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter2Wallet.address)}`)
-            //console.log(`voter3Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter3Wallet.address)}`)
-            //console.log(`voter4Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter4Wallet.address)}`)
-            //console.log(`voter5Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter5Wallet.address)}`)
+            console.log(`deployerWallet BAL: ${await ERCGovernanceTokenSmartContract.balanceOf(deployerWallet.address)}`)
+            console.log(`executorWallet BAL: ${await ERCGovernanceTokenSmartContract.balanceOf(executorWallet.address)}`)
+            console.log(`proposerWallet BAL: ${await ERCGovernanceTokenSmartContract.balanceOf(proposerWallet.address)}`)
+            console.log(`voter1Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter1Wallet.address)}`)
+            console.log(`voter2Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter2Wallet.address)}`)
+            console.log(`voter3Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter3Wallet.address)}`)
+            console.log(`voter4Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter4Wallet.address)}`)
+            console.log(`voter5Wallet BAL:   ${await ERCGovernanceTokenSmartContract.balanceOf(voter5Wallet.address)}`)
 
             const executorInitialBalance:any = await ethers.provider.getBalance(executorWallet.address);
 

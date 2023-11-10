@@ -4591,8 +4591,8 @@
       ]
     },
     "C:\\Apps\\dvs-x-mern-services\\hardhat\\contracts\\base\\JWLXTKN\\JWLXTKNFactoryBase.sol": {
-      "lastModificationDate": 1699439378170,
-      "contentHash": "6f2909f40917c18f492af98913734d1c",
+      "lastModificationDate": 1699591094664,
+      "contentHash": "e43b15f7e34d13f224a7f71284e264a2",
       "sourceName": "contracts/base/JWLXTKN/JWLXTKNFactoryBase.sol",
       "solcConfig": {
         "version": "0.8.22",
@@ -4633,7 +4633,8 @@
         "@openzeppelin/contracts/access/AccessControl.sol",
         "@openzeppelin/contracts/utils/math/Math.sol",
         "@openzeppelin/contracts/utils/math/Math.sol",
-        "../common/ERCModifiers.sol"
+        "../common/ERCModifiers.sol",
+        "hardhat/console.sol"
       ],
       "versionPragmas": [
         "^0.8.19"

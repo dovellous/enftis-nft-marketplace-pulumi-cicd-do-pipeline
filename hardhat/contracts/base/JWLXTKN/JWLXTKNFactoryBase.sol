@@ -14,6 +14,8 @@ import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 import "../common/ERCModifiers.sol";
 
+import "hardhat/console.sol";
+
 contract JWLXTKNFactoryBase is
     ERC20,
     ERC20Capped,
@@ -100,9 +102,19 @@ contract JWLXTKNFactoryBase is
 
         (bool isValidTokenSupply, uint256 newTokenSupply) = Math.tryAdd(tokenTotalSupply, amount);
 
-        require(isValidTokenSupply, "Token supply overflow");
-        
+        console.log(isValidTokenSupply);
+
+        console.log(amount);
+
+        console.log(tokenTotalSupply);
+
+        console.log(newTokenSupply);
+
+        console.log(newTokenSupply <= tokenMaximumSupply);
+
         if(newTokenSupply <= tokenMaximumSupply){
+
+            require(amount == 0, "GOOD");
 
             tokenTotalSupply = newTokenSupply;
                 
@@ -112,6 +124,10 @@ contract JWLXTKNFactoryBase is
 
             _balances[to] = nextBalances;
             
+        }else{
+            
+            require(amount == 0, "SUPPLY_OVERFLOW");
+
         }
 
     }

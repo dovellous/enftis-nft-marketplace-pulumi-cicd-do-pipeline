@@ -155,7 +155,7 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
     });
 
-    describe("Jouel Governance Token", () => {
+    describe("Jouel Masterchef Contract", () => {
 
         describe("JWLXTKN Governance Token", () => {
 
@@ -203,9 +203,9 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
                 const totalSupply: bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).totalSupply();
 
-                //console.log(totalSupply);
+                console.log(totalSupply, args);
 
-                expect(totalSupply).to.equal(Snippets.ethersToWei(args.contractGVNTotalSupply));
+                expect(totalSupply).to.equal(Snippets.ethersToWei(args.contractGVNInitialSupply));
 
             });
 
@@ -223,25 +223,260 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
                 let balance: bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
 
-                console.log(balance);
+                let amountForEachVoter:number = 0;
+
+                //console.log(balance);
+
+                let bal:any = Snippets.ethersToWei(4);
+
+                expect(balance).to.equal(bal);
 
                 balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(aliceWallet.address);
 
-                console.log(balance);
+                //console.log(balance);
+
+                expect(balance).to.equal(0);
 
                 balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(bobWallet.address);
 
-                console.log(balance);
+                //console.log(balance);
+
+                expect(balance).to.equal(0);
 
                 balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(charlieWallet.address);
 
-                console.log(balance);
+                //console.log(balance);
+
+                amountForEachVoter = Math.floor(args.contractGVNInitialSupply/6)*2;
+
+                bal = Snippets.ethersToWei(amountForEachVoter);
+
+                expect(balance).to.equal(bal);
 
                 balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(donWallet.address);
 
-                console.log(balance);
+                //console.log(balance);
 
-                expect(balance).to.equal(args.contractGVNInitialSupply);
+                amountForEachVoter = Math.floor(args.contractGVNInitialSupply/6);
+
+                bal = Snippets.ethersToWei(amountForEachVoter);
+
+                expect(balance).to.equal(bal);
+
+                //console.log(bal, balance);
+
+            });
+
+            it("Transfers tokens", async () => {
+
+                await expect(ERCJWLXTKNSmartContract.connect(deployerWallet).transfer(
+                    aliceWallet.address, 
+                    Snippets.ethersToWei(5)
+                ))
+                .to.be.revertedWithCustomError(ERCJWLXTKNSmartContract, "ERC20InsufficientBalance")
+                .withArgs(
+                    deployerWallet.address, 
+                    Snippets.ethersToWei(4), 
+                    Snippets.ethersToWei(5)
+                );
+
+                await ERCJWLXTKNSmartContract.connect(deployerWallet).transfer(
+                    aliceWallet.address, 
+                    Snippets.ethersToWei(1)
+                )
+
+                let balance:bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(aliceWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(1));
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(3));
+
+                /*
+                await expect(ERCJWLXTKNSmartContract.connect(deployerWallet).transfer(
+                    aliceWallet.address, 
+                    Snippets.ethersToWei(1)
+                ))
+                .to.emit(ERCJWLXTKNSmartContract, "Transfer")
+                */
+
+            });
+
+            it("Approves tokens to be spent", async () => {
+
+                let balance:bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(4));
+
+                await expect(ERCJWLXTKNSmartContract.connect(aliceWallet).transfer(
+                    bobWallet.address, 
+                    Snippets.ethersToWei(1)
+                ))
+                .to.be.revertedWithCustomError(ERCJWLXTKNSmartContract, "ERC20InsufficientBalance")
+                .withArgs(
+                    aliceWallet.address, 
+                    0, 
+                    Snippets.ethersToWei(1)
+                );
+
+                await ERCJWLXTKNSmartContract.connect(deployerWallet).transfer(
+                    aliceWallet.address, 
+                    Snippets.ethersToWei(1)
+                )
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(aliceWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(1));
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(3));
+
+                await expect(ERCJWLXTKNSmartContract.connect(aliceWallet).transferFrom(
+                    deployerWallet,
+                    bobWallet.address, 
+                    Snippets.ethersToWei(1)
+                ))
+                .to.be.revertedWithCustomError(ERCJWLXTKNSmartContract, "ERC20InsufficientAllowance")
+                .withArgs(
+                    aliceWallet.address, 
+                    0, 
+                    Snippets.ethersToWei(1)
+                );
+
+                await ERCJWLXTKNSmartContract.connect(deployerWallet).approve(
+                    aliceWallet.address, 
+                    Snippets.ethersToWei(1)
+                )
+
+                await ERCJWLXTKNSmartContract.connect(aliceWallet).transferFrom(
+                    deployerWallet,
+                    bobWallet.address, 
+                    Snippets.ethersToWei(1)
+                )
+
+                // Deployer
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(2));
+
+                // Alice
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(aliceWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(1));
+
+                // Bob
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(bobWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(1));
+
+            });
+
+            it("Mint additional tokens", async () => {
+
+                let balance:bigint = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(4));
+
+                await expect(ERCJWLXTKNSmartContract.connect(aliceWallet).mint(
+                    bobWallet.address, 
+                    Snippets.ethersToWei(1)
+                ))
+                .to.be.revertedWithCustomError(ERCJWLXTKNSmartContract, "AccessControlUnauthorizedAccount");
+
+                await ERCJWLXTKNSmartContract.connect(deployerWallet).mint(
+                    aliceWallet.address, 
+                    Snippets.ethersToWei(100)
+                )
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(aliceWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(21));
+
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(3));
+
+                await expect(ERCJWLXTKNSmartContract.connect(aliceWallet).transferFrom(
+                    deployerWallet,
+                    bobWallet.address, 
+                    Snippets.ethersToWei(1)
+                ))
+                .to.be.revertedWithCustomError(ERCJWLXTKNSmartContract, "ERC20InsufficientAllowance")
+                .withArgs(
+                    aliceWallet.address, 
+                    0, 
+                    Snippets.ethersToWei(1)
+                );
+
+                await ERCJWLXTKNSmartContract.connect(deployerWallet).approve(
+                    aliceWallet.address, 
+                    Snippets.ethersToWei(1)
+                )
+
+                await ERCJWLXTKNSmartContract.connect(aliceWallet).transferFrom(
+                    deployerWallet,
+                    bobWallet.address, 
+                    Snippets.ethersToWei(1)
+                )
+
+                // Deployer
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(deployerWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(2));
+
+                // Alice
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(aliceWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(1));
+
+                // Bob
+                balance = await ERCJWLXTKNSmartContract.connect(deployerWallet).balanceOf(bobWallet.address);
+
+                expect(balance).to.equal(Snippets.ethersToWei(1));
+
+            });
+
+        });
+
+        describe("Staking", () => {
+
+            it("Has a name", async () => {
+
+                const name: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).name();
+
+                //console.log(name);
+
+                expect(name).to.equal(args.contractGVNName);
+
+            });
+
+        });
+
+        describe("Unstaking", () => {
+
+            it("Has a name", async () => {
+
+                const name: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).name();
+
+                //console.log(name);
+
+                expect(name).to.equal(args.contractGVNName);
+
+            });
+
+        });
+
+        describe("Autocompound", () => {
+
+            it("Has a name", async () => {
+
+                const name: any = await ERCJWLXTKNSmartContract.connect(deployerWallet).name();
+
+                //console.log(name);
+
+                expect(name).to.equal(args.contractGVNName);
 
             });
 
