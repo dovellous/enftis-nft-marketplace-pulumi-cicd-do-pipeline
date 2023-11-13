@@ -73,6 +73,8 @@ export interface JWLXTKNFactoryBaseInterface extends Interface {
       | "getPastVotes"
       | "getRoleAdmin"
       | "getVotes"
+      | "grantManagerRole"
+      | "grantMinterRole"
       | "grantRole"
       | "hasRole"
       | "maxFlashLoan"
@@ -249,6 +251,14 @@ export interface JWLXTKNFactoryBaseInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getVotes",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "grantManagerRole",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "grantMinterRole",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -437,6 +447,14 @@ export interface JWLXTKNFactoryBaseInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getVotes", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "grantManagerRole",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "grantMinterRole",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(
@@ -881,6 +899,18 @@ export interface JWLXTKNFactoryBase extends BaseContract {
 
   getVotes: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
+  grantManagerRole: TypedContractMethod<
+    [account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  grantMinterRole: TypedContractMethod<
+    [account: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
   grantRole: TypedContractMethod<
     [role: BytesLike, account: AddressLike],
     [void],
@@ -1176,6 +1206,12 @@ export interface JWLXTKNFactoryBase extends BaseContract {
   getFunction(
     nameOrSignature: "getVotes"
   ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "grantManagerRole"
+  ): TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "grantMinterRole"
+  ): TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "grantRole"
   ): TypedContractMethod<

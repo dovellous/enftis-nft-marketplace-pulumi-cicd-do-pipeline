@@ -29,6 +29,7 @@ export interface IJWLXInterface extends Interface {
       | "safeJWLXTransfer"
       | "safeTransfer"
       | "safeTransferFrom"
+      | "transferFrom"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -51,6 +52,10 @@ export interface IJWLXInterface extends Interface {
     functionFragment: "safeTransferFrom",
     values: [AddressLike, AddressLike, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [AddressLike, AddressLike, BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
@@ -64,6 +69,10 @@ export interface IJWLXInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
 }
@@ -141,6 +150,12 @@ export interface IJWLX extends BaseContract {
     "nonpayable"
   >;
 
+  transferFrom: TypedContractMethod<
+    [_from: AddressLike, _to: AddressLike, _amount: BigNumberish],
+    [bigint],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -171,6 +186,13 @@ export interface IJWLX extends BaseContract {
   >;
   getFunction(
     nameOrSignature: "safeTransferFrom"
+  ): TypedContractMethod<
+    [_from: AddressLike, _to: AddressLike, _amount: BigNumberish],
+    [bigint],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "transferFrom"
   ): TypedContractMethod<
     [_from: AddressLike, _to: AddressLike, _amount: BigNumberish],
     [bigint],

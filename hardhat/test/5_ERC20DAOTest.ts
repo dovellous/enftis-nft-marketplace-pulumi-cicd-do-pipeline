@@ -67,8 +67,8 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
         ERCGovernanceTokenSmartContract = await ercGovernanceTokenSmartContract.deploy(
             CONTRACT_PARAMS.CONTRACT_NAME_TKN, 
             CONTRACT_PARAMS.CONTRACT_SYMBOL_TKN, 
-            CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY_DAO,
-            CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY_DAO,
+            Snippets.ethersToWei(CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY_DAO),
+            Snippets.ethersToWei(CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY_DAO),
             deployerWallet.address
         );
 
@@ -99,9 +99,16 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
         ); */
 
         const governanaceTokenSupply:number = Math.floor(parseInt(CONTRACT_PARAMS.CONTRACT_INITIAL_SUPPLY));
-        const amountForEachVoter:number = Math.floor(governanaceTokenSupply/100);
+        const governanaceTokenMaxSupply:number = Math.floor(parseInt(CONTRACT_PARAMS.CONTRACT_MAXIMUM_SUPPLY));
+        const amountForEachVoter:number = Math.floor(governanaceTokenSupply/10/6);
 
-        console.log(`Balance of Deployer: `, await ERCGovernanceTokenSmartContract.balanceOf(deployerWallet.address));
+        console.log(`Balance of Deployer:   `, await ERCGovernanceTokenSmartContract.balanceOf(deployerWallet.address));
+
+        console.log(`Amount per each voter: `, Snippets.ethersToWei(amountForEachVoter), (amountForEachVoter));
+
+        console.log(`Total supply:          `, Snippets.ethersToWei(governanaceTokenSupply), governanaceTokenSupply);
+
+        console.log(`Total max supply:      `, Snippets.ethersToWei(governanaceTokenMaxSupply), governanaceTokenMaxSupply);
 
         await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter1Wallet.address, (Snippets.ethersToWei(amountForEachVoter*2)))
         await ERCGovernanceTokenSmartContract.connect(deployerWallet).transfer(voter2Wallet.address, (Snippets.ethersToWei(amountForEachVoter)))

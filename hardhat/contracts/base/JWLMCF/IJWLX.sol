@@ -14,4 +14,6 @@ interface IJWLX {
 
     function safeTransferFrom(address _from, address _to, uint256 _amount) external returns (uint256);
 
+    function transferFrom(address _from, address _to, uint256 _amount) external returns (uint256);
+
 }

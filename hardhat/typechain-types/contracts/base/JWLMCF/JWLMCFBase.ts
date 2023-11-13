@@ -23,6 +23,27 @@ import type {
   TypedContractMethod,
 } from "../../../common";
 
+export declare namespace JWLMCFBase {
+  export type PoolInfoStruct = {
+    lpToken: AddressLike;
+    allocPoint: BigNumberish;
+    lastRewardBlock: BigNumberish;
+    rewardTokenPerShare: BigNumberish;
+  };
+
+  export type PoolInfoStructOutput = [
+    lpToken: string,
+    allocPoint: bigint,
+    lastRewardBlock: bigint,
+    rewardTokenPerShare: bigint
+  ] & {
+    lpToken: string;
+    allocPoint: bigint;
+    lastRewardBlock: bigint;
+    rewardTokenPerShare: bigint;
+  };
+}
+
 export interface JWLMCFBaseInterface extends Interface {
   getFunction(
     nameOrSignature:
@@ -31,11 +52,12 @@ export interface JWLMCFBaseInterface extends Interface {
       | "autoCompound"
       | "changeDev"
       | "checkPoolDuplicate"
-      | "dev"
+      | "developerTreasuryWalletAccount"
       | "emergencyWithdraw"
       | "getMultiplier"
       | "getPoolInfo"
-      | "jwlrPerBlock"
+      | "getPools"
+      | "jouelTokenRewardPerBlock"
       | "jwlx"
       | "massUpdatePools"
       | "owner"
@@ -51,6 +73,7 @@ export interface JWLMCFBaseInterface extends Interface {
       | "unstake"
       | "updateMultiplier"
       | "updatePool"
+      | "updateStartBlock"
       | "userInfo"
   ): FunctionFragment;
 
@@ -59,6 +82,7 @@ export interface JWLMCFBaseInterface extends Interface {
       | "Deposit"
       | "EmergencyWithdraw"
       | "OwnershipTransferred"
+      | "PendingReward"
       | "Withdraw"
   ): EventFragment;
 
@@ -82,7 +106,10 @@ export interface JWLMCFBaseInterface extends Interface {
     functionFragment: "checkPoolDuplicate",
     values: [AddressLike]
   ): string;
-  encodeFunctionData(functionFragment: "dev", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "developerTreasuryWalletAccount",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "emergencyWithdraw",
     values: [BigNumberish]
@@ -95,8 +122,9 @@ export interface JWLMCFBaseInterface extends Interface {
     functionFragment: "getPoolInfo",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "getPools", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "jwlrPerBlock",
+    functionFragment: "jouelTokenRewardPerBlock",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "jwlx", values?: undefined): string;
@@ -154,6 +182,10 @@ export interface JWLMCFBaseInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "updateStartBlock",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "userInfo",
     values: [BigNumberish, AddressLike]
   ): string;
@@ -172,7 +204,10 @@ export interface JWLMCFBaseInterface extends Interface {
     functionFragment: "checkPoolDuplicate",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "dev", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "developerTreasuryWalletAccount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "emergencyWithdraw",
     data: BytesLike
@@ -185,8 +220,9 @@ export interface JWLMCFBaseInterface extends Interface {
     functionFragment: "getPoolInfo",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getPools", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "jwlrPerBlock",
+    functionFragment: "jouelTokenRewardPerBlock",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "jwlx", data: BytesLike): Result;
@@ -222,6 +258,10 @@ export interface JWLMCFBaseInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "updatePool", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateStartBlock",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
 }
 
@@ -267,6 +307,40 @@ export namespace OwnershipTransferredEvent {
   export interface OutputObject {
     previousOwner: string;
     newOwner: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace PendingRewardEvent {
+  export type InputTuple = [
+    currentBlock: BigNumberish,
+    poolLastRewardBlock: BigNumberish,
+    lpToken: BigNumberish,
+    reward: BigNumberish,
+    userAmount: BigNumberish,
+    rewardPerSare: BigNumberish,
+    userPendingReward: BigNumberish
+  ];
+  export type OutputTuple = [
+    currentBlock: bigint,
+    poolLastRewardBlock: bigint,
+    lpToken: bigint,
+    reward: bigint,
+    userAmount: bigint,
+    rewardPerSare: bigint,
+    userPendingReward: bigint
+  ];
+  export interface OutputObject {
+    currentBlock: bigint;
+    poolLastRewardBlock: bigint;
+    lpToken: bigint;
+    reward: bigint;
+    userAmount: bigint;
+    rewardPerSare: bigint;
+    userPendingReward: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -345,7 +419,11 @@ export interface JWLMCFBase extends BaseContract {
 
   autoCompound: TypedContractMethod<[], [void], "nonpayable">;
 
-  changeDev: TypedContractMethod<[_dev: AddressLike], [void], "nonpayable">;
+  changeDev: TypedContractMethod<
+    [_developerTreasuryWalletAccount: AddressLike],
+    [void],
+    "nonpayable"
+  >;
 
   checkPoolDuplicate: TypedContractMethod<
     [_lpToken: AddressLike],
@@ -353,7 +431,7 @@ export interface JWLMCFBase extends BaseContract {
     "view"
   >;
 
-  dev: TypedContractMethod<[], [string], "view">;
+  developerTreasuryWalletAccount: TypedContractMethod<[], [string], "view">;
 
   emergencyWithdraw: TypedContractMethod<
     [_pid: BigNumberish],
@@ -380,7 +458,13 @@ export interface JWLMCFBase extends BaseContract {
     "view"
   >;
 
-  jwlrPerBlock: TypedContractMethod<[], [bigint], "view">;
+  getPools: TypedContractMethod<
+    [],
+    [JWLMCFBase.PoolInfoStructOutput[]],
+    "view"
+  >;
+
+  jouelTokenRewardPerBlock: TypedContractMethod<[], [bigint], "view">;
 
   jwlx: TypedContractMethod<[], [string], "view">;
 
@@ -447,6 +531,12 @@ export interface JWLMCFBase extends BaseContract {
 
   updatePool: TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
 
+  updateStartBlock: TypedContractMethod<
+    [_startBlock: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   userInfo: TypedContractMethod<
     [arg0: BigNumberish, arg1: AddressLike],
     [[bigint, bigint] & { amount: bigint; pendingReward: bigint }],
@@ -472,12 +562,16 @@ export interface JWLMCFBase extends BaseContract {
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "changeDev"
-  ): TypedContractMethod<[_dev: AddressLike], [void], "nonpayable">;
+  ): TypedContractMethod<
+    [_developerTreasuryWalletAccount: AddressLike],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "checkPoolDuplicate"
   ): TypedContractMethod<[_lpToken: AddressLike], [void], "view">;
   getFunction(
-    nameOrSignature: "dev"
+    nameOrSignature: "developerTreasuryWalletAccount"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "emergencyWithdraw"
@@ -504,7 +598,10 @@ export interface JWLMCFBase extends BaseContract {
     "view"
   >;
   getFunction(
-    nameOrSignature: "jwlrPerBlock"
+    nameOrSignature: "getPools"
+  ): TypedContractMethod<[], [JWLMCFBase.PoolInfoStructOutput[]], "view">;
+  getFunction(
+    nameOrSignature: "jouelTokenRewardPerBlock"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "jwlx"
@@ -583,6 +680,9 @@ export interface JWLMCFBase extends BaseContract {
     nameOrSignature: "updatePool"
   ): TypedContractMethod<[_pid: BigNumberish], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "updateStartBlock"
+  ): TypedContractMethod<[_startBlock: BigNumberish], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "userInfo"
   ): TypedContractMethod<
     [arg0: BigNumberish, arg1: AddressLike],
@@ -610,6 +710,13 @@ export interface JWLMCFBase extends BaseContract {
     OwnershipTransferredEvent.InputTuple,
     OwnershipTransferredEvent.OutputTuple,
     OwnershipTransferredEvent.OutputObject
+  >;
+  getEvent(
+    key: "PendingReward"
+  ): TypedContractEvent<
+    PendingRewardEvent.InputTuple,
+    PendingRewardEvent.OutputTuple,
+    PendingRewardEvent.OutputObject
   >;
   getEvent(
     key: "Withdraw"
@@ -651,6 +758,17 @@ export interface JWLMCFBase extends BaseContract {
       OwnershipTransferredEvent.InputTuple,
       OwnershipTransferredEvent.OutputTuple,
       OwnershipTransferredEvent.OutputObject
+    >;
+
+    "PendingReward(uint256,uint256,uint256,uint256,uint256,uint256,uint256)": TypedContractEvent<
+      PendingRewardEvent.InputTuple,
+      PendingRewardEvent.OutputTuple,
+      PendingRewardEvent.OutputObject
+    >;
+    PendingReward: TypedContractEvent<
+      PendingRewardEvent.InputTuple,
+      PendingRewardEvent.OutputTuple,
+      PendingRewardEvent.OutputObject
     >;
 
     "Withdraw(address,uint256,uint256)": TypedContractEvent<

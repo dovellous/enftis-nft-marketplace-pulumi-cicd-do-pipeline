@@ -48,13 +48,15 @@ contract JWLMCF is JWLMCFBase {
         address _dev,
         uint256 _jwlrPerBlock,
         uint256 _startBlock,
-        uint256 _multiplier
+        uint256 _multiplier,
+        uint256 _allocPoint
     ) payable JWLMCFBase(
         _jwlr,
         _dev,
         _jwlrPerBlock,
         _startBlock,
-        _multiplier
+        _multiplier,
+        _allocPoint
     ) {}
 
 }

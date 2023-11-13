@@ -55,19 +55,22 @@ contract JWLXTKNFactoryBase is
         address initialAuthority
     )
         ERC20(_name, _symbol)
-        ERC20Capped(_maximumSupply * 10 ** 18)
+        ERC20Capped(_maximumSupply)
         ERC20Permit(_name)
     {
 
         if(initialAuthority == address(0)){
             initialAuthority = _msgSender();
         }
-        
-        _mint(initialAuthority, _initialSupply * 10 ** 18);
-        
-        tokenTotalSupply = _initialSupply * 10 ** 18;
 
-        tokenMaximumSupply = _maximumSupply * 10 ** 18;
+        console.log(_initialSupply);
+        console.log(_maximumSupply);
+        
+        _mint(initialAuthority, _initialSupply);
+        
+        tokenTotalSupply = _initialSupply;
+
+        tokenMaximumSupply = _maximumSupply;
 
         AccessManaged(initialAuthority);
         _grantRole(DEFAULT_ADMIN_ROLE, initialAuthority);
@@ -96,39 +99,31 @@ contract JWLXTKNFactoryBase is
         _unpause();
     }
 
+    function grantMinterRole(address account) external onlyRole(MINTER_ROLE) {
+        _grantRole(MINTER_ROLE, account);
+    }
+
+    function grantManagerRole(address account) external onlyRole(MANAGER_ROLE) {
+        _grantRole(MANAGER_ROLE, account);
+    }
+
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
 
         require(hasRole(MINTER_ROLE, _msgSender()), "Not allowed");
 
         (bool isValidTokenSupply, uint256 newTokenSupply) = Math.tryAdd(tokenTotalSupply, amount);
 
-        console.log(isValidTokenSupply);
+        require(amount > 0, "INVALID_AMOUNT");
 
-        console.log(amount);
+        require(isValidTokenSupply, "TOKEN_SUPPLY_OVERFLOW");
 
-        console.log(tokenTotalSupply);
-
-        console.log(newTokenSupply);
-
-        console.log(newTokenSupply <= tokenMaximumSupply);
-
-        if(newTokenSupply <= tokenMaximumSupply){
-
-            require(amount == 0, "GOOD");
-
-            tokenTotalSupply = newTokenSupply;
+        tokenTotalSupply = newTokenSupply;
                 
-            _mint(to, amount);
+        _mint(to, amount);
 
-            (,uint256 nextBalances) = Math.tryAdd(_balances[to], amount);
+        (,uint256 nextBalances) = Math.tryAdd(_balances[to], amount);
 
-            _balances[to] = nextBalances;
-            
-        }else{
-            
-            require(amount == 0, "SUPPLY_OVERFLOW");
-
-        }
+        _balances[to] = nextBalances;
 
     }
 
@@ -153,6 +148,13 @@ contract JWLXTKNFactoryBase is
   function safeJWLXTransfer(address _to, uint256 _amount) external {
     require(hasRole(MANAGER_ROLE, _msgSender()), "Not allowed");
     uint256 _balance = balanceOf(address(this));
+    console.log(_msgSender());
+    console.log(balanceOf(_msgSender()));
+    console.log(_balance);
+    console.log(address(this));
+    console.log(_to);
+    console.log(_amount);
+    console.log(_amount > _balance);
     if (_amount > _balance){
       transfer(_to, _balance);
     }

@@ -4544,8 +4544,8 @@
       ]
     },
     "C:\\Apps\\dvs-x-mern-services\\hardhat\\contracts\\base\\JWLMCF\\JWLMCFBase.sol": {
-      "lastModificationDate": 1699324986209,
-      "contentHash": "bed6291453c5bb422e029cc682552ed8",
+      "lastModificationDate": 1699848834980,
+      "contentHash": "ef1bdc0628be8cd24fc7128b3dd265ca",
       "sourceName": "contracts/base/JWLMCF/JWLMCFBase.sol",
       "solcConfig": {
         "version": "0.8.22",
@@ -4591,8 +4591,8 @@
       ]
     },
     "C:\\Apps\\dvs-x-mern-services\\hardhat\\contracts\\base\\JWLXTKN\\JWLXTKNFactoryBase.sol": {
-      "lastModificationDate": 1699591094664,
-      "contentHash": "e43b15f7e34d13f224a7f71284e264a2",
+      "lastModificationDate": 1699848319818,
+      "contentHash": "74d7a716724a85a36b8f301e8b7ff293",
       "sourceName": "contracts/base/JWLXTKN/JWLXTKNFactoryBase.sol",
       "solcConfig": {
         "version": "0.8.22",
@@ -4644,8 +4644,8 @@
       ]
     },
     "C:\\Apps\\dvs-x-mern-services\\hardhat\\contracts\\base\\JWLMCF\\IJWLX.sol": {
-      "lastModificationDate": 1698414559000,
-      "contentHash": "78b0fbf0be968ced7ba40f6ce228d755",
+      "lastModificationDate": 1699715395692,
+      "contentHash": "633c1eb9d34b825d694eb12dbfef1a25",
       "sourceName": "contracts/base/JWLMCF/IJWLX.sol",
       "solcConfig": {
         "version": "0.8.22",
@@ -4889,8 +4889,8 @@
       ]
     },
     "C:\\Apps\\dvs-x-mern-services\\hardhat\\contracts\\JWLMCF.sol": {
-      "lastModificationDate": 1698414612000,
-      "contentHash": "79c0d5abe3983c552f7437dc028004d8",
+      "lastModificationDate": 1699690230844,
+      "contentHash": "d18b0f45a5001a3630084e0ff8422893",
       "sourceName": "contracts/JWLMCF.sol",
       "solcConfig": {
         "version": "0.8.22",

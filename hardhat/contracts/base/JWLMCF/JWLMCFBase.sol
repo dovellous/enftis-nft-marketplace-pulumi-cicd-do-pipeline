@@ -29,15 +29,15 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
     }
 
     IJWLX public jwlx;
-    address public dev;
-    uint256 public jwlrPerBlock;
+    address public developerTreasuryWalletAccount;
+    uint256 public jouelTokenRewardPerBlock;
 
     PoolInfo[] public poolInfo;
     mapping(uint256 => mapping(address => UserInfo)) public userInfo;
     uint256 public totalAllocation = 0;
     uint256 public startBlock;
     uint256 public BONUS_MULTIPLIER;
-
+    event PendingReward(uint256 currentBlock, uint256 poolLastRewardBlock, uint256 lpToken, uint256 reward, uint256 userAmount, uint256 rewardPerSare, uint256 userPendingReward);
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event EmergencyWithdraw(
@@ -48,26 +48,27 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
 
     constructor(
         IJWLX _jwlx,
-        address _dev,
-        uint256 _jwlrPerBlock,
+        address _developerTreasuryWalletAccount,
+        uint256 _jouelTokenRewardPerBlock,
         uint256 _startBlock,
-        uint256 _multiplier
+        uint256 _multiplier,
+        uint256 _allocPoint
     ) Ownable(_msgSender()) {
         jwlx = _jwlx;
-        dev = _dev;
-        jwlrPerBlock = _jwlrPerBlock;
+        developerTreasuryWalletAccount = _developerTreasuryWalletAccount;
+        jouelTokenRewardPerBlock = _jouelTokenRewardPerBlock;
         startBlock = _startBlock;
         BONUS_MULTIPLIER = _multiplier;
 
         poolInfo.push(
             PoolInfo({
                 lpToken: _jwlx,
-                allocPoint: 1000,
+                allocPoint: _allocPoint,
                 lastRewardBlock: startBlock,
                 rewardTokenPerShare: 0
             })
         );
-        totalAllocation = 1000;
+        totalAllocation = _allocPoint;
     }
 
     modifier validatePool(uint256 _pid) {
@@ -79,6 +80,10 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
         BONUS_MULTIPLIER = multiplierNumber;
     }
 
+    function updateStartBlock(uint256 _startBlock) public onlyOwner {
+        startBlock = _startBlock;
+    }
+
     function poolLength() external view returns (uint256) {
         return poolInfo.length;
     }
@@ -86,7 +91,7 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
     function checkPoolDuplicate(IJWLX _lpToken) public view {
         uint256 length = poolInfo.length;
         for (uint256 _pid = 0; _pid < length; _pid++) {
-            require(poolInfo[_pid].lpToken != _lpToken, "TOKEN_POOL_ALREADY_EXISTS");
+            require(poolInfo[_pid].lpToken != _lpToken, "LIQUIDITY_POOL_TOKEN_ALREADY_EXISTS");
         }
     }
 
@@ -172,7 +177,7 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
                 block.number
             );
             uint256 tokenReward = Snippets.mathMulDiv(
-                (multiplier * jwlrPerBlock),
+                (multiplier * jouelTokenRewardPerBlock),
                 pool.allocPoint,
                 totalAllocation
             );
@@ -182,17 +187,22 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
                 rewardTokenPerShare
             );
         }
-        return
-            Snippets.mathMulSub(
+
+        uint256 reward = Snippets.mathMulSub(
                 user.amount,
                 ((rewardTokenPerShare / 10) * 10 ** 12),
                 user.pendingReward
             );
+
+        emit PendingReward(block.number, pool.lastRewardBlock, lpSupply, reward, user.amount, ((rewardTokenPerShare / 10) * 10 ** 12), user.pendingReward);
+
+        return reward;
+            
     }
 
     function massUpdatePools() public {
-        uint256 length = poolInfo.length;
-        for (uint256 pid = 0; pid < length; ++pid) {
+        uint256 pLength = poolInfo.length;
+        for (uint256 pid; pid < pLength; ++pid) {
             updatePool(pid);
         }
     }
@@ -215,12 +225,12 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
 
         uint256 tokenReward = Snippets.mathMulDiv(
-            (multiplier * jwlrPerBlock),
+            (multiplier * jouelTokenRewardPerBlock),
             pool.allocPoint,
             totalAllocation
         );
 
-        jwlx.mint(dev, Snippets.mathDiv(tokenReward, 10));
+        jwlx.mint(developerTreasuryWalletAccount, Snippets.mathDiv(tokenReward, 10));
 
         jwlx.mint(address(jwlx), tokenReward);
 
@@ -249,7 +259,8 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
             }
         }
         if (_amount > 0) {
-            pool.lpToken.safeTransferFrom(
+        
+            pool.lpToken.transferFrom(
                 address(msg.sender),
                 address(this),
                 _amount
@@ -339,12 +350,25 @@ contract JWLMCFBase is Ownable, ReentrancyGuard {
         );
     }
 
-    function safeJWLXTransfer(address _to, uint256 _amount) internal {
-        jwlx.safeJWLXTransfer(_to, _amount);
+    function getPools()
+        public
+        view
+        returns(
+            PoolInfo[] memory
+        )
+    {
+
+        return poolInfo;
+
     }
 
-    function changeDev(address _dev) public {
-        require(msg.sender == dev, "NOT_AUTHORIZED");
-        dev = _dev;
+    function safeJWLXTransfer(address _to, uint256 _amount) internal {
+        jwlx.mint(_to, _amount);
+        //jwlx.safeJWLXTransfer(_to, _amount);
+    }
+
+    function changeDev(address _developerTreasuryWalletAccount) public {
+        require(msg.sender == developerTreasuryWalletAccount, "NOT_AUTHORIZED");
+        developerTreasuryWalletAccount = _developerTreasuryWalletAccount;
     }
 }
