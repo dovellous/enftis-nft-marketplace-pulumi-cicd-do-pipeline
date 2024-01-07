@@ -1,59 +1,20 @@
-import { BaseFactoryClass, Web3Config, getABIS } from ".";
+import { ERCClass, Web3Config } from ".";
 
-class ERCMKTPFactoryClass extends BaseFactoryClass {
+class ERCMKTPFactoryClass extends ERCClass {
+  constructor(chain: any, walletAddress: `0x${string}`) {
+    const contractName: string = Web3Config.ERCMKTP_FACTORY;
 
-    constructor(chain: any, walletAddress: `0x${string}`) {
+    const contractPrefix: string = "ERCMKTP";
 
-        const contractName: string = Web3Config.ERCMKTP_FACTORY;
-
-        super(chain, walletAddress, contractName);
-
-        this.updateCurrentClient(chain, walletAddress);
-
-    }
-
-    async updateCurrentClient(chain: any, walletAddress: `0x${string}`): Promise<any> {
-
-        if (!chain) {
-            return;
-        }
-
-        const abisArray:any = await getABIS();
-
-        const abiJSON: any = abisArray[`C_${chain.id}`];
-
-        const addressJSON: any = abisArray[`A_${chain.id}`];
-
-        super.updateClient(abiJSON, addressJSON, chain, walletAddress);
-
-    }
-
-    async exe(functionName: string, args: any, successCallback: Function, errorCallback: Function, finalCallback: Function): Promise<any> {
-
-        if (!this.isReady()) {
-
-            this.updateCurrentClient(this.getCurrentChain(), this.getCurrentWalletAddress());
-
-            return await this.exe(functionName, args, successCallback, errorCallback, finalCallback);
-
-        }
-
-        if (Web3Config.ERCMKTP_FACTORY_READS.includes(functionName)) {
-
-            return await super.readContract(functionName, args, successCallback, errorCallback, finalCallback);
-
-        } else if (Web3Config.ERCMKTP_FACTORY_WRITES.includes(functionName)) {
-
-            return await super.writeContract(functionName, args, successCallback, errorCallback, finalCallback);
-
-        } else {
-
-            throw ('Function not valid:' + functionName);
-
-        }
-
-    }
-
+    super(
+      contractPrefix,
+      Web3Config.ERCMKTP_FACTORY_READS,
+      Web3Config.ERCMKTP_FACTORY_WRITES,
+      chain,
+      walletAddress,
+      contractName
+    );
+  }
 }
 
-export { ERCMKTPFactoryClass }
+export { ERCMKTPFactoryClass };

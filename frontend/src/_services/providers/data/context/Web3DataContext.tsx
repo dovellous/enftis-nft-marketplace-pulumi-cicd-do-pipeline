@@ -33,6 +33,8 @@ import { getWalletClient, getAccount, getNetwork } from '@wagmi/core';
 import { ERC1155FactoryClass } from "./libs/classes/ERC1155FactoryClass";
 import { ERC721FactoryClass } from "./libs/classes/ERC721FactoryClass";
 import { ERCMKTPFactoryClass } from "./libs/classes/ERCMKTPFactoryClass";
+import { ERCDAOFactoryClass } from "./libs/classes/ERCDAOFactoryClass";
+import { ERCDEFIFactoryClass } from "./libs/classes/ERCDEFIFactoryClass";
 //
 
 
@@ -110,8 +112,14 @@ export interface Web3ContentTypeInterface {
   // ERC1155FactorySmartContract
   erc1155FactorySmartContract: ERC1155FactoryClass;
 
-  // ERCMKTPFactorySmartContract
+  // ERCDAOFactorySmartContract
   ercMKTPFactorySmartContract: ERCMKTPFactoryClass;
+
+  // ERCDAOFactorySmartContract
+  ercDAOFactorySmartContract: ERCDAOFactoryClass;
+
+  // ERCDEFIFactorySmartContract
+  ercDEFIFactorySmartContract: ERCDEFIFactoryClass;
 
 }
 
@@ -148,6 +156,12 @@ export const Web3DataContext = createContext<Web3ContentTypeInterface>({
 
   // ERCMKTPFactorySmartContract
   ercMKTPFactorySmartContract: new ERCMKTPFactoryClass({ id: 1, name: 'Mainnet' }, `0x0`),
+
+  // ERCDAOFactorySmartContract
+  ercDAOFactorySmartContract: new ERCDAOFactoryClass({ id: 1, name: 'Mainnet' }, `0x0`),
+
+  // ERCDEFIFactorySmartContract
+  ercDEFIFactorySmartContract: new ERCDEFIFactoryClass({ id: 1, name: 'Mainnet' }, `0x0`),
 
 });
 
@@ -219,11 +233,17 @@ export const Web3DataContextProvider = ({ children }: any) => {
 
   const ercMKTPFactorySmartContract = new ERCMKTPFactoryClass(chain, walletAccount);
 
+  const ercDAOFactorySmartContract = new ERCDAOFactoryClass(chain, walletAccount);
+
+  const ercDEFIFactorySmartContract = new ERCDEFIFactoryClass(chain, walletAccount);
+
   const updateCurrentSmartContract: any = async (): Promise<any> => {
 
     erc721FactorySmartContract.updateCurrentClient(currentChain, address as `0x${string}`);
     erc1155FactorySmartContract.updateCurrentClient(currentChain, address as `0x${string}`);
     ercMKTPFactorySmartContract.updateCurrentClient(currentChain, address as `0x${string}`);
+    ercDAOFactorySmartContract.updateCurrentClient(currentChain, address as `0x${string}`);
+    ercDEFIFactorySmartContract.updateCurrentClient(currentChain, address as `0x${string}`);
 
   };
 
@@ -306,7 +326,13 @@ export const Web3DataContextProvider = ({ children }: any) => {
         erc1155FactorySmartContract,
 
         // ERCMKTPFactorySmartContract
-        ercMKTPFactorySmartContract
+        ercMKTPFactorySmartContract,
+
+        // ERCDAOFactorySmartContract
+        ercDAOFactorySmartContract,
+
+        // ERCDEFIFactorySmartContract
+        ercDEFIFactorySmartContract
 
         //
       }}

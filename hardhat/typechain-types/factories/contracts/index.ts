@@ -6,6 +6,8 @@ export * as base from "./base";
 export * as libs from "./libs";
 export { ERC1155Factory__factory } from "./ERC1155Factory__factory";
 export { ERC721Factory__factory } from "./ERC721Factory__factory";
+export { ERCDAO__factory } from "./ERCDAO__factory";
+export { ERCDEFI__factory } from "./ERCDEFI__factory";
 export { ERCLogger__factory } from "./ERCLogger__factory";
 export { ERCMKTPFactory__factory } from "./ERCMKTPFactory__factory";
 export { JWLDAOGVN__factory } from "./JWLDAOGVN__factory";

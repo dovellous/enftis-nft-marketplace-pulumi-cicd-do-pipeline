@@ -113,6 +113,32 @@ describe(`${process.env.CONTRACT_FILE_MCF}`, async function () {
 
         await ERCJouelMasterChefSmartContract.waitForDeployment();
 
+        CHAIN_IDS.map(async (chain: any) => {
+
+            const path: any = `../frontend/src/_services/providers/data/context/libs/artifacts/${chain}`;
+
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+
+            // Addresses
+
+            const smartContractAddress: string = await ERCJouelMasterChefSmartContract.getAddress();
+
+            fs.writeFileSync(
+                `${path}/ERCDEFIFactoryAddress.json`,
+                `{ "address": "${smartContractAddress}" }`
+            );
+
+            // Contracts
+
+            fs.copyFile('./artifacts/contracts/ERCDEFIFactory.sol/ERCDEFIFactory.json', `${path}/ERCDEFIFactoryContract.json`, (err: any) => {
+                if (err) throw err;
+                console.log('Artifact file [ ERCDEFIFactory + Address ] copied successfully!');
+            });
+
+        })
+
         ERCJouelMasterChefSmartContract.on(
             "*",
             (event: any) => {

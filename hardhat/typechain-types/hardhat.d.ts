@@ -466,6 +466,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC721Factory__factory>;
     getContractFactory(
+      name: "ERCDAO",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERCDAO__factory>;
+    getContractFactory(
+      name: "ERCDEFI",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERCDEFI__factory>;
+    getContractFactory(
       name: "ERCLogger",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERCLogger__factory>;
@@ -1064,6 +1072,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC721Factory>;
     getContractAt(
+      name: "ERCDAO",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERCDAO>;
+    getContractAt(
+      name: "ERCDEFI",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERCDEFI>;
+    getContractAt(
       name: "ERCLogger",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -1557,6 +1575,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC721Factory>;
     deployContract(
+      name: "ERCDAO",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERCDAO>;
+    deployContract(
+      name: "ERCDEFI",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERCDEFI>;
+    deployContract(
       name: "ERCLogger",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERCLogger>;
@@ -2154,6 +2180,16 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC721Factory>;
+    deployContract(
+      name: "ERCDAO",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERCDAO>;
+    deployContract(
+      name: "ERCDEFI",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERCDEFI>;
     deployContract(
       name: "ERCLogger",
       args: any[],

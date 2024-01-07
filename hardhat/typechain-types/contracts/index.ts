@@ -9,6 +9,8 @@ import type * as libs from "./libs";
 export type { libs };
 export type { ERC1155Factory } from "./ERC1155Factory";
 export type { ERC721Factory } from "./ERC721Factory";
+export type { ERCDAO } from "./ERCDAO";
+export type { ERCDEFI } from "./ERCDEFI";
 export type { ERCLogger } from "./ERCLogger";
 export type { ERCMKTPFactory } from "./ERCMKTPFactory";
 export type { JWLDAOGVN } from "./JWLDAOGVN";

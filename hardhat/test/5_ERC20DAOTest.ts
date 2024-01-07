@@ -82,6 +82,32 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
 
         fs.writeFileSync(`${targetDir}JWLXTKN.txt`, ERCGovernanceTokenSmartContractAddress);
 
+        CHAIN_IDS.map(async (chain: any) => {
+
+            const path: any = `../frontend/src/_services/providers/data/context/libs/artifacts/${chain}`;
+
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+
+            // Addresses
+
+            const smartContractAddress: string = await ERCGovernanceTokenSmartContract.getAddress();
+
+            fs.writeFileSync(
+                `${path}/JWLXTKNAddress.json`,
+                `{ "address": "${smartContractAddress}" }`
+            );
+
+            // Contracts
+
+            fs.copyFile('./artifacts/contracts/JWLXTKN.sol/JWLXTKN.json', `${path}/JWLXTKNContract.json`, (err: any) => {
+                if (err) throw err;
+                console.log('Artifact file [ JWLXTKN + Address ] copied successfully!');
+            });
+
+        })
+
         ERCGovernanceTokenSmartContract.on(
             "*",
             (event:any) => {
@@ -174,6 +200,32 @@ describe(`${process.env.CONTRACT_FILE_DAO}`, async function () {
         );
 
         await ERCGovernanceDAOSmartContract.waitForDeployment();
+
+        CHAIN_IDS.map(async (chain: any) => {
+
+            const path: any = `../frontend/src/_services/providers/data/context/libs/artifacts/${chain}`;
+
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path, { recursive: true });
+            }
+
+            // Addresses
+
+            const smartContractAddress: string = await ERCGovernanceDAOSmartContract.getAddress();
+
+            fs.writeFileSync(
+                `${path}/ERCDAOFactoryAddress.json`,
+                `{ "address": "${smartContractAddress}" }`
+            );
+
+            // Contracts
+
+            fs.copyFile('./artifacts/contracts/ERCDAOFactory.sol/ERCDAOFactory.json', `${path}/ERCDAOFactoryContract.json`, (err: any) => {
+                if (err) throw err;
+                console.log('Artifact file [ ERCDAOFactory + Address ] copied successfully!');
+            });
+
+        })
 
         ERCGovernanceDAOSmartContract.on(
             "*",

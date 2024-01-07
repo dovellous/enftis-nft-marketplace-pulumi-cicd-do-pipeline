@@ -31,6 +31,12 @@ export const SettingsDataContextProvider = ({ children }: any) => {
 
   const [applicationSettings, setApplicationSettings] = useState<any>(applicationSettingsInitialState);
 
+  //local settings
+
+  //load from remote
+
+  //save local settings
+
   return (
     <SettingsDataContext.Provider value={{
       applicationSettings, setApplicationSettings
